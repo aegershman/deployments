@@ -1,0 +1,35 @@
+resources:
+  - name: time
+    type: time
+    source:
+      interval: 1m
+
+jobs:
+  - name: job-hello-world
+    plan:
+      - task: hello-world
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: { repository: busybox }
+          run:
+            path: echo
+            args: [hello world]
+
+  - name: test-overlay
+    plan:
+      - get: time
+        trigger: true
+      - task: test-task
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: {repository: busybox}
+          run:
+            path: sh
+            args:
+              - -c
+              - |
+                echo hello world

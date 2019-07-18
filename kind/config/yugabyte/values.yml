@@ -1,0 +1,36 @@
+Image:
+  tag: 2.0.1.0-b19
+
+storage:
+  master:
+    count: 2
+    size: 2G
+    storageClass: standard
+  tserver:
+    count: 2
+    size: 2G
+    storageClass: standard
+
+replicas:
+  master: 3
+  tserver: 3
+
+resource:
+  master:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  tserver:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+# Flag to use to disable YugaByte SQL support on tservers.
+disableYsql: False
+
+serviceEndpoints:
+  - name: "yb-master-ui"
+    type: NodePort
+    app: "yb-master"
+    ports:
+      ui: "7000"
