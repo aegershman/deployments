@@ -1,0 +1,23 @@
+postgresql:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 256M
+
+worker:
+  enabled: false
+
+web:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+    - concourse.gershman.io
+
+concourse:
+  web:
+    clusterName: eks-gershman
+    externalUrl: http://concourse.gershman.io
+    kubernetes:
+      enabled: false

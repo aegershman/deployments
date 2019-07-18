@@ -1,0 +1,5 @@
+controller:
+  replicaCount: 2
+  ## https://github.com/kubernetes-incubator/external-dns/issues/654#issuecomment-493949237
+  publishService:
+    enabled: true
