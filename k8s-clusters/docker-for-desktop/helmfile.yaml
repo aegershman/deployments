@@ -5,6 +5,8 @@ helmDefaults:
 repositories:
 - name: stable
   url: https://kubernetes-charts.storage.googleapis.com
+- name: kubecost
+  url: https://kubecost.github.io/cost-analyzer
 
 releases:
 
@@ -23,6 +25,16 @@ releases:
   version: ~8.1.x
   values:
   - config/concourse-workers/values.yml
+
+- name: kubecost
+  namespace: kubecost
+  chart: kubecost/cost-analyzer
+  installed: true
+  version: ~1.x.x
+  values:
+  - config/kubecost/values.yml
+  secrets:
+  - config/kubecost/secrets.yaml
 
 - name: nginx-ingress
   namespace: nginx-ingress
