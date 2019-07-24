@@ -7,9 +7,9 @@ case "$1" in
 s | set)
   fly -t localhost set-pipeline \
     -p bbl-gershman \
-    -c ci/pipeline.yml \
-    -l ci/params.yml \
-    -l ci/.credentials.yml
+    -c pipeline.yml \
+    -l params.yml \
+    -l .credentials.yml
   ;;
 
 -h | --help | *)
