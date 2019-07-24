@@ -30,7 +30,7 @@ resources:
 
 jobs:
 
-- name: setup-infrastructure-experimental
+- name: bbl-up #setup-infrastructure-experimental
   plan:
   - in_parallel:
     - get: cf-deployment-concourse-tasks
