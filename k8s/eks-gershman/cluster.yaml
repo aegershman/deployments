@@ -13,3 +13,4 @@ nodeGroups:
     iam:
       withAddonPolicies:
         externalDNS: true
+        # certManager: true
