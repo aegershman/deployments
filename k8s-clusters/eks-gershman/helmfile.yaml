@@ -1,28 +1,23 @@
 helmDefaults:
   kubeContext: gershman-admin@eks-gershman.us-east-2.eksctl.io
-  # recreatePods: true
 
 repositories:
 - name: stable
   url: https://kubernetes-charts.storage.googleapis.com
+- name: kubecost
+  url: https://kubecost.github.io/cost-analyzer
 
 releases:
 
-- name: concourse-web
-  namespace: concourse-web
+- name: concourse
+  namespace: concourse
   chart: stable/concourse
-  installed: false
+  installed: true
   version: ~8.1.x
   values:
-  - config/concourse-web/values.yml
-
-- name: concourse-workers
-  namespace: concourse-workers
-  chart: stable/concourse
-  installed: false
-  version: ~8.1.x
-  values:
-  - config/concourse-workers/values.yml
+  - config/concourse/values.yml
+  secrets:
+  - config/concourse/secrets.yaml
 
 - name: external-dns
   namespace: external-dns
@@ -32,10 +27,20 @@ releases:
   values:
   - config/external-dns/values.yml
 
+- name: kubecost
+  namespace: kubecost
+  chart: kubecost/cost-analyzer
+  installed: false
+  version: ~1.x.x
+  values:
+  - config/kubecost/values.yml
+  secrets:
+  - config/kubecost/secrets.yaml
+
 - name: nginx-ingress
   namespace: nginx-ingress
   chart: stable/nginx-ingress
   installed: true
-  version: ~1.10.x
+  version: ~1.x.x
   values:
   - config/nginx-ingress/values.yml

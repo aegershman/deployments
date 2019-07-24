@@ -2,10 +2,14 @@ postgresql:
   enabled: true
   persistence:
     enabled: true
-    size: 256M
+    size: 8Gi
 
 worker:
-  enabled: false
+  replicas: 1
+
+persistence:
+  worker:
+    size: 20Gi
 
 web:
   ingress:
@@ -17,7 +21,14 @@ web:
 
 concourse:
   web:
-    clusterName: eks-gershman
     externalUrl: http://concourse.gershman.io
+    localAuth:
+      enabled: false
     kubernetes:
       enabled: false
+    auth:
+      mainTeam:
+        github:
+          user: aegershman
+      github:
+        enabled: true

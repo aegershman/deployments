@@ -3,10 +3,11 @@ kind: ClusterConfig
 
 metadata:
   name: eks-gershman
-  region: us-east-2 # ohio
+  region: us-east-2
 
 nodeGroups:
   - name: standard-workers
+    ## https://github.com/awslabs/amazon-eks-ami/blob/master/files/eni-max-pods.txt
     instanceType: t3.small
     desiredCapacity: 1
     iam:

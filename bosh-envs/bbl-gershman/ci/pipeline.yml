@@ -40,9 +40,10 @@ jobs:
       BBL_AWS_REGION: us-east-2
       BBL_AWS_ACCESS_KEY_ID: ((bbl_aws_access_key_id))
       BBL_AWS_SECRET_ACCESS_KEY: ((bbl_aws_secret_access_key))
-      BBL_LB_CERT: ((bbl_lbs_certificate))
-      BBL_LB_KEY: ((bbl_lbs_private_key))
-      BBL_LB_CERT_CHAIN: ((bbl_lbs_ca))
+      SKIP_LB_CREATION: 'true'
+      # BBL_LB_CERT: ((bbl_lbs_certificate))
+      # BBL_LB_KEY: ((bbl_lbs_private_key))
+      # BBL_LB_CERT_CHAIN: ((bbl_lbs_ca))
       LB_DOMAIN: cf.gershman.io #hermione.cf-app.com
       BBL_ENV_NAME: bbl-gershman #hermione-experimental
     input_mapping:
@@ -53,3 +54,193 @@ jobs:
       params:
         repository: updated-bbl-state
         rebase: true
+
+
+- name: destroy-infrastructure-experimental
+  serial_groups: [hermione]
+  public: true
+  plan:
+  - in_parallel:
+    # - put: experimental-pool
+    #   params: {claim: hermione}
+    - get: relint-envs
+    - get: cf-deployment-concourse-tasks
+  - task: guarantee-no-existing-cf-deployment
+    file: cf-deployment-concourse-tasks/bosh-delete-deployment/task.yml
+    input_mapping:
+      bbl-state: relint-envs
+  - task: destroy-infrastructure
+    file: cf-deployment-concourse-tasks/bbl-destroy/task.yml
+    params:
+      BBL_STATE_DIR: environments/test/hermione/bbl-state
+      BBL_AWS_ACCESS_KEY_ID: ((bbl_aws_access_key_id))
+      BBL_AWS_SECRET_ACCESS_KEY: ((bbl_aws_secret_access_key))
+    input_mapping:
+      bbl-state: relint-envs
+    ensure:
+      put: relint-envs
+      params:
+        repository: updated-bbl-state
+        rebase: true
+
+
+# - name: fresh-deploy
+#   serial_groups: [ luna-smokes ]
+#   public: true
+#   plan:
+#   - get: fresh-pool
+#     trigger: true
+#     passed: [fresh-acquire-pool]
+#   - in_parallel:
+#     - get: cf-deployment-develop
+#       passed: [fresh-acquire-pool]
+#     - get: cf-deployment-concourse-tasks
+#     - get: runtime-ci
+#     - get: relint-envs
+#     - get: cf-smoke-tests
+#   - task: guarantee-no-existing-cf-deployment
+#     file: cf-deployment-concourse-tasks/bosh-delete-deployment/task.yml
+#     input_mapping:
+#       bbl-state: relint-envs
+#     params:
+#       BBL_STATE_DIR: environments/test/luna/bbl-state
+#       DEPLOYMENT_NAME: luna-cf
+#       IGNORE_ERRORS: true
+#   - task: collect-ops-files
+#     file: cf-deployment-concourse-tasks/collect-ops-files/task.yml
+#     input_mapping:
+#       base-ops-files: cf-deployment-develop
+#       new-ops-files: relint-envs
+#     params:
+#       BASE_OPS_FILE_DIR: operations
+#       NEW_OPS_FILES: |
+#         environments/test/luna/rename-isolation-segment-network.yml
+#         environments/test/luna/change-postgres-max-connections.yml
+#   - task: bosh-deploy-cf
+#     file: cf-deployment-concourse-tasks/bosh-deploy/task.yml
+#     input_mapping:
+#       bbl-state: relint-envs
+#       cf-deployment: cf-deployment-develop
+#       ops-files: collected-ops-files
+#       vars-files: relint-envs
+#     params:
+#       BBL_STATE_DIR: environments/test/luna/bbl-state
+#       SYSTEM_DOMAIN: luna.cf-app.com
+#       OPS_FILES: |
+#         operations/experimental/fast-deploy-with-downtime-and-danger.yml
+#         operations/use-compiled-releases.yml
+#         operations/rename-network-and-deployment.yml
+#         operations/set-bbs-active-key.yml
+#         operations/test/add-persistent-isolation-segment-diego-cell.yml
+#         operations/test/add-persistent-isolation-segment-router.yml
+#         operations/rename-isolation-segment-network.yml
+#         operations/addons/enable-component-syslog.yml
+#         operations/use-postgres.yml
+#         operations/experimental/enable-tls-cloud-controller-postgres.yml
+#         operations/change-postgres-max-connections.yml
+#         operations/use-internal-lookup-for-route-services.yml
+#       VARS_FILES: |
+#         environments/test/luna/deployment-name.yml
+#         environments/test/luna/network-name.yml
+#         environments/test/luna/bbs-key-label.yml
+#         environments/test/luna/syslog-vars.yml
+#       REGENERATE_CREDENTIALS: true
+#   - task: run-bosh-cleanup
+#     file: cf-deployment-concourse-tasks/bosh-cleanup/task.yml
+#     input_mapping:
+#       bbl-state: relint-envs
+#     params:
+#       BBL_STATE_DIR: environments/test/luna/bbl-state
+#   - task: update-integration-configs
+#     file: cf-deployment-concourse-tasks/update-integration-configs/task.yml
+#     params:
+#       BBL_STATE_DIR: environments/test/luna/bbl-state
+#       CATS_INTEGRATION_CONFIG_FILE: environments/test/luna/integration_config.json
+#     input_mapping:
+#       bbl-state: relint-envs
+#       integration-configs: relint-envs
+#     ensure:
+#       put: relint-envs
+#       params:
+#         repository: updated-integration-configs
+#         rebase: true
+#   - task: ensure-gcloud-backend-service-healthy
+#     file: runtime-ci/tasks/ensure-gcloud-backend-service-healthy/task.yml
+#     input_mapping:
+#       google-creds-dir: relint-envs
+#     params:
+#       GCP_PROJECT_ID: ((luna_gcp_project))
+#       GCP_BACKEND_SERVICE: ((luna_router_backend_service))
+#       GOOGLE_ACCOUNT_CREDS_PATH: environments/test/luna/google_account_creds.json
+#   - in_parallel:
+#     - task: ensure-api-healthy
+#       file: runtime-ci/tasks/ensure-api-healthy/task.yml
+#       input_mapping:
+#         cats-integration-config: relint-envs
+#       params:
+#         CONFIG_FILE_PATH: environments/test/luna/integration_config.json
+#     - task: ensure-isolation-segment-healthy
+#       file: runtime-ci/tasks/ensure-api-healthy/task.yml
+#       input_mapping:
+#         cats-integration-config: relint-envs
+#       params:
+#         CHECK_ISOLATION_SEGMENT: true
+#         CONFIG_FILE_PATH: environments/test/luna/integration_config.json
+#   - in_parallel:
+#     - task: open-asgs-for-credhub
+#       file: cf-deployment-concourse-tasks/open-asgs-for-bosh-instance-group/task.yml
+#       input_mapping:
+#         bbl-state: relint-envs
+#       params:
+#         BBL_STATE_DIR: environments/test/luna/bbl-state
+#         BOSH_DEPLOYMENT: luna-cf
+#         INSTANCE_GROUP_NAME: credhub
+#         SYSTEM_DOMAIN: luna.cf-app.com
+#         SECURITY_GROUP_NAME: credhub
+#     - task: open-asgs-for-uaa
+#       file: cf-deployment-concourse-tasks/open-asgs-for-bosh-instance-group/task.yml
+#       input_mapping:
+#         bbl-state: relint-envs
+#       params:
+#         BBL_STATE_DIR: environments/test/luna/bbl-state
+#         BOSH_DEPLOYMENT: luna-cf
+#         INSTANCE_GROUP_NAME: uaa
+#         SYSTEM_DOMAIN: luna.cf-app.com
+#         SECURITY_GROUP_NAME: uaa
+#     - task: enable-docker-and-tasks
+#       attempts: 2
+#       file: cf-deployment-concourse-tasks/set-feature-flags/task.yml
+#       input_mapping:
+#         bbl-state: relint-envs
+#       params:
+#         BBL_STATE_DIR: environments/test/luna/bbl-state
+#         SYSTEM_DOMAIN: luna.cf-app.com
+#         ENABLED_FEATURE_FLAGS: |
+#           diego_docker
+#           task_creation
+
+
+# - name: fresh-delete-deployment
+#   serial: true
+#   public: true
+#   plan:
+#   - timeout: 4h
+#     do:
+#     - get: fresh-pool
+#       trigger: true
+#       passed:
+#       - fresh-cats
+#       - fresh-smoke-tests
+#     - in_parallel:
+#       - get: cf-deployment-concourse-tasks
+#       - get: relint-envs
+#     - task: delete-deployment-cf
+#       file: cf-deployment-concourse-tasks/bosh-delete-deployment/task.yml
+#       input_mapping:
+#         bbl-state: relint-envs
+#       params:
+#         BBL_STATE_DIR: environments/test/luna/bbl-state
+#         DEPLOYMENT_NAME: luna-cf
+#         IGNORE_ERRORS: true
+#     - put: fresh-pool
+#       params: {release: fresh-pool}
