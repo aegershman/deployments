@@ -1,0 +1,17 @@
+helmDefaults:
+  kubeContext: kubernetes-admin@kind
+
+repositories:
+- name: stable
+  url: https://kubernetes-charts.storage.googleapis.com
+
+releases:
+
+- name: nginx-ingress
+  namespace: nginx-ingress
+  chart: stable/nginx-ingress
+  installed: true
+  atomic: true
+  version: ~1.x.x
+  values:
+  - config/nginx-ingress/values.yml
