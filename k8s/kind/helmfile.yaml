@@ -7,6 +7,7 @@ repositories:
 
 releases:
 
+  ## https://mauilion.dev/posts/kind-metallb/
 - name: nginx-ingress
   namespace: nginx-ingress
   chart: stable/nginx-ingress
