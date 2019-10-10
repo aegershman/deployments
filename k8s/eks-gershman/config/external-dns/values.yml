@@ -1,8 +1,0 @@
-provider: aws
-aws:
-  zoneType: public
-  region: us-east-2
-txtOwnerId: ZALG0R77HP448
-replicas: 1
-rbac:
-  create: true
