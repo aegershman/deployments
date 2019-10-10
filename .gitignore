@@ -9,5 +9,3 @@
 *.tfvars
 
 .DS_Store
-.credentials.yml
-secrets.yaml.dec
