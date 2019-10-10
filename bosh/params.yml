@@ -1,8 +1,0 @@
-bbl_aws_access_key_id: ~
-bbl_aws_secret_access_key: ~
-bbl_lbs_certificate: ~
-bbl_lbs_private_key: ~
-bbl_lbs_ca: ~
-
-relint_envs_username: ~
-relint_envs_password: ~
