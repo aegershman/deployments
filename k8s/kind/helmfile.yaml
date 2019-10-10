@@ -2,17 +2,14 @@ helmDefaults:
   kubeContext: kubernetes-admin@kind
 
 repositories:
-- name: stable
-  url: https://kubernetes-charts.storage.googleapis.com
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
 
 releases:
-
-  ## https://mauilion.dev/posts/kind-metallb/
-- name: nginx-ingress
-  namespace: nginx-ingress
-  chart: stable/nginx-ingress
-  installed: true
-  atomic: true
-  version: ~1.x.x
-  values:
-  - config/nginx-ingress/values.yml
+  - name: nginx-ingress
+    namespace: nginx-ingress
+    chart: stable/nginx-ingress
+    installed: true
+    version: ~1.x.x
+    values:
+      - config/nginx-ingress/values.yml
