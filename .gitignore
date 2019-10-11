@@ -9,3 +9,5 @@
 *.tfvars
 
 .DS_Store
+
+bosh/gershman-io/.envrc
