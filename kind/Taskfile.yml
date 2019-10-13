@@ -35,3 +35,26 @@ tasks:
   sync:
     cmds:
       - helmfile sync
+
+  enc:
+    cmds:
+      - sops --encrypt --input-type dotenv .envrc > .envrc.enc
+
+  dec:
+    cmds:
+      - sops --decrypt --output-type dotenv .envrc.enc > .envrc
+
+  clusterapi:
+    # https://blog.scottlowe.org/2019/08/27/bootstrapping-a-kubernetes-cluster-on-aws-with-clusterapi/
+    cmds:
+      - kubectl apply -f bootstrap/cluster-api-components.yml
+      - kubectl apply -f bootstrap/bootstrap-components.yml
+      - |
+        export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm alpha bootstrap encode-aws-credentials)
+        cat bootstrap/infrastructure-components.yml | envsubst | kubectl apply -f -
+
+  clusterapply:
+    cmds:
+      - kubectl apply -f bootstrap/cluster.yaml
+      - kubectl apply -f bootstrap/controlplane.yaml
+      - kubectl apply -f bootstrap/machinedeployment.yaml

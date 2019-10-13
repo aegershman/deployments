@@ -1,5 +1,7 @@
+bin
 .DS_Store
-*.enc
+*.dec
+.envrc
 
 # Local .terraform directories
 **/.terraform/*
