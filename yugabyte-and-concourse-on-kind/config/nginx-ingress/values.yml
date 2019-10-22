@@ -1,0 +1,5 @@
+controller:
+  replicaCount: 1
+  hostNetwork: true
+  service:
+    type: NodePort
