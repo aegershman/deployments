@@ -4,14 +4,12 @@ helmDefaults:
 repositories:
   - name: stable
     url: https://kubernetes-charts.storage.googleapis.com
-  - name: yugabytedb
-    url: https://charts.yugabyte.com
 
 releases:
   - name: concourse
     namespace: concourse
     chart: stable/concourse
-    installed: false
+    installed: true
     version: ~8.x.x
     values:
       - config/concourse/values.yml
@@ -23,11 +21,3 @@ releases:
     version: ~1.x.x
     values:
       - config/nginx-ingress/values.yml
-
-  - name: yugabyte
-    namespace: yugabyte
-    chart: yugabytedb/yugabyte
-    installed: false
-    version: ~2.0.x
-    values:
-      - config/yugabyte/values.yml

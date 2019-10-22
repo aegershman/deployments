@@ -7,7 +7,7 @@
 # but it's localhost so pfft
 #
 postgresql:
-  enabled: false
+  enabled: true
 
 persistence:
   enabled: false
@@ -35,13 +35,4 @@ concourse:
     kubernetes:
       enabled: false
     enableLidar: true
-    postgres:
-      host: yb-tserver-0.yb-tservers.yugabyte.svc.cluster.local
-      sslmode: disable
-      database: postgres
-      port: 5433
     logLevel: debug
-
-secrets:
-  postgresUser: postgres
-  postgresPassword: postgres
