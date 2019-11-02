@@ -1,5 +1,7 @@
 controller:
   replicaCount: 1
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
   config:
     proxy-buffer-size: 16k
     proxy-body-size: 64m
