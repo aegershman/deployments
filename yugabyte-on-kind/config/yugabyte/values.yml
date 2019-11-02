@@ -1,5 +1,5 @@
-Image:
-  tag: 2.0.1.0-b19
+# Image:
+#   tag: 2.0.1.0-b19
 
 storage:
   master:
