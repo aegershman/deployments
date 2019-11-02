@@ -1,5 +1,3 @@
-# just trying it out
-
 # export KUBECONFIG="$(kind get kubeconfig-path)"
 
 version: "2"

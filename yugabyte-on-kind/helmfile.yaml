@@ -7,7 +7,6 @@ repositories:
   - name: yugabytedb
     url: https://charts.yugabyte.com
 
-
 releases:
   - name: concourse
     namespace: concourse
