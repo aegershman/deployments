@@ -24,7 +24,7 @@ releases:
   - name: nginx-ingress
     namespace: nginx-ingress
     chart: stable/nginx-ingress
-    installed: false
+    installed: true
     version: ~1.x.x
     values:
       - config/nginx-ingress/values.yml
@@ -32,7 +32,7 @@ releases:
   - name: stratos
     namespace: stratos
     chart: stratos/console
-    installed: false
+    installed: true
     version: ~2.6.x
     values:
       - config/stratos/values.yml
