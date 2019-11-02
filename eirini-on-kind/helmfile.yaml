@@ -39,7 +39,7 @@ releases:
 
   - name: uaa
     namespace: uaa
-    chart: eirini/uaa
+    chart: local-charts/uaa #eirini/uaa TODO move back to upstream once fixed
     installed: true
     version: ~2.18.x
     values:
