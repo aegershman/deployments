@@ -1,4 +1,5 @@
 console:
+  migrateVolumes: false
   service:
     ingress:
       enabled: true
