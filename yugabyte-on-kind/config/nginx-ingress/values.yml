@@ -1,5 +1,9 @@
 controller:
   replicaCount: 1
   hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
   service:
     type: NodePort
+
+defaultBackend:
+  enabled: false
