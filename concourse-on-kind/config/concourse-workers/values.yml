@@ -17,3 +17,6 @@ concourse:
     ephemeral: true
     baggageclaim:
       driver: overlay
+    tsa:
+      hosts:
+        - concourse-web-web.concourse-web.svc.cluster.local:2222

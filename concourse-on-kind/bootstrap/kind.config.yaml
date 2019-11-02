@@ -1,5 +1,3 @@
-# https://projectcontour.io/kindly-running-contour/
-# https://banzaicloud.com/blog/kind-ingress/
 ---
 kind: Cluster
 apiVersion: kind.sigs.k8s.io/v1alpha3
