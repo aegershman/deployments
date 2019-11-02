@@ -1,0 +1,19 @@
+postgresql:
+  enabled: false
+
+persistence:
+  enabled: false
+
+worker:
+  enabled: true
+  replicas: 1
+  emptyDirSize: 256M
+
+web:
+  enabled: false
+
+concourse:
+  worker:
+    ephemeral: true
+    baggageclaim:
+      driver: overlay

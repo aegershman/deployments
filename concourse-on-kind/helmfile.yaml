@@ -6,13 +6,21 @@ repositories:
     url: https://kubernetes-charts.storage.googleapis.com
 
 releases:
-  - name: concourse
-    namespace: concourse
+  - name: concourse-web
+    namespace: concourse-web
     chart: stable/concourse
     installed: true
     version: ~8.x.x
     values:
-      - config/concourse/values.yml
+      - config/concourse-web/values.yml
+
+  - name: concourse-workers
+    namespace: concourse-workers
+    chart: stable/concourse
+    installed: true
+    version: ~8.x.x
+    values:
+      - config/concourse-workers/values.yml
 
   - name: nginx-ingress
     namespace: nginx-ingress
