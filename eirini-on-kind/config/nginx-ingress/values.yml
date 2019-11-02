@@ -3,7 +3,7 @@ controller:
   hostNetwork: true
   dnsPolicy: ClusterFirstWithHostNet
   service:
-    type: NodePort
+    type: ClusterIP
   config:
     proxy-buffer-size: 16k
     proxy-body-size: 64m
