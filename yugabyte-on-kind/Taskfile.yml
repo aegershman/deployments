@@ -7,18 +7,16 @@ env:
     sh: kind get kubeconfig-path
 
 tasks:
-  create:
+  create-kind:
     cmds:
       - kind create cluster --config bootstrap/kind.config.yaml
-      - task: bootstrap
-      - task: sync
 
-  bootstrap:
+  bootstrap-kind:
     cmds:
       - kubectl apply -f bootstrap/rbac-tiller.yml
       - helm init --service-account tiller --upgrade --wait
 
-  delete:
+  delete-kind:
     cmds:
       - kind delete cluster
       - docker system prune --all --volumes --force
