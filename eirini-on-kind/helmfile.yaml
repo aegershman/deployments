@@ -23,7 +23,7 @@ releases:
     namespace: nginx-ingress
     chart: stable/nginx-ingress
     installed: false
-    version: ~1.10.x
+    version: ~1.x.x
     values:
       - config/nginx-ingress/values.yml
 
