@@ -1,0 +1,22 @@
+postgresql:
+  enabled: false
+
+persistence:
+  enabled: false
+
+worker:
+  enabled: true
+  replicas: 1
+  emptyDirSize: 256M
+
+web:
+  enabled: false
+
+concourse:
+  worker:
+    ephemeral: true
+    baggageclaim:
+      driver: overlay
+    tsa:
+      hosts:
+        - concourse-web-web.concourse-web.svc.cluster.local:2222

@@ -1,0 +1,21 @@
+postgresql:
+  enabled: true
+
+worker:
+  enabled: false
+
+web:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - concourse.127.0.0.1.xip.io
+
+concourse:
+  web:
+    clusterName: localhost
+    externalUrl: http://concourse.127.0.0.1.xip.io:8080
+    kubernetes:
+      enabled: false
