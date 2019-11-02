@@ -8,14 +8,6 @@ repositories:
     url: https://charts.yugabyte.com
 
 releases:
-  - name: concourse
-    namespace: concourse
-    chart: stable/concourse
-    installed: true
-    version: ~8.x.x
-    values:
-      - config/concourse/values.yml
-
   - name: nginx-ingress
     namespace: nginx-ingress
     chart: stable/nginx-ingress

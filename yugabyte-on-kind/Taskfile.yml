@@ -23,13 +23,6 @@ tasks:
       - kind delete cluster
       - docker system prune --all --volumes --force
 
-  fly:
-    cmds:
-      - fly -t localhost login -c http://concourse.127.0.0.1.nip.io -u test -p test -n main -k
-      - fly -t localhost sync
-      - fly -t localhost sp -p basic -c bootstrap/basic-pipeline.yml -n
-      - fly -t localhost unpause-pipeline -p basic
-
   sync:
     cmds:
       - helmfile sync
