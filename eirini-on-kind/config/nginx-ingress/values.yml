@@ -8,6 +8,9 @@ controller:
     proxy-buffer-size: 16k
     proxy-body-size: 64m
 
+defaultBackend:
+  enabled: false
+
 tcp:
   # 20000: scf/tcp-router-tcp-router-public:20000
   # 20001: scf/tcp-router-tcp-router-public:20001
