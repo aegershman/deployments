@@ -24,7 +24,7 @@ releases:
   - name: nginx-ingress
     namespace: nginx-ingress
     chart: stable/nginx-ingress
-    installed: true
+    installed: false
     version: ~1.x.x
     values:
       - config/nginx-ingress/values.yml
@@ -32,7 +32,7 @@ releases:
   - name: stratos
     namespace: stratos
     chart: stratos/console
-    installed: true
+    installed: false
     version: ~2.6.x
     values:
       - config/stratos/values.yml
@@ -40,8 +40,8 @@ releases:
   - name: uaa
     namespace: uaa
     chart: eirini/uaa
-    installed: false
-    version: ~2.16.x
+    installed: true
+    version: ~2.18.x
     values:
       - config/uaa/values.yml
     secrets:
