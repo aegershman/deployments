@@ -1,5 +1,5 @@
-# Image:
-#   tag: 2.0.1.0-b19
+Image:
+  tag: 2.0.1.0-b19
 
 storage:
   master:
@@ -30,7 +30,15 @@ disableYsql: False
 
 serviceEndpoints:
   - name: "yb-master-ui"
-    type: NodePort
+    type: ClusterIP
     app: "yb-master"
     ports:
       ui: "7000"
+
+  - name: "yb-tserver-service"
+    type: ClusterIP
+    app: "yb-tserver"
+    ports:
+      yql-port: "9042"
+      yedis-port: "6379"
+      ysql-port: "5433"
