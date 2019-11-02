@@ -1,0 +1,44 @@
+helmDefaults:
+  kubeContext: kubernetes-admin@kind
+
+repositories:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
+  - name: suse
+    url: https://kubernetes-charts.suse.com
+  - name: stratos-ui
+    url: https://cloudfoundry-incubator.github.io/stratos
+
+releases:
+  - name: cf
+    namespace: cf
+    chart: suse/cf
+    installed: false
+    version: ~2.16.x
+    values:
+      - config/cf/sizing.yml
+      - config/cf/values.yml
+
+  - name: nginx-ingress
+    namespace: nginx-ingress
+    chart: stable/nginx-ingress
+    installed: false
+    version: ~1.10.x
+    values:
+      - config/nginx-ingress/values.yml
+
+  - name: stratos
+    namespace: stratos
+    chart: stratos-ui/console
+    installed: false
+    version: ~2.4.x
+    values:
+      - config/stratos/values.yml
+
+  - name: uaa
+    namespace: uaa
+    chart: suse/uaa
+    installed: false
+    version: ~2.16.x
+    values:
+      - config/uaa/values.yml

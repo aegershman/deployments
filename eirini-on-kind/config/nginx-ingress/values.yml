@@ -1,0 +1,20 @@
+controller:
+  replicaCount: 1
+  config:
+    proxy-buffer-size: 16k
+    proxy-body-size: 64m
+  service:
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb
+
+tcp:
+  # 20000: scf/tcp-router-tcp-router-public:20000
+  # 20001: scf/tcp-router-tcp-router-public:20001
+  # 20002: scf/tcp-router-tcp-router-public:20002
+  # 20003: scf/tcp-router-tcp-router-public:20003
+  # 20004: scf/tcp-router-tcp-router-public:20004
+  # 20005: scf/tcp-router-tcp-router-public:20005
+  # 20006: scf/tcp-router-tcp-router-public:20006
+  # 20007: scf/tcp-router-tcp-router-public:20007
+  # 20008: scf/tcp-router-tcp-router-public:20008
+  2222: scf/diego-ssh-ssh-proxy-public:2222
