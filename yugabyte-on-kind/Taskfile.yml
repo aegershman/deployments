@@ -1,5 +1,3 @@
-# just trying it out
-
 # export KUBECONFIG="$(kind get kubeconfig-path)"
 
 version: "2"
@@ -9,29 +7,28 @@ env:
     sh: kind get kubeconfig-path
 
 tasks:
-  create:
+  create-kind:
     cmds:
       - kind create cluster --config bootstrap/kind.config.yaml
-      - task: bootstrap
-      - task: sync
 
-  bootstrap:
+  bootstrap-kind:
     cmds:
       - kubectl apply -f bootstrap/rbac-tiller.yml
       - helm init --service-account tiller --upgrade --wait
 
-  delete:
+  delete-kind:
     cmds:
       - kind delete cluster
       - docker system prune --all --volumes --force
 
-  fly:
-    cmds:
-      - fly -t localhost login -c http://concourse.127.0.0.1.nip.io -u test -p test -n main -k
-      - fly -t localhost sync
-      - fly -t localhost sp -p basic -c bootstrap/basic-pipeline.yml -n
-      - fly -t localhost unpause-pipeline -p basic
-
   sync:
     cmds:
       - helmfile sync
+
+  forward-master-ui:
+    cmds:
+      - kubectl -n yugabyte port-forward svc/yb-master-ui 7000:7000
+
+  forward-tserver-service:
+    cmds:
+      - kubectl -n yugabyte port-forward svc/yb-tserver-service 9042:9042 6379:6379 5433:5433

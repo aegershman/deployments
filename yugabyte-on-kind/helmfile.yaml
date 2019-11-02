@@ -1,0 +1,15 @@
+helmDefaults:
+  kubeContext: kubernetes-admin@kind
+
+repositories:
+  - name: yugabytedb
+    url: https://charts.yugabyte.com
+
+releases:
+  - name: yugabyte
+    namespace: yugabyte
+    chart: yugabytedb/yugabyte
+    installed: true
+    version: ~2.0.x
+    values:
+      - config/yugabyte/values.yml

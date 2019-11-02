@@ -30,7 +30,15 @@ disableYsql: False
 
 serviceEndpoints:
   - name: "yb-master-ui"
-    type: NodePort
+    type: ClusterIP
     app: "yb-master"
     ports:
       ui: "7000"
+
+  - name: "yb-tserver-service"
+    type: ClusterIP
+    app: "yb-tserver"
+    ports:
+      yql-port: "9042"
+      yedis-port: "6379"
+      ysql-port: "5433"
