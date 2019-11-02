@@ -2,8 +2,6 @@ helmDefaults:
   kubeContext: kubernetes-admin@kind
 
 repositories:
-  - name: stable
-    url: https://kubernetes-charts.storage.googleapis.com
   - name: yugabytedb
     url: https://charts.yugabyte.com
 
