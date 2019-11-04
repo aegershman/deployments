@@ -7,11 +7,12 @@ kube:
 
 services:
   loadbalanced: false
-  ingress:
-    enabled: true
-    tls:
-      crt: ~
-      key: ~
+
+ingress:
+  enabled: true
+  tls:
+    crt: ~
+    key: ~
 
 env:
   DOMAIN: eirini.127.0.0.1.xip.io
