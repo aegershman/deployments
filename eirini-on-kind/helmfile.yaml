@@ -13,7 +13,7 @@ releases:
   - name: cf
     namespace: cf
     chart: eirini/cf
-    installed: false
+    installed: true
     version: ~2.16.x
     values:
       - config/cf/values.yml
@@ -40,7 +40,7 @@ releases:
   - name: uaa
     namespace: uaa
     chart: local-charts/uaa #eirini/uaa TODO move back to upstream once fixed
-    installed: true
+    installed: false
     version: ~2.18.x
     values:
       - config/uaa/values.yml
