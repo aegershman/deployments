@@ -12,7 +12,7 @@ repositories:
 releases:
   - name: cf
     namespace: cf
-    chart: eirini/cf
+    chart: local-charts/cf #eirini/cf TODO move back to upstream once fixed
     installed: true
     version: ~2.16.x
     values:
