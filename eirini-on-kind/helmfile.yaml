@@ -4,20 +4,22 @@ helmDefaults:
 repositories:
   - name: stable
     url: https://kubernetes-charts.storage.googleapis.com
-  - name: suse
-    url: https://kubernetes-charts.suse.com
-  - name: stratos-ui
-    url: https://cloudfoundry-incubator.github.io/stratos
+  - name: eirini
+    url: https://cloudfoundry-incubator.github.io/eirini-release
+  - name: stratos
+    url: https://cloudfoundry.github.io/stratos
 
 releases:
   - name: cf
     namespace: cf
-    chart: suse/cf
-    installed: false
+    chart: local-charts/cf #eirini/cf TODO move back to upstream once fixed
+    installed: true
     version: ~2.16.x
     values:
-      - config/cf/sizing.yml
       - config/cf/values.yml
+      - config/cf/sizing.yml
+    secrets:
+      - config/cf/secrets.yaml
 
   - name: nginx-ingress
     namespace: nginx-ingress
@@ -29,16 +31,18 @@ releases:
 
   - name: stratos
     namespace: stratos
-    chart: stratos-ui/console
+    chart: stratos/console
     installed: false
-    version: ~2.4.x
+    version: ~2.6.x
     values:
       - config/stratos/values.yml
 
   - name: uaa
     namespace: uaa
-    chart: suse/uaa
+    chart: local-charts/uaa #eirini/uaa TODO move back to upstream once fixed
     installed: false
-    version: ~2.16.x
+    version: ~2.18.x
     values:
       - config/uaa/values.yml
+    secrets:
+      - config/uaa/secrets.yaml
