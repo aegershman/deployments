@@ -1,6 +1,6 @@
 sizing:
   api_group:
-    count: 2
+    count: 1
   blobstore:
     # can't scale count, but can scale size
     cpu:
@@ -8,38 +8,38 @@ sizing:
     memory:
       request: 5_000 # Unit [MiB]
   cc_clock:
-    count: 2
+    count: 1
   cc_uploader:
-    count: 2
+    count: 1
   cc_worker:
-    count: 2
+    count: 1
   cf_usb:
-    count: 2
+    count: 1
   credhub_user:
     count: 0 # apparently a little experimental?
   diego_api:
-    count: 3
+    count: 1
   diego_brain:
-    count: 2
+    count: 1
   diego_cell:
-    count: 3
+    count: 1
   diego_ssh:
-    count: 2
+    count: 1
   doppler:
-    count: 2
+    count: 1
   log_api:
-    count: 2
+    count: 1
   mysql:
-    count: 2
+    count: 1
   nats:
-    count: 2
+    count: 1
   nfs_broker:
-    count: 2
+    count: 1
   router:
-    count: 2
+    count: 1
   routing_api:
-    count: 2
+    count: 1
   syslog_scheduler:
-    count: 2
+    count: 1
   tcp_router:
-    count: 2
+    count: 1
