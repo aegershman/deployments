@@ -1,3 +1,18 @@
+####################
+### WALL OF TODO ###
+bits:
+  useExistingSecret: true
+  ingress:
+    endpoint: eirini.127.0.0.1.xip.io
+    use: true
+  secrets:
+    BITS_SERVICE_SECRET: xyzabc
+
+eirini:
+  opi:
+    use_registry_ingress: true
+####################
+
 kube:
   auth: "rbac"
 
