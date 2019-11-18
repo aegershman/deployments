@@ -12,3 +12,6 @@ bin
 
 # .tfvars files
 *.tfvars
+
+creds.yml
+state.json
