@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIR_PREFIX="~/projects/deployments/bosh-lite"
+DIR_PREFIX="/Users/aarongershman/projects/deployments/bosh-lite"
 
 bosh create-env ${DIR_PREFIX}/bosh-deployment/bosh.yml \
   --state ./state.json \
