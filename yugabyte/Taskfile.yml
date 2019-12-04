@@ -1,30 +1,6 @@
-# export KUBECONFIG="$(kind get kubeconfig-path)"
-
 version: "2"
 
-env:
-  KUBECONFIG:
-    sh: kind get kubeconfig-path
-
 tasks:
-  create-kind:
-    cmds:
-      - kind create cluster --config bootstrap/kind.config.yaml
-
-  bootstrap-kind:
-    cmds:
-      - kubectl apply -f bootstrap/rbac-tiller.yml
-      - helm init --service-account tiller --upgrade --wait
-
-  delete-kind:
-    cmds:
-      - kind delete cluster
-      - docker system prune --all --volumes --force
-
-  sync:
-    cmds:
-      - helmfile sync
-
   forward-master-ui:
     cmds:
       - kubectl -n yugabyte port-forward svc/yb-master-ui 7000:7000
@@ -32,3 +8,15 @@ tasks:
   forward-tserver-service:
     cmds:
       - kubectl -n yugabyte port-forward svc/yb-tserver-service 9042:9042 6379:6379 5433:5433
+
+  logs-master:
+    cmds:
+      - kubectl -n yugabyte logs -f -lapp=yb-master
+
+  logs-tservers:
+    cmds:
+      - kubectl -n yugabyte logs -f -lapp=yb-tserver
+
+  logs-all:
+    cmds:
+      - kubectl -n yugabyte logs -f -lchart=yugabyte --max-log-requests=10
