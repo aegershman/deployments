@@ -22,3 +22,11 @@ releases:
     installed: true
     values:
       - config/kubecf/values.yml
+
+  - name: nginx
+    namespace: kubecfl
+    chart: stable/nginx-ingress
+    installed: true
+    version: ~1.x.x
+    values:
+      - config/nginx/values.yml
