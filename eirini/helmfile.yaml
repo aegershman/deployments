@@ -46,5 +46,6 @@ releases:
     version: ~2.19.x
     values:
       - config/uaa/values.yml
+      - config/uaa/sizing.yml
     secrets:
       - config/uaa/secrets.yaml

@@ -1,0 +1,4 @@
+sizing:
+  mysql:
+    disk_sizes:
+      mysql_data: 6
