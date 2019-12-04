@@ -1,4 +1,0 @@
-uaa-mysql-proxy:b5894215a07f91c97a85d8ee3425c9ab04440799
-uaa-mysql:9a2f4e2b41e4e750b3ca51c26e481fb08168bb2d
-uaa-secret-generation:2080273e710c93c192188fd2bcc1aa35121fb12c
-uaa-uaa:8fb9cbf2ab5b0dbe580259a83c45c6ad539ed20c

@@ -4,17 +4,19 @@ helmDefaults:
 repositories:
   - name: stable
     url: https://kubernetes-charts.storage.googleapis.com
-  - name: eirini
-    url: https://cloudfoundry-incubator.github.io/eirini-release
+  # - name: eirini
+  #   url: https://cloudfoundry-incubator.github.io/eirini-release
+  - name: suse
+    url: https://kubernetes-charts.suse.com
   - name: stratos
     url: https://cloudfoundry.github.io/stratos
 
 releases:
   - name: cf
     namespace: eirini
-    chart: local-charts/cf #eirini/cf TODO move back to upstream once fixed
+    chart: suse/cf
     installed: false
-    version: ~2.16.x
+    version: ~2.19.x
     values:
       - config/cf/values.yml
       - config/cf/sizing.yml
@@ -39,9 +41,9 @@ releases:
 
   - name: uaa
     namespace: eirini
-    chart: local-charts/uaa #eirini/uaa TODO move back to upstream once fixed
-    installed: false
-    version: ~2.18.x
+    chart: suse/uaa
+    installed: true
+    version: ~2.19.x
     values:
       - config/uaa/values.yml
     secrets:
