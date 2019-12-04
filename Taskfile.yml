@@ -1,26 +1,11 @@
 version: "2"
 
 tasks:
-  create-kind:
+  kind-create:
     cmds:
       - kind create cluster --config bootstrap/kind.config.yaml
 
-  delete-kind:
+  kind-delete:
     cmds:
       - kind delete cluster
       - docker system prune --all --volumes --force
-
-  forward:
-    cmds:
-      - kubectl -n nginx-ingress port-forward svc/nginx-ingress-controller 8080:80
-
-  fly:
-    cmds:
-      - fly -t localhost login -c http://concourse.127.0.0.1.xip.io:8080 -u test -p test -n main -k
-      - fly -t localhost sync
-      - fly -t localhost sp -p basic -c bootstrap/basic-pipeline.yml -n
-      - fly -t localhost unpause-pipeline -p basic
-
-  sync:
-    cmds:
-      - helmfile sync
