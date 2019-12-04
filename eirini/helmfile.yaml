@@ -42,7 +42,7 @@ releases:
   - name: uaa
     namespace: eirini
     chart: suse/uaa
-    installed: true
+    installed: false
     version: ~2.19.x
     values:
       - config/uaa/values.yml
