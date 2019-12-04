@@ -11,9 +11,9 @@ repositories:
 
 releases:
   - name: cf
-    namespace: cf
+    namespace: eirini
     chart: local-charts/cf #eirini/cf TODO move back to upstream once fixed
-    installed: true
+    installed: false
     version: ~2.16.x
     values:
       - config/cf/values.yml
@@ -21,16 +21,16 @@ releases:
     secrets:
       - config/cf/secrets.yaml
 
-  - name: nginx-ingress
-    namespace: nginx-ingress
+  - name: nginx
+    namespace: eirini
     chart: stable/nginx-ingress
     installed: false
     version: ~1.x.x
     values:
-      - config/nginx-ingress/values.yml
+      - config/nginx/values.yml
 
   - name: stratos
-    namespace: stratos
+    namespace: eirini
     chart: stratos/console
     installed: false
     version: ~2.6.x
@@ -38,7 +38,7 @@ releases:
       - config/stratos/values.yml
 
   - name: uaa
-    namespace: uaa
+    namespace: eirini
     chart: local-charts/uaa #eirini/uaa TODO move back to upstream once fixed
     installed: false
     version: ~2.18.x
