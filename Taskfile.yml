@@ -1,20 +1,9 @@
-# export KUBECONFIG="$(kind get kubeconfig-path)"
-
 version: "2"
-
-env:
-  KUBECONFIG:
-    sh: kind get kubeconfig-path
 
 tasks:
   create-kind:
     cmds:
       - kind create cluster --config bootstrap/kind.config.yaml
-
-  bootstrap-kind:
-    cmds:
-      - kubectl apply -f bootstrap/rbac-tiller.yml
-      - helm init --service-account tiller --upgrade --wait
 
   delete-kind:
     cmds:
