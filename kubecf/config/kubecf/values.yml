@@ -1,0 +1,9 @@
+---
+system_domain: kubecf.127.0.0.1.xip.io
+features:
+  eirini:
+    enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
