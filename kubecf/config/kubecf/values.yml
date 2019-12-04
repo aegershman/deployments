@@ -1,6 +1,7 @@
 ---
 system_domain: kubecf.127.0.0.1.xip.io
 features:
-  eirini: true
+  eirini:
+    enabled: true
   ingress:
     enabled: true
