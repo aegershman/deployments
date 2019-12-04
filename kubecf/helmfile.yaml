@@ -24,7 +24,7 @@ releases:
       - config/kubecf/values.yml
 
   - name: nginx
-    namespace: kubecfl
+    namespace: kubecf
     chart: stable/nginx-ingress
     installed: true
     version: ~1.x.x
