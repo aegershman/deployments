@@ -1,3 +1,0 @@
-[submodule "bosh-lite/bosh-deployment"]
-	path = bosh-lite/bosh-deployment
-	url = git@github.com:cloudfoundry/bosh-deployment.git
