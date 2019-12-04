@@ -1,0 +1,7 @@
+# https://github.com/kubernetes-sigs/kind/blob/master/pkg/internal/apis/config/encoding/testdata/v1alpha4/valid-many-fields.yaml
+---
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+  - role: worker

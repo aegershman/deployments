@@ -1,0 +1,11 @@
+version: "2"
+
+tasks:
+  kind-create:
+    cmds:
+      - kind create cluster --config kind.config.yaml
+
+  kind-delete:
+    cmds:
+      - kind delete cluster
+      - docker system prune --all --volumes --force

@@ -1,0 +1,33 @@
+helmDefaults:
+  kubeContext: kind-kind
+
+repositories:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com/
+  - name: concourse
+    url: https://concourse-charts.storage.googleapis.com/
+
+releases:
+  - name: web
+    namespace: concourse
+    chart: concourse/concourse
+    installed: true
+    version: ~8.x.x
+    values:
+      - config/web/values.yml
+
+  - name: workers
+    namespace: concourse
+    chart: concourse/concourse
+    installed: true
+    version: ~8.x.x
+    values:
+      - config/workers/values.yml
+
+  - name: nginx
+    namespace: concourse
+    chart: stable/nginx-ingress
+    installed: true
+    version: ~1.x.x
+    values:
+      - config/nginx/values.yml

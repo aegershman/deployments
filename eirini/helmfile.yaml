@@ -1,0 +1,51 @@
+helmDefaults:
+  kubeContext: kind-kind
+
+repositories:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
+  # - name: eirini
+  #   url: https://cloudfoundry-incubator.github.io/eirini-release
+  - name: suse
+    url: https://kubernetes-charts.suse.com
+  - name: stratos
+    url: https://cloudfoundry.github.io/stratos
+
+releases:
+  - name: cf
+    namespace: eirini
+    chart: suse/cf
+    installed: false
+    version: ~2.19.x
+    values:
+      - config/cf/values.yml
+      - config/cf/sizing.yml
+    secrets:
+      - config/cf/secrets.yaml
+
+  - name: nginx
+    namespace: eirini
+    chart: stable/nginx-ingress
+    installed: false
+    version: ~1.x.x
+    values:
+      - config/nginx/values.yml
+
+  - name: stratos
+    namespace: eirini
+    chart: stratos/console
+    installed: false
+    version: ~2.6.x
+    values:
+      - config/stratos/values.yml
+
+  - name: uaa
+    namespace: eirini
+    chart: suse/uaa
+    installed: false
+    version: ~2.19.x
+    values:
+      - config/uaa/values.yml
+      - config/uaa/sizing.yml
+    secrets:
+      - config/uaa/secrets.yaml
