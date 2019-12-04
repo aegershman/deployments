@@ -9,7 +9,7 @@ repositories: []
 # https://github.com/SUSE/kubecf/blob/master/doc/dev/minikube.md
 releases:
   - name: cf-operator
-    namespace: cf-operator
+    namespace: kubecf
     chart: https://s3.amazonaws.com/cf-operators/release/helm-charts/cf-operator-v0.4.2%2B0.g604925f0.tgz
     installed: true
     values:
