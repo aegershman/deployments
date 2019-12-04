@@ -1,5 +1,5 @@
 helmDefaults:
-  kubeContext: kubernetes-admin@kind
+  kubeContext: kind-kind
 
 repositories:
   - name: yugabytedb
@@ -10,6 +10,6 @@ releases:
     namespace: yugabyte
     chart: yugabytedb/yugabyte
     installed: true
-    version: ~2.0.x
+    version: 2.0.5
     values:
       - config/yugabyte/values.yml
