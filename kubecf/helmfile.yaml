@@ -14,3 +14,10 @@ releases:
     installed: true
     values:
       - config/cf-operator/values.yml
+
+  - name: kubecf
+    namespace: kubecf
+    chart: https://scf-v3.s3.amazonaws.com/scf-3.0.0-82165ef3.tgz
+    installed: true
+    values:
+      - config/kubecf/values.yml
