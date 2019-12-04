@@ -1,5 +1,5 @@
 helmDefaults:
-  kubeContext: kubernetes-admin@kind
+  kubeContext: kind-kind
 
 repositories:
   - name: stable
