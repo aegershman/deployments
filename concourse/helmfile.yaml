@@ -2,6 +2,8 @@ helmDefaults:
   kubeContext: kind-kind
 
 repositories:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com/
   - name: concourse
     url: https://concourse-charts.storage.googleapis.com/
 
