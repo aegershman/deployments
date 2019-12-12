@@ -17,6 +17,6 @@ web:
 concourse:
   web:
     clusterName: localhost
-    externalUrl: http://concourse.127.0.0.1.xip.io:8080
+    externalUrl: http://concourse.127.0.0.1.xip.io
     kubernetes:
       enabled: false
