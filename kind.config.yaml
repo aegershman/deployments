@@ -11,3 +11,12 @@ nodes:
         hostPort: 80
       - containerPort: 32443
         hostPort: 443
+      # for use with yugabyte
+      - containerPort: 7000
+        hostPort: 7000
+      - containerPort: 9042
+        hostPort: 9042
+      - containerPort: 6379
+        hostPort: 6379
+      - containerPort: 5433
+        hostPort: 5433
