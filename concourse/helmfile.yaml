@@ -11,17 +11,19 @@ repositories:
 releases:
   - name: web
     namespace: concourse
-    chart: concourse/concourse
+    chart: stable/concourse
+    # chart: concourse/concourse
     installed: true
-    version: ~8.5.x
+    version: ~8.2.x
     values:
       - config/web/values.yml
 
   - name: workers
     namespace: concourse
-    chart: concourse/concourse
+    chart: stable/concourse
+    # chart: concourse/concourse
     installed: true
-    version: ~8.5.x
+    version: ~8.2.x
     values:
       - config/workers/values.yml
 
