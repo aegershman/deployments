@@ -1,7 +1,13 @@
 # https://github.com/kubernetes-sigs/kind/blob/master/pkg/internal/apis/config/encoding/testdata/v1alpha4/valid-many-fields.yaml
+# https://github.com/kubernetes-sigs/kind/pull/637
 ---
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
-  - role: control-plane
   - role: worker
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 32080
+        hostPort: 32080
+      - containerPort: 32443
+        hostPort: 32443

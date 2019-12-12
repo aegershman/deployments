@@ -1,3 +1,4 @@
+---
 helmDefaults:
   kubeContext: kind-kind
 
@@ -12,7 +13,7 @@ releases:
     namespace: concourse
     chart: concourse/concourse
     installed: true
-    version: ~8.x.x
+    version: ~8.5.x
     values:
       - config/web/values.yml
 
@@ -20,7 +21,7 @@ releases:
     namespace: concourse
     chart: concourse/concourse
     installed: true
-    version: ~8.x.x
+    version: ~8.5.x
     values:
       - config/workers/values.yml
 
