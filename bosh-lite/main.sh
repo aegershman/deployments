@@ -4,8 +4,8 @@ set -e
 
 case "$1" in
 c | create)
-  DEPLOY_DIR="bosh-deployment"
-  STATE_DIR="state"
+  DEPLOY_DIR="vendor/bosh-deployment"
+  STATE_DIR="vendor/state"
 
   bosh create-env ${DEPLOY_DIR}/bosh.yml \
     --state ${STATE_DIR}/state.json \

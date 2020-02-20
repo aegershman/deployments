@@ -6,6 +6,6 @@ directories:
       sha: 64326e12ab4f605415e27d1b6b6db7bf8f6d868b
     path: bosh-deployment
   - manual: {}
-    path: workspace
+    path: state
   path: vendor
 kind: LockConfig
