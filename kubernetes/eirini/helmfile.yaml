@@ -1,3 +1,4 @@
+---
 helmDefaults:
   kubeContext: kind-kind
 
@@ -13,7 +14,6 @@ repositories:
 
 releases:
   - name: cf
-    namespace: eirini
     chart: suse/cf
     installed: false
     version: ~2.19.x
@@ -24,7 +24,6 @@ releases:
       - config/cf/secrets.yaml
 
   - name: nginx
-    namespace: eirini
     chart: stable/nginx-ingress
     installed: false
     version: ~1.x.x
@@ -32,7 +31,6 @@ releases:
       - config/nginx/values.yml
 
   - name: stratos
-    namespace: eirini
     chart: stratos/console
     installed: false
     version: ~2.6.x
@@ -40,7 +38,6 @@ releases:
       - config/stratos/values.yml
 
   - name: uaa
-    namespace: eirini
     chart: suse/uaa
     installed: false
     version: ~2.19.x
