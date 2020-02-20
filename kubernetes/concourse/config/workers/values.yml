@@ -6,21 +6,22 @@ postgresql:
   enabled: false
 
 persistence:
-  enabled: false
+  enabled: true
+  worker:
+    size: 2Gi
+    storageClass: standard
 
 worker:
   enabled: true
   replicas: 1
-  emptyDirSize: 256M
+  # emptyDirSize: 256M
 
 web:
   enabled: false
 
 concourse:
   worker:
-    ephemeral: true
-    baggageclaim:
-      driver: overlay
+    # ephemeral: false
     tsa:
       hosts:
         - web-web.default.svc.cluster.local:2222
