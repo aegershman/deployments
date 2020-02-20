@@ -5,13 +5,13 @@ storage:
     size: 2G
     storageClass: standard
   tserver:
-    count: 1
+    count: 3
     size: 2G
     storageClass: standard
 
 replicas:
   master: 1
-  tserver: 1
+  tserver: 3
 
 resource:
   master:
