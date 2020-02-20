@@ -18,11 +18,11 @@ jobs:
             source:
               repository: busybox
           run:
-            path: bash
+            path: sh
             args:
               - -c
               - |
-                #!/usr/bin/env bash
+                #!/bin/sh
 
                 set -eu
                 echo $(date)
