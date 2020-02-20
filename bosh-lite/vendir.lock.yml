@@ -1,0 +1,9 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Bumping Stemcell gcp-ubuntu-xenial-stemcell to version 621.57
+      sha: 64326e12ab4f605415e27d1b6b6db7bf8f6d868b
+    path: bosh-deployment
+  path: vendor
+kind: LockConfig
