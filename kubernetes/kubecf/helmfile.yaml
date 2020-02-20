@@ -11,13 +11,13 @@ repositories: []
 # https://scf-v3.s3.amazonaws.com/index.html
 releases:
   - name: cf-operator
-    chart: https://cf-operators.s3.amazonaws.com/helm-charts/cf-operator-v0.4.2-199.g57bec03f.tgz
+    chart: https://s3.amazonaws.com/cf-operators/release/helm-charts/cf-operator-2.3.0%2B0.g27a91cdf.tgz
     installed: true
     values:
       - config/cf-operator/values.yml
 
   - name: kubecf
-    chart: https://scf-v3.s3.amazonaws.com/kubecf-3.0.0-4a01e41.tgz
+    chart: https://github.com/SUSE/kubecf/releases/download/v0.2.0/kubecf-0.2.0.tgz
     installed: true
     values:
       - config/kubecf/values.yml
