@@ -1,17 +1,17 @@
 ---
 storage:
   master:
-    count: 2
+    count: 1
     size: 2G
     storageClass: standard
   tserver:
-    count: 2
+    count: 1
     size: 2G
     storageClass: standard
 
 replicas:
-  master: 3
-  tserver: 3
+  master: 1
+  tserver: 1
 
 resource:
   master:
