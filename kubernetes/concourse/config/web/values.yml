@@ -1,4 +1,7 @@
 ---
+image: concourse/concourse-rc
+imageTag: 6.0.0-rc.29
+
 postgresql:
   enabled: true
 
@@ -15,9 +18,6 @@ web:
       - concourse.127.0.0.1.xip.io
 
 concourse:
-  image: concourse/concourse-rc
-  imageTag: 6.0.0-rc.11
-
   web:
     clusterName: localhost
     externalUrl: http://concourse.127.0.0.1.xip.io

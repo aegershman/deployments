@@ -1,4 +1,7 @@
 ---
+image: concourse/concourse-rc
+imageTag: 6.0.0-rc.29
+
 postgresql:
   enabled: false
 
@@ -14,9 +17,6 @@ web:
   enabled: false
 
 concourse:
-  image: concourse/concourse-rc
-  imageTag: 6.0.0-rc.11
-
   worker:
     ephemeral: true
     baggageclaim:
