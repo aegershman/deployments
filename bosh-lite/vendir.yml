@@ -1,0 +1,23 @@
+# https://bosh.io/docs/bosh-lite/
+# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
+# https://starkandwayne.com/blog/bosh-lite-on-virtualbox-with-bosh2/
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: vendor
+    contents:
+      - path: bosh-deployment
+        git:
+          url: https://github.com/cloudfoundry/bosh-deployment
+          ref: 64326e12ab4f605415e27d1b6b6db7bf8f6d868b
+        includePaths:
+          - bosh-lite-runc.yml
+          - bosh-lite.yml
+          - bosh.yml
+          - credhub.yml
+          - jumpbox-user.yml
+          - uaa.yml
+          - virtualbox/**/*
+      - path: state
+        manual: {}
