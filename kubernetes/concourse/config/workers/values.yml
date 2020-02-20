@@ -23,4 +23,4 @@ concourse:
       driver: overlay
     tsa:
       hosts:
-        - web-web.concourse.svc.cluster.local:2222
+        - web-web.default.svc.cluster.local:2222
