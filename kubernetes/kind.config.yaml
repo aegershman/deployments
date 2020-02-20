@@ -10,3 +10,16 @@ nodes:
         hostPort: 80
       - containerPort: 443
         hostPort: 443
+      ##########
+      # yugabyte
+      ##########
+      - containerPort: 7000
+        hostPort: 7000
+      - containerPort: 9000
+        hostPort: 9000
+      - containerPort: 9042
+        hostPort: 9042
+      - containerPort: 6379
+        hostPort: 6379
+      - containerPort: 5433
+        hostPort: 5433
