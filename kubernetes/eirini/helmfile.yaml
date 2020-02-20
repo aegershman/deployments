@@ -16,7 +16,7 @@ releases:
   - name: cf
     chart: suse/cf
     installed: false
-    version: ~2.19.x
+    version: ~2.20.x
     values:
       - config/cf/values.yml
       - config/cf/sizing.yml
@@ -40,7 +40,7 @@ releases:
   - name: uaa
     chart: suse/uaa
     installed: false
-    version: ~2.19.x
+    version: ~2.20.x
     values:
       - config/uaa/values.yml
       - config/uaa/sizing.yml
