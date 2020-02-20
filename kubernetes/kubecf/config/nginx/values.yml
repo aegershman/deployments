@@ -9,10 +9,9 @@ controller:
 defaultBackend:
   enabled: false
 
-# https://github.com/SUSE/kubecf/blob/master/doc/dev/general.md#installation-of-the-nginx-ingress-controller
 # https://github.com/SUSE/kubecf/blob/master/deploy/helm/kubecf/values.yaml#L101-L103
+# https://github.com/SUSE/kubecf/blob/master/doc/dev/general.md#installation-of-the-nginx-ingress-controller
 tcp:
-  2222: "kubecf/kubecf-scheduler:2222"
   20000: kubecf/kubecf-tcp-router:20000"
   20001: kubecf/kubecf-tcp-router:20001"
   20002: kubecf/kubecf-tcp-router:20002"
@@ -22,3 +21,4 @@ tcp:
   20006: kubecf/kubecf-tcp-router:20006"
   20007: kubecf/kubecf-tcp-router:20007"
   20008: kubecf/kubecf-tcp-router:20008"
+  2222: "kubecf/kubecf-scheduler:2222"

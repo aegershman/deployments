@@ -1,6 +1,0 @@
-version: "2"
-
-tasks:
-  forward:
-    cmds:
-      - kubectl -n nginx-ingress port-forward svc/nginx-ingress-controller 8080:80 4443:443

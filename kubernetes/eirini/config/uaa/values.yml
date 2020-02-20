@@ -1,3 +1,4 @@
+---
 kube:
   storage_class:
     persistent: "standard"
