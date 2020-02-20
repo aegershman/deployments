@@ -18,3 +18,5 @@ directories:
           - jumpbox-user.yml
           - uaa.yml
           - virtualbox/**/*
+      - path: state
+        manual: {}
