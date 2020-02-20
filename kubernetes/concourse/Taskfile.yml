@@ -1,0 +1,12 @@
+---
+version: "2"
+
+tasks:
+  login:
+    cmds:
+      - fly -t localhost login -c http://concourse.127.0.0.1.xip.io -u test -p test -n main -k
+      - fly -t localhost sync
+
+  set:
+    cmds:
+      - fly -t localhost sp -p demo -c demo/pipeline.yml -l demo/params.yml -n
