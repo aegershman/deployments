@@ -1,0 +1,28 @@
+---
+# resources:
+#   - name: time
+#     type: time
+#     source:
+#       interval: 30s
+
+jobs:
+  - name: make-a-change
+    plan:
+      # - get: time
+      #   trigger: true
+      - task: create-new-uuid
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: busybox
+          run:
+            path: sh
+            args:
+              - -c
+              - |
+                #!/bin/sh
+
+                set -eu
+                echo $(date)

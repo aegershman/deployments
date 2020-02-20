@@ -1,22 +1,23 @@
+---
 version: "2"
 
 tasks:
   forward-master-ui:
     cmds:
-      - kubectl -n yugabyte port-forward svc/yb-master-ui 7000:7000
+      - kubectl port-forward svc/yb-master-ui 7000:7000
 
   forward-tserver-service:
     cmds:
-      - kubectl -n yugabyte port-forward svc/yb-tserver-service 9042:9042 6379:6379 5433:5433
+      - kubectl port-forward svc/yb-tserver-service 9042:9042 6379:6379 5433:5433
 
   logs-master:
     cmds:
-      - kubectl -n yugabyte logs -f -lapp=yb-master
+      - kubectl logs -f -lapp=yb-master
 
   logs-tservers:
     cmds:
-      - kubectl -n yugabyte logs -f -lapp=yb-tserver
+      - kubectl logs -f -lapp=yb-tserver
 
   logs-all:
     cmds:
-      - kubectl -n yugabyte logs -f -lchart=yugabyte --max-log-requests=10
+      - kubectl logs -f -lchart=yugabyte --max-log-requests=10

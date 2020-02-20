@@ -1,3 +1,4 @@
+---
 helmDefaults:
   kubeContext: kind-kind
 
@@ -7,9 +8,8 @@ repositories:
 
 releases:
   - name: yugabyte
-    namespace: yugabyte
     chart: yugabytedb/yugabyte
     installed: true
-    version: 2.0.5
+    version: ~2.0.x
     values:
       - config/yugabyte/values.yml

@@ -1,4 +1,7 @@
 ---
+image: concourse/concourse-rc
+imageTag: 6.0.0-rc.29
+
 postgresql:
   enabled: true
 
