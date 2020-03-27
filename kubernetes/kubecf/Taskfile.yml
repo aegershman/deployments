@@ -42,7 +42,23 @@ tasks:
         kubectl logs -f --tail=250 deployment.apps/cf-operator
         kubectl logs -f --tail=250 deployment.apps/cf-operator-quarks-job
       - |
+        kubectl -n kubecf get all
         kubectl -n kubecf get pods
+        kubectl -n kubecf get sts
+      - | # trust me, it's kind of a fun game to follow this tree of thing-waiting-on-thing
+        kubectl -n kubecf logs -f sts/kubecf-adapter -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-api -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-bits -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-credhub -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-diego-api -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-doppler -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-eirini -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-log-api -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-nats -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-router -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-routing-api -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-singleton-blobstore -c wait-for
+        kubectl -n kubecf logs -f sts/kubecf-uaa -c wait-for
       - |
         kubectl -n kubecf logs -f --tail=250 kubecf-database-0 -c database
         kubectl -n kubecf logs -f --tail=250 kubecf-database-0 -c logs
