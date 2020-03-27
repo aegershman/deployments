@@ -26,6 +26,11 @@ tasks:
         kubectl get quarkssecrets.quarks.cloudfoundry.org
         kubectl get quarksstatefulsets.quarks.cloudfoundry.org
 
+  retrieve-cf-admin-password:
+    cmds:
+      - |
+        kubectl -n kubecf get secret kubecf.var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode
+
   logs-placeholder:
     cmds:
       # not to be actually ran as a task; just here for copy-paste-ability
