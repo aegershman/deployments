@@ -5,6 +5,10 @@ controller:
   dnsPolicy: ClusterFirstWithHostNet
   service:
     type: NodePort
+  config:
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
+    proxy-body-size: 64m
+    proxy-buffer-size: 16k
 
 defaultBackend:
   enabled: false

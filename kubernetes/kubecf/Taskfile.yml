@@ -1,16 +1,14 @@
 ---
 version: "2"
 
+# TODO this is a really clever use of bosh to generate credentials and certificates
+# https://github.com/cloudfoundry/cf-for-k8s/blob/master/hack/generate-values.sh#L75-L166
+
 tasks:
   get-kind-node-ip:
     cmds:
       - |
         kubectl get node kind-control-plane --output jsonpath='{ .status.addresses[?(@.type == "InternalIP")].address }'
-
-  docker-kind-trust-k8s-root-ca:
-    cmds:
-      - | # to be honest I'm not sure to what extent this is necessary? so far, hasn't been necessary actually
-        docker exec -it "kind-control-plane" bash -c 'cp /etc/kubernetes/pki/ca.crt /etc/ssl/certs/ && update-ca-certificates && (systemctl list-units | grep containerd > /dev/null && systemctl restart containerd)'
 
   rm-crds:
     cmds:
