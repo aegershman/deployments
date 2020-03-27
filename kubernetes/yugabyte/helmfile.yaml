@@ -10,6 +10,6 @@ releases:
   - name: yugabyte
     chart: yugabytedb/yugabyte
     installed: true
-    version: ~2.0.x
+    version: ~2.1.x
     values:
       - config/yugabyte/values.yml
