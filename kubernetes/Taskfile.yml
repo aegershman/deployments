@@ -5,6 +5,7 @@ tasks:
   kind-create:
     cmds:
       - kind create cluster --config kind.config.yaml
+      # - kind create cluster --config kind.config.yaml --image kindest/node:v1.18.0
       # - kind create cluster --config kind.config.yaml --image kindest/node:v1.16.3
 
   kind-trust-k8s-root-ca-on-docker-daemon:
