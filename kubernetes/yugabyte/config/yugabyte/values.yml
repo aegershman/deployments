@@ -1,4 +1,9 @@
 ---
+Image:
+  repository: "yugabytedb/yugabyte"
+  tag: 2.1.2.0-b10
+  pullPolicy: IfNotPresent
+
 storage:
   master:
     count: 1
@@ -9,10 +14,6 @@ storage:
     size: 2G
     storageClass: standard
 
-replicas:
-  master: 1
-  tserver: 1
-
 resource:
   master:
     requests:
@@ -22,6 +23,20 @@ resource:
     requests:
       cpu: 100m
       memory: 256Mi
+
+replicas:
+  master: 1
+  tserver: 1
+
+partition:
+  master: 0
+  tserver: 0
+
+gflags:
+  master:
+    default_memory_limit_to_ram_ratio: 0.85
+  tserver:
+    use_cassandra_authentication: False
 
 # Flag to use to disable YugaByte SQL support on tservers.
 disableYsql: False
