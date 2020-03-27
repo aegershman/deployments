@@ -7,6 +7,11 @@ tasks:
       - |
         kubectl get node kind-control-plane --output jsonpath='{ .status.addresses[?(@.type == "InternalIP")].address }'
 
+  docker-kind-trust-k8s-root-ca:
+    cmds:
+      - | # to be honest I'm not sure to what extent this is necessary? so far, hasn't been necessary actually
+        docker exec -it "kind-control-plane" bash -c 'cp /etc/kubernetes/pki/ca.crt /etc/ssl/certs/ && update-ca-certificates && (systemctl list-units | grep containerd > /dev/null && systemctl restart containerd)'
+
   rm-crds:
     cmds:
       - |
@@ -30,14 +35,6 @@ tasks:
         kubectl get quarksjobs.quarks.cloudfoundry.org
         kubectl get quarkssecrets.quarks.cloudfoundry.org
         kubectl get quarksstatefulsets.quarks.cloudfoundry.org
-
-  post-installation-validation:
-    cmds:
-      - | # check if the cf api is responding
-        cf api --skip-ssl-validation api.kubecf.127.0.0.1.xip.io
-      - | # retrieve cf admin password
-        kubectl -n kubecf get secret kubecf.var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode
-        cf auth admin PASSWORD_FROM_ABOVE
 
   logs-placeholder:
     cmds:
@@ -70,3 +67,19 @@ tasks:
       - |
         kubectl -n kubecf describe pod -lquarks.cloudfoundry.org/qjob-name=ig-kubecf
         kubectl -n kubecf logs -f -lquarks.cloudfoundry.org/qjob-name=ig-kubecf
+      - |
+        kubectl -n kubecf-eirini get pods
+
+  post-installation-validation:
+    cmds:
+      - | # check if the cf api is responding
+        cf api --skip-ssl-validation api.kubecf.127.0.0.1.xip.io
+      - | # retrieve cf admin password
+        kubectl -n kubecf get secret kubecf.var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode
+        cf auth admin $(kubectl -n kubecf get secret kubecf.var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode)
+      - | # stand yourself up a nice little spot to push some hot juicy trash (see also: me)
+        cf create-org scratch-org
+        cf create-space scratch-space -o scratch-org
+        cf target -o scratch-org -s scratch-space
+      - | # after cf push'ing apps, see them pop up in the kubecf-eirini namespace as pods
+        kubectl -n kubecf-eirini get pods

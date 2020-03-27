@@ -28,12 +28,13 @@ releases:
     installed: true
     needs:
       - cf-operator
+      - nginx
     values:
       - config/kubecf/values.yml
 
   - name: nginx
     chart: stable/nginx-ingress
-    installed: false
+    installed: true
     version: ~1.x.x
     values:
       - config/nginx/values.yml
@@ -42,7 +43,7 @@ releases:
     chart: https://github.com/cloudfoundry/stratos/releases/download/3.0.0/console-helm-chart-3.0.0-6ace0ff4a.tgz
     installed: false
     needs:
-      - kubecf
+      - kubecf/kubecf
       - nginx
     values:
       - config/stratos/values.yml
