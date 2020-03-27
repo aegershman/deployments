@@ -1,0 +1,7 @@
+---
+console:
+  migrateVolumes: false
+  service:
+    ingress:
+      enabled: true
+      host: stratos.127.0.0.1.xip.io
