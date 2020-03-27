@@ -5,7 +5,6 @@ tasks:
   kind-create:
     cmds:
       - kind create cluster --config kind.config.yaml
-      # - kind create cluster --config kind.config.yaml --image kindest/node:v1.15.6
       # - kind create cluster --config kind.config.yaml --image kindest/node:v1.16.3
 
   kind-delete:
