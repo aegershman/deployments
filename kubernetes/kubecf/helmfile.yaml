@@ -20,8 +20,8 @@ releases:
       - config/cf-operator/values.yml
 
   - name: kubecf
-    chart: https://github.com/SUSE/kubecf/releases/download/v0.2.0/kubecf-0.2.0.tgz
-    installed: false
+    chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v1.0.1/kubecf-v1.0.1.tgz
+    installed: true
     values:
       - config/kubecf/values.yml
 

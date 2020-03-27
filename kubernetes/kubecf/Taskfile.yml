@@ -13,3 +13,18 @@ tasks:
       - |
         kubectl logs -f deployment.apps/cf-operator
         kubectl logs -f deployment.apps/cf-operator-quarks-job
+
+  crds-placeholder:
+    cmds:
+      # not to be actually ran as a task; just here for copy-paste-ability
+      - exit 1
+      - |
+        kubectl get crds
+        kubectl describe boshdeployments.quarks.cloudfoundry.org
+        kubectl describe quarksjobs.quarks.cloudfoundry.org
+        kubectl describe quarkssecrets.quarks.cloudfoundry.org
+        kubectl describe quarksstatefulsets.quarks.cloudfoundry.org
+        kubectl get boshdeployments.quarks.cloudfoundry.org
+        kubectl get quarksjobs.quarks.cloudfoundry.org
+        kubectl get quarkssecrets.quarks.cloudfoundry.org
+        kubectl get quarksstatefulsets.quarks.cloudfoundry.org
