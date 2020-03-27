@@ -2,6 +2,11 @@
 version: "2"
 
 tasks:
+  get-kind-node-ip:
+    cmds:
+      - |
+        kubectl get node kind-control-plane --output jsonpath='{ .status.addresses[?(@.type == "InternalIP")].address }'
+
   rm-crds:
     cmds:
       - |
