@@ -1,7 +1,4 @@
 ---
-image: concourse/concourse-rc
-imageTag: 6.0.0-rc.29
-
 postgresql:
   enabled: false
 
@@ -14,14 +11,13 @@ persistence:
 worker:
   enabled: true
   replicas: 1
-  # emptyDirSize: 256M
 
 web:
   enabled: false
 
 concourse:
   worker:
-    # ephemeral: false
+    ephemeral: true
     tsa:
       hosts:
         - web-web.default.svc.cluster.local:2222

@@ -12,14 +12,14 @@ releases:
   - name: web
     chart: concourse/concourse
     installed: true
-    version: ~9.1.x
+    version: ~10.x.x
     values:
       - config/web/values.yml
 
   - name: workers
     chart: concourse/concourse
     installed: true
-    version: ~9.1.x
+    version: ~10.x.x
     values:
       - config/workers/values.yml
 
