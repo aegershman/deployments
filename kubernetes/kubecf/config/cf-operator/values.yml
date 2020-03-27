@@ -1,4 +1,4 @@
 ---
-global:
-  operator:
-    watchNamespace: "default"
+# global:
+#   operator:
+#     watchNamespace: default

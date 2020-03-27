@@ -21,13 +21,13 @@ releases:
 
   - name: kubecf
     chart: https://github.com/SUSE/kubecf/releases/download/v0.2.0/kubecf-0.2.0.tgz
-    installed: true
+    installed: false
     values:
       - config/kubecf/values.yml
 
   - name: nginx
     chart: stable/nginx-ingress
-    installed: true
+    installed: false
     version: ~1.x.x
     values:
       - config/nginx/values.yml
