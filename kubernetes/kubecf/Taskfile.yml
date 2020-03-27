@@ -5,3 +5,11 @@ tasks:
   rm-crds:
     cmds:
       - kubectl delete crd boshdeployments.quarks.cloudfoundry.org quarksjobs.quarks.cloudfoundry.org quarkssecrets.quarks.cloudfoundry.org quarksstatefulsets.quarks.cloudfoundry.org
+
+  logs-placeholder:
+    cmds:
+      # not to be actually ran as a task; just here for copy-paste-ability
+      - exit 1
+      - |
+        kubectl logs -f deployment.apps/cf-operator
+        kubectl logs -f deployment.apps/cf-operator-quarks-job
