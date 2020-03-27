@@ -5,6 +5,7 @@ helmDefaults:
 repositories: []
 
 # https://cf-operators.s3.amazonaws.com/helm-charts/index.html
+# https://github.com/cloudfoundry-incubator/cf-operator/blob/master/deploy/helm/cf-operator/values.yaml
 # https://github.com/cloudfoundry-incubator/cf-operator/blob/master/dev-env-kind.yaml
 # https://github.com/cloudfoundry-incubator/cf-operator/releases
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
@@ -20,8 +21,11 @@ releases:
       - config/cf-operator/values.yml
 
   - name: kubecf
+    namespace: kubecf
     chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v1.0.1/kubecf-v1.0.1.tgz
     installed: true
+    needs:
+      - cf-operator
     values:
       - config/kubecf/values.yml
 

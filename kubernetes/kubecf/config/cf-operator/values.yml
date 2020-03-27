@@ -1,4 +1,5 @@
 ---
-# global:
-#   operator:
-#     watchNamespace: default
+createWatchNamespace: true
+global:
+  operator:
+    watchNamespace: kubecf

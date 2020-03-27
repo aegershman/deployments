@@ -4,15 +4,11 @@ version: "2"
 tasks:
   rm-crds:
     cmds:
-      - kubectl delete crd boshdeployments.quarks.cloudfoundry.org quarksjobs.quarks.cloudfoundry.org quarkssecrets.quarks.cloudfoundry.org quarksstatefulsets.quarks.cloudfoundry.org
-
-  logs-placeholder:
-    cmds:
-      # not to be actually ran as a task; just here for copy-paste-ability
-      - exit 1
       - |
-        kubectl logs -f deployment.apps/cf-operator
-        kubectl logs -f deployment.apps/cf-operator-quarks-job
+        kubectl delete crd boshdeployments.quarks.cloudfoundry.org
+        kubectl delete crd quarksjobs.quarks.cloudfoundry.org
+        kubectl delete crd quarkssecrets.quarks.cloudfoundry.org
+        kubectl delete crd quarksstatefulsets.quarks.cloudfoundry.org
 
   crds-placeholder:
     cmds:
@@ -24,7 +20,24 @@ tasks:
         kubectl describe quarksjobs.quarks.cloudfoundry.org
         kubectl describe quarkssecrets.quarks.cloudfoundry.org
         kubectl describe quarksstatefulsets.quarks.cloudfoundry.org
+      - |
         kubectl get boshdeployments.quarks.cloudfoundry.org
         kubectl get quarksjobs.quarks.cloudfoundry.org
         kubectl get quarkssecrets.quarks.cloudfoundry.org
         kubectl get quarksstatefulsets.quarks.cloudfoundry.org
+
+  logs-placeholder:
+    cmds:
+      # not to be actually ran as a task; just here for copy-paste-ability
+      - exit 1
+      - |
+        kubectl logs -f --tail=250 deployment.apps/cf-operator
+        kubectl logs -f --tail=250 deployment.apps/cf-operator-quarks-job
+      - |
+        kubectl -n kubecf get pods
+      - |
+        kubectl -n kubecf logs -f --tail=250 kubecf-database-0 -c database
+        kubectl -n kubecf logs -f --tail=250 kubecf-database-0 -c logs
+      - |
+        kubectl -n kubecf describe pod -lquarks.cloudfoundry.org/qjob-name=ig-kubecf
+        kubectl -n kubecf logs -f -lquarks.cloudfoundry.org/qjob-name=ig-kubecf
