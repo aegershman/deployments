@@ -1,17 +1,9 @@
 ---
+# https://cluster-api.sigs.k8s.io/clusterctl/commands/config-cluster.html
+
 version: "2"
 
 tasks:
-  enc:
-    cmds:
-      - |
-        sops --encrypt --input-type dotenv .envrc > .envrc.enc
-
-  dec:
-    cmds:
-      - |
-        sops --decrypt --output-type dotenv .envrc.enc > .envrc
-
   clusterapi:
     cmds:
       - | # https://blog.scottlowe.org/2019/08/27/bootstrapping-a-kubernetes-cluster-on-aws-with-clusterapi/
