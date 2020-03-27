@@ -1,0 +1,11 @@
+---
+system_domain: 172.17.0.2.xip.io
+services:
+  router:
+    externalIPs:
+      - 172.17.0.2
+    loadBalancerIP:
+      - 172.17.0.2
+features:
+  ingress:
+    enabled: false
