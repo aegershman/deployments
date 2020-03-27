@@ -1,1 +1,4 @@
 ---
+global:
+  operator:
+    watchNamespace: "default"
