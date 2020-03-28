@@ -79,11 +79,6 @@ tasks:
         cf create-org scratch-org
         cf create-space scratch-space -o scratch-org
         cf target -o scratch-org -s scratch-space
-      - | # lets also deploy stratos-ui
-        cf enable-feature-flag diego_docker
-        cf push -f config/stratos/manifest.yml
-        cf logs console --recent
-        kubectl -n kubecf-eirini logs -f console-scratch-space-be85aef4f2-0
       - | # after cf push'ing apps, see them pop up in the kubecf-eirini namespace as pods
         kubectl -n kubecf-eirini get pods
       - | # misc. helpful for debugging
