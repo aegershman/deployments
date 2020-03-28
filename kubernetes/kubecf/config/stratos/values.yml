@@ -1,3 +1,5 @@
+# https://github.com/cloudfoundry/stratos/blob/master/deploy/kubernetes/console/values.yaml
+# https://github.com/cloudfoundry/stratos/blob/master/manifest.yml
 ---
 console:
   migrateVolumes: false
@@ -8,11 +10,24 @@ console:
         kubernetes.io/ingress.class: nginx
       host: stratos.127.0.0.1.xip.io
 
+  # Enable/disable Tech Preview
+  techPreview: false
+
+  # Use local admin user instead of UAA - set to a password to enable
+  localAdminPassword: ~
+
+  # URL of a Cloud Foundry to use for authentication and to auto-register on login
+  autoRegisterCF: ~
+
 uaa:
   protocol: https://
   port: 2793
-  host: uaa.eirini.127.0.0.1.xip.io
+  host: uaa.kubecf.127.0.0.1.xip.io
   consoleClient: cf
-  consoleClientSecret: cfsecret
+  consoleClientSecret: ~
   consoleAdminIdentifier: cloud_controller.admin
   skipSSLValidation: true
+
+env:
+  # UAA Zone (namespace cf is deployed to when deployed to Kubernetes)
+  UAA_ZONE: kubecf
