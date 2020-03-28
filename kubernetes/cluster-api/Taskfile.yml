@@ -1,20 +1,9 @@
----
 # https://cluster-api.sigs.k8s.io/clusterctl/commands/config-cluster.html
-
+# https://github.com/k14s/vendir
+---
 version: "2"
 
 tasks:
-  clusterapi:
+  vendir:
     cmds:
-      - | # https://blog.scottlowe.org/2019/08/27/bootstrapping-a-kubernetes-cluster-on-aws-with-clusterapi/
-        kubectl apply -f bootstrap/cluster-api-components.yml
-        kubectl apply -f bootstrap/bootstrap-components.yml
-        export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm alpha bootstrap encode-aws-credentials)
-        cat bootstrap/infrastructure-components.yml | envsubst | kubectl apply -f -
-
-  clusterapply:
-    cmds:
-      - |
-        kubectl apply -f bootstrap/cluster.yaml
-        kubectl apply -f bootstrap/controlplane.yaml
-        kubectl apply -f bootstrap/machinedeployment.yaml
+      - vendir sync
