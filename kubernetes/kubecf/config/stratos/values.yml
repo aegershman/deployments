@@ -1,4 +1,5 @@
 # https://github.com/cloudfoundry/stratos/blob/master/deploy/kubernetes/console/values.yaml
+# https://github.com/cloudfoundry/stratos/blob/master/manifest.yml
 ---
 console:
   migrateVolumes: false
@@ -23,7 +24,7 @@ uaa:
   port: 2793
   host: uaa.kubecf.127.0.0.1.xip.io
   consoleClient: cf
-  consoleClientSecret: cfsecret
+  consoleClientSecret: ~
   consoleAdminIdentifier: cloud_controller.admin
   skipSSLValidation: true
 
