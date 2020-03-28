@@ -2,18 +2,14 @@
 version: "2"
 
 tasks:
+  kind-trust-k8s-root-ca-on-docker-daemon:
+    cmds: # https://github.com/cloudfoundry-incubator/cf-operator/#prerequisites
+      - docker exec -it "kind-control-plane" bash -c 'cp /etc/kubernetes/pki/ca.crt /etc/ssl/certs/ && update-ca-certificates && (systemctl list-units | grep containerd > /dev/null && systemctl restart containerd)'
+
   kind-create:
     cmds:
-      - kind create cluster --config kind.config.yaml
-      # - kind create cluster --config kind.config.yaml --image kindest/node:v1.18.0
-      # - kind create cluster --config kind.config.yaml --image kindest/node:v1.16.3
-
-  kind-trust-k8s-root-ca-on-docker-daemon:
-    cmds:
-      # TODO if you're using kubecf, run this right after creating the cluster
-      # https://github.com/cloudfoundry-incubator/cf-operator/#prerequisites
-      - |
-        docker exec -it "kind-control-plane" bash -c 'cp /etc/kubernetes/pki/ca.crt /etc/ssl/certs/ && update-ca-certificates && (systemctl list-units | grep containerd > /dev/null && systemctl restart containerd)'
+      - kind create cluster --config kind.config.yaml # --image kindest/node:v1.17.0
+      - task: kind-trust-k8s-root-ca-on-docker-daemon
 
   kind-delete:
     cmds:
