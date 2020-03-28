@@ -1,10 +1,10 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
-  - contents:
-      - githubRelease:
-          url: https://api.github.com/repos/kubernetes-sigs/cluster-api/releases/24950673
-        path: components
-      - manual: {}
-        path: values
-    path: config
+- contents:
+  - githubRelease:
+      url: https://api.github.com/repos/kubernetes-sigs/cluster-api/releases/24950673
+    path: components
+  - manual: {}
+    path: values
+  path: config
 kind: LockConfig
