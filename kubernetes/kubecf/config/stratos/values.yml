@@ -7,3 +7,12 @@ console:
       annotations:
         kubernetes.io/ingress.class: nginx
       host: stratos.127.0.0.1.xip.io
+
+uaa:
+  protocol: https://
+  port: 2793
+  host: uaa.eirini.127.0.0.1.xip.io
+  consoleClient: cf
+  consoleClientSecret: cfsecret
+  consoleAdminIdentifier: cloud_controller.admin
+  skipSSLValidation: true

@@ -8,6 +8,7 @@ repositories: []
 # https://github.com/cloudfoundry-incubator/cf-operator/blob/master/deploy/helm/cf-operator/values.yaml
 # https://github.com/cloudfoundry-incubator/cf-operator/blob/master/dev-env-kind.yaml
 # https://github.com/cloudfoundry-incubator/cf-operator/releases
+# https://github.com/cloudfoundry-incubator/kubecf-docs/blob/master/content/en/docs/Getting%20started/kubernetes-deploy.md
 # https://github.com/cloudfoundry-incubator/kubecf/blob/master/deploy/helm/kubecf/values.yaml
 # https://github.com/cloudfoundry-incubator/kubecf/blob/master/dev/kind/config.yaml
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/deploy/kind/cluster.yml
@@ -21,6 +22,7 @@ releases:
   - name: cf-operator
     chart: https://s3.amazonaws.com/cf-operators/release/helm-charts/cf-operator-3.4.0%2B0.g0c173836.tgz
     installed: true
+    wait: true
     values:
       - config/cf-operator/values.yml
 
