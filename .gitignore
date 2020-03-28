@@ -17,3 +17,5 @@ state.json
 
 dist
 hack
+
+clusterctl-*-amd64

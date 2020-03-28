@@ -1,0 +1,20 @@
+# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: config
+    contents:
+      - path: components
+        githubRelease:
+          slug: kubernetes-sigs/cluster-api
+          tag: v0.3.3
+          disableAutoChecksumValidation: true
+        includePaths:
+          - bootstrap-components.yaml
+          - cluster-api-components.yaml
+          - clusterctl-darwin-amd64
+          - control-plane-components.yaml
+          - core-components.yaml
+      - path: values
+        manual: {}
