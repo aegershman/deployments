@@ -1,4 +1,5 @@
 # https://cluster-api.sigs.k8s.io/clusterctl/commands/config-cluster.html
+# https://cluster-api.sigs.k8s.io/clusterctl/developers.html#additional-steps-in-order-to-use-the-docker-provider
 # https://github.com/k14s/vendir
 ---
 version: "2"
@@ -7,3 +8,7 @@ tasks:
   vendir:
     cmds:
       - vendir sync
+
+  init:
+    cmds:
+      - ./config/components/clusterctl-darwin-amd64 init --infrastructure aws --list-images
