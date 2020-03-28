@@ -8,7 +8,7 @@ console:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
-      host: stratos.127.0.0.1.xip.io
+      host: console.kubecf.127.0.0.1.xip.io
 
   # Enable/disable Tech Preview
   techPreview: false
