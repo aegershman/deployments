@@ -21,8 +21,9 @@ console:
 
 uaa:
   protocol: https://
-  port: 2793
-  host: uaa.kubecf.127.0.0.1.xip.io
+  port: 8443
+  # host: uaa.kubecf.127.0.0.1.xip.io
+  host: kubecf-uaa.kubecf.svc.cluster.local
   consoleClient: cf
   consoleClientSecret: ~
   consoleAdminIdentifier: cloud_controller.admin
