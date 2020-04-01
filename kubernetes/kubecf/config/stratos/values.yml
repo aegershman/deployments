@@ -12,21 +12,22 @@ console:
   techPreview: false
 
   # Use local admin user instead of UAA - set to a password to enable
-  localAdminPassword: ~
+  localAdminPassword: password123
 
   # URL of a Cloud Foundry to use for authentication and to auto-register on login
   autoRegisterCF: ~
 
 uaa:
   protocol: https://
-  port: 8443
-  # host: uaa.kubecf.127.0.0.1.xip.io
-  host: kubecf-uaa.kubecf.svc.cluster.local
+  port: 443
+  host: uaa.kubecf.127.0.0.1.xip.io
   consoleClient: cf
   consoleClientSecret: ~
   consoleAdminIdentifier: cloud_controller.admin
   skipSSLValidation: true
 
 env:
-  # UAA Zone (namespace cf is deployed to when deployed to Kubernetes)
-  UAA_ZONE: kubecf
+  DOMAIN: kubecf.127.0.0.1.xip.io
+  UAA_HOST: uaa.kubecf.127.0.0.1.xip.io
+  UAA_PORT: 443
+  UAA_ZONE: ~

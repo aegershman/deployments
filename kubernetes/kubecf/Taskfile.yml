@@ -94,7 +94,7 @@ tasks:
       - | # check if the cf api is responding
         cf api --skip-ssl-validation api.kubecf.127.0.0.1.xip.io
       - | # retrieve cf admin password
-        kubectl -n kubecf get secret kubecf.var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode
+        echo $(kubectl -n kubecf get secret kubecf.var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode)
         cf auth admin $(kubectl -n kubecf get secret kubecf.var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode)
       - | # stand yourself up a nice little spot to push some hot juicy trash (see also: me)
         cf create-org scratch-org
