@@ -21,16 +21,13 @@ uaa:
   protocol: https://
   port: 443
   host: uaa.kubecf.127.0.0.1.xip.io
-  # host: kubecf-uaa.kubecf.svc.cluster.local
-  # host: uaa.service.cf.internal
   consoleClient: cf
   consoleClientSecret: ~
   consoleAdminIdentifier: cloud_controller.admin
   skipSSLValidation: true
 
 env:
-  # UAA Zone (namespace cf is deployed to when deployed to Kubernetes)
-  DOMAIN: 127.0.0.1
-  UAA_HOST: kubecf.127.0.0.1.xip.io
+  DOMAIN: kubecf.127.0.0.1.xip.io
+  UAA_HOST: uaa.kubecf.127.0.0.1.xip.io
   UAA_PORT: 443
-  UAA_ZONE: ~
+  UAA_ZONE: kubecf
