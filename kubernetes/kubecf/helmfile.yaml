@@ -8,20 +8,6 @@ repositories:
   - name: stratos
     url: https://cloudfoundry.github.io/stratos
 
-# https://cf-operators.s3.amazonaws.com/helm-charts/index.html
-# https://github.com/cloudfoundry-incubator/cf-operator/blob/master/deploy/helm/cf-operator/values.yaml
-# https://github.com/cloudfoundry-incubator/cf-operator/blob/master/dev-env-kind.yaml
-# https://github.com/cloudfoundry-incubator/cf-operator/releases
-# https://github.com/cloudfoundry-incubator/kubecf-docs/blob/master/content/en/docs/Getting%20started/kubernetes-deploy.md
-# https://github.com/cloudfoundry-incubator/kubecf/blob/master/deploy/helm/kubecf/values.yaml
-# https://github.com/cloudfoundry-incubator/kubecf/blob/master/dev/kind/config.yaml
-# https://github.com/cloudfoundry/cf-for-k8s/blob/master/deploy/kind/cluster.yml
-# https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
-# https://github.com/cloudfoundry/stratos/blob/master/deploy/kubernetes/console/values.yaml
-# https://github.com/SUSE/kubecf/blob/master/doc/dev/general.md
-# https://github.com/SUSE/kubecf/blob/master/doc/dev/minikube.md
-# https://kubecf.suse.dev/docs/tutorials/deploy-kind/
-# https://scf-v3.s3.amazonaws.com/index.html
 releases:
   - name: cf-operator
     chart: quarks/cf-operator
