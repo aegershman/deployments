@@ -2,7 +2,9 @@
 helmDefaults:
   kubeContext: kind-kind
 
-repositories: []
+repositories:
+  - name: quarks
+    url: https://cloudfoundry-incubator.github.io/quarks-helm
 
 # https://cf-operators.s3.amazonaws.com/helm-charts/index.html
 # https://github.com/cloudfoundry-incubator/cf-operator/blob/master/deploy/helm/cf-operator/values.yaml
@@ -20,8 +22,9 @@ repositories: []
 # https://scf-v3.s3.amazonaws.com/index.html
 releases:
   - name: cf-operator
-    chart: https://s3.amazonaws.com/cf-operators/release/helm-charts/cf-operator-3.4.0%2B0.g0c173836.tgz
+    chart: quarks/cf-operator
     installed: true
+    version: ~4.0.x
     wait: true
     values:
       - config/cf-operator/values.yml
