@@ -1,5 +1,3 @@
-# https://github.com/cloudfoundry/stratos/blob/master/deploy/kubernetes/console/values.yaml
-# https://github.com/cloudfoundry/stratos/blob/master/manifest.yml
 ---
 console:
   migrateVolumes: false

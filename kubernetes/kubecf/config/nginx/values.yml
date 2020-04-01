@@ -6,15 +6,12 @@ controller:
   service:
     type: NodePort
   config:
-    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
     proxy-body-size: 64m
     proxy-buffer-size: 16k
 
 defaultBackend:
   enabled: false
 
-# https://github.com/SUSE/kubecf/blob/master/deploy/helm/kubecf/values.yaml#L101-L103
-# https://github.com/SUSE/kubecf/blob/master/doc/dev/general.md#installation-of-the-nginx-ingress-controller
 tcp:
   20000: kubecf/kubecf-tcp-router:20000"
   20001: kubecf/kubecf-tcp-router:20001"
