@@ -8,7 +8,7 @@ console:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
-      host: stratos.127.0.0.1.xip.io
+      host: console.kubecf.127.0.0.1.xip.io
 
   # Enable/disable Tech Preview
   techPreview: false
@@ -21,8 +21,9 @@ console:
 
 uaa:
   protocol: https://
-  port: 2793
-  host: uaa.kubecf.127.0.0.1.xip.io
+  port: 8443
+  # host: uaa.kubecf.127.0.0.1.xip.io
+  host: kubecf-uaa.kubecf.svc.cluster.local
   consoleClient: cf
   consoleClientSecret: ~
   consoleAdminIdentifier: cloud_controller.admin

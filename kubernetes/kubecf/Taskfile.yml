@@ -81,3 +81,8 @@ tasks:
         cf target -o scratch-org -s scratch-space
       - | # after cf push'ing apps, see them pop up in the kubecf-eirini namespace as pods
         kubectl -n kubecf-eirini get pods
+      - | # misc. helpful for debugging
+        kubectl -n kubecf logs -f kubecf-api-0
+        kubectl -n kubecf logs -f --tail 250 kubecf-api-0 -c cloud-controller-ng-cloud-controller-ng
+        kubectl -n kubecf logs -f --tail 250 kubecf-api-0 -c route-registrar-route-registrar
+        kubectl logs -f --tail 250 -lapp=nginx-ingress
