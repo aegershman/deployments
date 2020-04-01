@@ -2,7 +2,11 @@
 helmDefaults:
   kubeContext: kind-kind
 
-repositories: []
+repositories:
+  - name: quarks
+    url: https://cloudfoundry-incubator.github.io/quarks-helm
+  - name: stratos
+    url: https://cloudfoundry.github.io/stratos
 
 # https://cf-operators.s3.amazonaws.com/helm-charts/index.html
 # https://github.com/cloudfoundry-incubator/cf-operator/blob/master/deploy/helm/cf-operator/values.yaml
@@ -20,7 +24,8 @@ repositories: []
 # https://scf-v3.s3.amazonaws.com/index.html
 releases:
   - name: cf-operator
-    chart: https://s3.amazonaws.com/cf-operators/release/helm-charts/cf-operator-3.4.0%2B0.g0c173836.tgz
+    chart: quarks/cf-operator
+    version: ~3.4.x
     installed: true
     wait: true
     values:
@@ -44,8 +49,9 @@ releases:
       - config/nginx/values.yml
 
   - name: stratos
-    chart: https://github.com/cloudfoundry/stratos/releases/download/3.0.0/console-helm-chart-3.0.0-6ace0ff4a.tgz
+    chart: stratos/console
     installed: false
+    version: ~3.0.x
     needs:
       - kubecf/kubecf
       - nginx
