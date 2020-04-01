@@ -36,7 +36,7 @@ releases:
 
   - name: stratos
     chart: stratos/console
-    installed: false
+    installed: true
     version: ~3.0.x
     needs:
       - kubecf/kubecf
