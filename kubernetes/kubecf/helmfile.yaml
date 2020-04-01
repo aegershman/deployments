@@ -35,9 +35,8 @@ releases:
       - config/nginx/values.yml
 
   - name: stratos
-    namespace: kubecf
     chart: stratos/console
-    installed: true
+    installed: false
     version: ~3.0.x
     needs:
       - kubecf/kubecf

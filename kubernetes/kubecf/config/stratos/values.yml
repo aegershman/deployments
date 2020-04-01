@@ -12,7 +12,7 @@ console:
   techPreview: false
 
   # Use local admin user instead of UAA - set to a password to enable
-  localAdminPassword: ~
+  localAdminPassword: password123
 
   # URL of a Cloud Foundry to use for authentication and to auto-register on login
   autoRegisterCF: ~
@@ -30,4 +30,4 @@ env:
   DOMAIN: kubecf.127.0.0.1.xip.io
   UAA_HOST: uaa.kubecf.127.0.0.1.xip.io
   UAA_PORT: 443
-  UAA_ZONE: kubecf
+  UAA_ZONE: ~
