@@ -45,7 +45,7 @@ releases:
 
   - name: stratos
     chart: https://github.com/cloudfoundry/stratos/releases/download/3.0.0/console-helm-chart-3.0.0-6ace0ff4a.tgz
-    installed: true
+    installed: false
     needs:
       - kubecf/kubecf
       - nginx
