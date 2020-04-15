@@ -1,0 +1,35 @@
+---
+version: "2"
+
+tasks:
+  vendir:
+    cmds:
+      - vendir sync
+
+  apply:
+    cmds:
+      - |
+        kubectl apply -f config/build-examples/image.yaml
+        kubectl apply -f config/generics
+        kubectl apply -f config/kpack-components
+        kubectl apply -f config/kpack-release/release-*.yaml
+
+  kpack-reset:
+    cmds:
+      - |
+        kubectl delete -f config/build-examples/image.yaml
+        kubectl apply -f config/build-examples/image.yaml
+
+  kpack-logs:
+    cmds:
+      - | # not designed to be actually ran as a command, just a placeholder of commands
+        exit 1
+        kubectl -n kpack get pods --watch
+        kubectl -n kpack logs -f -lapp=kpack-controller
+        kubectl describe builds
+        kubectl describe clusterbuilder
+        kubectl describe image spring-petclinic-tutorial
+        kubectl get clusterbuilder -o yaml
+        kubectl get image spring-petclinic-tutorial -o yaml
+        kubectl get images
+        logs -image spring-petclinic-tutorial

@@ -1,0 +1,20 @@
+# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: config
+    contents:
+      - path: build-examples
+        manual: {}
+      - path: generics
+        manual: {}
+      - path: kpack-components
+        manual: {}
+      - path: kpack-release
+        githubRelease:
+          slug: pivotal/kpack
+          tag: v0.0.8
+          disableAutoChecksumValidation: true
+        includePaths:
+          - release-0.0.8.yaml

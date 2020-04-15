@@ -1,0 +1,14 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - manual: {}
+    path: build-examples
+  - manual: {}
+    path: generics
+  - manual: {}
+    path: kpack-components
+  - githubRelease:
+      url: https://api.github.com/repos/pivotal/kpack/releases/25016868
+    path: kpack-release
+  path: config
+kind: LockConfig
