@@ -11,6 +11,6 @@ tasks:
       - which kapp
       - which ytt
 
-  apply:
+  apply-metrics-server:
     cmds:
-      - kubectl apply --recursive --filename vendor
+      - kubectl apply --recursive --filename vendor/github.com/kubernetes-sigs
