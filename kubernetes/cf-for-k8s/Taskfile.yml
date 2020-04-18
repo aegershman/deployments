@@ -21,7 +21,7 @@ tasks:
 
   generate-values:
     cmds:
-      - |
+      - | # I'm assuming vcap.me == nip.io == xip.io, allowing for localhost dns
         ./config/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
           --cf-domain vcap.me \
           >config/values/cf-values.yml
@@ -36,3 +36,8 @@ tasks:
           -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-ingressgateway-service.yml \
           >config/values/cf-for-k8s-ytt.yml
       - kapp deploy -a cf -f config/values/cf-for-k8s-ytt.yml
+
+  post-install:
+    cmds:
+      - |
+        cf api --skip-ssl-validation https://api.vcap.me
