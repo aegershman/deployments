@@ -33,6 +33,13 @@ tasks:
           -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-ingressgateway-service.yml \
           >config/values/cf-for-k8s-ytt.yml
 
+  clean-generated-values:
+    cmds:
+      - | # when you remove these from /tmp and re-run the generate-values script it'll give you new passwords, certs, etc.
+        rm -f /tmp/cf-values.yml
+        rm -f /tmp/cf-for-k8s-ytt.yml
+        rm -rf /tmp/vcap.me
+
   apply-cf:
     cmds:
       - kapp deploy -a cf -f config/values/cf-for-k8s-ytt.yml
