@@ -25,9 +25,6 @@ tasks:
         ./config/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
           --cf-domain vcap.me \
           >config/values/cf-values.yml
-
-  apply-cf:
-    cmds:
       - |
         ytt \
           -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config \
@@ -35,6 +32,9 @@ tasks:
           -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
           -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-ingressgateway-service.yml \
           >config/values/cf-for-k8s-ytt.yml
+
+  apply-cf:
+    cmds:
       - kapp deploy -a cf -f config/values/cf-for-k8s-ytt.yml
 
   post-install:
@@ -52,5 +52,6 @@ tasks:
 
   debug:
     cmds:
-      - |
+      - | # not intended to be ran as a task, just for holding command strings
+        exit 1
         kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
