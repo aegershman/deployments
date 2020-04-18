@@ -29,7 +29,7 @@ tasks:
     cmds:
       - |
         kapp deploy -a cf -f <(ytt \
-          -f ./config/vendor/github.com/cloudfoundry/cf-for-k8s/config \
+          -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config \
           -f /tmp/cf-values.yml \
-          -f ./config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
-          -f ./config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-ingressgateway-service.yml)
+          -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
+          -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-ingressgateway-service.yml)
