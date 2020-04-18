@@ -3,7 +3,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-  - path: config/vendor
+  - path: vendor
     contents:
       - path: github.com/kubernetes-sigs/metrics-server
         githubRelease:
@@ -12,5 +12,3 @@ directories:
           disableAutoChecksumValidation: true
         includePaths:
           - components.yaml
-  - path: config/values
-    manual: {}

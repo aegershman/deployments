@@ -4,7 +4,5 @@ directories:
   - githubRelease:
       url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: github.com/kubernetes-sigs/metrics-server
-  path: config/vendor
-- contents: null
-  path: config/values
+  path: vendor
 kind: LockConfig
