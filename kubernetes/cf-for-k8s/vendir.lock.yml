@@ -1,11 +1,10 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
-  - git:
-      commitTitle: 'Merge pull request #502 from serathius/release-0.3.7...'
-      sha: b36cb6ef57aa2f12c55fedc0903f6c8d78c37fd5
+  - githubRelease:
+      url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: github.com/kubernetes-sigs/metrics-server
-  path: config/components
+  path: config/vendor
 - contents: null
   path: config/values
 kind: LockConfig
