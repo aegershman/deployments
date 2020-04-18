@@ -6,6 +6,7 @@ version: "2"
 tasks:
   has-binaries:
     cmds:
+      - which bosh
       - which cf
       - which kapp
       - which ytt
