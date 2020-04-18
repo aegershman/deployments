@@ -11,7 +11,7 @@ repositories:
 releases:
   - name: cf-operator
     chart: quarks/cf-operator
-    version: ~3.4.x
+    version: ~4.3.x
     installed: true
     wait: true
     values:
@@ -19,7 +19,7 @@ releases:
 
   - name: kubecf
     namespace: kubecf
-    chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v1.0.1/kubecf-v1.0.1.tgz
+    chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.0.0/kubecf-v2.0.0.tgz
     installed: true
     needs:
       - cf-operator
