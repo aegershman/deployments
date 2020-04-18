@@ -22,5 +22,6 @@ directories:
           - config-optional/**/*
           - config/**/*
           - hack/**/*
+          - tests/smoke/assets/test-node-app/**/*
       - path: values
         manual: {}
