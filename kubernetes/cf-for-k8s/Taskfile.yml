@@ -49,3 +49,8 @@ tasks:
       - |
         cf push test-node-app -p config/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env
+
+  debug:
+    cmds:
+      - |
+        kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
