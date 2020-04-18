@@ -10,3 +10,7 @@ tasks:
       - which cf
       - which kapp
       - which ytt
+
+  apply:
+    cmds:
+      - kubectl apply --recursive --filename vendor
