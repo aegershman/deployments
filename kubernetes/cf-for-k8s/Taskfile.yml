@@ -11,6 +11,12 @@ tasks:
       - which kapp
       - which ytt
 
+  generate-values:
+    cmds:
+      - |
+        ./config/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
+          --cf-domain vcap.me > /config/values/cf-values.yml
+
   apply-metrics-server:
     cmds:
-      - kubectl apply --recursive --filename vendor/github.com/kubernetes-sigs
+      - kubectl apply --recursive --filename config/vendor/github.com/kubernetes-sigs

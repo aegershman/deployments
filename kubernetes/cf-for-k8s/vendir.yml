@@ -4,7 +4,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-  - path: vendor
+  - path: config/vendor
     contents:
       - path: github.com/kubernetes-sigs/metrics-server
         githubRelease:
@@ -22,3 +22,5 @@ directories:
           - config-optional/**/*
           - config/**/*
           - hack/**/*
+  - path: config/values
+    manual: {}

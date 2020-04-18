@@ -9,5 +9,7 @@ directories:
         be set...
       sha: 27a59a24db3f140a360c11debcc9e49f9d62d981
     path: github.com/cloudfoundry/cf-for-k8s
-  path: vendor
+  path: config/vendor
+- contents: null
+  path: config/values
 kind: LockConfig
