@@ -5,9 +5,8 @@ directories:
       url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: vendor/github.com/kubernetes-sigs/metrics-server
   - git:
-      commitTitle: The docker image smoke test still needs the diego_docker flag to
-        be set...
-      sha: 27a59a24db3f140a360c11debcc9e49f9d62d981
+      commitTitle: 'Merge pull request #152 from cloudfoundry/fix-migration-job...'
+      sha: 134c4d9106c0e033296be274a79cf356b9c1b92d
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
