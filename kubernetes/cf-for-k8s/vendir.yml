@@ -1,0 +1,15 @@
+# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: config/components
+    contents:
+      - path: metrics-server
+        git:
+          url: https://github.com/kubernetes-sigs/metrics-server
+          ref: v0.3.7
+        includePaths:
+          - deploy/1.8+/metrics-server-deployment.yaml
+      - path: values
+        manual: {}
