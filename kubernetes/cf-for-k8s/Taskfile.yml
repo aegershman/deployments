@@ -42,7 +42,7 @@ tasks:
 
   apply-cf:
     cmds:
-      - kapp deploy -a cf -f config/values/cf-for-k8s-ytt.yml
+      - kapp deploy -a cf -f config/values/cf-for-k8s-ytt.yml --yes
 
   post-install:
     cmds:
