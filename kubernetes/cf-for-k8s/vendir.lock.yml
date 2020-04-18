@@ -4,5 +4,10 @@ directories:
   - githubRelease:
       url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: github.com/kubernetes-sigs/metrics-server
+  - git:
+      commitTitle: The docker image smoke test still needs the diego_docker flag to
+        be set...
+      sha: 27a59a24db3f140a360c11debcc9e49f9d62d981
+    path: github.com/cloudfoundry/cf-for-k8s
   path: vendor
 kind: LockConfig
