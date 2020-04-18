@@ -4,16 +4,16 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-  - path: config/vendor
+  - path: config
     contents:
-      - path: github.com/kubernetes-sigs/metrics-server
+      - path: vendor/github.com/kubernetes-sigs/metrics-server
         githubRelease:
           slug: kubernetes-sigs/metrics-server
           tag: v0.3.6
           disableAutoChecksumValidation: true
         includePaths:
           - components.yaml
-      - path: github.com/cloudfoundry/cf-for-k8s
+      - path: vendor/github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
           ref: v0.1.0
@@ -22,5 +22,5 @@ directories:
           - config-optional/**/*
           - config/**/*
           - hack/**/*
-  - path: config/values
-    manual: {}
+      - path: values
+        manual: {}
