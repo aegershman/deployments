@@ -6,10 +6,11 @@ directories:
   - path: config/components
     contents:
       - path: github.com/kubernetes-sigs/metrics-server
-        git:
-          url: https://github.com/kubernetes-sigs/metrics-server
-          ref: v0.3.7
+        githubRelease:
+          url: kubernetes-sigs/metrics-server
+          tag: v0.3.6
+          # disableAutoChecksumValidation: true
         includePaths:
-          - deploy/1.8+/metrics-server-deployment.yaml
+          - components.yaml
   - path: config/values
     manual: {}

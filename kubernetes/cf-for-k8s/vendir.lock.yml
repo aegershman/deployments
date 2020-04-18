@@ -6,4 +6,6 @@ directories:
       sha: b36cb6ef57aa2f12c55fedc0903f6c8d78c37fd5
     path: github.com/kubernetes-sigs/metrics-server
   path: config/components
+- contents: null
+  path: config/values
 kind: LockConfig
