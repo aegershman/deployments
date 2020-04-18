@@ -1,0 +1,11 @@
+---
+version: "2"
+
+# https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy-local.md#steps-to-deploy-on-kind
+# https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
+tasks:
+  has-binaries:
+    cmds:
+      - which cf
+      - which kapp
+      - which ytt
