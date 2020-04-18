@@ -11,11 +11,15 @@ tasks:
       - which kapp
       - which ytt
 
+  vendir:
+    cmds:
+      - vendir sync
+
   generate-values:
     cmds:
       - |
         ./config/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
-          --cf-domain vcap.me > /config/values/cf-values.yml
+          --cf-domain vcap.me > /tmp/cf-values.yml
 
   apply-metrics-server:
     cmds:
