@@ -48,6 +48,10 @@ tasks:
     cmds:
       - kapp deploy -a cf -f config/values/cf-for-k8s-ytt.yml --yes
 
+  delete-cf:
+    cmds:
+      - kapp delete -a cf -y
+
   post-install:
     cmds:
       - |
