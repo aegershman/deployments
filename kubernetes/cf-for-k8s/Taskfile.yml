@@ -52,7 +52,7 @@ tasks:
     cmds:
       - |
         cf api --skip-ssl-validation https://api.vcap.me
-        cf auth admin $(yq r config/values/cf-values.yml 'cf-admin_password')
+        cf auth admin $(yq r config/values/cf-values.yml 'cf_admin_password')
       - |
         cf create-org test-org
         cf create-space -o test-org test-space
@@ -64,8 +64,8 @@ tasks:
   full-install-steps:
     cmds:
       - task: has-binaries
-      - task: vendir
-      - task: kind-create
+      # - task: vendir
+      # - task: kind-create
       - task: apply-metrics-server
       # - task: clean-generated-values
       - task: generate-values

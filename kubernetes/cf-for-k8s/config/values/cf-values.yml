@@ -2,8 +2,8 @@
 ---
 system_domain: "vcap.me"
 app_domains:
-  #@overlay/append
-  - "vcap.me"
+#@overlay/append
+- "vcap.me"
 cf_admin_password: dpugmy12oa4432ssmj4u
 
 cf_blobstore:
@@ -102,7 +102,7 @@ uaa:
       8Pg05/4o2EFY06osg874FjE9T1pOsszR9zNKPya1LhPFJ4qlmrs+EKg4OJn0tnQu
       G5ocj6zdnghkXUt7ZlqTPVNVMamMQx71InWE6fATr7ymGsBQcy0/cn8=
       -----END RSA PRIVATE KEY-----
-
+      
   encryption_key:
     passphrase: rvebahy8sl8yeuoiq2j6
   login:
@@ -147,7 +147,7 @@ uaa:
         ERlRX/R4sq1f2+3UhQn+w316CtyGxlx5u5WbQZ+jsKCVyZDcvwE/2bOF6QCrHxrI
         AvdLNBKRElDSrYfqqs1cUEllbnYE0j/KZOk07R4WgTAK54F1+gXhhw4=
         -----END RSA PRIVATE KEY-----
-
+        
       certificate: |
         -----BEGIN CERTIFICATE-----
         MIIEfTCCAuWgAwIBAgIQI9Zo/k02zI4qOmRgISszUDANBgkqhkiG9w0BAQsFADAz
@@ -176,6 +176,7 @@ uaa:
         x21EyG4rJ7k6hiYwRdCSSc1iSDiVMpwP83w+h+luLmk5kjEA8kNMrU0oFPyEb9Vo
         QA==
         -----END CERTIFICATE-----
+        
 
 doppler:
   tls:
