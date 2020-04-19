@@ -4,7 +4,6 @@ metadata:
   name: capi-api-server
   namespace: cf-system
   annotations:
-    kapp.k14s.io/change-rule.cf-db-postgresql: upsert after upserting cf-for-k8s.cloudfoundry.org/cf-db-postgresql
     kapp.k14s.io/change-rule.istio-sidecar-injector: upsert after upserting cf-for-k8s.cloudfoundry.org/istio-sidecar-injector
 spec:
   replicas: 2
@@ -214,9 +213,9 @@ metadata:
   namespace: cf-system
   annotations:
     kapp.k14s.io/update-strategy: fallback-on-replace
-    kapp.k14s.io/change-rule.cf-db-postgresql: upsert after upserting cf-for-k8s.cloudfoundry.org/cf-db-postgresql
     kapp.k14s.io/change-rule.istio-sidecar-injector: upsert after upserting cf-for-k8s.cloudfoundry.org/istio-sidecar-injector
 spec:
+  backoffLimit: 3
   template:
     spec:
       containers:
@@ -234,7 +233,7 @@ spec:
         volumeMounts:
         - name: cloud-controller-ng-yaml
           mountPath: /config
-      restartPolicy: Never
+      restartPolicy: OnFailure
       volumes:
       - name: cloud-controller-ng-yaml
         configMap:
@@ -625,7 +624,6 @@ metadata:
   name: capi-clock
   namespace: cf-system
   annotations:
-    kapp.k14s.io/change-rule.cf-db-postgresql: upsert after upserting cf-for-k8s.cloudfoundry.org/cf-db-postgresql
     kapp.k14s.io/change-rule.istio-sidecar-injector: upsert after upserting cf-for-k8s.cloudfoundry.org/istio-sidecar-injector
 spec:
   replicas: 1
@@ -895,7 +893,6 @@ metadata:
   name: capi-worker
   namespace: cf-system
   annotations:
-    kapp.k14s.io/change-rule.cf-db-postgresql: upsert after upserting cf-for-k8s.cloudfoundry.org/cf-db-postgresql
     kapp.k14s.io/change-rule.istio-sidecar-injector: upsert after upserting cf-for-k8s.cloudfoundry.org/istio-sidecar-injector
 spec:
   replicas: 1
@@ -13442,7 +13439,6 @@ metadata:
     heritage: Helm
   namespace: cf-db
   annotations:
-    kapp.k14s.io/change-group.cf-db-postgresql: cf-for-k8s.cloudfoundry.org/cf-db-postgresql
     kapp.k14s.io/change-rule.istio-sidecar-injector: upsert after upserting cf-for-k8s.cloudfoundry.org/istio-sidecar-injector
 spec:
   serviceName: cf-db-postgresql-headless
