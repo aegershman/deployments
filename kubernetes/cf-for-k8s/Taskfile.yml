@@ -61,6 +61,17 @@ tasks:
         cf push test-node-app -p config/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env
 
+  full-install-steps:
+    cmds:
+      - task: has-binaries
+      - task: vendir
+      - task: kind-create
+      - task: apply-metrics-server
+      # - task: clean-generated-values
+      - task: generate-values
+      - task: apply-cf
+      # - task: post-install
+
   debug:
     cmds:
       - | # not intended to be ran as a task, just for holding command strings
