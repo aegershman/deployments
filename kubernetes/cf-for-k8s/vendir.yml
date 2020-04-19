@@ -1,0 +1,28 @@
+# https://github.com/k14s/vendir/blob/master/docs/vendir-spec.md
+# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: config
+    contents:
+      - path: vendor/github.com/kubernetes-sigs/metrics-server
+        githubRelease:
+          slug: kubernetes-sigs/metrics-server
+          tag: v0.3.6
+          disableAutoChecksumValidation: true
+        includePaths:
+          - components.yaml
+      - path: vendor/github.com/cloudfoundry/cf-for-k8s
+        git:
+          url: https://github.com/cloudfoundry/cf-for-k8s
+          ref: 134c4d9106c0e033296be274a79cf356b9c1b92d # v0.1.0
+        includePaths:
+          - bin/**/*
+          - config-optional/**/*
+          - config/**/*
+          - deploy/kind/**/*
+          - hack/**/*
+          - tests/smoke/assets/test-node-app/**/*
+      - path: values
+        manual: {}

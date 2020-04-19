@@ -1,0 +1,14 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - githubRelease:
+      url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
+    path: vendor/github.com/kubernetes-sigs/metrics-server
+  - git:
+      commitTitle: 'Merge pull request #152 from cloudfoundry/fix-migration-job...'
+      sha: 134c4d9106c0e033296be274a79cf356b9c1b92d
+    path: vendor/github.com/cloudfoundry/cf-for-k8s
+  - manual: {}
+    path: values
+  path: config
+kind: LockConfig
