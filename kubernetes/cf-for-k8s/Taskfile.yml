@@ -15,6 +15,10 @@ tasks:
     cmds:
       - vendir sync
 
+  kind-create:
+    cmds:
+      - kind create cluster --config config/vendor/github.com/cloudfoundry/cf-for-k8s/deploy/kind/cluster.yml
+
   apply-metrics-server:
     cmds:
       - kubectl apply --recursive --filename config/vendor/github.com/kubernetes-sigs

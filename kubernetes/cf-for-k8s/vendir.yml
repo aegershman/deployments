@@ -21,6 +21,7 @@ directories:
           - bin/**/*
           - config-optional/**/*
           - config/**/*
+          - deploy/kind/**/*
           - hack/**/*
           - tests/smoke/assets/test-node-app/**/*
       - path: values
