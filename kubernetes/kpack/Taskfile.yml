@@ -9,10 +9,14 @@ tasks:
   apply:
     cmds:
       - |
-        kubectl apply -f config/build-examples/image.yaml
-        kubectl apply -f config/generics
-        kubectl apply -f config/kpack-components
         kubectl apply -f config/kpack-release/release-*.yaml
+        kubectl apply -f config/kpack-components
+        kubectl apply -f config/generics
+        kubectl apply -f config/build-examples/image.yaml
+
+  delete:
+    cmds:
+      - kubectl delete -f config -R
 
   kpack-reset:
     cmds:
