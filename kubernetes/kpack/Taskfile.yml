@@ -7,12 +7,17 @@ tasks:
       - vendir sync
 
   apply:
+    # kubectl apply -f config/build-examples/image.yaml
     cmds:
       - |
-        kubectl apply -f config/build-examples/image.yaml
+        kubectl apply -f config/build-examples/imageToGithubAttempt.yaml
         kubectl apply -f config/generics
         kubectl apply -f config/kpack-components
         kubectl apply -f config/kpack-release/release-*.yaml
+
+  delete:
+    cmds:
+      - kubectl delete -f config -R
 
   kpack-reset:
     cmds:
