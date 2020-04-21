@@ -37,3 +37,4 @@ tasks:
         kubectl get image spring-petclinic-tutorial -o yaml
         kubectl get images
         logs -image spring-petclinic-tutorial
+        kubectl get builds,images,builders,sourceresolvers
