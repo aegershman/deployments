@@ -4,7 +4,7 @@ kind: Image
 metadata:
   name: spring-petclinic-tutorial
 spec:
-  tag: aegershman/spring-petclinic-tutorial
+  tag: aegershman/kpack-goofin
   serviceAccount: kpack-service-account
   builder:
     name: cluster-sample-builder
