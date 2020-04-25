@@ -9,6 +9,25 @@ features:
       kubernetes.io/ingress.class: nginx
   suse_buildpacks:
     enabled: false
+
 kube:
   service_cluster_ip_range: 0.0.0.0/0
   pod_cluster_ip_range: 0.0.0.0/0
+
+# https://github.com/cloudfoundry-incubator/kubecf/blob/84ac2c18bec4d62feb07875a387a7ad8108b82f4/deploy/helm/kubecf/values.yaml#L368-L386
+eirini:
+  services:
+    loadbalanced: false
+  opi:
+    # kubecf:
+    #   enable: false
+    use_registry_ingress: true
+    ingress_endpoint: 127.0.0.1.xip.io
+
+bits:
+  ingress:
+    # https://github.com/cloudfoundry-incubator/bits-service-release/blob/9a34f385fd4d542274ac34e8cc947dfe9a2495a3/helm/bits/templates/bits.yaml#L13
+    endpoint: 127.0.0.1.xip.io
+    use: true
+  services:
+    loadbalanced: false
