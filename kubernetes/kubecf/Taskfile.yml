@@ -100,6 +100,7 @@ tasks:
         cf create-org scratch-org
         cf create-space scratch-space -o scratch-org
         cf target -o scratch-org -s scratch-space
+      - | # enable docker so that you can push docker images
         cf enable-feature-flag diego_docker
       - | # after cf push'ing apps, see them pop up in the kubecf-eirini namespace as pods
         kubectl -n kubecf-eirini get pods
@@ -112,11 +113,18 @@ tasks:
   post-install-minibroker:
     cmds:
       - |
-        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc.cluster.local
+        cf create-service-broker minibroker user pass http://minibroker-minibroker.default.svc.cluster.local
         cf service-access
         cf enable-service-access mysql
         cf enable-service-access redis
         cf enable-service-access mongodb
         cf enable-service-access mariadb
         cf marketplace
+      - |
         cf create-service mariadb 10-3-22 mariadb-svc -c '{"db": {"name": "my_database"}}'
+        cf service mariadb-svc
+        cf services
+      - |
+        cf create-service-key mariadb-svc mykey
+        cf service-keys mariadb-svc
+        cf service-key mariadb-svc mykey
