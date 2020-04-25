@@ -3,6 +3,8 @@ helmDefaults:
   kubeContext: kind-kind
 
 repositories:
+  - name: minibroker
+    url: https://minibroker.blob.core.windows.net/charts
   - name: quarks
     url: https://cloudfoundry-incubator.github.io/quarks-helm
   - name: stratos
@@ -26,6 +28,15 @@ releases:
       - nginx
     values:
       - config/kubecf/values.yml
+
+  - name: minibroker
+    chart: minibroker/minibroker
+    installed: true
+    version: ~0.x.x
+    needs:
+      - kubecf/kubecf
+    values:
+      - config/minibroker/values.yml
 
   - name: nginx
     chart: stable/nginx-ingress
