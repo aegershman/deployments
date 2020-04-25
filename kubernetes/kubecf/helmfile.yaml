@@ -34,7 +34,7 @@ releases:
     installed: true
     version: ~0.x.x
     needs:
-      - kubecf
+      - kubecf/kubecf
     values:
       - config/minibroker/values.yml
 
