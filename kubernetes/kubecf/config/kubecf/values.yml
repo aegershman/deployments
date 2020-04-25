@@ -19,8 +19,8 @@ eirini:
   services:
     loadbalanced: false
   opi:
-    # kubecf:
-    #   enable: false
+    kubecf:
+      enable: true
     use_registry_ingress: true
     ingress_endpoint: 127.0.0.1.xip.io
 
