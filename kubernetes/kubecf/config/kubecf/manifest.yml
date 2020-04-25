@@ -1,11 +1,8 @@
 ---
 applications:
   - name: todo-ui
-    instances: 1
     memory: 256M
     routes:
       - route: todo.kubecf.127.0.0.1.xip.io
     docker:
       image: dbbaskette/todos-ui
-    env: {}
-    services: []
