@@ -8,6 +8,8 @@ repositories:
 
 releases:
   - name: yugabyte
+    namespace: yugabyte
+    createNamespace: true
     chart: yugabytedb/yugabyte
     installed: true
     version: ~2.1.x
