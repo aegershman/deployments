@@ -30,6 +30,8 @@ releases:
       - config/kubecf/values.yml
 
   - name: minibroker
+    namespace: minibroker
+    createNamespace: true
     chart: minibroker/minibroker
     installed: true
     version: ~0.x.x
