@@ -52,6 +52,8 @@ releases:
       - config/nginx/values.yml
 
   - name: stratos
+    namespace: stratos
+    createNamespace: true
     chart: stratos/console
     installed: false
     version: ~3.1.x
