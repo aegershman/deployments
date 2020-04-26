@@ -115,7 +115,7 @@ tasks:
   post-install-minibroker:
     cmds:
       - |
-        cf create-service-broker minibroker user pass http://minibroker-minibroker.default.svc.cluster.local
+        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc.cluster.local
         cf service-access
         cf enable-service-access mysql
         cf enable-service-access redis
