@@ -25,7 +25,7 @@ releases:
     installed: true
     needs:
       - cf-operator
-      - nginx
+      - nginx-ingress/nginx
     values:
       - config/kubecf/values.yml
 
@@ -41,6 +41,8 @@ releases:
       - config/minibroker/values.yml
 
   - name: nginx
+    namespace: nginx-ingress
+    createNamespace: true
     chart: stable/nginx-ingress
     installed: true
     version: ~1.x.x
@@ -53,6 +55,6 @@ releases:
     version: ~3.1.x
     needs:
       - kubecf/kubecf
-      - nginx
+      - nginx-ingress/nginx
     values:
       - config/stratos/values.yml
