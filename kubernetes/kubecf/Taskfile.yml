@@ -123,7 +123,7 @@ tasks:
         cf enable-service-access mariadb
         cf marketplace
       - |
-        cf create-service mariadb 10-3-22 mariadb-svc -c
+        cf create-service mariadb 10-3-22 mariadb-svc
         cf create-service mariadb 10-3-22 mariadb-svc -c '{"db": {"name": "my_database"}}'
         cf service mariadb-svc
         cf services
