@@ -1,5 +1,5 @@
 ---
-createWatchNamespace: true
+createWatchNamespace: false # we rely on the namespace already being created
 global:
   operator:
     watchNamespace: kubecf

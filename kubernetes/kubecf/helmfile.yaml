@@ -12,6 +12,8 @@ repositories:
 
 releases:
   - name: cf-operator
+    namespace: cf-operator
+    createNamespace: true
     chart: quarks/cf-operator
     version: ~4.4.x
     installed: true
@@ -24,7 +26,7 @@ releases:
     chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.1.0/kubecf-v2.1.0.tgz
     installed: true
     needs:
-      - cf-operator
+      - cf-operator/cf-operator
       - nginx-ingress/nginx
     values:
       - config/kubecf/values.yml
