@@ -13,18 +13,18 @@ console:
 
   # URL of a Cloud Foundry to use for authentication and to auto-register on login
   autoRegisterCF: ~
-#
-# uaa:
-#   protocol: https://
-#   port: 8443
-#   host: uaa.kubecf.svc.cluster.local
-#   consoleClient: cf
-#   consoleClientSecret: ""
-#   consoleAdminIdentifier: cloud_controller.admin
-#   skipSSLValidation: true
 
-# env:
-#   DOMAIN: kubecf.svc.cluster.local
-#   UAA_HOST: uaa.kubecf.svc.cluster.local
-#   UAA_PORT: 8443
-#   UAA_ZONE: kubecf
+uaa:
+  protocol: https://
+  port: 8443
+  host: uaa.kubecf.svc.cluster.local
+  consoleClient: cf
+  consoleClientSecret: ~
+  consoleAdminIdentifier: cloud_controller.admin
+  skipSSLValidation: true
+
+env:
+  # DOMAIN: kubecf.svc.cluster.local
+  # UAA_HOST: uaa.kubecf.svc.cluster.local
+  # UAA_PORT: 8443
+  UAA_ZONE: ""
