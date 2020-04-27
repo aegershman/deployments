@@ -53,7 +53,7 @@ releases:
     namespace: stratos
     createNamespace: true
     chart: stratos/console
-    installed: true
+    installed: false
     version: ~3.1.x
     needs:
       - kubecf/kubecf
