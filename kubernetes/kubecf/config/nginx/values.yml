@@ -23,4 +23,3 @@ tcp:
   20007: kubecf/tcp-router:20007"
   20008: kubecf/tcp-router:20008"
   2222: "kubecf/scheduler:2222"
-  8443: "kubecf/uaa:8443"
