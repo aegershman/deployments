@@ -17,7 +17,7 @@ releases:
     namespace: cf-operator
     createNamespace: true
     chart: quarks/cf-operator
-    version: ~4.4.x
+    version: 4.4.4
     installed: true
     wait: true
     values:
