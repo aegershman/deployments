@@ -8,6 +8,8 @@ controller:
   config:
     proxy-body-size: 64m
     proxy-buffer-size: 16k
+  metrics:
+    enabled: true
 
 defaultBackend:
   enabled: false

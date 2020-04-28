@@ -17,7 +17,7 @@ releases:
     namespace: cf-operator
     createNamespace: true
     chart: quarks/cf-operator
-    version: ~4.4.x
+    version: 4.4.4
     installed: true
     wait: true
     values:
@@ -29,6 +29,7 @@ releases:
     chart: ingress-nginx/ingress-nginx
     installed: true
     version: ~2.0.x
+    wait: true
     values:
       - config/ingress-nginx/values.yml
 
