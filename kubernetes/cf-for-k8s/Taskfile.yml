@@ -53,12 +53,20 @@ tasks:
         cf create-org test-org
         cf create-space -o test-org test-space
         cf target -o test-org -s test-space
-      - |
+      - | # push an app already built via docker:
         cf enable-feature-flag diego_docker
         cf push -f config/values/example-docker-cf-manifest.yml
-      - |
+      - | # push an app from source code:
         cf push test-node-app -p config/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env
+      - | # assuming minibroker is installed:
+        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc.cluster.local
+        cf enable-service-access mysql
+        cf enable-service-access redis
+        cf enable-service-access mongodb
+        cf enable-service-access mariadb
+        cf create-service mariadb 10-3-22 mariadb-svc
+        cf create-service-key mariadb-svc mykey
 
   full-install-steps:
     cmds:

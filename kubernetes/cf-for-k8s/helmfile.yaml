@@ -1,0 +1,17 @@
+---
+helmDefaults:
+  kubeContext: kind-kind
+
+repositories:
+  - name: minibroker
+    url: https://minibroker.blob.core.windows.net/charts
+
+releases:
+  - name: minibroker
+    namespace: minibroker
+    createNamespace: true
+    chart: minibroker/minibroker
+    installed: true
+    version: ~0.x.x
+    values:
+      - config/minibroker/values.yml
