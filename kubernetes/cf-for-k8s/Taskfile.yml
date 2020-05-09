@@ -4,20 +4,12 @@ version: "2"
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy-local.md#steps-to-deploy-on-kind
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
 tasks:
-  has-binaries:
-    cmds:
-      - which bosh
-      - which cf
-      - which kapp
-      - which ytt
-
-  vendir:
-    cmds:
-      - vendir sync
-
   kind-create:
     cmds:
-      - kind create cluster --config config/vendor/github.com/cloudfoundry/cf-for-k8s/deploy/kind/cluster.yml --image='kindest/node:v1.16.4'
+      - |
+        kind create cluster \
+          --config config/vendor/github.com/cloudfoundry/cf-for-k8s/deploy/kind/cluster.yml \
+          --image='kindest/node:v1.18.2'
 
   apply-metrics-server:
     cmds:
@@ -67,8 +59,6 @@ tasks:
 
   full-install-steps:
     cmds:
-      - task: has-binaries
-      # - task: vendir
       # - task: kind-create
       - task: apply-metrics-server
       # - task: clean-generated-values

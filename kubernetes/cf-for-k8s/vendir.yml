@@ -16,7 +16,7 @@ directories:
       - path: vendor/github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: 134c4d9106c0e033296be274a79cf356b9c1b92d # v0.1.0
+          ref: 6d561a5d0ecde1f11eb7836187c0d06851c0f56f # v0.2.0
         includePaths:
           - bin/**/*
           - config-optional/**/*

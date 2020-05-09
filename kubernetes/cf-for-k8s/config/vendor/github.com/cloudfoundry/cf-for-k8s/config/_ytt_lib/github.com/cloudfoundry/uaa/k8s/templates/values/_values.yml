@@ -19,14 +19,25 @@ tomcat:
 
 #! UAA Application Values
 database:
-  scheme: hsqldb
+  scheme: ~
   address: ~
   port: ~
   name: ~
-  username: sa
-  password: password
+  username: ~
+  password: ~
 
 jwt:
   policy:
     activeKeyId: ~
     keys: []
+
+smtp:
+  host: ~
+  port: 25
+  user: ~
+  password: ~
+  starttls: ~
+  from_address: ~
+
+admin:
+  client_secret: ~
