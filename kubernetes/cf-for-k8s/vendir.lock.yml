@@ -10,5 +10,5 @@ directories:
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
-  path: config
+  path: config/cf
 kind: LockConfig

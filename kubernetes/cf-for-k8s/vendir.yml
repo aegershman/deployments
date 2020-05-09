@@ -4,7 +4,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-  - path: config
+  - path: config/cf
     contents:
       - path: vendor/github.com/kubernetes-sigs/metrics-server
         githubRelease:
