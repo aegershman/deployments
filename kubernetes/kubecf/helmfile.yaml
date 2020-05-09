@@ -28,7 +28,7 @@ releases:
     createNamespace: true
     chart: ingress-nginx/ingress-nginx
     installed: true
-    version: ~2.0.x
+    version: ~2.1.x
     wait: true
     values:
       - config/ingress-nginx/values.yml
