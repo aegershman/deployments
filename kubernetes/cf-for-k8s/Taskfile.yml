@@ -8,26 +8,26 @@ tasks:
     cmds:
       - |
         kind create cluster \
-          --config config/vendor/github.com/cloudfoundry/cf-for-k8s/deploy/kind/cluster.yml \
+          --config config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/deploy/kind/cluster.yml \
           --image='kindest/node:v1.18.2'
 
   apply-metrics-server:
     cmds:
-      - kubectl apply --recursive --filename config/vendor/github.com/kubernetes-sigs
+      - kubectl apply --recursive --filename config/cf/vendor/github.com/kubernetes-sigs
 
   generate-values:
     cmds:
       - | # I'm assuming vcap.me == nip.io == xip.io, allowing for localhost dns
-        ./config/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
+        ./config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
           --cf-domain vcap.me \
-          >config/values/cf-values.yml
+          >config/cf/values/cf-values.yml
       - |
         ytt \
-          -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config \
-          -f config/values/cf-values.yml \
-          -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
-          -f config/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-ingressgateway-service.yml \
-          >config/values/cf-for-k8s-ytt.yml
+          -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config \
+          -f config/cf/values/cf-values.yml \
+          -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
+          -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-ingressgateway-service.yml \
+          >config/cf/values/cf-for-k8s-ytt.yml
 
   clean-generated-values:
     cmds:
@@ -38,7 +38,7 @@ tasks:
 
   apply-cf:
     cmds:
-      - kapp deploy -a cf -f config/values/cf-for-k8s-ytt.yml --yes
+      - kapp deploy -a cf -f config/cf/values/cf-for-k8s-ytt.yml --yes
 
   delete-cf:
     cmds:
@@ -48,16 +48,16 @@ tasks:
     cmds:
       - |
         cf api --skip-ssl-validation https://api.vcap.me
-        cf auth admin $(yq r config/values/cf-values.yml 'cf_admin_password')
+        cf auth admin $(yq r config/cf/values/cf-values.yml 'cf_admin_password')
       - |
         cf create-org test-org
         cf create-space -o test-org test-space
         cf target -o test-org -s test-space
       - | # push an app already built via docker:
         cf enable-feature-flag diego_docker
-        cf push -f config/values/example-docker-cf-manifest.yml
+        cf push -f config/cf/values/example-docker-cf-manifest.yml
       - | # push an app from source code:
-        cf push test-node-app -p config/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
+        cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env
       - | # assuming minibroker is installed:
         cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc.cluster.local
