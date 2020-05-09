@@ -4,13 +4,6 @@ version: "2"
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy-local.md#steps-to-deploy-on-kind
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
 tasks:
-  has-binaries:
-    cmds:
-      - which bosh
-      - which cf
-      - which kapp
-      - which ytt
-
   vendir:
     cmds:
       - vendir sync
@@ -67,7 +60,6 @@ tasks:
 
   full-install-steps:
     cmds:
-      - task: has-binaries
       # - task: vendir
       # - task: kind-create
       - task: apply-metrics-server
