@@ -7,6 +7,8 @@ features:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
+  suse_buildpacks:
+    enabled: false
 
 # https://github.com/cloudfoundry-incubator/kubecf/blob/84ac2c18bec4d62feb07875a387a7ad8108b82f4/deploy/helm/kubecf/values.yaml#L368-L386
 eirini:
