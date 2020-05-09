@@ -12,6 +12,7 @@ releases:
     createNamespace: true
     chart: minibroker/minibroker
     installed: true
+    wait: true
     version: ~0.x.x
     values:
       - config/minibroker/values.yml
