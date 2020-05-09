@@ -108,6 +108,7 @@ tasks:
         kubectl -n eirini get pods
       - | # misc. helpful for debugging
         kubectl -n kubecf logs -f api-0
+        kubectl -n kubecf logs -f --tail 250 api-0 --all-containers --max-log-requests=60
         kubectl -n kubecf logs -f --tail 250 api-0 -c cloud-controller-ng-cloud-controller-ng
         kubectl -n kubecf logs -f --tail 250 api-0 -c route-registrar-route-registrar
         kubectl -n ingress-nginx logs -f --tail 250 -lapp.kubernetes.io/name=ingress-nginx
