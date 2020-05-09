@@ -68,6 +68,7 @@ tasks:
         cf create-service mariadb 10-3-22 mariadb-svc
         cf service mariadb-svc
         cf create-service-key mariadb-svc mykey
+        cf bind-service todo-ui mariadb-svc
 
   full-install-steps:
     cmds:
