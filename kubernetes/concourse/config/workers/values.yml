@@ -1,7 +1,4 @@
 ---
-image: concourse/concourse
-imageTag: "6.1"
-
 postgresql:
   enabled: false
 
