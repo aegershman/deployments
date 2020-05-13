@@ -1,4 +1,7 @@
 ---
+image: concourse/concourse
+imageTag: "6.1"
+
 postgresql:
   enabled: false
 
@@ -16,8 +19,6 @@ web:
   enabled: false
 
 concourse:
-  image: concourse/concourse
-  imageTag: "6.1"
   worker:
     ephemeral: true
     tsa:
