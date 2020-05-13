@@ -15,7 +15,6 @@ releases:
     chart: ingress-nginx/ingress-nginx
     installed: true
     version: ~2.1.x
-    wait: true
     values:
       - config/ingress-nginx/values.yml
 
