@@ -1,37 +1,34 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
+  createNamespace: true
+  recreatePods: false
+  wait: true
 
 repositories:
-  - name: stable
-    url: https://kubernetes-charts.storage.googleapis.com/
   - name: concourse
     url: https://concourse-charts.storage.googleapis.com/
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
 
 releases:
+  - name: ingress-nginx
+    namespace: ingress-nginx
+    chart: ingress-nginx/ingress-nginx
+    version: ~2.1.x
+    values:
+      - config/ingress-nginx/values.yml
+
   - name: web
     namespace: concourse-web
-    createNamespace: true
     chart: concourse/concourse
-    installed: true
     version: ~10.x.x
     values:
       - config/web/values.yml
 
   - name: workers
     namespace: concourse-workers
-    createNamespace: true
     chart: concourse/concourse
-    installed: true
     version: ~10.x.x
     values:
       - config/workers/values.yml
-
-  - name: nginx
-    namespace: nginx-ingress
-    createNamespace: true
-    chart: stable/nginx-ingress
-    installed: true
-    version: ~1.x.x
-    values:
-      - config/nginx/values.yml
