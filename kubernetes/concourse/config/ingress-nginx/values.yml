@@ -5,6 +5,5 @@ controller:
   dnsPolicy: ClusterFirstWithHostNet
   service:
     type: NodePort
-
-defaultBackend:
-  enabled: false
+  metrics:
+    enabled: false
