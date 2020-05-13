@@ -1,0 +1,53 @@
+---
+expose:
+  ingress:
+    hosts:
+      core: core-harbor.127.0.0.1.xip.io
+      notary: notary-harbor.127.0.0.1.xip.io
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
+      ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+
+externalURL: https://core-harbor.127.0.0.1.xip.io
+
+persistence:
+  enabled: true
+  # Setting it to "keep" to avoid removing PVCs during a helm delete
+  # operation. Leaving it empty will delete PVCs after the chart deleted
+  resourcePolicy: ""
+
+# debug, info, warning, error or fatal
+logLevel: info
+
+# The initial password of Harbor 'admin' user. Change it from portal after launching Harbor
+harborAdminPassword: Harbor12345
+
+registry:
+  credentials:
+    username: "harbor_registry_user"
+    password: "harbor_registry_password"
+    # If you update the username or password of registry, make sure use cli tool htpasswd to generate the bcrypt hash
+    # e.g. "htpasswd -nbBC10 $username $password"
+    htpasswd: "harbor_registry_user:$2y$10$9L4Tc0DJbFFMB6RdSCunrOpTHdwhid4ktBJmLD00bYgqkkGOvll3m"
+
+chartmuseum:
+  enabled: false
+
+clair:
+  enabled: false
+
+trivy:
+  enabled: false
+  # insecure the flag to skip verifying registry certificate
+  insecure: true
+  # skipUpdate the flag to disable Trivy DB downloads from GitHub
+  #
+  # You might want to set the value of this flag to `true` in test or CI/CD environments to avoid GitHub rate limiting issues.
+  # If the value is set to `true` you have to manually download the `trivy.db` file and mount it in the
+  # `/home/scanner/.cache/trivy/db/trivy.db` path.
+  skipUpdate: true
+
+notary:
+  enabled: false
