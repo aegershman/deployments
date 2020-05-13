@@ -1,6 +1,9 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
+  createNamespace: true
+  recreatePods: false
+  wait: true
 
 repositories:
   - name: concourse
@@ -11,27 +14,21 @@ repositories:
 releases:
   - name: ingress-nginx
     namespace: ingress-nginx
-    createNamespace: true
     chart: ingress-nginx/ingress-nginx
-    installed: true
     version: ~2.1.x
     values:
       - config/ingress-nginx/values.yml
 
   - name: web
     namespace: concourse-web
-    createNamespace: true
     chart: concourse/concourse
-    installed: true
     version: ~10.x.x
     values:
       - config/web/values.yml
 
   - name: workers
     namespace: concourse-workers
-    createNamespace: true
     chart: concourse/concourse
-    installed: true
     version: ~10.x.x
     values:
       - config/workers/values.yml
