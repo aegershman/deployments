@@ -56,8 +56,9 @@ releases:
     namespace: stratos
     createNamespace: true
     chart: stratos/console
-    installed: false
+    installed: true
     version: ~3.2.x
+    wait: true
     needs:
       - kubecf/kubecf
       - ingress-nginx/ingress-nginx
