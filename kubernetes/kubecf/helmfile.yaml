@@ -28,7 +28,7 @@ releases:
     createNamespace: true
     chart: ingress-nginx/ingress-nginx
     installed: true
-    version: ~2.1.x
+    version: ~2.3.x
     wait: true
     values:
       - config/ingress-nginx/values.yml
@@ -57,7 +57,7 @@ releases:
     createNamespace: true
     chart: stratos/console
     installed: false
-    version: ~3.1.x
+    version: ~3.2.x
     needs:
       - kubecf/kubecf
       - ingress-nginx/ingress-nginx
