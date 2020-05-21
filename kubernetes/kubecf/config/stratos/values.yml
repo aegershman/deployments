@@ -1,3 +1,4 @@
+# https://github.com/cloudfoundry/stratos/blob/master/deploy/kubernetes/console/templates/__helpers.tpl#L45-L63
 ---
 console:
   migrateVolumes: false
@@ -12,17 +13,19 @@ console:
   techPreview: false
 
   # URL of a Cloud Foundry to use for authentication and to auto-register on login
-  autoRegisterCF: ~
+  autoRegisterCF: ~ # https://api.kubecf.127.0.0.1.xip.io
 
 uaa:
-  endpoint: https://uaa.kubecf.svc.cluster.local:8443
+  # endpoint: https://uaa.kubecf.svc.cluster.local:8443
+  # endpoint: https://uaa.kubecf.127.0.0.1.xip.io:443
   consoleClient: cf
-  consoleClientSecret: ~
+  consoleClientSecret: ""
   consoleAdminIdentifier: cloud_controller.admin
   skipSSLValidation: true
 
 env:
-  DOMAIN: ~
-  UAA_HOST: ~
-  UAA_PORT: 8443
-  UAA_ZONE: ""
+  # DOMAIN: ~
+  # UAA_HOST: ~
+  # UAA_PORT: 8443
+  # UAA_PORT: 443
+  UAA_ZONE: ~
