@@ -37,6 +37,7 @@ releases:
     namespace: kubecf
     chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.1.0/kubecf-v2.1.0.tgz
     installed: true
+    wait: false
     needs:
       - cf-operator/cf-operator
       - ingress-nginx/ingress-nginx
@@ -49,6 +50,7 @@ releases:
     chart: minibroker/minibroker
     installed: true
     version: ~0.x.x
+    wait: false
     values:
       - config/minibroker/values.yml
 
@@ -58,6 +60,7 @@ releases:
     chart: stratos/console
     installed: false
     version: ~3.2.x
+    wait: false
     needs:
       - kubecf/kubecf
       - ingress-nginx/ingress-nginx
