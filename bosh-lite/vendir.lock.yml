@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Bumping Stemcell gcp-ubuntu-xenial-stemcell to version 621.57
-      sha: 64326e12ab4f605415e27d1b6b6db7bf8f6d868b
+      commitTitle: Bumping uaa to version 74.19.0
+      sha: f8d4b602475e651b24db8a550d915ff86bd62e66
     path: bosh-deployment
   - manual: {}
     path: state
