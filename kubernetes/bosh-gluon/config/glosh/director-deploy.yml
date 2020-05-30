@@ -2,7 +2,7 @@
 apiVersion: gluon.starkandwayne.com/v1alpha1
 kind: BOSHDeployment
 metadata:
-  name: ops1
+  name: glosh1
 
 spec:
   repo: https://github.com/cloudfoundry/bosh-deployment
@@ -12,7 +12,9 @@ spec:
     - vsphere/cpi
 
   vars:
-    - configMap: { name: buffalo-lab-boshes }
-    - secret: { name: buffalo-lab-vcenter }
+    - configMap:
+        name: bosh-gluon-glosh
+    - secret:
+        name: buffalo-lab-vcenter
     - name: internal_ip
       value: 10.0.0.4

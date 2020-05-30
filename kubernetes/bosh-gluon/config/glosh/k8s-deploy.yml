@@ -11,6 +11,6 @@ dependencies:
     - config: runtime-config
 
 spec:
-  director: ops1
+  director: glosh1
   repo: https://github.com/jhunt/k8s-deployment
   entrypoint: k8s.yml

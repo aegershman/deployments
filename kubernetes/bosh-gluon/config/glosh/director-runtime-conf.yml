@@ -5,7 +5,7 @@ metadata:
   name: runtime-config
 
 spec:
-  director: ops1
+  director: glosh1
   type: runtime
   config: |
     addons:

@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: buffalo-lab-boshes
+  name: bosh-gluon-glosh
 
 data:
   vcenter_ip: your.vsphere.example.com
