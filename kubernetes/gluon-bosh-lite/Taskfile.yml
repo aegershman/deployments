@@ -2,6 +2,11 @@
 version: "2"
 
 tasks:
+  controller:
+    cmds:
+      - |
+        cd config/vendor/github.com/starkandwayne/gluonconfig/manager
+        kustomize edit set image controller=starkandwayne/gluon-controller:latest
   apply:
     cmds:
       - kubectl apply -R -f config/vendor

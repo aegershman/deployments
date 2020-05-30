@@ -12,6 +12,6 @@ directories:
           ref: 69b5e0e91e13194004dd757e44521312924b09ad
         includePaths:
           - config/crd/bases/**/*
-          # - config/manager/manager.yaml
+          - config/manager/**/*
       - path: bosh-lite
         manual: {}
