@@ -6,5 +6,12 @@ kind: Config
 directories:
   - path: config
     contents:
+      - path: vendor/github.com/starkandwayne/gluon
+        git:
+          url: https://github.com/starkandwayne/gluon
+          ref: 69b5e0e91e13194004dd757e44521312924b09ad
+        includePaths:
+          - config/crd/bases/**/*
+          # - config/manager/manager.yaml
       - path: bosh-lite
         manual: {}

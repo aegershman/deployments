@@ -1,6 +1,10 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
+  - git:
+      commitTitle: Command-line Interface Utility `gluon`...
+      sha: 69b5e0e91e13194004dd757e44521312924b09ad
+    path: vendor/github.com/starkandwayne/gluon
   - manual: {}
     path: bosh-lite
   path: config

@@ -6,11 +6,15 @@ metadata:
 
 dependencies:
   dependsOn:
+    - config: cloud-conf
+      status: ""
+    - config: runtime-conf
+      status: ""
     - stemcell: xenial-621-74
-    - config: cloud-config
-    - config: runtime-config
+      status: ""
 
 spec:
   director: gluon-bosh-lite
   repo: https://github.com/jhunt/k8s-deployment
+  ref: latest
   entrypoint: k8s.yml

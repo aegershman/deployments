@@ -4,4 +4,5 @@ version: "2"
 tasks:
   apply:
     cmds:
-      - exit 1
+      - kubectl apply -R -f config/vendor
+      - kubectl apply -R -f config/bosh-lite

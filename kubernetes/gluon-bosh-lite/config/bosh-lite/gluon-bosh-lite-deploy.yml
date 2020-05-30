@@ -20,3 +20,5 @@ spec:
         name: gluon-bosh-lite
     - name: director_name
       value: "bosh-lite-director"
+
+  entrypoint: bosh.yml
