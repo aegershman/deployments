@@ -1,0 +1,16 @@
+---
+apiVersion: gluon.starkandwayne.com/v1alpha1
+kind: BOSHDeployment
+metadata:
+  name: k8s
+
+dependencies:
+  dependsOn:
+    - stemcell: xenial-621-74
+    - config: cloud-config
+    - config: runtime-config
+
+spec:
+  director: ops1
+  repo: https://github.com/jhunt/k8s-deployment
+  entrypoint: k8s.yml
