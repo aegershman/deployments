@@ -18,7 +18,5 @@ spec:
   vars:
     - configMap:
         name: gluon-bosh-lite
-    # - secret:
-    #     name: buffalo-lab-vcenter
     - name: director_name
       value: "bosh-lite-director"
