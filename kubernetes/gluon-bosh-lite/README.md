@@ -1,4 +1,4 @@
-# bosh-gluon
+# gluon-bosh-lite
 
 [goofin' with `bosh` via `gluon`](https://starkandwayne.com/blog/deploying-kubernetes-via-gluon/)
 

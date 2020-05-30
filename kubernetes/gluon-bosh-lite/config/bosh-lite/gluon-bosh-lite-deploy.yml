@@ -2,7 +2,7 @@
 apiVersion: gluon.starkandwayne.com/v1alpha1
 kind: BOSHDeployment
 metadata:
-  name: glosh1
+  name: gluon-bosh-lite
 
 spec:
   repo: https://github.com/cloudfoundry/bosh-deployment
@@ -17,7 +17,7 @@ spec:
 
   vars:
     - configMap:
-        name: bosh-gluon-glosh
+        name: gluon-bosh-lite
     # - secret:
     #     name: buffalo-lab-vcenter
     - name: director_name

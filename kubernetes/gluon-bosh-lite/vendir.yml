@@ -6,5 +6,5 @@ kind: Config
 directories:
   - path: config
     contents:
-      - path: glosh
+      - path: bosh-lite
         manual: {}

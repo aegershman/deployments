@@ -2,10 +2,10 @@
 apiVersion: gluon.starkandwayne.com/v1alpha1
 kind: BOSHConfig
 metadata:
-  name: cloud-config
+  name: cloud-conf
 
 spec:
-  director: glosh1
+  director: gluon-bosh-lite
   type: cloud
   config: |
     azs:

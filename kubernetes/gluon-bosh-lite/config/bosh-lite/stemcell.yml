@@ -5,7 +5,7 @@ metadata:
   name: xenial-621-74
 
 spec:
-  director: glosh1
+  director: gluon-bosh-lite
 
   name: bosh-vsphere-esxi-ubuntu-xenial-go_agent
   version: "621.74"

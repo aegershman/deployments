@@ -11,6 +11,6 @@ dependencies:
     - config: runtime-config
 
 spec:
-  director: glosh1
+  director: gluon-bosh-lite
   repo: https://github.com/jhunt/k8s-deployment
   entrypoint: k8s.yml
