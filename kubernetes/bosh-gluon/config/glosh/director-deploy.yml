@@ -6,15 +6,19 @@ metadata:
 
 spec:
   repo: https://github.com/cloudfoundry/bosh-deployment
+  ref: f8d4b602475e651b24db8a550d915ff86bd62e66
   ops:
-    - uaa
+    - bosh-lite
     - credhub
-    - vsphere/cpi
+    - jumpbox-user
+    - uaa
+    - virtualbox/cpi
+    - virtualbox/outbound-network
 
   vars:
     - configMap:
         name: bosh-gluon-glosh
-    - secret:
-        name: buffalo-lab-vcenter
-    - name: internal_ip
-      value: 10.0.0.4
+    # - secret:
+    #     name: buffalo-lab-vcenter
+    - name: director_name
+      value: "bosh-lite-director"
