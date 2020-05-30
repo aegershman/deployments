@@ -1,0 +1,18 @@
+---
+version: "2"
+
+tasks:
+  controller:
+    cmds:
+      - |
+        cd config/vendor/github.com/starkandwayne/gluon/config/manager
+        kustomize edit set image controller=starkandwayne/gluon-controller:latest
+        cd ../../
+        kustomize build config/default | kubectl apply -f -
+  apply:
+    cmds:
+      - kubectl apply -R -f config/bosh-lite
+  run:
+    cmds:
+      - task: controller
+      - task: apply

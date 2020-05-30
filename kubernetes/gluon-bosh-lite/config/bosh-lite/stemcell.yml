@@ -1,0 +1,13 @@
+---
+apiVersion: gluon.starkandwayne.com/v1alpha1
+kind: BOSHStemcell
+metadata:
+  name: xenial-621-74
+
+spec:
+  director: gluon-bosh-lite
+
+  name: bosh-vsphere-esxi-ubuntu-xenial-go_agent
+  version: "621.74"
+  url: https://bosh-core-stemcells.s3-accelerate.amazonaws.com/621.74/bosh-stemcell-621.74-vsphere-esxi-ubuntu-xenial-go_agent.tgz
+  sha1: 0d927b9c5f79b369e646f5c835e33496bf7356c5
