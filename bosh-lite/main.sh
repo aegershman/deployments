@@ -22,6 +22,11 @@ c | create)
     -v outbound_network_name=NatNetwork
   ;;
 
+l | login)
+  export BOSH_CLIENT=admin
+  export BOSH_CLIENT_SECRET=$(bosh int ${STATE_DIR}/creds.yml --path /admin_password)
+  ;;
+
 *)
   exit 1
   ;;
