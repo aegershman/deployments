@@ -19,7 +19,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
@@ -410,7 +410,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
@@ -1440,7 +1440,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
@@ -1629,7 +1629,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
@@ -2097,7 +2097,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
@@ -2770,7 +2770,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
@@ -3690,8 +3690,6 @@ spec:
                   be in the same format as the query-param syntax. More info about
                   label selectors: http://kubernetes.io/docs/user-guide/labels#label-selectors'
                 type: string
-            required:
-            - replicas
             type: object
         type: object
     served: true
@@ -3738,6 +3736,7 @@ webhooks:
     - UPDATE
     resources:
     - clusters
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -3757,6 +3756,7 @@ webhooks:
     - UPDATE
     resources:
     - machines
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -3776,6 +3776,7 @@ webhooks:
     - UPDATE
     resources:
     - machinedeployments
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -3795,6 +3796,7 @@ webhooks:
     - UPDATE
     resources:
     - machinehealthchecks
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -3814,6 +3816,7 @@ webhooks:
     - UPDATE
     resources:
     - machinesets
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -3833,6 +3836,7 @@ webhooks:
     - UPDATE
     resources:
     - machinepools
+  sideEffects: None
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -3901,6 +3905,20 @@ rules:
 - apiGroups:
   - bootstrap.cluster.x-k8s.io
   - controlplane.cluster.x-k8s.io
+  - infrastructure.cluster.x-k8s.io
+  resources:
+  - '*'
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - bootstrap.cluster.x-k8s.io
+  - exp.infrastructure.cluster.x-k8s.io
   - infrastructure.cluster.x-k8s.io
   resources:
   - '*'
@@ -4180,7 +4198,7 @@ spec:
         - --enable-leader-election
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.3.3
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.3.6
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -4236,7 +4254,7 @@ spec:
         - --webhook-port=9443
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.3.3
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.3.6
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -4323,6 +4341,7 @@ webhooks:
     - UPDATE
     resources:
     - clusters
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -4342,6 +4361,7 @@ webhooks:
     - UPDATE
     resources:
     - machines
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -4361,6 +4381,7 @@ webhooks:
     - UPDATE
     resources:
     - machinedeployments
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -4380,6 +4401,7 @@ webhooks:
     - UPDATE
     resources:
     - machinehealthchecks
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -4399,6 +4421,7 @@ webhooks:
     - UPDATE
     resources:
     - machinesets
+  sideEffects: None
 - clientConfig:
     caBundle: Cg==
     service:
@@ -4418,6 +4441,7 @@ webhooks:
     - UPDATE
     resources:
     - machinepools
+  sideEffects: None
 ---
 apiVersion: v1
 kind: Namespace
@@ -4432,7 +4456,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-kubeadm-bootstrap-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: bootstrap-kubeadm
@@ -6104,7 +6128,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-kubeadm-bootstrap-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: bootstrap-kubeadm
@@ -8055,7 +8079,7 @@ spec:
         - --enable-leader-election
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.3
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.6
         imagePullPolicy: IfNotPresent
         name: manager
       terminationGracePeriodSeconds: 10
@@ -8099,7 +8123,7 @@ spec:
         - --webhook-port=9443
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.3
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.6
         imagePullPolicy: IfNotPresent
         name: manager
         ports:
@@ -8159,7 +8183,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-kubeadm-control-plane-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
@@ -9195,6 +9219,7 @@ webhooks:
     - UPDATE
     resources:
     - kubeadmcontrolplanes
+  sideEffects: None
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -9466,7 +9491,7 @@ spec:
         - --enable-leader-election
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.3
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.6
         imagePullPolicy: IfNotPresent
         name: manager
       terminationGracePeriodSeconds: 10
@@ -9510,7 +9535,7 @@ spec:
         - --webhook-port=9443
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.3
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.6
         imagePullPolicy: IfNotPresent
         name: manager
         ports:
@@ -9586,3 +9611,4 @@ webhooks:
     - UPDATE
     resources:
     - kubeadmcontrolplanes
+  sideEffects: None
