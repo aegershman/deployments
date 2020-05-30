@@ -11,7 +11,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-webhook-system/capi-kubeadm-control-plane-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.8
+    controller-gen.kubebuilder.io/version: v0.2.9
   creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
@@ -1047,6 +1047,7 @@ webhooks:
     - UPDATE
     resources:
     - kubeadmcontrolplanes
+  sideEffects: None
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -1318,7 +1319,7 @@ spec:
         - --enable-leader-election
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.3
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.6
         imagePullPolicy: IfNotPresent
         name: manager
       terminationGracePeriodSeconds: 10
@@ -1362,7 +1363,7 @@ spec:
         - --webhook-port=9443
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.3
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.6
         imagePullPolicy: IfNotPresent
         name: manager
         ports:
@@ -1438,3 +1439,4 @@ webhooks:
     - UPDATE
     resources:
     - kubeadmcontrolplanes
+  sideEffects: None

@@ -5,8 +5,8 @@ directories:
       url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: vendor/github.com/kubernetes-sigs/metrics-server
   - git:
-      commitTitle: Add a test to verify optional configs are valid...
-      sha: 6d561a5d0ecde1f11eb7836187c0d06851c0f56f
+      commitTitle: Add priority class to DaemonSets...
+      sha: 86f5a6ed49ff6f132104c52c4a983b202c304211
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
