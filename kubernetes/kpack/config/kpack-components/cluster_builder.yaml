@@ -2,7 +2,7 @@
 apiVersion: build.pivotal.io/v1alpha1
 kind: ClusterBuilder
 metadata:
-  name: cluster-sample-builder
+  name: default
 spec:
-  image: cloudfoundry/cnb:bionic
+  image: gcr.io/paketo-buildpacks/builder:base
   updatePolicy: polling

@@ -10,7 +10,11 @@ tasks:
     cmds:
       - |
         kubectl apply -f config/kpack-release/release-*.yaml
-        kubectl apply -f config/kpack-components
+        kubectl -n kpack get pods --watch
+      - |
+        kubectl apply -f config/kpack-components/cluster_builder.yaml
+        kubectl describe clusterbuilder default
+      - |
         kubectl apply -f config/generics
         kubectl apply -f config/build-examples/image.yaml
 
