@@ -3,7 +3,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-  - path: config
+  - path: config/kpack
     contents:
       - path: build-examples
         manual: {}

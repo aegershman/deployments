@@ -9,10 +9,14 @@ tasks:
   apply:
     cmds:
       - |
-        kubectl apply -f config/kpack-release/release-*.yaml
-        kubectl apply -f config/kpack-components
-        kubectl apply -f config/generics
-        kubectl apply -f config/build-examples/image.yaml
+        kubectl apply -f config/kpack/kpack-release/release-*.yaml
+        kubectl -n kpack get pods --watch
+      - |
+        kubectl apply -f config/kpack/kpack-components/cluster_builder.yaml
+        kubectl describe clusterbuilder default
+      - |
+        kubectl apply -R -f config/kpack/generics
+        kubectl apply -f config/kpack/build-examples/image.yaml
 
   delete:
     cmds:
@@ -21,8 +25,8 @@ tasks:
   kpack-reset:
     cmds:
       - |
-        kubectl delete -f config/build-examples/image.yaml
-        kubectl apply -f config/build-examples/image.yaml
+        kubectl delete -f config/kpack/build-examples/image.yaml
+        kubectl apply -f config/kpack/build-examples/image.yaml
 
   kpack-logs:
     cmds:
