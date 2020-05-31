@@ -20,7 +20,7 @@ tasks:
 
   delete:
     cmds:
-      - kubectl delete -f config -R
+      - kubectl delete -R -f config/kpack
 
   kpack-reset:
     cmds:
