@@ -4,7 +4,7 @@ kind: Image
 metadata:
   name: spring-petclinic-tutorial
 spec:
-  tag: core-harbor.127.0.0.1.xip.io/library/aegershman
+  tag: harbor-harbor-core.harbor.svc.cluster.local/library/aegershman/spring-petclinic
   serviceAccount: kpack-service-account
   builder:
     name: default
