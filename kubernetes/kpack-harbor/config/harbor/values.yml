@@ -1,16 +1,17 @@
 ---
 expose:
+  type: ingress
   ingress:
     hosts:
-      core: core-harbor.127.0.0.1.xip.io
-      notary: notary-harbor.127.0.0.1.xip.io
+      core: harbor.vcap.me
+      notary: notary-harbor.vcap.me
     annotations:
       ingress.kubernetes.io/ssl-redirect: "true"
       ingress.kubernetes.io/proxy-body-size: "0"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
 
-externalURL: https://core-harbor.127.0.0.1.xip.io
+externalURL: https://harbor.vcap.me
 
 persistence:
   enabled: true
