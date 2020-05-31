@@ -32,6 +32,7 @@ tasks:
     cmds:
       - | # not designed to be actually ran as a command, just a placeholder of commands
         exit 1
+        kubectl -n ingress-nginx logs -f -lapp.kubernetes.io/name=ingress-nginx
         kubectl -n kpack get pods --watch
         kubectl -n kpack logs -f -lapp=kpack-controller
         kubectl describe builds
