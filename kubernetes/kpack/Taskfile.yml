@@ -15,7 +15,7 @@ tasks:
         kubectl apply -f config/kpack-components/cluster_builder.yaml
         kubectl describe clusterbuilder default
       - |
-        kubectl apply -f config/generics
+        kubectl apply -R -f config/generics
         kubectl apply -f config/build-examples/image.yaml
 
   delete:
