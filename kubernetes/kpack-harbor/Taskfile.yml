@@ -37,11 +37,12 @@ tasks:
         kubectl describe builds
         kubectl describe clusterbuilder
         kubectl describe image spring-petclinic-tutorial
+        kubectl describe pod -limage.build.pivotal.io/image=spring-petclinic-tutorial
+        kubectl get builds,images,builders,sourceresolvers
         kubectl get clusterbuilder -o yaml
         kubectl get image spring-petclinic-tutorial -o yaml
         kubectl get images
         logs -image spring-petclinic-tutorial
-        kubectl get builds,images,builders,sourceresolvers
 
   harbor-copy-example:
     cmds:
