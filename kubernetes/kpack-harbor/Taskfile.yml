@@ -20,7 +20,7 @@ tasks:
 
   delete:
     cmds:
-      - kubectl delete -f config -R
+      - kubectl delete -R -f config/kpack
 
   kpack-reset:
     cmds:
@@ -32,13 +32,30 @@ tasks:
     cmds:
       - | # not designed to be actually ran as a command, just a placeholder of commands
         exit 1
+        kubectl -n ingress-nginx logs -f -lapp.kubernetes.io/name=ingress-nginx
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=core
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=registry -c registry
         kubectl -n kpack get pods --watch
         kubectl -n kpack logs -f -lapp=kpack-controller
         kubectl describe builds
         kubectl describe clusterbuilder
         kubectl describe image spring-petclinic-tutorial
+        kubectl describe pod -limage.build.pivotal.io/image=spring-petclinic-tutorial
+        kubectl get builds,images,builders,sourceresolvers
         kubectl get clusterbuilder -o yaml
         kubectl get image spring-petclinic-tutorial -o yaml
         kubectl get images
         logs -image spring-petclinic-tutorial
-        kubectl get builds,images,builders,sourceresolvers
+
+  harbor-copy-example:
+    cmds:
+      # for dockerhub, the registry auth target is "https://index.docker.io/v1/".
+      # notice "library" is the project and "kuard-amd64" is the repository;
+      # the repository was created automatically by virtue of the push.
+      - |
+        exit 1
+        docker login --username admin --password Harbor12345 harbor.vcap.me
+        docker pull gcr.io/kuar-demo/kuard-amd64:blue
+        docker tag gcr.io/kuar-demo/kuard-amd64:blue harbor.vcap.me/library/kuard-amd64:blue
+        docker images
+        docker push harbor.vcap.me/library/kuard-amd64:blue

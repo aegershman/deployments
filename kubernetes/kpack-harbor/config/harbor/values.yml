@@ -1,16 +1,43 @@
 ---
 expose:
+  type: ingress
   ingress:
+    # gershman note:
+    # but still leave these addresses here
+    # on the vcap.me domain so that you can access the UI
+    # from your host machine if desired
     hosts:
-      core: core-harbor.127.0.0.1.xip.io
-      notary: notary-harbor.127.0.0.1.xip.io
+      core: harbor.vcap.me
+      notary: notary-harbor.vcap.me
     annotations:
       ingress.kubernetes.io/ssl-redirect: "true"
       ingress.kubernetes.io/proxy-body-size: "0"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
 
-externalURL: https://core-harbor.127.0.0.1.xip.io
+# The external URL for Harbor core service. It is used to
+# 1) populate the docker/helm commands showed on portal
+# 2) populate the token service URL returned to docker/notary client
+#
+# Format: protocol://domain[:port]. Usually:
+# 1) if "expose.type" is "ingress", the "domain" should be
+# the value of "expose.ingress.hosts.core"
+# 2) if "expose.type" is "clusterIP", the "domain" should be
+# the value of "expose.clusterIP.name"
+# 3) if "expose.type" is "nodePort", the "domain" should be
+# the IP address of k8s node
+#
+# gershman note:
+# this is deceptive because you'd think it should be the ingress-addressable route,
+# but no! otherwise it'll resolve to the localhost of the build pod container itself
+# and not the "localhost" of the actual host machine which would route to the ingress
+# and thus to harbor-- no, instead, use the full cluster-internal DNS for tagging,
+# and make sure that 'harbor' has it's external_host configured as the cluster-internal DNS
+# so it returns the proper values to the client's docker auth endpoint resolver
+#
+# externalURL: http://harbor.vcap.me
+# externalURL: http://harbor-harbor-core.harbor.svc.cluster.local:80
+externalURL: http://harbor-harbor-core.harbor.svc.cluster.local
 
 persistence:
   enabled: true
@@ -19,7 +46,8 @@ persistence:
   resourcePolicy: ""
 
 # debug, info, warning, error or fatal
-logLevel: info
+# logLevel: info
+logLevel: debug
 
 # The initial password of Harbor 'admin' user. Change it from portal after launching Harbor
 harborAdminPassword: Harbor12345
