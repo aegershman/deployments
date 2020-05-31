@@ -4,7 +4,20 @@ kind: Image
 metadata:
   name: spring-petclinic-tutorial
 spec:
-  tag: harbor.vcap.me/library/spring-petclinic
+  # this is deceptive because you'd think it should be the ingress-addressable route,
+  # but no! otherwise it'll resolve to the localhost of the build pod container itself
+  # and not the "localhost" of the actual host machine which would route to the ingress
+  # and thus to harbor-- no, instead, use the full cluster-internal DNS for tagging,
+  # and make sure that 'harbor' has it's external_host configured as the cluster-internal DNS
+  # so it returns the proper values to the client's docker auth endpoint resolver
+  #
+  # tag: harbor.vcap.me/library/spring-petclinic
+  #
+  # [analyze] ERROR: failed to get previous image: connect to repo store 'harbor-harbor-core.harbor.svc.cluster.local/library/spring-petclinic': GET http://harbor-harbor-core.harbor.svc.cluster.local/v2/library/spring-petclinic/manifests/latest: NOT_FOUND: repository library/spring-petclinic not found
+  # tag: harbor-harbor-core.harbor.svc.cluster.local/library/spring-petclinic
+  #
+  tag: harbor-harbor-core.harbor.svc.cluster.local/library
+  #
   serviceAccount: kpack-service-account
   builder:
     name: default
