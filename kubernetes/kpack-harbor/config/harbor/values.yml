@@ -36,7 +36,8 @@ expose:
 # so it returns the proper values to the client's docker auth endpoint resolver
 #
 # externalURL: http://harbor.vcap.me
-externalURL: http://harbor-harbor-core.harbor.svc.cluster.local:80
+# externalURL: http://harbor-harbor-core.harbor.svc.cluster.local:80
+externalURL: http://harbor-harbor-core.harbor.svc.cluster.local
 
 persistence:
   enabled: true
@@ -45,7 +46,8 @@ persistence:
   resourcePolicy: ""
 
 # debug, info, warning, error or fatal
-logLevel: info
+# logLevel: info
+logLevel: debug
 
 # The initial password of Harbor 'admin' user. Change it from portal after launching Harbor
 harborAdminPassword: Harbor12345

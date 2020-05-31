@@ -16,7 +16,15 @@ spec:
   # [analyze] ERROR: failed to get previous image: connect to repo store 'harbor-harbor-core.harbor.svc.cluster.local/library/spring-petclinic': GET http://harbor-harbor-core.harbor.svc.cluster.local/v2/library/spring-petclinic/manifests/latest: NOT_FOUND: repository library/spring-petclinic not found
   # tag: harbor-harbor-core.harbor.svc.cluster.local/library/spring-petclinic
   #
-  tag: harbor-harbor-core.harbor.svc.cluster.local/library
+  # nope, this isn't it either:
+  # [prepare] prepare:main.go:79: GET http://harbor-harbor-core.harbor.svc.cluster.local:80/service/token?scope=repository%3Alibrary%3Apush%2Cpull&service=harbor-registry: unsupported status code 500
+  # tag: harbor-harbor-core.harbor.svc.cluster.local/library
+  #
+  # okay, not this either?
+  # [prepare] prepare:main.go:83: invalid credentials to build to harbor-harbor-core.harbor.svc.cluster.local:80/library/spring-petclinic
+  # tag: harbor-harbor-core.harbor.svc.cluster.local:80/library/spring-petclinic
+  #
+  tag: harbor-harbor-core.harbor.svc.cluster.local/library/spring-petclinic
   #
   serviceAccount: kpack-service-account
   builder:
