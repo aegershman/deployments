@@ -42,3 +42,16 @@ tasks:
         kubectl get images
         logs -image spring-petclinic-tutorial
         kubectl get builds,images,builders,sourceresolvers
+
+  harbor-copy-example:
+    cmds:
+      # for dockerhub, the registry auth target is "https://index.docker.io/v1/".
+      # notice "library" is the project and "kuard-amd64" is the repository;
+      # the repository was created automatically by virtue of the push.
+      - |
+        exit 1
+        docker login --username admin --password Harbor12345 harbor.vcap.me
+        docker pull gcr.io/kuar-demo/kuard-amd64:blue
+        docker tag gcr.io/kuar-demo/kuard-amd64:blue harbor.vcap.me/library/kuard-amd64:blue
+        docker images
+        docker push harbor.vcap.me/library/kuard-amd64:blue
