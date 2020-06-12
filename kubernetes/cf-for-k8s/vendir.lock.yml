@@ -5,8 +5,8 @@ directories:
       url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: vendor/github.com/kubernetes-sigs/metrics-server
   - git:
-      commitTitle: 'DOC: also bump suggested resource min in docs...'
-      sha: e61ba6425502077e9daf2f78fcd2c697b76cb4e3
+      commitTitle: 'FIX: bump oldest supported version from 1.14 to 1.15...'
+      sha: 64ec279b4a0a7b46668cfe6e639d6f6b36cf536a
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
