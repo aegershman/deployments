@@ -35,7 +35,7 @@ releases:
 
   - name: kubecf
     namespace: kubecf
-    chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.1.0/kubecf-v2.1.0.tgz
+    chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.2.2/kubecf-v2.2.2.tgz
     installed: true
     wait: false
     needs:
