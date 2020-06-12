@@ -8,7 +8,7 @@ directories:
   - manual: {}
     path: kpack-components
   - githubRelease:
-      url: https://api.github.com/repos/pivotal/kpack/releases/25016868
+      url: https://api.github.com/repos/pivotal/kpack/releases/27343776
     path: kpack-release
   path: config/kpack
 kind: LockConfig
