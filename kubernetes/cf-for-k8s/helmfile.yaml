@@ -5,6 +5,8 @@ helmDefaults:
 repositories:
   - name: minibroker
     url: https://minibroker.blob.core.windows.net/charts
+  - name: svc-cat
+    url: https://svc-catalog-charts.storage.googleapis.com
 
 releases:
   - name: minibroker
@@ -16,3 +18,13 @@ releases:
     version: ~0.x.x
     values:
       - config/minibroker/values.yml
+
+  - name: service-catalog
+    namespace: catalog
+    createNamespace: true
+    chart: svc-cat/catalog
+    installed: false
+    wait: true
+    version: ~0.x.x
+    values:
+      - config/service-catalog/values.yml

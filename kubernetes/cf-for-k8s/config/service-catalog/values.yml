@@ -1,0 +1,13 @@
+# https://github.com/kubernetes-sigs/service-catalog/blob/master/charts/catalog/values.yaml
+---
+webhook:
+  service:
+    port: 443
+controllerManager:
+  enablePrometheusScrape: false
+  service:
+    type: ClusterIP
+asyncBindingOperationsEnabled: false
+namespacedServiceBrokerDisabled: false
+servicePlanDefaultsEnabled: false
+cascadingDeletionEnabled: false
