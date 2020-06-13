@@ -2,6 +2,13 @@
 version: "2"
 
 tasks:
-  default:
+  install:
+    cmds:
+      - | # vendir sync
+        kubectl apply --recursive --filename config/tektoncd/vendor
+
+  debug:
     cmds:
       - exit 1
+      - |
+        kubectl --namespace tekton-pipelines get pods --watch
