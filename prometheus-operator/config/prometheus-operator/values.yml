@@ -1,0 +1,24 @@
+---
+alertmanager:
+  ingress:
+    enabled: true
+    hosts:
+      - alertmanager.vcap.me
+
+grafana:
+  adminPassword: prom-operator
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.vcap.me
+  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L542
+  additionalDataSources: []
+
+prometheusOperator:
+  enabled: true
+
+prometheus:
+  ingress:
+    enabled: true
+    hosts:
+      - prometheus.vcap.me
