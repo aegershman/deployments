@@ -1,0 +1,18 @@
+---
+alertmanager:
+  ingress:
+    enabled: true
+    hosts:
+      - alertmanager.vcap.me
+
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.vcap.me
+
+prometheus:
+  ingress:
+    enabled: true
+    hosts:
+      - prometheus.vcap.me

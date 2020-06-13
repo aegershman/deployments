@@ -1,0 +1,7 @@
+---
+version: "2"
+
+tasks:
+  default:
+    cmds:
+      - exit 1
