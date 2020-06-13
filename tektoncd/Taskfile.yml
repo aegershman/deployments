@@ -19,7 +19,6 @@ tasks:
         kubectl create -f taskRun.yaml
       - | # option 2 with tkn cli
         tkn task start echo
-        tkn taskrun logs echo-run-rssjw -f -n default
 
   debug:
     cmds:
