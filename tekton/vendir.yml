@@ -13,5 +13,7 @@ directories:
           disableAutoChecksumValidation: true
         includePaths:
           - release.yaml
-      - path: user-supplied
+      - path: user-supplied-config
+        manual: {}
+      - path: user-supplied-pipelines
         manual: {}

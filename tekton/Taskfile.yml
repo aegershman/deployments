@@ -2,10 +2,13 @@
 version: "2"
 
 tasks:
-  install:
+  apply:
     cmds:
       - | # vendir sync
         kubectl apply --recursive --filename config/tektoncd/vendor
+        kubectl apply --recursive --filename config/tektoncd/user-supplied-config
+      - |
+        kubectl apply --filename config/tektoncd/user-supplied-pipelines/echo.yaml
 
   debug:
     cmds:
