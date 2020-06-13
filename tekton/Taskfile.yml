@@ -2,13 +2,24 @@
 version: "2"
 
 tasks:
-  apply:
+  install:
     cmds:
       - | # vendir sync
         kubectl apply --recursive --filename config/tektoncd/vendor
         kubectl apply --recursive --filename config/tektoncd/user-supplied-config
+
+  start:
+    cmds:
+      - exit 1
       - |
         kubectl apply --filename config/tektoncd/user-supplied-pipelines/echo.yaml
+        tkn task start echo --dry-run
+      - | # option 1 with kubectl...
+        tkn task start echo --dry-run > taskRun.yaml
+        kubectl create -f taskRun.yaml
+      - | # option 2 with tkn cli
+        tkn task start echo
+        tkn taskrun logs echo-run-rssjw -f -n default
 
   debug:
     cmds:
