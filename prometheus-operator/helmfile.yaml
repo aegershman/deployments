@@ -1,6 +1,7 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
+  wait: true
 
 repositories:
   - name: stable
@@ -15,7 +16,6 @@ releases:
     chart: ingress-nginx/ingress-nginx
     installed: true
     version: ~2.4.x
-    wait: true
     values:
       - config/ingress-nginx/values.yml
 
@@ -25,5 +25,7 @@ releases:
     chart: stable/prometheus-operator
     installed: true
     version: ~8.14.x
+    needs:
+      - ingress-nginx/ingress-nginx
     values:
       - config/prometheus-operator/values.yml
