@@ -4,7 +4,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-  - path: config/tektoncd
+  - path: config/tektoncd-pipeline
     contents:
       - path: vendor/github.com/tektoncd/pipeline
         githubRelease:

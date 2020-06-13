@@ -8,5 +8,5 @@ directories:
     path: user-supplied-config
   - manual: {}
     path: user-supplied-pipelines
-  path: config/tektoncd
+  path: config/tektoncd-pipeline
 kind: LockConfig
