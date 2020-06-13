@@ -9,4 +9,11 @@ directories:
   - manual: {}
     path: user-supplied-pipelines
   path: config/tektoncd-pipeline
+- contents:
+  - githubRelease:
+      url: https://api.github.com/repos/tektoncd/dashboard/releases/27212042
+    path: vendor/github.com/tektoncd/dashboard
+  - manual: {}
+    path: user-supplied-config
+  path: config/tektoncd-dashboard
 kind: LockConfig
