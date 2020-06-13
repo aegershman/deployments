@@ -5,6 +5,8 @@ directories:
       url: https://api.github.com/repos/tektoncd/pipeline/releases/27474766
     path: vendor/github.com/tektoncd/pipeline
   - manual: {}
-    path: values
+    path: user-supplied-config
+  - manual: {}
+    path: user-supplied-pipelines
   path: config/tektoncd
 kind: LockConfig
