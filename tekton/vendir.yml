@@ -1,0 +1,17 @@
+# https://github.com/k14s/vendir/blob/master/docs/vendir-spec.md
+# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: config/tektoncd
+    contents:
+      - path: vendor/github.com/tektoncd/pipeline
+        githubRelease:
+          slug: tektoncd/pipeline
+          tag: v0.13.2
+          disableAutoChecksumValidation: true
+        includePaths:
+          - release.yaml
+      - path: values
+        manual: {}
