@@ -7,6 +7,9 @@ tasks:
       - | # vendir sync
         kubectl apply --recursive --filename config/tektoncd-pipeline/vendor
         kubectl apply --recursive --filename config/tektoncd-pipeline/user-supplied-config
+      - | # dashboard
+        kubectl apply --recursive --filename config/tektoncd-dashboard/vendor
+        kubectl apply --recursive --filename config/tektoncd-pipeline/user-supplied-config
 
   start:
     cmds:
@@ -25,3 +28,4 @@ tasks:
       - exit 1
       - |
         kubectl --namespace tekton-pipelines get pods --watch
+        kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097

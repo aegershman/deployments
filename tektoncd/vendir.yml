@@ -17,3 +17,14 @@ directories:
         manual: {}
       - path: user-supplied-pipelines
         manual: {}
+  - path: config/tektoncd-dashboard
+    contents:
+      - path: vendor/github.com/tektoncd/dashboard
+        githubRelease:
+          slug: tektoncd/dashboard
+          tag: v0.7.0
+          disableAutoChecksumValidation: true
+        includePaths:
+          - tekton-dashboard-release.yaml
+      - path: user-supplied-config
+        manual: {}
