@@ -13,5 +13,5 @@ directories:
           disableAutoChecksumValidation: true
         includePaths:
           - release.yaml
-      - path: values
+      - path: user-supplied
         manual: {}
