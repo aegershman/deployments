@@ -1,0 +1,30 @@
+# https://github.com/k14s/vendir/blob/master/docs/vendir-spec.md
+# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: config/tektoncd-pipeline
+    contents:
+      - path: vendor/github.com/tektoncd/pipeline
+        githubRelease:
+          slug: tektoncd/pipeline
+          tag: v0.13.2
+          disableAutoChecksumValidation: true
+        includePaths:
+          - release.yaml
+      - path: user-supplied-config
+        manual: {}
+      - path: user-supplied-pipelines
+        manual: {}
+  - path: config/tektoncd-dashboard
+    contents:
+      - path: vendor/github.com/tektoncd/dashboard
+        githubRelease:
+          slug: tektoncd/dashboard
+          tag: v0.7.0
+          disableAutoChecksumValidation: true
+        includePaths:
+          - tekton-dashboard-release.yaml
+      - path: user-supplied-config
+        manual: {}
