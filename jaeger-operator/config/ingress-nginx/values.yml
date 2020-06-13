@@ -1,0 +1,15 @@
+---
+controller:
+  replicaCount: 1
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+  service:
+    type: NodePort
+  config:
+    proxy-body-size: 64m
+    proxy-buffer-size: 16k
+  metrics:
+    enabled: false
+
+defaultBackend:
+  enabled: false
