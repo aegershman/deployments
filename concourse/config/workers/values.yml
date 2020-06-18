@@ -20,4 +20,4 @@ concourse:
     ephemeral: true
     tsa:
       hosts:
-        - web-web.concourse-web.svc.cluster.local:2222
+        - web-web-worker-gateway.concourse-web.svc.cluster.local:2222

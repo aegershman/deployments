@@ -22,14 +22,14 @@ releases:
   - name: web
     namespace: concourse-web
     chart: concourse/concourse
-    version: ~11.x.x
+    version: ~11.2.x
     values:
       - config/web/values.yml
 
   - name: workers
     namespace: concourse-workers
     chart: concourse/concourse
-    version: ~11.x.x
+    version: ~11.2.x
     values:
       - config/workers/values.yml
 
