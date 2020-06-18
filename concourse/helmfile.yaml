@@ -15,7 +15,7 @@ releases:
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
-    version: ~2.4.x
+    version: ~2.7.x
     values:
       - config/ingress-nginx/values.yml
 
