@@ -1,4 +1,3 @@
-# https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L542
 ---
 alertmanager:
   ingress:
@@ -16,6 +15,7 @@ grafana:
       kubernetes.io/ingress.class: nginx
     hosts:
       - grafana.vcap.me
+  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L542
   additionalDataSources: []
 
 prometheusOperator:
@@ -28,3 +28,7 @@ prometheus:
       kubernetes.io/ingress.class: nginx
     hosts:
       - prometheus.vcap.me
+
+  # https://github.com/helm/charts/issues/11310
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false

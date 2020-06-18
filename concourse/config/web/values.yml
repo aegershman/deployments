@@ -20,3 +20,12 @@ concourse:
     externalUrl: http://concourse.vcap.me
     kubernetes:
       enabled: false
+
+    prometheus:
+      enabled: true
+      ## If Prometheus operator is used, also create a servicemonitor object
+      serviceMonitor:
+        enabled: true
+        interval: "30s"
+        # Namespace the servicemonitor object should be in
+        namespace:

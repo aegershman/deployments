@@ -19,6 +19,16 @@ releases:
     values:
       - config/ingress-nginx/values.yml
 
+  - name: prometheus-operator
+    namespace: prometheus-operator
+    chart: stable/prometheus-operator
+    installed: true
+    version: ~8.15.x
+    needs:
+      - ingress-nginx/ingress-nginx
+    values:
+      - config/prometheus-operator/values.yml
+
   - name: web
     namespace: concourse-web
     chart: concourse/concourse
@@ -32,13 +42,3 @@ releases:
     version: ~11.2.x
     values:
       - config/workers/values.yml
-
-  - name: prometheus-operator
-    namespace: prometheus-operator
-    chart: stable/prometheus-operator
-    installed: true
-    version: ~8.15.x
-    needs:
-      - ingress-nginx/ingress-nginx
-    values:
-      - config/prometheus-operator/values.yml
