@@ -35,7 +35,6 @@ releases:
 
   - name: prometheus-operator
     namespace: prometheus-operator
-    createNamespace: true
     chart: stable/prometheus-operator
     installed: true
     version: ~8.15.x
