@@ -4,7 +4,7 @@ version: "2"
 tasks:
   login:
     cmds:
-      - fly -t localhost login -c http://concourse.127.0.0.1.xip.io -u test -p test -n main -k
+      - fly -t localhost login -c http://concourse.vcap.me -u test -p test -n main -k
       - fly -t localhost sync
 
   set:

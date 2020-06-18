@@ -32,3 +32,14 @@ releases:
     version: ~11.x.x
     values:
       - config/workers/values.yml
+
+  - name: prometheus-operator
+    namespace: prometheus-operator
+    createNamespace: true
+    chart: stable/prometheus-operator
+    installed: true
+    version: ~8.15.x
+    needs:
+      - ingress-nginx/ingress-nginx
+    values:
+      - config/prometheus-operator/values.yml
