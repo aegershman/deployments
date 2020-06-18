@@ -1,6 +1,9 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
+  createNamespace: true
+  recreatePods: false
+  wait: true
 
 repositories:
   - name: minibroker
@@ -11,20 +14,24 @@ repositories:
 releases:
   - name: minibroker
     namespace: minibroker
-    createNamespace: true
     chart: minibroker/minibroker
     installed: true
-    wait: true
     version: ~0.x.x
     values:
       - config/minibroker/values.yml
 
+  - name: prometheus-operator
+    namespace: prometheus-operator
+    chart: stable/prometheus-operator
+    installed: true
+    version: ~8.15.x
+    values:
+      - config/prometheus-operator/values.yml
+
   - name: service-catalog
     namespace: catalog
-    createNamespace: true
     chart: svc-cat/catalog
     installed: false
-    wait: true
     version: ~0.x.x
     values:
       - config/service-catalog/values.yml

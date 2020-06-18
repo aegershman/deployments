@@ -1,0 +1,34 @@
+---
+alertmanager:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: istio
+    hosts:
+      - alertmanager.vcap.me
+
+grafana:
+  adminPassword: prom-operator
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: istio
+    hosts:
+      - grafana.vcap.me
+  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L542
+  additionalDataSources: []
+
+prometheusOperator:
+  enabled: true
+
+prometheus:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: istio
+    hosts:
+      - prometheus.vcap.me
+
+  # https://github.com/helm/charts/issues/11310
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
