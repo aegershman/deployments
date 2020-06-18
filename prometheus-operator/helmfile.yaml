@@ -15,7 +15,7 @@ releases:
     createNamespace: true
     chart: ingress-nginx/ingress-nginx
     installed: true
-    version: ~2.4.x
+    version: ~2.7.x
     values:
       - config/ingress-nginx/values.yml
 
@@ -24,7 +24,7 @@ releases:
     createNamespace: true
     chart: stable/prometheus-operator
     installed: true
-    version: ~8.14.x
+    version: ~8.15.x
     needs:
       - ingress-nginx/ingress-nginx
     values:
