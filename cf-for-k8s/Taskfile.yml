@@ -9,7 +9,7 @@ tasks:
       - |
         kind create cluster \
           --config config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/deploy/kind/cluster.yml \
-          --image='kindest/node:v1.18.2'
+          --image='kindest/node:v1.18.4'
 
   apply-metrics-server:
     cmds:
