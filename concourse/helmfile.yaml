@@ -16,6 +16,7 @@ releases:
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
     installed: true
+    recreatePods: false
     version: ~2.7.x
     values:
       - config/ingress-nginx/values.yml
