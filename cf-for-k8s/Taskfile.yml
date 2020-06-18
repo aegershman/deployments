@@ -24,9 +24,11 @@ tasks:
       - |
         ytt \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config \
-          -f config/cf/values/cf-values.yml \
-          -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-ingressgateway-service.yml \
+          -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
+          -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
+          -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
+          -f config/cf/values/cf-values.yml \
           >config/cf/values/cf-for-k8s-ytt.yml
 
   clean-generated-values:

@@ -5,8 +5,8 @@ directories:
       url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: vendor/github.com/kubernetes-sigs/metrics-server
   - git:
-      commitTitle: 'FIX: bump oldest supported version from 1.14 to 1.15...'
-      sha: 64ec279b4a0a7b46668cfe6e639d6f6b36cf536a
+      commitTitle: 'Merge pull request #248 from cloudfoundry/Syerram-issue-templates...'
+      sha: 94c7800db20232a54a8d84f3f7303a0761af2365
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
