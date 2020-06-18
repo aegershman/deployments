@@ -5,29 +5,34 @@ controller:
   dnsPolicy: ClusterFirstWithHostNet
   service:
     type: NodePort
-
   # https://github.com/kubernetes/ingress-nginx/blob/6048e63daa2bd074a843f3caf344b1816bd703bc/charts/ingress-nginx/values.yaml#L429
   metrics:
     enabled: true
-  serviceMonitor:
-    enabled: true
-  prometheusRule:
-    enabled: true
-    rules:
-      # These are just examples rules, please adapt them to your needs
-      - alert: TooMany500s
-        expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"5.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          description: Too many 5XXs
-          summary: More than 5% of the all requests did return 5XX, this require your attention
-      - alert: TooMany400s
-        expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"4.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          description: Too many 4XXs
-          summary: More than 5% of the all requests did return 4XX, this require your attention
+    service:
+      type: NodePort
+    serviceMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: true
+      rules:
+        # These are just examples rules, please adapt them to your needs
+        - alert: TooMany500s
+          expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"5.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            description: Too many 5XXs
+            summary: More than 5% of the all requests did return 5XX, this require your attention
+        - alert: TooMany400s
+          expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"4.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            description: Too many 4XXs
+            summary: More than 5% of the all requests did return 4XX, this require your attention
+  terminationGracePeriodSeconds: 10
+
+defaultBackend:
+  enabled: false

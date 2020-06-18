@@ -15,6 +15,7 @@ releases:
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
+    installed: true
     version: ~2.7.x
     values:
       - config/ingress-nginx/values.yml
@@ -32,6 +33,7 @@ releases:
   - name: web
     namespace: concourse-web
     chart: concourse/concourse
+    installed: true
     version: ~11.2.x
     values:
       - config/web/values.yml
@@ -39,6 +41,7 @@ releases:
   - name: workers
     namespace: concourse-workers
     chart: concourse/concourse
+    installed: true
     version: ~11.2.x
     values:
       - config/workers/values.yml
