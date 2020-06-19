@@ -5,8 +5,8 @@ directories:
       url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: vendor/github.com/kubernetes-sigs/metrics-server
   - git:
-      commitTitle: 'Merge pull request #248 from cloudfoundry/Syerram-issue-templates...'
-      sha: 94c7800db20232a54a8d84f3f7303a0761af2365
+      commitTitle: 'DOC: add documentation for setting up static loadbalancer IP...'
+      sha: 64150ab093b24ad69b0b9bacb36b4ae2ba24058d
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
