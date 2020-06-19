@@ -14,3 +14,8 @@ nodes:
         hostPort: 80
       - containerPort: 443
         hostPort: 443
+      # for use with additional ingress-nginx in cf-for-k8s
+      - containerPort: 32080 # http
+        hostPort: 32080
+      - containerPort: 32443 # https
+        hostPort: 32443

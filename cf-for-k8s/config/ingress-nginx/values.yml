@@ -1,0 +1,19 @@
+# https://kubernetes.github.io/ingress-nginx/deploy/baremetal/
+---
+controller:
+  replicaCount: 1
+  hostNetwork: false
+  service:
+    type: NodePort
+    nodePorts:
+      http: 32080
+      https: 32443
+  metrics:
+    enabled: false
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+defaultBackend:
+  enabled: false
