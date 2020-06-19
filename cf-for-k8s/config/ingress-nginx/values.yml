@@ -1,0 +1,18 @@
+---
+controller:
+  replicaCount: 1
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+  service:
+    type: NodePort
+  metrics:
+    enabled: false
+  # https://github.com/kubernetes/minikube/pull/5519/files
+  updateStrategy:
+    rollingUpdate:
+      # maxUnavailable needs to be 1 so that port conflicts between the old and new pod doesn't happen when using hostPort
+      maxUnavailable: 1
+      maxSurge: 1
+
+defaultBackend:
+  enabled: false
