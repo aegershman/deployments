@@ -80,3 +80,42 @@ prometheus:
     #   metric_relabel_configs:
     #     - regex: (kubernetes_io_hostname|failure_domain_beta_kubernetes_io_region|beta_kubernetes_io_os|beta_kubernetes_io_arch|beta_kubernetes_io_instance_type|failure_domain_beta_kubernetes_io_zone)
     #       action: labeldrop
+
+  # https://github.com/helm/charts/blob/e9d85afa10373b94184e911ebc9eae4e1dfb3bfc/stable/prometheus-operator/values.yaml#L1932
+  additionalServiceMonitors: []
+
+  # https://github.com/helm/charts/blob/e9d85afa10373b94184e911ebc9eae4e1dfb3bfc/stable/prometheus-operator/values.yaml#L2017
+  additionalPodMonitors: []
+  ## Name of the PodMonitor to create
+  ##
+  # - name: ""
+  ## Additional labels to set used for the PodMonitorSelector. Together with standard labels from
+  ## the chart
+  ##
+  # additionalLabels: {}
+  ## Pod label for use in assembling a job name of the form <label value>-<port>
+  ## If no label is specified, the pod endpoint name is used.
+  ##
+  # jobLabel: ""
+  ## Label selector for pods to which this PodMonitor applies
+  ##
+  # selector: {}
+  ## PodTargetLabels transfers labels on the Kubernetes Pod onto the target.
+  ##
+  # podTargetLabels: {}
+  ## SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
+  ##
+  # sampleLimit: 0
+  ## Namespaces from which pods are selected
+  ##
+  # namespaceSelector:
+  ## Match any namespace
+  ##
+  # any: false
+  ## Explicit list of namespace names to select
+  ##
+  # matchNames: []
+  ## Endpoints of the selected pods to be monitored
+  ## https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
+  ##
+  # podMetricsEndpoints: []
