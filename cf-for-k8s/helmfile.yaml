@@ -30,6 +30,16 @@ releases:
     values:
       - config/minibroker/values.yml
 
+  - name: prometheus-operator
+    namespace: prometheus-operator
+    chart: stable/prometheus-operator
+    installed: true
+    version: ~8.15.x
+    needs:
+      - ingress-nginx/ingress-nginx
+    values:
+      - config/prometheus-operator/values.yml
+
   - name: service-catalog
     namespace: catalog
     chart: svc-cat/catalog
