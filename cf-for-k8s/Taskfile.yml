@@ -50,7 +50,8 @@ tasks:
         cf target -o test-org -s test-space
       - | # push an app already built via docker:
         cf enable-feature-flag diego_docker
-        cf push -f config/cf/values/example-docker-cf-manifest.yml
+        cf push -f config/cf/values/example-docker-cf-manifest-hash-browns.yml
+        cf push -f config/cf/values/example-docker-cf-manifest-todo-ui.yml
       - | # push an app from source code:
         cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env
