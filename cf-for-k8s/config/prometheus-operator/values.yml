@@ -1,3 +1,9 @@
+# http://alertmanager.vcap.me:32080
+# https://alertmanager.vcap.me:32443
+# http://grafana.vcap.me:32080
+# https://grafana.vcap.me:32443
+# http://prometheus.vcap.me:32080
+# https://prometheus.vcap.me:32443
 ---
 alertmanager:
   ingress:

@@ -1,3 +1,4 @@
+# https://kubernetes.github.io/ingress-nginx/deploy/baremetal/
 ---
 controller:
   replicaCount: 1
