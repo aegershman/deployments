@@ -1,0 +1,37 @@
+# Default values for the minibroker
+# Image to use
+image: quay.io/kubernetes-service-catalog/minibroker:canary
+# ImagePullPolicy; valid values are "IfNotPresent", "Never", and "Always"
+imagePullPolicy: IfNotPresent
+deploymentPolicy: RollingUpdate
+# Certificate details to use for TLS. Leave blank to not use TLS
+tls:
+  # base-64 encoded PEM data for the TLS certificate
+  cert:
+  # base-64 encoded PEM data for the private key matching the certificate
+  key:
+
+# The logging level to use; higher values emit more information
+logLevel: 3
+
+serviceCatalogEnabledOnly: true
+
+deployServiceCatalog: true
+
+# A default namespace where Minibroker deploys service instances.
+defaultNamespace: ~
+
+rbac:
+  create: true
+  namespaced:
+    # Whether Minibroker will be namespaced or not. When enabled, Minibroker will only be able to
+    # manage resources in the whitelisted namespaces.
+    enabled: false
+    # A list of namespaces Minibroker can use to deploy service instances. The namespaces are
+    # expected to be created ahead of time.
+    whitelist: []
+  serviceAccount:
+    create: true
+    name: minibroker
+    annotations: {}
+    labels: {}

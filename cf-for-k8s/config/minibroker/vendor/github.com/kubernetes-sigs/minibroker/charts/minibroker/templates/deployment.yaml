@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "minibroker.fullname" . }}
+  labels:
+    {{- include "minibroker.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: {{ .Values.deploymentStrategy }}
+  selector:
+    matchLabels:
+      app: {{ template "minibroker.fullname" . }}
+  template:
+    metadata:
+      labels:
+        {{- include "minibroker.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: minibroker
+      containers:
+      - name: minibroker
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        args:
+        - minibroker
+        {{- if .Values.serviceCatalogEnabledOnly }}
+        - --service-catalog-enabled-only
+        {{- end }}
+        {{- if .Values.helmRepoUrl }}
+        - -helmUrl
+        - "{{ .Values.helmRepoUrl }}"
+        {{- end }}
+        {{- if .Values.defaultNamespace }}
+        - -defaultNamespace
+        - "{{ .Values.defaultNamespace }}"
+        {{- end }}
+        - --port
+        - "8080"
+        {{- if .Values.tls.cert }}
+        - --tlsCert
+        - "{{ .Values.tls.cert }}"
+        {{- end }}
+        {{- if .Values.tls.key }}
+        - --tlsKey
+        - "{{ .Values.tls.key }}"
+        {{- end }}
+        - -v
+        - {{ .Values.logLevel | quote }}
+        - -logtostderr
+        ports:
+        - containerPort: 8080
+      - name: tiller
+        image: "gcr.io/kubernetes-helm/tiller:v2.13.1"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: TILLER_NAMESPACE
+          value: {{ .Release.Namespace }}
+        - name: TILLER_HISTORY_MAX
+          value: "1"
+        command: ["/tiller"]
+        args: ["--listen=localhost:44134"]

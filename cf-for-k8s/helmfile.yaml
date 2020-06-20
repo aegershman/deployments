@@ -19,16 +19,19 @@ releases:
     chart: ingress-nginx/ingress-nginx
     installed: true
     version: ~2.7.x
+    needs:
+      - prometheus-operator/prometheus-operator
     values:
       - config/ingress-nginx/values.yml
 
   - name: minibroker
     namespace: minibroker
-    chart: minibroker/minibroker
+    # chart: minibroker/minibroker
+    chart: config/minibroker/vendor/github.com/kubernetes-sigs/minibroker/charts/minibroker
     installed: true
     version: ~0.x.x
     values:
-      - config/minibroker/values.yml
+      - config/minibroker/values/values.yml
 
   - name: prometheus-operator
     namespace: prometheus-operator
@@ -40,8 +43,11 @@ releases:
 
   - name: service-catalog
     namespace: catalog
-    chart: svc-cat/catalog
-    installed: false
+    # chart: svc-cat/catalog
+    chart: config/service-catalog/vendor/github.com/kubernetes-sigs/service-catalog/charts/catalog
+    installed: true
     version: ~0.x.x
+    needs:
+      - minibroker/minibroker
     values:
-      - config/service-catalog/values.yml
+      - config/service-catalog/values/values.yml

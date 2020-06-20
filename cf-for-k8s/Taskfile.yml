@@ -56,7 +56,7 @@ tasks:
         cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env
       - | # assuming minibroker is installed:
-        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc.cluster.local
+        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc
         cf enable-service-access mysql
         cf enable-service-access redis
         cf enable-service-access mongodb
@@ -79,3 +79,46 @@ tasks:
       - | # not intended to be ran as a task, just for holding command strings
         exit 1
         kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
+
+  svccat:
+    cmds:
+      - | # not intended to be ran as a task, just for holding command strings
+        exit 1
+      - | # minibroker
+        svcat register minibroker --url http://minibroker-minibroker.minibroker.svc --scope cluster
+        svcat get brokers
+        svcat sync broker minibroker
+        svcat marketplace
+        svcat provision redis-test --class redis --plan 5-0-7
+        svcat provision redis-test --class redis --plan 5-0-7 --param p1=foo --param p2=bar --secret 'creds[db]'
+        svcat bind redis-test --name redis-test
+        svcat describe instance redis-test
+        svcat deprovision redis-test
+        svcat get instances
+
+      - | # https://svc-cat.io/docs/cli/
+        svcat register ups-broker --url http://ups-broker-ups-broker.ups-broker.svc.cluster.local --scope cluster
+        svcat get brokers
+        svcat sync broker ups-broker
+        svcat marketplace
+        svcat provision ups-instance --class user-provided-service --plan default
+        svcat get instances
+        svcat bind ups-instance --name ups-binding
+        svcat bind ups-instance
+        svcat describe instance ups-instance
+        svcat unbind ups-instance
+        svcat unbind  --name ups-binding
+        svcat deregister ups-broker --scope cluster
+        svcat get brokers --scope namespace
+
+      - | # https://svc-cat.io/docs/walkthrough/
+        svcat get classes
+        kubectl get clusterserviceclasses
+        svcat describe class mariadb
+        kubectl get clusterserviceclasses mariadb -o yaml
+        svcat get plans
+        kubectl get clusterserviceplans
+        svcat describe plan 10-3-22 --scope cluster
+        kubectl get clusterserviceplans mariadb-10-3-22 -o yaml
+        svcat deprovision -n test-ns mini-instance
+        kubectl delete clusterservicebrokers minibroker

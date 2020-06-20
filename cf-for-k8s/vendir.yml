@@ -26,3 +26,27 @@ directories:
           - tests/smoke/assets/test-node-app/**/*
       - path: values
         manual: {}
+  - path: config/minibroker
+    contents:
+      - path: vendor/github.com/kubernetes-sigs/minibroker
+        git:
+          url: https://github.com/kubernetes-sigs/minibroker
+          ref: e50e4bc41f03ae2e10daaf9522f2aafb32bc7ea3
+          disableAutoChecksumValidation: true
+        includePaths:
+          - charts/minibroker/**/*
+      - path: values
+        manual: {}
+  - path: config/service-catalog
+    contents:
+      - path: vendor/github.com/kubernetes-sigs/service-catalog
+        git:
+          url: https://github.com/kubernetes-sigs/service-catalog
+          ref: 5068f67d9616bab9e21dae8a161578a034a0803a
+          disableAutoChecksumValidation: true
+        includePaths:
+          - charts/catalog/**/*
+          - charts/healthcheck/**/*
+          - charts/ups-broker/**/*
+      - path: values
+        manual: {}

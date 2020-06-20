@@ -11,4 +11,21 @@ directories:
   - manual: {}
     path: values
   path: config/cf
+- contents:
+  - git:
+      commitTitle: 'fix: remove hardcoded cluster domains (#73)...'
+      sha: e50e4bc41f03ae2e10daaf9522f2aafb32bc7ea3
+    path: vendor/github.com/kubernetes-sigs/minibroker
+  - manual: {}
+    path: values
+  path: config/minibroker
+- contents:
+  - git:
+      commitTitle: fix pb when use securityContext and add opportunity to add storageclass
+        (#2818)...
+      sha: 5068f67d9616bab9e21dae8a161578a034a0803a
+    path: vendor/github.com/kubernetes-sigs/service-catalog
+  - manual: {}
+    path: values
+  path: config/service-catalog
 kind: LockConfig
