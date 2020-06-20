@@ -52,70 +52,180 @@ prometheus:
     ## The scrape configuraiton example below will find master nodes, provided they have the name .*mst.*, relabel the
     ## port to 2379 and allow etcd scraping provided it is running on all Kubernetes master nodes
     ##
-    # additionalScrapeConfigs: []
-    # - job_name: kube-etcd
-    #   kubernetes_sd_configs:
-    #     - role: node
-    #   scheme: https
-    #   tls_config:
-    #     ca_file: /etc/prometheus/secrets/etcd-client-cert/etcd-ca
-    #     cert_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client
-    #     key_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
-    #   relabel_configs:
-    #     - action: labelmap
-    #       regex: __meta_kubernetes_node_label_(.+)
-    #     - source_labels: [__address__]
-    #       action: replace
-    #       targetLabel: __address__
-    #       regex: ([^:;]+):(\d+)
-    #       replacement: ${1}:2379
-    #     - source_labels: [__meta_kubernetes_node_name]
-    #       action: keep
-    #       regex: .*mst.*
-    #     - source_labels: [__meta_kubernetes_node_name]
-    #       action: replace
-    #       targetLabel: node
-    #       regex: (.*)
-    #       replacement: ${1}
-    #   metric_relabel_configs:
-    #     - regex: (kubernetes_io_hostname|failure_domain_beta_kubernetes_io_region|beta_kubernetes_io_os|beta_kubernetes_io_arch|beta_kubernetes_io_instance_type|failure_domain_beta_kubernetes_io_zone)
-    #       action: labeldrop
+    additionalScrapeConfigs:
+      - job_name: kube-etcd
+        kubernetes_sd_configs:
+          - role: node
+        scheme: https
+        tls_config:
+          ca_file: /etc/prometheus/secrets/etcd-client-cert/etcd-ca
+          cert_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client
+          key_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
+        relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+          - source_labels: [__address__]
+            action: replace
+            targetLabel: __address__
+            regex: ([^:;]+):(\d+)
+            replacement: ${1}:2379
+          - source_labels: [__meta_kubernetes_node_name]
+            action: keep
+            regex: .*mst.*
+          - source_labels: [__meta_kubernetes_node_name]
+            action: replace
+            targetLabel: node
+            regex: (.*)
+            replacement: ${1}
+        metric_relabel_configs:
+          - regex: (kubernetes_io_hostname|failure_domain_beta_kubernetes_io_region|beta_kubernetes_io_os|beta_kubernetes_io_arch|beta_kubernetes_io_instance_type|failure_domain_beta_kubernetes_io_zone)
+            action: labeldrop
+
+      # https://github.com/concourse/hush-house/blob/master/deployments/with-creds/metrics/values.yaml
+      - job_name: kubernetes-service-endpoints
+        kubernetes_sd_configs: [{ role: endpoints }]
+        relabel_configs:
+          - source_labels:
+              [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels:
+              [__meta_kubernetes_service_annotation_prometheus_io_scheme]
+            action: replace
+            target_label: __scheme__
+            regex: (https?)
+          - source_labels:
+              [__meta_kubernetes_service_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels:
+              [
+                __address__,
+                __meta_kubernetes_service_annotation_prometheus_io_port,
+              ]
+            action: replace
+            target_label: __address__
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: kubernetes_pod_name
+          - source_labels: [__meta_kubernetes_pod_node_name]
+            action: replace
+            target_label: kubernetes_node
 
   # https://github.com/helm/charts/blob/e9d85afa10373b94184e911ebc9eae4e1dfb3bfc/stable/prometheus-operator/values.yaml#L1932
-  additionalServiceMonitors: []
+  additionalServiceMonitors:
+    # Name of the ServiceMonitor to create
+    #
+    - name: "cf-for-k8s-test-servicemonitor"
+
+      # Additional labels to set used for the ServiceMonitorSelector. Together with standard labels from
+      # the chart
+      #
+      additionalLabels: {}
+
+      # Service label for use in assembling a job name of the form <label value>-<port>
+      # If no label is specified, the service name is used.
+      #
+      jobLabel: ""
+
+      # labels to transfer from the kubernetes service to the target
+      #
+      targetLabels: ""
+
+      # Label selector for services to which this ServiceMonitor applies
+      #
+      selector:
+        matchLabels:
+          cloudfoundry.org/app_guid: 4bd99796-9795-4bbe-a618-3e5142021745
+          cloudfoundry.org/process_type: web
+      # Namespaces from which services are selected
+      #
+      namespaceSelector:
+        # Match any namespace
+        #
+        any: false
+
+        # Explicit list of namespace names to select
+        #
+        matchNames:
+          - cf-workloads
+
+      # Endpoints of the selected service to be monitored
+      #
+      endpoints:
+        # Name of the endpoint's service port
+        # Mutually exclusive with targetPort
+        - port: http
+
+          # # Name or number of the endpoint's target port
+          # # Mutually exclusive with port
+          # - targetPort: ""
+
+          # Interval at which metrics should be scraped
+          #
+          interval: 10s
+
+          # HTTP path to scrape for metrics
+          #
+          path: /metrics
+
+          # HTTP scheme to use for scraping
+          #
+          scheme: http
 
   # https://github.com/helm/charts/blob/e9d85afa10373b94184e911ebc9eae4e1dfb3bfc/stable/prometheus-operator/values.yaml#L2017
-  additionalPodMonitors: []
-  ## Name of the PodMonitor to create
-  ##
-  # - name: ""
-  ## Additional labels to set used for the PodMonitorSelector. Together with standard labels from
-  ## the chart
-  ##
-  # additionalLabels: {}
-  ## Pod label for use in assembling a job name of the form <label value>-<port>
-  ## If no label is specified, the pod endpoint name is used.
-  ##
-  # jobLabel: ""
-  ## Label selector for pods to which this PodMonitor applies
-  ##
-  # selector: {}
-  ## PodTargetLabels transfers labels on the Kubernetes Pod onto the target.
-  ##
-  # podTargetLabels: {}
-  ## SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
-  ##
-  # sampleLimit: 0
-  ## Namespaces from which pods are selected
-  ##
-  # namespaceSelector:
-  ## Match any namespace
-  ##
-  # any: false
-  ## Explicit list of namespace names to select
-  ##
-  # matchNames: []
-  ## Endpoints of the selected pods to be monitored
-  ## https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
-  ##
-  # podMetricsEndpoints: []
+  # http://docs.pivotal.io/rabbitmq-kubernetes/0-7/monitoring.html
+  additionalPodMonitors:
+    # Name of the PodMonitor to create
+    #
+    - name: "cf-for-k8s-test-monitor"
+
+      # Additional labels to set used for the PodMonitorSelector. Together with standard labels from
+      # the chart
+      #
+      additionalLabels: {}
+
+      # Pod label for use in assembling a job name of the form <label value>-<port>
+      # If no label is specified, the pod endpoint name is used.
+      #
+      jobLabel: "hash-browns"
+
+      # Label selector for pods to which this PodMonitor applies
+      #
+      selector:
+        matchLabels:
+          cloudfoundry.org/app_guid: 4bd99796-9795-4bbe-a618-3e5142021745
+          cloudfoundry.org/process_type: web
+
+      # PodTargetLabels transfers labels on the Kubernetes Pod onto the target.
+      #
+      podTargetLabels: {}
+
+      # SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
+      #
+      # sampleLimit: 0
+
+      # Namespaces from which pods are selected
+      #
+      namespaceSelector:
+        # Match any namespace
+        #
+        any: false
+
+        # Explicit list of namespace names to select
+        #
+        matchNames:
+          - cf-workloads
+
+      # Endpoints of the selected pods to be monitored
+      # https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
+      #
+      podMetricsEndpoints:
+        - interval: 15s
+          port: http

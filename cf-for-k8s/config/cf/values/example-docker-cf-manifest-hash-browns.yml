@@ -17,5 +17,5 @@ applications:
         # ... certainly makes you wonder about the possibilities, right?
         # very cool stuff
         prometheus.io/scrape: "true"
-        prometheus.io/port: 80
+        prometheus.io/port: 8080
         prometheus.io/path: /metrics
