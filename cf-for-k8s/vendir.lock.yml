@@ -11,4 +11,13 @@ directories:
   - manual: {}
     path: values
   path: config/cf
+- contents:
+  - git:
+      commitTitle: fix pb when use securityContext and add opportunity to add storageclass
+        (#2818)...
+      sha: 5068f67d9616bab9e21dae8a161578a034a0803a
+    path: vendor/github.com/kubernetes-sigs/service-catalog
+  - manual: {}
+    path: values
+  path: config/service-catalog
 kind: LockConfig
