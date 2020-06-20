@@ -26,11 +26,12 @@ releases:
 
   - name: minibroker
     namespace: minibroker
-    chart: minibroker/minibroker
+    # chart: minibroker/minibroker
+    chart: config/minibroker/vendor/github.com/kubernetes-sigs/minibroker/charts/minibroker
     installed: true
     version: ~0.x.x
     values:
-      - config/minibroker/values.yml
+      - config/minibroker/values/values.yml
 
   - name: prometheus-operator
     namespace: prometheus-operator
