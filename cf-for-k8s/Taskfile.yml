@@ -72,6 +72,7 @@ tasks:
       - |
         kubectl apply -f config/cf/values/cf-hash-browns-service-monitor.yaml
         kubectl -n cf-workloads get servicemonitor -o yaml
+        kubectl -n ingress-nginx get servicemonitor -o yaml
 
   full-install-steps:
     cmds:

@@ -1,3 +1,5 @@
+# https://stackoverflow.com/questions/52991038/how-to-create-a-servicemonitor-for-prometheus-operator
+# https://support.coreos.com/hc/en-us/articles/360000155514-Prometheus-ServiceMonitor-troubleshooting
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
