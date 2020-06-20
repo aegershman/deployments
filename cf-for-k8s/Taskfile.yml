@@ -56,7 +56,7 @@ tasks:
         cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env
       - | # assuming minibroker is installed:
-        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc.cluster.local
+        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc
         cf enable-service-access mysql
         cf enable-service-access redis
         cf enable-service-access mongodb
