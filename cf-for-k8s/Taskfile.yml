@@ -51,6 +51,7 @@ tasks:
       - | # push an app already built via docker:
         cf enable-feature-flag diego_docker
         cf push -f config/cf/values/example-docker-cf-manifest-hash-browns.yml
+        cf push -f config/cf/values/example-docker-cf-manifest-hash-browns-no-web.yml
         cf push -f config/cf/values/example-docker-cf-manifest-todo-ui.yml
       - | # push an app from source code:
         cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
@@ -65,6 +66,20 @@ tasks:
         cf service mariadb-svc
         cf create-service-key mariadb-svc mykey
         cf bind-service todo-ui mariadb-svc
+
+  prometheus-operator:
+    cmds:
+      - exit 1
+      - |
+        kubectl apply -f config/cf/values/cf-hash-browns-service-monitor.yaml
+        cf push -f config/cf/values/example-docker-cf-manifest-hash-browns.yml
+        cf push -f config/cf/values/example-docker-cf-manifest-hash-browns-no-web.yml
+      - |
+        kubectl delete -f config/cf/values/cf-hash-browns-service-monitor.yaml
+        kubectl -n cf-workloads get servicemonitor -o yaml
+        kubectl -n cf-workloads get endpoints -o yaml
+        kubectl -n ingress-nginx get servicemonitor -o yaml
+        kubectl -n prometheus-operator logs -f -lapp=prometheus-operator-operator --all-containers=true
 
   full-install-steps:
     cmds:
