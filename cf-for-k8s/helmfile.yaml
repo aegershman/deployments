@@ -19,6 +19,8 @@ releases:
     chart: ingress-nginx/ingress-nginx
     installed: true
     version: ~2.7.x
+    needs:
+      - prometheus-operator/prometheus-operator
     values:
       - config/ingress-nginx/values.yml
 
@@ -44,4 +46,4 @@ releases:
     installed: false
     version: ~0.x.x
     values:
-      - config/service-catalog/values.yml
+      - config/service-catalog/values/values.yml

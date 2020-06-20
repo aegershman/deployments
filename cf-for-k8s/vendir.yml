@@ -26,3 +26,14 @@ directories:
           - tests/smoke/assets/test-node-app/**/*
       - path: values
         manual: {}
+  - path: config/service-catalog
+    contents:
+      - path: vendor/github.com/kubernetes-sigs/service-catalog
+        git:
+          url: https://github.com/kubernetes-sigs/service-catalog
+          ref: 5068f67d9616bab9e21dae8a161578a034a0803a
+          disableAutoChecksumValidation: true
+        includePaths:
+          - charts/**/*
+      - path: values
+        manual: {}
