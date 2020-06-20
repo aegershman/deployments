@@ -1,0 +1,10 @@
+1. Get the WordPress URL:
+
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "fullname" . }})
+  export MINIKUBE_IP=$(minikube ip)
+  echo http://$MINIKUBE_IP:$NODE_PORT/admin
+
+2. Login with the following credentials to see your blog
+
+  echo Username: {{ .Values.wordpressUsername }}
+  echo Password: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "fullname" . }} -o jsonpath="{.data.wordpress-password}" | base64 --decode)
