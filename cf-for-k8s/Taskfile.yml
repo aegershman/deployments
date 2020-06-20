@@ -79,3 +79,18 @@ tasks:
       - | # not intended to be ran as a task, just for holding command strings
         exit 1
         kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
+
+  svccat:
+    cmds: # https://svc-cat.io/docs/walkthrough/
+      - exit 1
+      - | # not intended to be ran as a task, just for holding command strings
+        svcat get classes
+        kubectl get clusterserviceclasses
+        svcat describe class mariadb
+        kubectl get clusterserviceclasses mariadb -o yaml
+        svcat get plans
+        kubectl get clusterserviceplans
+        svcat describe plan 10-3-22 --scope cluster
+        kubectl get clusterserviceplans mariadb-10-3-22 -o yaml
+        svcat deprovision -n test-ns mini-instance
+        kubectl delete clusterservicebrokers minibroker

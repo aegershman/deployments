@@ -46,5 +46,7 @@ releases:
     chart: config/service-catalog/vendor/github.com/kubernetes-sigs/service-catalog/charts/catalog
     installed: true
     version: ~0.x.x
+    needs:
+      - minibroker/minibroker
     values:
       - config/service-catalog/values/values.yml
