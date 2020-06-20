@@ -1,12 +1,28 @@
 # https://github.com/kubernetes-sigs/service-catalog/blob/master/charts/catalog/values.yaml
+# https://github.com/openservicebrokerapi/servicebroker/blob/master/gettingStarted.md#sample-service-brokers
+# https://kubernetes.io/docs/concepts/extend-kubernetes/service-catalog/
+# https://kubernetes.io/docs/tasks/service-catalog/install-service-catalog-using-sc/
+# https://svc-cat.io/docs/
 ---
+imagePullPolicy: IfNotPresent
+
 webhook:
   service:
     port: 443
+    type: NodePort
+    nodePort:
+      # The TLS-enabled endpoint will be exposed here
+      securePort: 31443
+
 controllerManager:
-  enablePrometheusScrape: false
+  enablePrometheusScrape: true
   service:
     type: ClusterIP
+    nodePort:
+      # The TLS-enabled endpoint will be exposed here
+      securePort: 30444
+
+originatingIdentityEnabled: true
 asyncBindingOperationsEnabled: false
 namespacedServiceBrokerDisabled: false
 servicePlanDefaultsEnabled: false
