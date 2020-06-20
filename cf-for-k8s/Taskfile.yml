@@ -131,6 +131,7 @@ tasks:
       - | # no clue if this works
         exit 1
         kubectl -n harbor port-forward service/harbor-harbor-core 4107:80
+        kubectl -n harbor port-forward deployment/harbor-harbor-core 4107:8080
         docker login --username admin --password Harbor12345 localhost:4107
         docker pull gcr.io/kuar-demo/kuard-amd64:blue
         docker tag gcr.io/kuar-demo/kuard-amd64:blue localhost:4107/library/kuard-amd64:blue
