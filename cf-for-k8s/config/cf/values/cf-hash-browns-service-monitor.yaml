@@ -15,5 +15,6 @@ spec:
     matchLabels:
       cloudfoundry.org/process_type: web
   endpoints:
-    - port: http
+    # - port: http
+    - port: http-envoy-prom # 15080, istio-proxy
       interval: 15s
