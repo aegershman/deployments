@@ -122,3 +122,18 @@ tasks:
         kubectl get clusterserviceplans mariadb-10-3-22 -o yaml
         svcat deprovision -n test-ns mini-instance
         kubectl delete clusterservicebrokers minibroker
+
+  harbor-debug:
+    cmds:
+      # for dockerhub, the registry auth target is "https://index.docker.io/v1/".
+      # notice "library" is the project and "kuard-amd64" is the repository;
+      # the repository was created automatically by virtue of the push.
+      - | # no clue if this works
+        exit 1
+        kubectl -n harbor port-forward service/harbor-harbor-core 4107:80
+        kubectl -n harbor port-forward deployment/harbor-harbor-core 4107:8080
+        docker login --username admin --password Harbor12345 localhost:4107
+        docker pull gcr.io/kuar-demo/kuard-amd64:blue
+        docker tag gcr.io/kuar-demo/kuard-amd64:blue localhost:4107/library/kuard-amd64:blue
+        docker images
+        docker push localhost:4107/library/kuard-amd64:blue

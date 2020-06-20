@@ -1,0 +1,63 @@
+# https://github.com/bitnami/bitnami-docker-harbor-jobservice/issues/1
+# https://github.com/goharbor/harbor-helm/blob/master/values.yaml
+---
+expose:
+  type: ClusterIP
+  tls:
+    enabled: false
+    commonName: harbor
+  clusterIP:
+    name: harbor
+    ports:
+      httpPort: 80
+      httpsPort: 443
+      notaryPort: 4443
+
+externalURL: http://harbor.harbor.svc.cluster.local
+
+internalTLS:
+  enabled: false
+
+persistence:
+  enabled: false # todo
+  # Setting it to "keep" to avoid removing PVCs during a helm delete
+  # operation. Leaving it empty will delete PVCs after the chart deleted
+  resourcePolicy: ""
+
+# debug, info, warning, error or fatal
+logLevel: debug
+
+# The initial password of Harbor 'admin' user. Change it from portal after launching Harbor
+harborAdminPassword: Harbor12345
+
+registry:
+  # If true, the registry returns relative URLs in Location headers. The client is responsible for resolving the correct URL.
+  relativeurls: false
+  credentials:
+    username: "harbor_registry_user"
+    password: "harbor_registry_password"
+    # If you update the username or password of registry, make sure use cli tool htpasswd to generate the bcrypt hash
+    # e.g. "htpasswd -nbBC10 $username $password"
+    htpasswd: "harbor_registry_user:$2y$10$9L4Tc0DJbFFMB6RdSCunrOpTHdwhid4ktBJmLD00bYgqkkGOvll3m"
+
+chartmuseum:
+  enabled: false
+
+clair:
+  enabled: false
+
+trivy:
+  enabled: false
+
+notary:
+  enabled: false
+
+database:
+  # if external database is used, set "type" to "external"
+  # and fill the connection informations in "external" section
+  type: internal
+
+redis:
+  # if external Redis is used, set "type" to "external"
+  # and fill the connection informations in "external" section
+  type: internal

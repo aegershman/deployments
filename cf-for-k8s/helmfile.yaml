@@ -3,9 +3,11 @@ helmDefaults:
   kubeContext: kind-kind
   createNamespace: true
   recreatePods: false
-  wait: true
+  wait: false
 
 repositories:
+  - name: harbor
+    url: https://helm.goharbor.io
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
   - name: minibroker
@@ -14,6 +16,15 @@ repositories:
     url: https://svc-catalog-charts.storage.googleapis.com
 
 releases:
+  - name: harbor
+    namespace: harbor
+    chart: harbor/harbor
+    # chart: config/harbor/vendor/github.com/goharbor/harbor-helm
+    installed: false
+    version: ~1.4.x
+    values:
+      - config/harbor/values/values.yml
+
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
