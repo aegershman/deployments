@@ -84,6 +84,18 @@ tasks:
     cmds:
       - | # not intended to be ran as a task, just for holding command strings
         exit 1
+      - | # minibroker
+        svcat register minibroker --url http://minibroker-minibroker.minibroker.svc --scope cluster
+        svcat get brokers
+        svcat sync broker minibroker
+        svcat marketplace
+        svcat provision redis-test --class redis --plan 5-0-7
+        svcat provision redis-test --class redis --plan 5-0-7 --param p1=foo --param p2=bar --secret 'creds[db]'
+        svcat bind redis-test --name redis-test
+        svcat describe instance redis-test
+        svcat deprovision redis-test
+        svcat get instances
+
       - | # https://svc-cat.io/docs/cli/
         svcat register ups-broker --url http://ups-broker-ups-broker.ups-broker.svc.cluster.local --scope cluster
         svcat get brokers
@@ -97,7 +109,6 @@ tasks:
         svcat unbind ups-instance
         svcat unbind  --name ups-binding
         svcat deregister ups-broker --scope cluster
-        svcat register ups-broker --url http://ups-broker-ups-broker.ups-broker.svc.cluster.local -n foobar
         svcat get brokers --scope namespace
 
       - | # https://svc-cat.io/docs/walkthrough/
