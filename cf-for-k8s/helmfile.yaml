@@ -3,7 +3,7 @@ helmDefaults:
   kubeContext: kind-kind
   createNamespace: true
   recreatePods: false
-  wait: true
+  wait: false
 
 repositories:
   - name: harbor

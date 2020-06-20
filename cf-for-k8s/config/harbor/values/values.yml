@@ -2,6 +2,9 @@
 ---
 expose:
   type: ClusterIP
+  tls:
+    enabled: false
+    commonName: harbor
   clusterIP:
     name: harbor
     ports:
@@ -9,7 +12,7 @@ expose:
       httpsPort: 443
       notaryPort: 4443
 
-externalURL: http://harbor
+externalURL: http://harbor.harbor.svc.cluster.local
 
 internalTLS:
   enabled: false
