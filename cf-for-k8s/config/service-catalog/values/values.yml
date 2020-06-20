@@ -24,7 +24,8 @@ controllerManager:
       securePort: 30444
 
 originatingIdentityEnabled: true
-asyncBindingOperationsEnabled: false
+# https://github.com/kubernetes-sigs/service-catalog/issues/2813
+asyncBindingOperationsEnabled: true
 namespacedServiceBrokerDisabled: false
 servicePlanDefaultsEnabled: false
-cascadingDeletionEnabled: false
+cascadingDeletionEnabled: true

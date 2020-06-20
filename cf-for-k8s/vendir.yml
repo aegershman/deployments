@@ -34,7 +34,7 @@ directories:
           ref: e50e4bc41f03ae2e10daaf9522f2aafb32bc7ea3
           disableAutoChecksumValidation: true
         includePaths:
-          - charts/**/*
+          - charts/minibroker/**/*
       - path: values
         manual: {}
   - path: config/service-catalog
@@ -45,6 +45,8 @@ directories:
           ref: 5068f67d9616bab9e21dae8a161578a034a0803a
           disableAutoChecksumValidation: true
         includePaths:
-          - charts/**/*
+          - charts/catalog/**/*
+          - charts/healthcheck/**/*
+          - charts/ups-broker/**/*
       - path: values
         manual: {}
