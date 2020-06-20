@@ -81,9 +81,26 @@ tasks:
         kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
 
   svccat:
-    cmds: # https://svc-cat.io/docs/walkthrough/
-      - exit 1
+    cmds:
       - | # not intended to be ran as a task, just for holding command strings
+        exit 1
+      - | # https://svc-cat.io/docs/cli/
+        svcat register ups-broker --url http://ups-broker-ups-broker.ups-broker.svc.cluster.local --scope cluster
+        svcat get brokers
+        svcat sync broker ups-broker
+        svcat marketplace
+        svcat provision ups-instance --class user-provided-service --plan default
+        svcat get instances
+        svcat bind ups-instance --name ups-binding
+        svcat bind ups-instance
+        svcat describe instance ups-instance
+        svcat unbind ups-instance
+        svcat unbind  --name ups-binding
+        svcat deregister ups-broker --scope cluster
+        svcat register ups-broker --url http://ups-broker-ups-broker.ups-broker.svc.cluster.local -n foobar
+        svcat get brokers --scope namespace
+
+      - | # https://svc-cat.io/docs/walkthrough/
         svcat get classes
         kubectl get clusterserviceclasses
         svcat describe class mariadb
