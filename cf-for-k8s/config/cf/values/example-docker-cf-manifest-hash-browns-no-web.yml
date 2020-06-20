@@ -1,0 +1,13 @@
+---
+applications:
+  - name: hash-browns
+    memory: 256M
+    no-route: true
+    health-check-type: process
+    docker:
+      image: alexellis2/hashbrowns:1.2.0
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: 80
+        prometheus.io/path: /metrics

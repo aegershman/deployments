@@ -1,4 +1,5 @@
 # https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md
+# https://github.com/coreos/prometheus-operator/issues/1899
 # https://stackoverflow.com/questions/52991038/how-to-create-a-servicemonitor-for-prometheus-operator
 # https://support.coreos.com/hc/en-us/articles/360000155514-Prometheus-ServiceMonitor-troubleshooting
 ---
@@ -15,6 +16,5 @@ spec:
     matchLabels:
       cloudfoundry.org/process_type: web
   endpoints:
-    # - port: http
-    - port: http-envoy-prom # 15080, istio-proxy
+    - port: http
       interval: 15s
