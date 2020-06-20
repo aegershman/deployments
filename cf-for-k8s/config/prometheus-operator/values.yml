@@ -45,8 +45,11 @@ prometheus:
     ## as specified in the official Prometheus documentation:
     ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config.
     ##
+    ## https://developer.sh/posts/prometheus-self-discovery
     ## https://github.com/concourse/hush-house/blob/master/deployments/with-creds/metrics/values.yaml
+    ## https://kubedb.com/docs/0.12.0/guides/redis/monitoring/using-builtin-prometheus/
     ## https://linuxacademy.com/blog/kubernetes/running-prometheus-on-kubernetes/
+    ## https://rancher.com/blog/2020/custom-monitoring
     ##
     additionalScrapeConfigs:
       - job_name: kubernetes-pods
