@@ -26,6 +26,16 @@ directories:
           - tests/smoke/assets/test-node-app/**/*
       - path: values
         manual: {}
+  - path: config/harbor
+    contents:
+      - path: vendor/github.com/goharbor/harbor-helm
+        git:
+          url: https://github.com/goharbor/harbor-helm
+          ref: 83428a9e39074a0498960cbfb961473748f73de3
+          disableAutoChecksumValidation: true
+        includePaths: []
+      - path: values
+        manual: {}
   - path: config/minibroker
     contents:
       - path: vendor/github.com/kubernetes-sigs/minibroker
