@@ -20,10 +20,10 @@ releases:
     namespace: harbor
     # chart: harbor/harbor
     chart: config/harbor/vendor/github.com/goharbor/harbor-helm
-    installed: true
+    installed: false
     version: ~1.4.x
     values:
-      - config/harbor/values.yml
+      - config/harbor/values/values.yml
 
   - name: ingress-nginx
     namespace: ingress-nginx
