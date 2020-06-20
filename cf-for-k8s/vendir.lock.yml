@@ -13,6 +13,14 @@ directories:
   path: config/cf
 - contents:
   - git:
+      commitTitle: 'Merge pull request #620 from heww/lint-improvement...'
+      sha: 83428a9e39074a0498960cbfb961473748f73de3
+    path: vendor/github.com/goharbor/harbor-helm
+  - manual: {}
+    path: values
+  path: config/harbor
+- contents:
+  - git:
       commitTitle: 'fix: remove hardcoded cluster domains (#73)...'
       sha: e50e4bc41f03ae2e10daaf9522f2aafb32bc7ea3
     path: vendor/github.com/kubernetes-sigs/minibroker
