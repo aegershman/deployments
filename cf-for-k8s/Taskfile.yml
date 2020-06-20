@@ -66,6 +66,13 @@ tasks:
         cf create-service-key mariadb-svc mykey
         cf bind-service todo-ui mariadb-svc
 
+  prometheus-operator:
+    cmds:
+      - exit 1
+      - |
+        kubectl apply -f config/cf/values/cf-hash-browns-service-monitor.yaml
+        kubectl -n cf-workloads get servicemonitor -o yaml
+
   full-install-steps:
     cmds:
       # - task: apply-metrics-server

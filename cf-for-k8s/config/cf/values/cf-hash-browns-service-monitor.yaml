@@ -1,0 +1,16 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cf-hash-browns-test-service-monitor
+  namespace: cf-workloads
+  labels:
+    app: hash-browns-test
+    use: prometheus-test
+spec:
+  selector:
+    matchLabels:
+      cloudfoundry.org/process_type: web
+  endpoints:
+    - port: http
+      interval: 15s
