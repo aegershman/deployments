@@ -8,14 +8,4 @@ applications:
       image: dbbaskette/todos-ui
     metadata:
       annotations:
-        # cf7 version 7.0.0-beta.30+6203bbe5d.2020-02-21
-        # without quotation marks around "true", this throws a 500:
-        # prometheus.io/scrape: true
-        # but with quotes around it, s'all good. and it does pass through to
-        # the built pod in ns cf-workloads
-        # ...
-        # ... certainly makes you wonder about the possibilities, right?
-        # very cool stuff
-        prometheus.io/scrape: "true"
-        prometheus.io/port: 2112
-        prometheus.io/path: /metrics
+        prometheus.io/scrape: "false"

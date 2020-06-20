@@ -9,7 +9,11 @@ controller:
       http: 32080
       https: 32443
   metrics:
-    enabled: false
+    enabled: true
+    service:
+      type: ClusterIP
+    serviceMonitor:
+      enabled: true
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
