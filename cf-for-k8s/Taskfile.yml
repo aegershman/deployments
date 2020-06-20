@@ -73,6 +73,7 @@ tasks:
         kubectl apply -f config/cf/values/cf-hash-browns-service-monitor.yaml
         kubectl -n cf-workloads get servicemonitor -o yaml
         kubectl -n ingress-nginx get servicemonitor -o yaml
+        kubectl -n prometheus-operator logs -f -lapp=prometheus-operator-operator --all-containers=true
 
   full-install-steps:
     cmds:
