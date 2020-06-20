@@ -42,8 +42,9 @@ releases:
 
   - name: service-catalog
     namespace: catalog
-    chart: svc-cat/catalog
-    installed: false
+    # chart: svc-cat/catalog
+    chart: config/service-catalog/vendor/github.com/kubernetes-sigs/service-catalog/charts/catalog
+    installed: true
     version: ~0.x.x
     values:
       - config/service-catalog/values/values.yml
