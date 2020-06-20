@@ -75,6 +75,7 @@ tasks:
         cf push -f config/cf/values/example-docker-cf-manifest-hash-browns.yml
         cf push -f config/cf/values/example-docker-cf-manifest-hash-browns-no-web.yml
       - |
+        kubectl delete -f config/cf/values/cf-hash-browns-service-monitor.yaml
         kubectl -n cf-workloads get servicemonitor -o yaml
         kubectl -n cf-workloads get endpoints -o yaml
         kubectl -n ingress-nginx get servicemonitor -o yaml
