@@ -18,8 +18,8 @@ repositories:
 releases:
   - name: harbor
     namespace: harbor
-    # chart: harbor/harbor
-    chart: config/harbor/vendor/github.com/goharbor/harbor-helm
+    chart: harbor/harbor
+    # chart: config/harbor/vendor/github.com/goharbor/harbor-helm
     installed: true
     version: ~1.4.x
     values:
