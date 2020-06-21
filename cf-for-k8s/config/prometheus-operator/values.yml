@@ -25,6 +25,14 @@ grafana:
   # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L542
   additionalDataSources: []
 
+kubelet:
+  enabled: true
+  serviceMonitor:
+    ## Enable scraping the kubelet over https. For requirements to enable this see
+    ## https://github.com/coreos/prometheus-operator/issues/926
+    ##
+    https: false
+
 prometheusOperator:
   enabled: true
   # possible values: "all", "debug", "info", "warn", "error", "none"
