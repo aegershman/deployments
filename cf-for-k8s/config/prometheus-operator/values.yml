@@ -1,3 +1,4 @@
+# https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
 # http://alertmanager.vcap.me:32080
 # https://alertmanager.vcap.me:32443
 # http://grafana.vcap.me:32080
@@ -23,6 +24,15 @@ grafana:
       - grafana.vcap.me
   # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L542
   additionalDataSources: []
+
+kubelet:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeProxy:
+  enabled: false
 
 prometheusOperator:
   enabled: true

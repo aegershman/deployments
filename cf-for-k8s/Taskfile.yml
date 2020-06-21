@@ -3,6 +3,7 @@ version: "2"
 
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy-local.md
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
+# https://github.com/cloudfoundry/cf-k8s-networking/tree/master/doc/no-loadbalancer
 tasks:
   apply-metrics-server:
     cmds: # we're using metrics-server packaged with cf-for-k8s, but will leave this here

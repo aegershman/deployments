@@ -16,7 +16,7 @@ webhook:
       securePort: 31443
 
 controllerManager:
-  enablePrometheusScrape: true
+  enablePrometheusScrape: false
   service:
     type: ClusterIP
     nodePort:
