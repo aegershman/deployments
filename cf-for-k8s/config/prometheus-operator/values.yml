@@ -26,12 +26,13 @@ grafana:
   additionalDataSources: []
 
 kubelet:
-  enabled: true
-  serviceMonitor:
-    ## Enable scraping the kubelet over https. For requirements to enable this see
-    ## https://github.com/coreos/prometheus-operator/issues/926
-    ##
-    https: false
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeProxy:
+  enabled: false
 
 prometheusOperator:
   enabled: true
