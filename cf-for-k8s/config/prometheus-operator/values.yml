@@ -1,3 +1,4 @@
+# https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
 # http://alertmanager.vcap.me:32080
 # https://alertmanager.vcap.me:32443
 # http://grafana.vcap.me:32080
