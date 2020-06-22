@@ -28,6 +28,8 @@ releases:
     chart: ingress-nginx/ingress-nginx
     installed: true
     version: ~2.7.x
+    needs:
+      - prometheus-operator/prometheus-operator
     values:
       - config/ingress-nginx/values.yml
 
@@ -49,6 +51,14 @@ releases:
     version: ~0.x.x
     values:
       - config/minibroker/values.yml
+
+  - name: prometheus-operator
+    namespace: prometheus-operator
+    chart: stable/prometheus-operator
+    installed: true
+    version: ~8.15.x
+    values:
+      - config/prometheus-operator/values.yml
 
   - name: stratos
     namespace: stratos
