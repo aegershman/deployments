@@ -11,7 +11,6 @@ persistence:
 worker:
   enabled: true
   replicas: 1
-  annotations: {}
 
 web:
   enabled: false
