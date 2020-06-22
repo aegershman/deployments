@@ -19,24 +19,24 @@ nodes:
         hostPort: 32080
       - containerPort: 32443 # https
         hostPort: 32443
-      # for use with ingress-nginx in kubecf for inbound tcp routing
-      - containerPort: 20000
-        hostPort: 20000
-      - containerPort: 20001
-        hostPort: 20001
-      - containerPort: 20002
-        hostPort: 20002
-      - containerPort: 20003
-        hostPort: 20003
-      - containerPort: 20004
-        hostPort: 20004
-      - containerPort: 20005
-        hostPort: 20005
-      - containerPort: 20006
-        hostPort: 20006
-      - containerPort: 20007
-        hostPort: 20007
-      - containerPort: 20008
-        hostPort: 20008
-      - containerPort: 2223
-        hostPort: 2223
+      # # for use with ingress-nginx in kubecf for inbound tcp routing
+      # - containerPort: 20000
+      #   hostPort: 20000
+      # - containerPort: 20001
+      #   hostPort: 20001
+      # - containerPort: 20002
+      #   hostPort: 20002
+      # - containerPort: 20003
+      #   hostPort: 20003
+      # - containerPort: 20004
+      #   hostPort: 20004
+      # - containerPort: 20005
+      #   hostPort: 20005
+      # - containerPort: 20006
+      #   hostPort: 20006
+      # - containerPort: 20007
+      #   hostPort: 20007
+      # - containerPort: 20008
+      #   hostPort: 20008
+      # - containerPort: 2223
+      #   hostPort: 2223
