@@ -1,4 +1,5 @@
 # https://github.com/jaegertracing/jaeger-operator/blob/master/deploy/examples/all-in-one-with-options.yaml
+# https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/#capabilities-of-the-downward-api
 ---
 jaeger:
   create: true

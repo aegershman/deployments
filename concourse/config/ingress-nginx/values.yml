@@ -1,5 +1,6 @@
 # https://github.com/kubernetes/ingress-nginx/blob/master/charts/ingress-nginx/values.yaml
 # https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/third-party-addons/opentracing.md
+# https://github.com/kubernetes/ingress-nginx/pull/4983
 # https://github.com/kubernetes/minikube/pull/5519/files
 # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
 ---
