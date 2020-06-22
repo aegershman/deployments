@@ -2,7 +2,7 @@
 helmDefaults:
   kubeContext: kind-kind
   createNamespace: true
-  wait: false
+  wait: true
 
 repositories:
   - name: ingress-nginx
@@ -28,8 +28,6 @@ releases:
     chart: ingress-nginx/ingress-nginx
     installed: true
     version: ~2.7.x
-    needs:
-      - prometheus-operator/prometheus-operator
     values:
       - config/ingress-nginx/values.yml
 
@@ -47,7 +45,7 @@ releases:
   - name: minibroker
     namespace: minibroker
     chart: minibroker/minibroker
-    installed: true
+    installed: false
     version: ~0.x.x
     values:
       - config/minibroker/values.yml
@@ -55,7 +53,7 @@ releases:
   - name: prometheus-operator
     namespace: prometheus-operator
     chart: stable/prometheus-operator
-    installed: true
+    installed: false
     version: ~8.15.x
     values:
       - config/prometheus-operator/values.yml

@@ -1,3 +1,4 @@
+# https://github.com/kubernetes/ingress-nginx/issues/5401
 ---
 controller:
   replicaCount: 1
@@ -6,18 +7,14 @@ controller:
   service:
     type: NodePort
   config:
-    enable-opentracing: "true"
-    jaeger-collector-host: jaeger-operator-jaeger-agent.jaeger-operator.svc.cluster.local
-    jaeger-collector-port: "6831"
-    jaeger-service-name: nginx
     proxy-body-size: 64m
     proxy-buffer-size: 16k
   metrics:
-    enabled: true
+    enabled: false
     service:
       type: ClusterIP
     serviceMonitor:
-      enabled: true
+      enabled: false
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
