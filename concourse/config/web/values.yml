@@ -21,11 +21,18 @@ concourse:
     kubernetes:
       enabled: false
 
+    tracing:
+      ## Jaeger's HTTP-based Thrift collector endpoint.
+      #
+      ## Example: "http://jaeger:14268/api/traces"
+      ##
+      jaegerEndpoint: http://jaeger-operator.jaeger-operator.svc.cluster.local:14268/api/traces
+      jaegerTags: "iaas_type:kind,env:localhost"
+      jaegerService: "concourse-web"
+
     prometheus:
       enabled: true
       ## If Prometheus operator is used, also create a servicemonitor object
       serviceMonitor:
         enabled: true
         interval: "30s"
-        # Namespace the servicemonitor object should be in
-        namespace:

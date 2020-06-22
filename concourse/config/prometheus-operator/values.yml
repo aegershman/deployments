@@ -12,7 +12,7 @@ alertmanager:
       - alertmanager.vcap.me
 
 grafana:
-  adminPassword: prom-operator
+  adminPassword: admin
   ingress:
     enabled: true
     annotations:

@@ -45,6 +45,8 @@ releases:
     chart: concourse/concourse
     installed: true
     version: ~11.2.x
+    needs:
+      - prometheus-operator/prometheus-operator
     values:
       - config/web/values.yml
 
