@@ -1,19 +1,24 @@
 # https://github.com/cloudfoundry/stratos/blob/master/deploy/kubernetes/console/templates/__helpers.tpl#L45-L63
 ---
+consoleVersion: latest
+dockerRegistrySecret: regsecret
+imagePullPolicy: Always
+
 console:
-  migrateVolumes: false
+  backendLogLevel: debug
   service:
+    servicePort: 443
+    type: ClusterIP
+    externalName:
     ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
       host: console.vcap.me
-
-  # Enable/disable Tech Preview
+    http:
+      enabled: true
+      servicePort: 80
   techPreview: false
-
-  # URL of a Cloud Foundry to use for authentication and to auto-register on login
-  autoRegisterCF: ~ # https://api.kubecf.vcap.me
 
 uaa:
   # endpoint: https://uaa.kubecf.svc.cluster.local:8443
@@ -28,4 +33,17 @@ env:
   # UAA_HOST: ~
   # UAA_PORT: 8443
   # UAA_PORT: 443
+  # UAA Zone (namespace cf is deployed to when deployed to Kubernetes)
   UAA_ZONE: ~
+# kube:
+#   # Whether RBAC is enabled in the Kubernetes cluster
+#   auth: "rbac"
+#   external_console_https_port: 8443
+#   storage_class:
+#     persistent:
+#   organization: splatform
+#   registry:
+#     hostname: docker.io
+#     username:
+#     password:
+#     email: default
