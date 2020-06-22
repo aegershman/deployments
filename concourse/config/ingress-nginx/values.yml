@@ -1,4 +1,5 @@
-# https://github.com/kubernetes/ingress-nginx/blob/6048e63daa2bd074a843f3caf344b1816bd703bc/charts/ingress-nginx/values.yaml#L429
+# https://github.com/kubernetes/ingress-nginx/blob/master/charts/ingress-nginx/values.yaml
+# https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/third-party-addons/opentracing.md
 # https://github.com/kubernetes/minikube/pull/5519/files
 ---
 controller:
@@ -8,6 +9,7 @@ controller:
   service:
     type: NodePort
   config:
+    enable-opentracing: "true"
     proxy-body-size: 64m
     proxy-buffer-size: 16k
   metrics:
