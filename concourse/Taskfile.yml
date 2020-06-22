@@ -4,12 +4,21 @@ version: "2"
 tasks:
   login:
     cmds:
-      - fly -t localhost login -c http://concourse.vcap.me -u test -p test -n main -k
-      - fly -t localhost sync
+      - |
+        fly -t localhost login -c http://concourse.vcap.me -u test -p test -n main -k
+        fly -t localhost sync
 
   set:
     cmds:
-      - fly -t localhost sp -p demo -c demo/pipeline.yml -l demo/params.yml -n
+      - |
+        fly -t localhost sp -p demo -c demo/pipeline.yml -l demo/params.yml -n
+        fly -t localhost up -p demo
+        fly -t localhost tj -j demo/make-a-change
+
+  concourse-debug:
+    cmds:
+      - |
+        fly -t localhost tj -j demo/make-a-change --watch
 
   jaeger-debug:
     cmds:
