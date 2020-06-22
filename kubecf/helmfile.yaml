@@ -1,6 +1,9 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
+  cleanupOnFail: false
+  force: false
+  historyMax: 2
 
 repositories:
   - name: ingress-nginx
@@ -40,7 +43,8 @@ releases:
     createNamespace: false
     chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.2.2/kubecf-v2.2.2.tgz
     installed: true
-    wait: false
+    wait: true
+    timeout: 900 # 15 minutes
     needs:
       - cf-operator/cf-operator
       - ingress-nginx/ingress-nginx

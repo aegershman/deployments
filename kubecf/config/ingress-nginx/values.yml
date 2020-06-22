@@ -10,11 +10,11 @@ controller:
     proxy-body-size: 64m
     proxy-buffer-size: 16k
   metrics:
-    enabled: false
+    enabled: true
     service:
       type: ClusterIP
     serviceMonitor:
-      enabled: false
+      enabled: true
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
@@ -42,4 +42,4 @@ tcp:
   20006: kubecf/tcp-router:20006"
   20007: kubecf/tcp-router:20007"
   20008: kubecf/tcp-router:20008"
-  2222: "kubecf/scheduler:2222"
+  2222: "kubecf/eirinix-ssh-proxy:2222"
