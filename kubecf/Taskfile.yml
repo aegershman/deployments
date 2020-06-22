@@ -106,6 +106,8 @@ tasks:
         cf push -f config/kubecf/example-docker-cf-manifest-hash-browns-no-web.yml
         cf push -f config/kubecf/example-docker-cf-manifest-hash-browns.yml
         cf push -f config/kubecf/example-docker-cf-manifest-todo-ui.yml
+      - | # push a plain app pulled from cf-for-k8s (assuming the path hasn't changed)
+        cf push test-node-app -p ../cf-for-k8s/config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
       - | # after cf push'ing apps, see them pop up in the kubecf-eirini namespace as pods
         kubectl -n eirini get pods
       - | # misc. helpful for debugging
