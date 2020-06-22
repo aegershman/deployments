@@ -1,8 +1,6 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
-  createNamespace: true
-  wait: true
 
 repositories:
   - name: ingress-nginx
@@ -17,6 +15,8 @@ repositories:
 releases:
   - name: cf-operator
     namespace: cf-operator
+    createNamespace: true
+    wait: true
     chart: quarks/cf-operator
     version: 4.5.6
     installed: true
@@ -25,6 +25,8 @@ releases:
 
   - name: ingress-nginx
     namespace: ingress-nginx
+    createNamespace: true
+    wait: true
     chart: ingress-nginx/ingress-nginx
     installed: true
     version: ~2.7.x
@@ -34,6 +36,7 @@ releases:
   - name: kubecf
     namespace: kubecf
     createNamespace: false
+    wait: false
     chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.2.2/kubecf-v2.2.2.tgz
     installed: true
     needs:
@@ -44,6 +47,8 @@ releases:
 
   - name: minibroker
     namespace: minibroker
+    createNamespace: true
+    wait: false
     chart: minibroker/minibroker
     installed: false
     version: ~0.x.x
@@ -52,6 +57,8 @@ releases:
 
   - name: prometheus-operator
     namespace: prometheus-operator
+    createNamespace: true
+    wait: true
     chart: stable/prometheus-operator
     installed: false
     version: ~8.15.x
@@ -60,6 +67,8 @@ releases:
 
   - name: stratos
     namespace: stratos
+    createNamespace: true
+    wait: true
     chart: stratos/console
     installed: false
     version: ~3.2.x
