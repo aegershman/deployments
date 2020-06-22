@@ -4,9 +4,34 @@ version: "2"
 tasks:
   login:
     cmds:
-      - fly -t localhost login -c http://concourse.vcap.me -u test -p test -n main -k
-      - fly -t localhost sync
+      - |
+        fly -t localhost login -c http://concourse.vcap.me -u test -p test -n main -k
+        fly -t localhost sync
 
   set:
     cmds:
-      - fly -t localhost sp -p demo -c demo/pipeline.yml -l demo/params.yml -n
+      - |
+        fly -t localhost sp -p demo -c demo/pipeline.yml -l demo/params.yml -n
+        fly -t localhost up -p demo
+        fly -t localhost tj -j demo/make-a-change
+        fly -t localhost tj -j demo/this-will-fail
+
+  concourse-debug:
+    cmds:
+      - |
+        fly -t localhost tj -j demo/make-a-change --watch
+        fly -t localhost tj -j demo/this-will-fail --watch
+        fly -t localhost hijack -j demo/make-a-change
+        fly -t localhost hijack -j demo/this-will-fail
+
+  jaeger-debug:
+    cmds:
+      - exit 1
+      - |
+        kubectl -n jaeger-operator get jaeger
+        kubectl -n jaeger-operator delete jaeger.jaegertracing.io/jaeger-operator-jaeger
+        kubectl -n jaeger-operator get pods -l app.kubernetes.io/instance=jaeger-operator-jaeger
+        kubectl -n jaeger-operator logs -f -l app.kubernetes.io/instance=jaeger-operator-jaeger
+      - |
+        kubectl -n jaeger-operator get pods -l app.kubernetes.io/name=jaeger-operator
+        kubectl -n jaeger-operator logs -f -l app.kubernetes.io/name=jaeger-operator

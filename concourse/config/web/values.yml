@@ -1,3 +1,6 @@
+# https://concourse-ci.org/tracing.html
+# https://discuss.istio.io/t/help-with-production-jaeger-and-istio/4002
+# https://medium.com/@masroor.hasan/tracing-infrastructure-with-jaeger-on-kubernetes-6800132a677
 ---
 postgresql:
   enabled: true
@@ -21,11 +24,13 @@ concourse:
     kubernetes:
       enabled: false
 
+    tracing:
+      jaegerEndpoint: http://jaeger-operator-jaeger-collector-headless.jaeger-operator.svc.cluster.local:14268/api/traces
+      jaegerTags: "iaas_type:kind,env:localhost"
+      jaegerService: "concourse-web"
+
     prometheus:
       enabled: true
-      ## If Prometheus operator is used, also create a servicemonitor object
       serviceMonitor:
         enabled: true
         interval: "30s"
-        # Namespace the servicemonitor object should be in
-        namespace:

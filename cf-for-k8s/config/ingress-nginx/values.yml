@@ -1,3 +1,4 @@
+# https://discuss.istio.io/t/istio-without-gateway-with-nginx-ingress/593/5
 # https://kubernetes.github.io/ingress-nginx/deploy/baremetal/
 ---
 controller:

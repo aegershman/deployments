@@ -1,3 +1,7 @@
+# http://alertmanager.vcap.me
+# http://grafana.vcap.me
+# http://prometheus.vcap.me
+# https://github.com/helm/charts/issues/11310
 ---
 alertmanager:
   ingress:
@@ -8,15 +12,22 @@ alertmanager:
       - alertmanager.vcap.me
 
 grafana:
-  adminPassword: prom-operator
+  adminPassword: admin
   ingress:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
       - grafana.vcap.me
-  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L542
-  additionalDataSources: []
+
+kubelet:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeProxy:
+  enabled: false
 
 prometheusOperator:
   enabled: true
@@ -28,7 +39,6 @@ prometheus:
       kubernetes.io/ingress.class: nginx
     hosts:
       - prometheus.vcap.me
-
-  # https://github.com/helm/charts/issues/11310
+  retention: 10m
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false

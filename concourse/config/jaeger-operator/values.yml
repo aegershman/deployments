@@ -1,0 +1,19 @@
+# http://docs-aliyun.cn-hangzhou.oss.aliyun-inc.com/pdf/cs-best-practices-intl-en-2018-04-08.pdf
+# https://discuss.kubernetes.io/t/jaeger-auto-injecting-into-pods/8138/5
+# https://github.com/jaegertracing/jaeger-operator/blob/master/deploy/examples/all-in-one-with-options.yaml
+# https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/#capabilities-of-the-downward-api
+# https://medium.com/jaegertracing/deployment-strategies-for-the-jaeger-agent-1d6f91796d09
+---
+jaeger:
+  create: true
+  spec:
+    strategy: allInOne
+    allInOne:
+      options:
+        log-level: debug
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+      hosts:
+        - jaeger.vcap.me
