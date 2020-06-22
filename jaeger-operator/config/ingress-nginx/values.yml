@@ -10,6 +10,14 @@ controller:
     proxy-buffer-size: 16k
   metrics:
     enabled: false
+    service:
+      type: ClusterIP
+    serviceMonitor:
+      enabled: false
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
 
 defaultBackend:
   enabled: false
