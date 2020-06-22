@@ -25,6 +25,8 @@ releases:
     version: 4.5.6
     installed: true
     wait: true
+    needs:
+      - ingress-nginx/ingress-nginx
     values:
       - config/cf-operator/values.yml
 
