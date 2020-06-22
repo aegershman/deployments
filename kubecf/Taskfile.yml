@@ -92,7 +92,7 @@ tasks:
   post-installation-validation:
     cmds:
       - | # check if the cf api is responding
-        cf api --skip-ssl-validation api.kubecf.127.0.0.1.xip.io
+        cf api --skip-ssl-validation api.kubecf.vcap.me
       - | # retrieve cf admin password
         echo $(kubectl -n kubecf get secret var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode)
         cf auth admin $(kubectl -n kubecf get secret var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode)

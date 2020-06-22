@@ -7,17 +7,17 @@ console:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
-      host: console.127.0.0.1.xip.io
+      host: console.vcap.me
 
   # Enable/disable Tech Preview
   techPreview: false
 
   # URL of a Cloud Foundry to use for authentication and to auto-register on login
-  autoRegisterCF: ~ # https://api.kubecf.127.0.0.1.xip.io
+  autoRegisterCF: ~ # https://api.kubecf.vcap.me
 
 uaa:
   # endpoint: https://uaa.kubecf.svc.cluster.local:8443
-  # endpoint: https://uaa.kubecf.127.0.0.1.xip.io:443
+  # endpoint: https://uaa.kubecf.vcap.me:443
   consoleClient: cf
   consoleClientSecret: ""
   consoleAdminIdentifier: cloud_controller.admin

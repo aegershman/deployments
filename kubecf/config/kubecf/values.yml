@@ -1,5 +1,5 @@
 ---
-system_domain: kubecf.127.0.0.1.xip.io
+system_domain: kubecf.vcap.me
 features:
   eirini:
     enabled: true
@@ -20,12 +20,12 @@ eirini:
     kubecf:
       enable: true
     use_registry_ingress: true
-    ingress_endpoint: 127.0.0.1.xip.io
+    ingress_endpoint: vcap.me
 
 bits:
   ingress:
     # https://github.com/cloudfoundry-incubator/bits-service-release/blob/9a34f385fd4d542274ac34e8cc947dfe9a2495a3/helm/bits/templates/bits.yaml#L13
-    endpoint: 127.0.0.1.xip.io
+    endpoint: vcap.me
     use: true
   services:
     loadbalanced: false
