@@ -3,31 +3,40 @@ helmDefaults:
   kubeContext: kind-kind
   createNamespace: true
   recreatePods: false
-  wait: true
+  wait: false
 
 repositories:
   - name: concourse
     url: https://concourse-charts.storage.googleapis.com/
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
+  - name: jaegertracing
+    url: https://jaegertracing.github.io/helm-charts
 
 releases:
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
     installed: true
-    recreatePods: false
     version: ~2.7.x
+    needs:
+      - prometheus-operator/prometheus-operator
     values:
       - config/ingress-nginx/values.yml
+
+  - name: jaeger-operator
+    namespace: jaeger-operator
+    chart: jaegertracing/jaeger-operator
+    installed: true
+    version: ~2.15.x
+    values:
+      - config/jaeger-operator/values.yml
 
   - name: prometheus-operator
     namespace: prometheus-operator
     chart: stable/prometheus-operator
     installed: true
     version: ~8.15.x
-    needs:
-      - ingress-nginx/ingress-nginx
     values:
       - config/prometheus-operator/values.yml
 
