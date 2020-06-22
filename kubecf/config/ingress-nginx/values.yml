@@ -1,10 +1,9 @@
+# https://github.com/kubernetes/ingress-nginx/blob/1ba39f508817605a92443ebfcaf084029ec94f44/charts/ingress-nginx/values.yaml#L37
 # https://github.com/kubernetes/ingress-nginx/issues/4360
 # https://github.com/kubernetes/ingress-nginx/issues/5401
 ---
 controller:
   replicaCount: 1
-  hostNetwork: true
-  dnsPolicy: ClusterFirstWithHostNet
   service:
     type: NodePort
   config:
@@ -21,6 +20,14 @@ controller:
       maxUnavailable: 1
       maxSurge: 1
   terminationGracePeriodSeconds: 90
+
+  admissionWebhooks:
+    enabled: true
+    failurePolicy: Fail
+    port: 8443
+    service:
+      servicePort: 443
+      type: ClusterIP
 
 defaultBackend:
   enabled: false
