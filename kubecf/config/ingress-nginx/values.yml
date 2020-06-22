@@ -1,4 +1,5 @@
 # https://github.com/kubernetes/ingress-nginx/blob/1ba39f508817605a92443ebfcaf084029ec94f44/charts/ingress-nginx/values.yaml#L37
+# https://github.com/kubernetes/ingress-nginx/issues/3268
 # https://github.com/kubernetes/ingress-nginx/issues/4360
 # https://github.com/kubernetes/ingress-nginx/issues/5401
 ---

@@ -36,6 +36,7 @@ releases:
     version: ~2.7.x
     wait: true
     needs:
+      - jaeger-operator/jaeger-operator
       - prometheus-operator/prometheus-operator
     values:
       - config/ingress-nginx/values.yml
@@ -44,7 +45,7 @@ releases:
     namespace: jaeger-operator
     createNamespace: true
     chart: jaegertracing/jaeger-operator
-    installed: false
+    installed: true
     version: ~2.15.x
     wait: true
     values:
