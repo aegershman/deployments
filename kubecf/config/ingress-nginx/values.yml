@@ -1,3 +1,4 @@
+# https://github.com/kubernetes/ingress-nginx/issues/4360
 # https://github.com/kubernetes/ingress-nginx/issues/5401
 ---
 controller:
@@ -19,7 +20,7 @@ controller:
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: 1
-  terminationGracePeriodSeconds: 20
+  terminationGracePeriodSeconds: 90
 
 defaultBackend:
   enabled: false
