@@ -7,6 +7,10 @@ controller:
   service:
     type: NodePort
   config:
+    enable-opentracing: "true"
+    jaeger-collector-host: jaeger-operator-jaeger-agent.jaeger-operator.svc.cluster.local
+    jaeger-collector-port: "6831"
+    jaeger-service-name: ingress-nginx
     proxy-body-size: 64m
     proxy-buffer-size: 16k
   metrics:

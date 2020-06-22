@@ -8,6 +8,8 @@ helmDefaults:
 repositories:
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
+  - name: jaegertracing
+    url: https://jaegertracing.github.io/helm-charts
   - name: minibroker
     url: https://minibroker.blob.core.windows.net/charts
   - name: quarks
@@ -37,6 +39,16 @@ releases:
       - prometheus-operator/prometheus-operator
     values:
       - config/ingress-nginx/values.yml
+
+  - name: jaeger-operator
+    namespace: jaeger-operator
+    createNamespace: true
+    chart: jaegertracing/jaeger-operator
+    installed: false
+    version: ~2.15.x
+    wait: true
+    values:
+      - config/jaeger-operator/values.yml
 
   - name: kubecf
     namespace: kubecf
