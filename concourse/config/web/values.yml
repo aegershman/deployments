@@ -1,3 +1,6 @@
+# https://concourse-ci.org/tracing.html
+# https://discuss.istio.io/t/help-with-production-jaeger-and-istio/4002
+# https://medium.com/@masroor.hasan/tracing-infrastructure-with-jaeger-on-kubernetes-6800132a677
 ---
 postgresql:
   enabled: true
@@ -22,11 +25,7 @@ concourse:
       enabled: false
 
     tracing:
-      ## Jaeger's HTTP-based Thrift collector endpoint.
-      #
-      ## Example: "http://jaeger:14268/api/traces"
-      ##
-      jaegerEndpoint: http://jaeger-operator.jaeger-operator.svc.cluster.local:14268/api/traces
+      jaegerEndpoint: http://jaeger-operator-jaeger-collector-headless.jaeger-operator.svc.cluster.local:14268/api/traces
       jaegerTags: "iaas_type:kind,env:localhost"
       jaegerService: "concourse-web"
 
