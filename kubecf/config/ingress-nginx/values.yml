@@ -42,4 +42,4 @@ tcp:
   20006: kubecf/tcp-router:20006"
   20007: kubecf/tcp-router:20007"
   20008: kubecf/tcp-router:20008"
-  2222: "kubecf/eirinix-ssh-proxy:2222"
+  2223: "kubecf/eirinix-ssh-proxy:2222"
