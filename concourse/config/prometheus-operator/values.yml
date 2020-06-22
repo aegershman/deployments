@@ -8,7 +8,6 @@ alertmanager:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/enable-opentracing: "true"
     hosts:
       - alertmanager.vcap.me
 
@@ -18,7 +17,6 @@ grafana:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/enable-opentracing: "true"
     hosts:
       - grafana.vcap.me
 
@@ -39,7 +37,6 @@ prometheus:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/enable-opentracing: "true"
     hosts:
       - prometheus.vcap.me
   retention: 10m

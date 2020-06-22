@@ -1,6 +1,7 @@
 # https://github.com/kubernetes/ingress-nginx/blob/master/charts/ingress-nginx/values.yaml
 # https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/third-party-addons/opentracing.md
 # https://github.com/kubernetes/minikube/pull/5519/files
+# https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
 ---
 controller:
   replicaCount: 1
@@ -10,6 +11,7 @@ controller:
     type: NodePort
   config:
     enable-opentracing: "true"
+    jaeger-collector-host: jaeger-operator-jaeger-agent.jaeger-operator.svc.cluster.local
     proxy-body-size: 64m
     proxy-buffer-size: 16k
   metrics:
