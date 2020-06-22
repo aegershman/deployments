@@ -3,7 +3,7 @@ applications:
   - name: todo-ui
     memory: 256M
     routes:
-      - route: todo.vcap.me
+      - route: todo.kubecf.vcap.me
     docker:
       image: dbbaskette/todos-ui
     metadata:

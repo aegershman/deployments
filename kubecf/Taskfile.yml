@@ -103,7 +103,9 @@ tasks:
       - | # enable docker so that you can push docker images
         cf enable-feature-flag diego_docker
       - | # push a docker app
-        cf push -f config/kubecf/manifest.yml
+        cf push -f config/kubecf/example-docker-cf-manifest-hash-browns-no-web.yml
+        cf push -f config/kubecf/example-docker-cf-manifest-hash-browns.yml
+        cf push -f config/kubecf/example-docker-cf-manifest-todo-ui.yml
       - | # after cf push'ing apps, see them pop up in the kubecf-eirini namespace as pods
         kubectl -n eirini get pods
       - | # misc. helpful for debugging
