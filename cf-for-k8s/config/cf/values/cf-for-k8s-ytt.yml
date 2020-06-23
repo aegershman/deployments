@@ -14418,7 +14418,7 @@ subjects:
   namespace: kube-system
 ---
 app_registry:
-  hostname: ""
-  repository: ""
-  username: ""
-  password: ""
+  hostname: http://harbor.harbor.svc.cluster.local:80
+  repository: harbor.harbor.svc.cluster.local:80/library
+  username: admin
+  password: Harbor12345
