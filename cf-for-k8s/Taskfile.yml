@@ -1,13 +1,29 @@
----
-version: "2"
-
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy-local.md
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
 # https://github.com/cloudfoundry/cf-k8s-networking/tree/master/doc/no-loadbalancer
+---
+version: "2"
+
 tasks:
+  full-install-steps:
+    cmds:
+      - task: clean-generated-values
+      # - task: apply-metrics-server
+      - task: generate-values
+      - task: apply-cf
+      # - task: post-install
+
   apply-metrics-server:
-    cmds: # we're using metrics-server packaged with cf-for-k8s, but will leave this here
-      - kubectl apply --recursive --filename config/cf/vendor/github.com/kubernetes-sigs
+    cmds:
+      - | # we're using metrics-server packaged with cf-for-k8s, but will leave this here
+        kubectl apply --recursive --filename config/cf/vendor/github.com/kubernetes-sigs
+
+  clean-generated-values:
+    cmds:
+      - | # when you remove these from /tmp and re-run the generate-values script it'll give you new passwords, certs, etc.
+        rm -f /tmp/cf-values.yml
+        rm -f /tmp/cf-for-k8s-ytt.yml
+        rm -rf /tmp/vcap.me
 
   generate-values:
     cmds:
@@ -25,27 +41,21 @@ tasks:
           -f config/cf/values/cf-values.yml \
           >config/cf/values/cf-for-k8s-ytt.yml
 
-  clean-generated-values:
-    cmds:
-      - | # when you remove these from /tmp and re-run the generate-values script it'll give you new passwords, certs, etc.
-        rm -f /tmp/cf-values.yml
-        rm -f /tmp/cf-for-k8s-ytt.yml
-        rm -rf /tmp/vcap.me
-
   apply-cf:
     cmds:
-      - kapp deploy -a cf -f config/cf/values/cf-for-k8s-ytt.yml --yes
+      - |
+        kapp deploy -a cf -f config/cf/values/cf-for-k8s-ytt.yml --yes
 
   delete-cf:
     cmds:
-      - kapp delete -a cf -y
+      - |
+        kapp delete -a cf -y
 
   post-install:
     cmds:
       - |
         cf api --skip-ssl-validation https://api.vcap.me
         cf auth admin $(yq r config/cf/values/cf-values.yml 'cf_admin_password')
-      - |
         cf create-org test-org
         cf create-space -o test-org test-space
         cf target -o test-org -s test-space
@@ -67,6 +77,8 @@ tasks:
         cf service mariadb-svc
         cf create-service-key mariadb-svc mykey
         cf bind-service todo-ui mariadb-svc
+      - | # debugging
+        kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
 
   prometheus-operator:
     cmds:
@@ -81,20 +93,6 @@ tasks:
         kubectl -n cf-workloads get endpoints -o yaml
         kubectl -n ingress-nginx get servicemonitor -o yaml
         kubectl -n prometheus-operator logs -f -lapp=prometheus-operator-operator --all-containers=true
-
-  full-install-steps:
-    cmds:
-      # - task: apply-metrics-server
-      # - task: clean-generated-values
-      - task: generate-values
-      - task: apply-cf
-      # - task: post-install
-
-  debug:
-    cmds:
-      - | # not intended to be ran as a task, just for holding command strings
-        exit 1
-        kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
 
   svccat:
     cmds:
@@ -139,7 +137,7 @@ tasks:
         svcat deprovision -n test-ns mini-instance
         kubectl delete clusterservicebrokers minibroker
 
-  harbor-debug:
+  harbor:
     cmds:
       # for dockerhub, the registry auth target is "https://index.docker.io/v1/".
       # notice "library" is the project and "kuard-amd64" is the repository;
