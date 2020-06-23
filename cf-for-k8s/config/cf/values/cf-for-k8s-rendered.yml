@@ -927,7 +927,7 @@ metadata:
   name: cc-kpack-registry-auth-secret
   namespace: cf-workloads-staging
   annotations:
-    build.pivotal.io/docker: http://harbor.harbor.svc.cluster.local:80/v2.0
+    build.pivotal.io/docker: http://harbor.harbor.svc.cluster.local:80/api/v2.0/
     kapp.k14s.io/versioned: ""
 type: kubernetes.io/basic-auth
 stringData:
@@ -1497,7 +1497,7 @@ metadata:
   namespace: cf-workloads
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MC92Mi4wIjp7ImF1dGgiOiJZV1J0YVc0NlNHRnlZbTl5TVRJek5EVT0iLCJwYXNzd29yZCI6IkhhcmJvcjEyMzQ1IiwidXNlcm5hbWUiOiJhZG1pbiJ9fX0=
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MC9hcGkvdjIuMC8iOnsiYXV0aCI6IllXUnRhVzQ2U0dGeVltOXlNVEl6TkRVPSIsInBhc3N3b3JkIjoiSGFyYm9yMTIzNDUiLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
 ---
 apiVersion: v1
 kind: Secret
