@@ -69,7 +69,7 @@ releases:
     namespace: minibroker
     createNamespace: true
     chart: minibroker/minibroker
-    installed: false
+    installed: true
     version: ~0.x.x
     wait: false
     values:
