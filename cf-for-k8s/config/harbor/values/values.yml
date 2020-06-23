@@ -1,8 +1,9 @@
 # https://github.com/bitnami/bitnami-docker-harbor-jobservice/issues/1
 # https://github.com/goharbor/harbor-helm/blob/master/values.yaml
+# https://github.com/goharbor/harbor/issues/5291
 ---
 expose:
-  type: ClusterIP
+  type: clusterIP
   tls:
     enabled: false
     commonName: harbor
@@ -13,7 +14,7 @@ expose:
       httpsPort: 443
       notaryPort: 4443
 
-externalURL: http://harbor.harbor.svc.cluster.local
+externalURL: http://harbor.harbor.svc.cluster.local:80
 
 internalTLS:
   enabled: false
