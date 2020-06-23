@@ -9,7 +9,7 @@ tasks:
 
   kind-create:
     cmds:
-      - kind create cluster --config kind.config.yaml # --image kindest/node:v1.17.0
+      - kind create cluster --config kind.config.yaml # --image kindest/node:v1.17.5
       - task: kind-trust-k8s-root-ca-on-docker-daemon
 
   kind-delete:

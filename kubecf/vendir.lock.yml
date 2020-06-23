@@ -1,0 +1,11 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Add DS_PROMETHEUS datasource for templating...
+      sha: d59018cf56e26d51aec70887c2bcdf502c401d18
+    path: vendor/github.com/kubernetes/ingress-nginx
+  - manual: {}
+    path: values
+  path: config/prometheus-operator
+kind: LockConfig

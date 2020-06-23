@@ -1,5 +1,15 @@
+# https://github.com/cloudfoundry-incubator/bits-service-release/blob/9a34f385fd4d542274ac34e8cc947dfe9a2495a3/helm/bits/templates/bits.yaml#L13
+# https://github.com/cloudfoundry-incubator/kubecf/blob/0916d4120edebdbff5af8926b29c272c64429af0/deploy/helm/kubecf/assets/operations/instance_groups/acceptance-tests.yaml
+# https://github.com/cloudfoundry-incubator/kubecf/blob/84ac2c18bec4d62feb07875a387a7ad8108b82f4/deploy/helm/kubecf/values.yaml#L368-L386
+# https://github.com/cloudfoundry-incubator/kubecf/blob/master/deploy/helm/kubecf/assets/operations/instance_groups/acceptance-tests.yaml
+# https://github.com/cloudfoundry-incubator/kubecf/issues/487
+# https://github.com/cloudfoundry-incubator/kubecf/pull/106
+# https://github.com/cloudfoundry-incubator/kubecf/pull/133
+# https://github.com/cloudfoundry-incubator/kubecf/pull/485
+# https://github.com/cloudfoundry-incubator/kubecf/pull/544
+# https://starkandwayne.com/blog/running-cloud-foundry-on-kubernetes-using-kubecf/
 ---
-system_domain: kubecf.127.0.0.1.xip.io
+system_domain: kubecf.vcap.me
 features:
   eirini:
     enabled: true
@@ -11,8 +21,10 @@ features:
     enabled: true
   suse_buildpacks:
     enabled: true
+  # Disabling routing_api will also disable the tcp_router instance_group
+  routing_api:
+    enabled: true
 
-# https://github.com/cloudfoundry-incubator/kubecf/blob/84ac2c18bec4d62feb07875a387a7ad8108b82f4/deploy/helm/kubecf/values.yaml#L368-L386
 eirini:
   services:
     loadbalanced: false
@@ -20,12 +32,11 @@ eirini:
     kubecf:
       enable: true
     use_registry_ingress: true
-    ingress_endpoint: 127.0.0.1.xip.io
+    ingress_endpoint: vcap.me
 
 bits:
   ingress:
-    # https://github.com/cloudfoundry-incubator/bits-service-release/blob/9a34f385fd4d542274ac34e8cc947dfe9a2495a3/helm/bits/templates/bits.yaml#L13
-    endpoint: 127.0.0.1.xip.io
+    endpoint: vcap.me
     use: true
   services:
     loadbalanced: false

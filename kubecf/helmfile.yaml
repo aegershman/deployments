@@ -1,10 +1,15 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
+  cleanupOnFail: false
+  force: false
+  historyMax: 2
 
 repositories:
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
+  - name: jaegertracing
+    url: https://jaegertracing.github.io/helm-charts
   - name: minibroker
     url: https://minibroker.blob.core.windows.net/charts
   - name: quarks
@@ -20,6 +25,8 @@ releases:
     version: 4.5.6
     installed: true
     wait: true
+    needs:
+      - ingress-nginx/ingress-nginx
     values:
       - config/cf-operator/values.yml
 
@@ -28,13 +35,27 @@ releases:
     createNamespace: true
     chart: ingress-nginx/ingress-nginx
     installed: true
-    version: ~2.4.x
+    version: ~2.7.x
     wait: true
+    needs:
+      - jaeger-operator/jaeger-operator
+      - prometheus-operator/prometheus-operator
     values:
       - config/ingress-nginx/values.yml
 
+  - name: jaeger-operator
+    namespace: jaeger-operator
+    createNamespace: true
+    chart: jaegertracing/jaeger-operator
+    installed: true
+    version: ~2.15.x
+    wait: true
+    values:
+      - config/jaeger-operator/values.yml
+
   - name: kubecf
     namespace: kubecf
+    createNamespace: false
     chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.2.2/kubecf-v2.2.2.tgz
     installed: true
     wait: false
@@ -54,15 +75,25 @@ releases:
     values:
       - config/minibroker/values.yml
 
+  - name: prometheus-operator
+    namespace: prometheus-operator
+    createNamespace: true
+    chart: stable/prometheus-operator
+    installed: true
+    version: ~8.15.x
+    wait: true
+    values:
+      - config/prometheus-operator/values/values.yml
+
   - name: stratos
     namespace: stratos
     createNamespace: true
     chart: stratos/console
     installed: false
     version: ~3.2.x
-    wait: false
+    wait: true
     needs:
-      - kubecf/kubecf
       - ingress-nginx/ingress-nginx
+      - kubecf/kubecf
     values:
       - config/stratos/values.yml

@@ -1,15 +1,45 @@
+# https://github.com/kubernetes/ingress-nginx/blob/1ba39f508817605a92443ebfcaf084029ec94f44/charts/ingress-nginx/values.yaml#L37
+# https://github.com/kubernetes/ingress-nginx/issues/3268
+# https://github.com/kubernetes/ingress-nginx/issues/4360
+# https://github.com/kubernetes/ingress-nginx/issues/5401
+# https://github.com/kubernetes/kubernetes/issues/87852
+# https://github.com/rancher/k3s/issues/1827
+# https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#via-the-host-network
+# https://kubernetes.io/docs/concepts/configuration/overview/#services
 ---
 controller:
   replicaCount: 1
-  hostNetwork: true
-  dnsPolicy: ClusterFirstWithHostNet
   service:
     type: NodePort
   config:
+    enable-opentracing: "true"
+    jaeger-collector-host: jaeger-operator-jaeger-agent.jaeger-operator.svc.cluster.local
+    jaeger-collector-port: "6831"
+    jaeger-service-name: nginx
     proxy-body-size: 64m
     proxy-buffer-size: 16k
+  dnsPolicy: ClusterFirstWithHostNet # ClusterFirst
+  reportNodeInternalIp: true # false
+  hostNetwork: true # false
   metrics:
-    enabled: false
+    enabled: true
+    service:
+      type: ClusterIP
+    serviceMonitor:
+      enabled: true
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  terminationGracePeriodSeconds: 300
+
+  admissionWebhooks:
+    enabled: true
+    failurePolicy: Fail
+    port: 8443
+    service:
+      servicePort: 443
+      type: ClusterIP
 
 defaultBackend:
   enabled: false
