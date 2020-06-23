@@ -1,4 +1,6 @@
+#@data/values
 ---
+#@overlay/match missing_ok=True
 app_registry:
   hostname: "http://harbor.harbor.svc.cluster.local:80"
   repository: "harbor.harbor.svc.cluster.local:80/library"
