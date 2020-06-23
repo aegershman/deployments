@@ -14416,3 +14416,9 @@ subjects:
 - kind: ServiceAccount
   name: metrics-server
   namespace: kube-system
+---
+app_registry:
+  hostname: ""
+  repository: ""
+  username: ""
+  password: ""
