@@ -3,6 +3,7 @@
 # https://github.com/helm/charts/blob/e5c64088924d943982714e0c3c8c9b8720334614/stable/grafana/values.yaml#L364
 # https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
 # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
+# https://github.com/helm/charts/issues/10183
 # https://github.com/helm/charts/issues/15725
 # https://github.com/helm/charts/issues/20515
 # https://github.com/tretos53/notes/blob/master/Grafana/Readme.MD
@@ -40,9 +41,11 @@ grafana:
   dashboards:
     nginx:
       nginx:
-        file: config/prometheus-operator/vendor/kubernetes/ingress-nginx/deploy/grafana/dashboards/nginx.json
+        # file: config/prometheus-operator/vendor/kubernetes/ingress-nginx/deploy/grafana/dashboards/nginx.json
+        url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/f5a02c14523a70288aa1c4aebdad5c2a499e1c28/deploy/grafana/dashboards/nginx.json
       request-handling-performance:
-        file: config/prometheus-operator/vendor/kubernetes/ingress-nginx/deploy/grafana/dashboards/request-handling-performance.json
+        # file: config/prometheus-operator/vendor/kubernetes/ingress-nginx/deploy/grafana/dashboards/request-handling-performance.json
+        url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/d59018cf56e26d51aec70887c2bcdf502c401d18/deploy/grafana/dashboards/request-handling-performance.json
 
 kubelet:
   enabled: false
