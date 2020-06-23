@@ -7,6 +7,7 @@
 # https://github.com/cloudfoundry-incubator/kubecf/pull/133
 # https://github.com/cloudfoundry-incubator/kubecf/pull/485
 # https://github.com/cloudfoundry-incubator/kubecf/pull/544
+# https://starkandwayne.com/blog/running-cloud-foundry-on-kubernetes-using-kubecf/
 ---
 system_domain: kubecf.vcap.me
 features:
