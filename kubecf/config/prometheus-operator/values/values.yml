@@ -4,6 +4,7 @@
 # https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
 # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
 # https://github.com/helm/charts/issues/15725
+# https://github.com/helm/charts/issues/20515
 # https://github.com/tretos53/notes/blob/master/Grafana/Readme.MD
 # https://www.replex.io/blog/kubernetes-in-production-the-ultimate-guide-to-monitoring-resource-metrics-with-grafana
 ---
@@ -28,19 +29,20 @@ grafana:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
-        - name: "custom"
+        - name: "nginx"
           orgId: 1
           folder: ""
           type: file
           disableDeletion: false
           editable: false
           options:
-            path: /var/lib/grafana/dashboards/custom
-
+            path: /var/lib/grafana/dashboards/nginx
   dashboards:
-    custom:
-      custom-dashboard:
-        file: config/prometheus-operator/vendor/kubernetes/ingress-nginx
+    nginx:
+      nginx:
+        file: config/prometheus-operator/vendor/kubernetes/ingress-nginx/deploy/grafana/dashboards/nginx.json
+      request-handling-performance:
+        file: config/prometheus-operator/vendor/kubernetes/ingress-nginx/deploy/grafana/dashboards/request-handling-performance.json
 
 kubelet:
   enabled: false
