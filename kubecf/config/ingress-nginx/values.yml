@@ -2,7 +2,10 @@
 # https://github.com/kubernetes/ingress-nginx/issues/3268
 # https://github.com/kubernetes/ingress-nginx/issues/4360
 # https://github.com/kubernetes/ingress-nginx/issues/5401
+# https://github.com/kubernetes/kubernetes/issues/87852
+# https://github.com/rancher/k3s/issues/1827
 # https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#via-the-host-network
+# https://kubernetes.io/docs/concepts/configuration/overview/#services
 ---
 controller:
   replicaCount: 1
@@ -15,6 +18,9 @@ controller:
     jaeger-service-name: nginx
     proxy-body-size: 64m
     proxy-buffer-size: 16k
+  dnsPolicy: ClusterFirstWithHostNet # ClusterFirst
+  reportNodeInternalIp: true # false
+  hostNetwork: true # false
   metrics:
     enabled: true
     service:
