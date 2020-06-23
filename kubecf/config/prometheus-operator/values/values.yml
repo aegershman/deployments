@@ -1,9 +1,11 @@
+# https://codevalue.com/tag/grafana/
 # https://github.com/cloudfoundry-incubator/eirini-ci/blob/12bd5417927061220f2e06ac09b9bf30c82a163c/cluster-monitoring/grafana-values.yml
+# https://github.com/helm/charts/blob/e5c64088924d943982714e0c3c8c9b8720334614/stable/grafana/values.yaml#L364
 # https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
 # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
-# http://alertmanager.vcap.me
-# http://grafana.vcap.me
-# http://prometheus.vcap.me
+# https://github.com/helm/charts/issues/15725
+# https://github.com/tretos53/notes/blob/master/Grafana/Readme.MD
+# https://www.replex.io/blog/kubernetes-in-production-the-ultimate-guide-to-monitoring-resource-metrics-with-grafana
 ---
 alertmanager:
   ingress:
@@ -21,6 +23,24 @@ grafana:
       kubernetes.io/ingress.class: nginx
     hosts:
       - grafana.vcap.me
+
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: "custom"
+          orgId: 1
+          folder: ""
+          type: file
+          disableDeletion: false
+          editable: false
+          options:
+            path: /var/lib/grafana/dashboards/custom
+
+  dashboards:
+    custom:
+      custom-dashboard:
+        file: config/prometheus-operator/vendor/kubernetes/ingress-nginx
 
 kubelet:
   enabled: false

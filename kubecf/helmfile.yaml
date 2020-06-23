@@ -83,7 +83,7 @@ releases:
     version: ~8.15.x
     wait: true
     values:
-      - config/prometheus-operator/values.yml
+      - config/prometheus-operator/values/values.yml
 
   - name: stratos
     namespace: stratos
