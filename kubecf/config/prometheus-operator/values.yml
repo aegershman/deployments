@@ -1,4 +1,5 @@
 # https://github.com/cloudfoundry-incubator/eirini-ci/blob/12bd5417927061220f2e06ac09b9bf30c82a163c/cluster-monitoring/grafana-values.yml
+# https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
 # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
 # http://alertmanager.vcap.me
 # http://grafana.vcap.me
