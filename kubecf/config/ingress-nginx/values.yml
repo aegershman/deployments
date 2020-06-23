@@ -2,6 +2,7 @@
 # https://github.com/kubernetes/ingress-nginx/issues/3268
 # https://github.com/kubernetes/ingress-nginx/issues/4360
 # https://github.com/kubernetes/ingress-nginx/issues/5401
+# https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#via-the-host-network
 ---
 controller:
   replicaCount: 1
@@ -11,7 +12,7 @@ controller:
     enable-opentracing: "true"
     jaeger-collector-host: jaeger-operator-jaeger-agent.jaeger-operator.svc.cluster.local
     jaeger-collector-port: "6831"
-    jaeger-service-name: ingress-nginx
+    jaeger-service-name: nginx
     proxy-body-size: 64m
     proxy-buffer-size: 16k
   metrics:
@@ -24,7 +25,7 @@ controller:
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: 1
-  terminationGracePeriodSeconds: 90
+  terminationGracePeriodSeconds: 300
 
   admissionWebhooks:
     enabled: true

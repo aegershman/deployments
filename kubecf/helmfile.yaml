@@ -58,7 +58,7 @@ releases:
     createNamespace: false
     chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.2.2/kubecf-v2.2.2.tgz
     installed: true
-    wait: true
+    wait: false
     needs:
       - cf-operator/cf-operator
       - ingress-nginx/ingress-nginx
