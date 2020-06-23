@@ -32,7 +32,7 @@ grafana:
       providers:
         - name: "nginx"
           orgId: 1
-          folder: ""
+          folder: "nginx"
           type: file
           disableDeletion: false
           editable: false
