@@ -91,7 +91,7 @@ releases:
     chart: stratos/console
     installed: false
     version: ~3.2.x
-    wait: false
+    wait: true
     needs:
       - ingress-nginx/ingress-nginx
       - kubecf/kubecf

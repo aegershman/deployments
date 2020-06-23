@@ -92,6 +92,14 @@ tasks:
         kubectl -n kubecf logs -f --tail 250 api-0 -c route-registrar-route-registrar
         kubectl -n kubecf logs -f api-0
 
+  uaa-zone-debug:
+    cmds:
+      - exit 1
+      - |
+        uaa target uaa.kubecf.vcap.me --skip-ssl-validation
+        uaa get-password-token cf -s "" -u admin -p "$(kubectl -n kubecf get secret var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode)"
+        uaa userinfo -v
+
   post-install-minibroker:
     cmds:
       - |
