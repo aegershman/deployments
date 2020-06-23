@@ -22,7 +22,7 @@ tasks:
     cmds:
       - | # when you remove these from /tmp and re-run the generate-values script it'll give you new passwords, certs, etc.
         rm -f /tmp/cf-values.yml
-        rm -f /tmp/cf-for-k8s-ytt.yml
+        rm -f /tmp/cf-for-k8s-rendered.yml
         rm -rf /tmp/vcap.me
 
   generate-values:
@@ -40,12 +40,12 @@ tasks:
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
           -f config/cf/values/cf-values.yml \
           -f config/cf/values/cf-registry-values.yml \
-          >config/cf/values/cf-for-k8s-ytt.yml
+          >config/cf/values/cf-for-k8s-rendered.yml
 
   apply-cf:
     cmds:
       - |
-        kapp deploy -a cf -f config/cf/values/cf-for-k8s-ytt.yml --yes
+        kapp deploy -a cf -f config/cf/values/cf-for-k8s-rendered.yml --yes
 
   delete-cf:
     cmds:
