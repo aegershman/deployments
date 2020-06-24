@@ -152,6 +152,7 @@ tasks:
         kubectl -n harbor logs -f -lapp=harbor -lcomponent=registry -c registry
         kubectl -n harbor logs -f -lapp=harbor -lcomponent=nginx
         kubectl -n harbor port-forward svc/harbor 8080:80
+        kubectl -n cf-workloads-staging describe pods
         curl -u admin:Harbor12345 localhost:8080/api/v2.0/systeminfo
         curl localhost:8080/api/v2.0/systeminfo
         curl localhost:8080/api/v2.0/users/current
