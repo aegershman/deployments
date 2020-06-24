@@ -26,6 +26,7 @@
 # https://github.com/moby/moby/issues/40203
 # https://goharbor.io/docs/1.10/install-config/customize-token-service/
 # https://goharbor.io/docs/1.10/install-config/run-installer-script/
+# https://goharbor.io/docs/1.10/working-with-projects/working-with-images/pulling-pushing-images/#pulling-images-from-harbor-in-kubernetes
 # https://goharbor.io/docs/2.0.0/install-config/configure-https/
 # https://goharbor.io/docs/2.0.0/install-config/configure-user-settings-cli/
 # https://goharbor.io/docs/2.0.0/install-config/configure-yml-file/
