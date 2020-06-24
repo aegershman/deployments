@@ -2,7 +2,7 @@
 expose:
   type: clusterIP
   tls:
-    enabled: false
+    enabled: true
     commonName: harbor
   clusterIP:
     name: harbor
@@ -11,14 +11,14 @@ expose:
       httpsPort: 443
       notaryPort: 4443
 
-externalURL: http://harbor.harbor.svc.cluster.local:80
+externalURL: https://harbor.harbor.svc.cluster.local
 
 internalTLS:
   enabled: false
 
 persistence:
   enabled: true
-  resourcePolicy: ""
+  resourcePolicy: keep # ""
   persistentVolumeClaim:
     registry:
       storageClass: "standard"
