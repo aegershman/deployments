@@ -180,7 +180,7 @@ tasks:
         svcat bind ups-instance
         svcat describe instance ups-instance
         svcat unbind ups-instance
-        svcat unbind  --name ups-binding
+        svcat unbind --name ups-binding
         svcat deregister ups-broker --scope cluster
         svcat get brokers --scope namespace
 
