@@ -1,7 +1,7 @@
 #@data/values
 ---
 app_registry:
-  hostname: "http://harbor.harbor.svc.cluster.local:80/api/v2.0/"
+  hostname: "http://harbor.harbor.svc.cluster.local:80"
   repository: "harbor.harbor.svc.cluster.local:80/library"
   username: "admin"
   password: "Harbor12345"
