@@ -2,6 +2,6 @@
 ---
 app_registry:
   hostname: "http://harbor.harbor.svc.cluster.local"
-  repository: "http://harbor.harbor.svc.cluster.local/library"
+  repository: "harbor.harbor.svc.cluster.local/library"
   username: "admin"
   password: "admin"

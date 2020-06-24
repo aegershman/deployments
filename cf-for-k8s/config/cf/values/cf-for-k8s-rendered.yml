@@ -612,7 +612,7 @@ data:
       kpack:
         builder_namespace: cf-workloads-staging
         registry_service_account_name: cc-kpack-registry-service-account
-        registry_tag_base: http://harbor.harbor.svc.cluster.local/library
+        registry_tag_base: harbor.harbor.svc.cluster.local/library
     perform_blob_cleanup: true
     app_usage_events:
       cutoff_age_in_days: 31
@@ -1049,7 +1049,7 @@ metadata:
   name: cf-default-builder
   namespace: cf-workloads-staging
 spec:
-  tag: http://harbor.harbor.svc.cluster.local/library/cf-default-builder
+  tag: harbor.harbor.svc.cluster.local/library/cf-default-builder
   serviceAccount: cc-kpack-registry-service-account
   stack: cflinuxfs3-stack
   store: cf-buildpack-store
