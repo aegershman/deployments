@@ -15,6 +15,8 @@
 # https://github.com/goharbor/harbor-helm/blob/master/values.yaml
 # https://github.com/goharbor/harbor-helm/issues/174
 # https://github.com/goharbor/harbor-helm/issues/54
+# https://github.com/goharbor/harbor-helm/issues/585
+# https://github.com/goharbor/harbor-helm/issues/622
 # https://github.com/goharbor/harbor-helm/pull/271
 # https://github.com/goharbor/harbor/actions/runs/32563634/workflow
 # https://github.com/goharbor/harbor/blob/a63cc5c9dc7db80b8e98c9835641c8db8e998287/src/portal/src/lib/services/project.service.ts
@@ -45,7 +47,7 @@ expose:
       httpsPort: 443
       notaryPort: 4443
 
-externalURL: http://harbor.harbor.svc.cluster.local
+externalURL: http://harbor.harbor.svc.cluster.local:80
 
 internalTLS:
   enabled: false
@@ -64,6 +66,14 @@ persistence:
       storageClass: "standard"
     redis:
       storageClass: "standard"
+
+# The update strategy for deployments with persistent volumes(jobservice, registry
+# and chartmuseum): "RollingUpdate" or "Recreate"
+# Set it as "Recreate" when "RWM" for volumes isn't supported
+updateStrategy:
+  type: RollingUpdate
+
+# debug, info, warning, error or fatal
 logLevel: debug
 
 harborAdminPassword: admin
