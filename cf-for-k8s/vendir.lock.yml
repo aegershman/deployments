@@ -5,8 +5,8 @@ directories:
       url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
     path: vendor/github.com/kubernetes-sigs/metrics-server
   - git:
-      commitTitle: Re-add kbld in order to preserve k14s image...
-      sha: 6b94aa1dcfe27c432bc72fd0389fef860a73c4d5
+      commitTitle: Give ytt more time to complete...
+      sha: d3476b1e72210ec582453416896c70b62e35ba70
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
