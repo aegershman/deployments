@@ -20,7 +20,7 @@ releases:
     namespace: harbor
     chart: harbor/harbor
     # chart: config/harbor/vendor/github.com/goharbor/harbor-helm
-    installed: false
+    installed: true
     version: ~1.4.x
     values:
       - config/harbor/values/values.yml
@@ -39,7 +39,7 @@ releases:
     namespace: minibroker
     # chart: minibroker/minibroker
     chart: config/minibroker/vendor/github.com/kubernetes-sigs/minibroker/charts/minibroker
-    installed: true
+    installed: false
     version: ~0.x.x
     values:
       - config/minibroker/values/values.yml
@@ -56,7 +56,7 @@ releases:
     namespace: catalog
     # chart: svc-cat/catalog
     chart: config/service-catalog/vendor/github.com/kubernetes-sigs/service-catalog/charts/catalog
-    installed: true
+    installed: false
     version: ~0.x.x
     needs:
       - minibroker/minibroker

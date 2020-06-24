@@ -1,8 +1,24 @@
+# https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/master/api/v2.0/legacy_swagger.yaml
+# https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/master/api/v2.0/swagger.yaml
 # https://github.com/bitnami/bitnami-docker-harbor-jobservice/issues/1
+# https://github.com/buildpacks/pack/issues/100
+# https://github.com/cloudfoundry/capi-k8s-release/issues/19
+# https://github.com/cloudfoundry/cf-for-k8s/issues/249
+# https://github.com/cloudfoundry/cf-for-k8s/issues/98
+# https://github.com/docker/distribution/issues/970#issuecomment-284227065
 # https://github.com/goharbor/harbor-helm/blob/master/values.yaml
+# https://github.com/goharbor/harbor-helm/issues/174
+# https://github.com/goharbor/harbor-helm/issues/54
+# https://github.com/goharbor/harbor-helm/pull/271
+# https://github.com/goharbor/harbor/blob/a63cc5c9dc7db80b8e98c9835641c8db8e998287/src/portal/src/lib/services/project.service.ts
+# https://github.com/goharbor/harbor/issues/12135
+# https://github.com/goharbor/harbor/issues/5291
+# https://github.com/jmcdice/cf-on-gke/blob/master/tas-on-k8s.sh
+# https://github.com/moby/moby/issues/37435
+# https://goharbor.io/docs/2.0.0/install-config/configure-yml-file/
 ---
 expose:
-  type: ClusterIP
+  type: clusterIP
   tls:
     enabled: false
     commonName: harbor
@@ -13,7 +29,7 @@ expose:
       httpsPort: 443
       notaryPort: 4443
 
-externalURL: http://harbor.harbor.svc.cluster.local
+externalURL: http://harbor.harbor.svc.cluster.local:80
 
 internalTLS:
   enabled: false
@@ -32,7 +48,7 @@ harborAdminPassword: Harbor12345
 
 registry:
   # If true, the registry returns relative URLs in Location headers. The client is responsible for resolving the correct URL.
-  relativeurls: false
+  relativeurls: true
   credentials:
     username: "harbor_registry_user"
     password: "harbor_registry_password"
