@@ -1,22 +1,35 @@
+# https://blog.ziki.cn/post/k8s-harbor/
+# https://docs.gitlab.com/ee/administration/packages/container_registry.html
 # https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/master/api/v2.0/legacy_swagger.yaml
 # https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/master/api/v2.0/swagger.yaml
 # https://github.com/bitnami/bitnami-docker-harbor-jobservice/issues/1
 # https://github.com/buildpacks/pack/issues/100
 # https://github.com/cloudfoundry/capi-k8s-release/issues/19
 # https://github.com/cloudfoundry/cf-for-k8s/issues/249
+# https://github.com/cloudfoundry/cf-for-k8s/issues/71
+# https://github.com/cloudfoundry/cf-for-k8s/issues/74
 # https://github.com/cloudfoundry/cf-for-k8s/issues/98
+# https://github.com/docker/distribution/blob/master/docs/configuration.md#token
+# https://github.com/docker/distribution/blob/master/docs/spec/auth/token.md
 # https://github.com/docker/distribution/issues/970#issuecomment-284227065
 # https://github.com/goharbor/harbor-helm/blob/master/values.yaml
 # https://github.com/goharbor/harbor-helm/issues/174
 # https://github.com/goharbor/harbor-helm/issues/54
 # https://github.com/goharbor/harbor-helm/pull/271
+# https://github.com/goharbor/harbor/actions/runs/32563634/workflow
 # https://github.com/goharbor/harbor/blob/a63cc5c9dc7db80b8e98c9835641c8db8e998287/src/portal/src/lib/services/project.service.ts
 # https://github.com/goharbor/harbor/issues/12135
 # https://github.com/goharbor/harbor/issues/5291
 # https://github.com/goharbor/harbor/issues/9796#issuecomment-552200561
 # https://github.com/jmcdice/cf-on-gke/blob/master/tas-on-k8s.sh
 # https://github.com/moby/moby/issues/37435
+# https://github.com/moby/moby/issues/40203
+# https://goharbor.io/docs/1.10/install-config/customize-token-service/
+# https://goharbor.io/docs/1.10/install-config/run-installer-script/
+# https://goharbor.io/docs/2.0.0/install-config/configure-https/
+# https://goharbor.io/docs/2.0.0/install-config/configure-user-settings-cli/
 # https://goharbor.io/docs/2.0.0/install-config/configure-yml-file/
+# https://ruzickap.github.io/k8s-harbor/part-04/#install-harbor-using-helm
 ---
 expose:
   type: clusterIP
