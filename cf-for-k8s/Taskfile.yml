@@ -157,6 +157,8 @@ tasks:
         curl localhost:8080/api/v2.0/systeminfo
         curl localhost:8080/api/v2.0/users/current
         curl -u admin:Harbor12345 localhost:8080/api/v2.0/users/current
+        curl -u admin:Harbor12345 localhost:8080/api/v2.0/projects
+        curl -u admin:Harbor12345 localhost:8080/api/v2.0/projects/library/repositories
       - |
         docker login --username admin --password Harbor12345 localhost:4107
         docker pull gcr.io/kuar-demo/kuard-amd64:blue
