@@ -11,6 +11,7 @@
 # https://github.com/goharbor/harbor-helm/issues/54
 # https://github.com/goharbor/harbor-helm/pull/271
 # https://github.com/goharbor/harbor/blob/a63cc5c9dc7db80b8e98c9835641c8db8e998287/src/portal/src/lib/services/project.service.ts
+# https://github.com/goharbor/harbor/issues/12135
 # https://github.com/goharbor/harbor/issues/5291
 # https://github.com/jmcdice/cf-on-gke/blob/master/tas-on-k8s.sh
 # https://github.com/moby/moby/issues/37435
