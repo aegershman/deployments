@@ -80,6 +80,24 @@ tasks:
         cf bind-service todo-ui mariadb-svc
       - | # debugging
         kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
+        kubectl -n cf-system get pods
+        kubectl -n cf-system logs -f eirini-754669b789-z4jw5 -c istio-proxy
+        kubectl -n cf-system logs -f eirini-754669b789-z4jw5 -c opi
+        kubectl -n cf-system logs -f cf-api-kpack-watcher-77f9967c4b-mwltr -c cf-api-kpack-watcher
+        kubectl -n cf-system logs -f cf-api-server-64dbfb9d-dtcsh -c cf-api-server --tail 250
+        kubectl -n cf-system logs -f cf-api-worker-6c9dd76fcd-gr9h4 -c cf-api-worker
+        kubectl -n cf-system logs -f routecontroller-78d58969bb-4r4mf -c routecontroller
+        kubectl -n cf-workloads-staging get pods
+        kubectl -n cf-workloads-staging get images -o yaml
+        kubectl -n cf-workloads-staging describe images
+        kubectl -n cf-workloads-staging describe builds
+        kubectl -n cf-system get cm
+        kubectl -n cf-system get cm eirini-ver-1 -o yaml
+        kubectl -n cf-system get cm cloud-controller-ng-yaml-ver-1  -o yaml
+        kubectl -n cf-system get cm nginx-ver-1  -o yaml
+        kubectl -n cf-system get cm routecontroller-config-ver-1  -o yaml
+        kubectl -n cf-workloads-staging get secrets
+        kubectl -n cf-workloads-staging get secret cc-kpack-registry-auth-secret-ver-1 -o yaml
 
   prometheus-operator:
     cmds:
@@ -151,14 +169,15 @@ tasks:
       - |
         kubectl -n harbor logs -f -lapp=harbor -lcomponent=registry -c registry
         kubectl -n harbor logs -f -lapp=harbor -lcomponent=nginx
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=core --tail 250
         kubectl -n harbor port-forward svc/harbor 8080:80
         kubectl -n cf-workloads-staging describe pods
-        curl -u admin:Harbor12345 localhost:8080/api/v2.0/systeminfo
+        curl -u admin:admin localhost:8080/api/v2.0/systeminfo
         curl localhost:8080/api/v2.0/systeminfo
         curl localhost:8080/api/v2.0/users/current
-        curl -u admin:Harbor12345 localhost:8080/api/v2.0/users/current
-        curl -u admin:Harbor12345 localhost:8080/api/v2.0/projects
-        curl -u admin:Harbor12345 localhost:8080/api/v2.0/projects/library/repositories
+        curl -u admin:admin localhost:8080/api/v2.0/users/current
+        curl -u admin:admin localhost:8080/api/v2.0/projects
+        curl -u admin:admin localhost:8080/api/v2.0/projects/library/repositories
       - |
         docker login --username admin --password Harbor12345 localhost:4107
         docker pull gcr.io/kuar-demo/kuard-amd64:blue

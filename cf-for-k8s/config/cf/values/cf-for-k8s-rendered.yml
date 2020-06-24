@@ -612,7 +612,7 @@ data:
       kpack:
         builder_namespace: cf-workloads-staging
         registry_service_account_name: cc-kpack-registry-service-account
-        registry_tag_base: harbor.harbor.svc.cluster.local:80/library
+        registry_tag_base: harbor.harbor.svc.cluster.local/library
     perform_blob_cleanup: true
     app_usage_events:
       cutoff_age_in_days: 31
@@ -927,12 +927,12 @@ metadata:
   name: cc-kpack-registry-auth-secret
   namespace: cf-workloads-staging
   annotations:
-    build.pivotal.io/docker: http://harbor.harbor.svc.cluster.local:80
+    build.pivotal.io/docker: http://harbor.harbor.svc.cluster.local
     kapp.k14s.io/versioned: ""
 type: kubernetes.io/basic-auth
 stringData:
   username: admin
-  password: Harbor12345
+  password: admin
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -1049,7 +1049,7 @@ metadata:
   name: cf-default-builder
   namespace: cf-workloads-staging
 spec:
-  tag: harbor.harbor.svc.cluster.local:80/library/cf-default-builder
+  tag: harbor.harbor.svc.cluster.local/library/cf-default-builder
   serviceAccount: cc-kpack-registry-service-account
   stack: cflinuxfs3-stack
   store: cf-buildpack-store
@@ -1497,7 +1497,7 @@ metadata:
   namespace: cf-workloads
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MCI6eyJhdXRoIjoiWVdSdGFXNDZTR0Z5WW05eU1USXpORFU9IiwicGFzc3dvcmQiOiJIYXJib3IxMjM0NSIsInVzZXJuYW1lIjoiYWRtaW4ifX19
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbCI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
 ---
 apiVersion: v1
 kind: Secret
@@ -13798,6 +13798,22 @@ data:
           authorities: cloud_controller.write,cloud_controller.update_build_state
           authorized-grant-types: client_credentials
           secret: iteojixvqs44rfhnbiv0
+      user:
+        authorities:
+        - openid
+        - scim.me
+        - scim.userids
+        - cloud_controller.read
+        - cloud_controller.write
+        - cloud_controller_service_permissions.read
+        - password.write
+        - uaa.user
+        - approvals.me
+        - oauth.approvals
+        - profile
+        - roles
+        - user_attributes
+        - uaa.offline_token
     scim:
       userids_enabled: true
       user:
