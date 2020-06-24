@@ -5,8 +5,11 @@
 # https://github.com/cloudfoundry/capi-k8s-release/issues/19
 # https://github.com/cloudfoundry/cf-for-k8s/issues/249
 # https://github.com/cloudfoundry/cf-for-k8s/issues/98
+# https://github.com/docker/distribution/issues/970#issuecomment-284227065
 # https://github.com/goharbor/harbor-helm/blob/master/values.yaml
+# https://github.com/goharbor/harbor-helm/issues/174
 # https://github.com/goharbor/harbor-helm/issues/54
+# https://github.com/goharbor/harbor-helm/pull/271
 # https://github.com/goharbor/harbor/blob/a63cc5c9dc7db80b8e98c9835641c8db8e998287/src/portal/src/lib/services/project.service.ts
 # https://github.com/goharbor/harbor/issues/5291
 # https://github.com/jmcdice/cf-on-gke/blob/master/tas-on-k8s.sh
@@ -44,7 +47,7 @@ harborAdminPassword: Harbor12345
 
 registry:
   # If true, the registry returns relative URLs in Location headers. The client is responsible for resolving the correct URL.
-  relativeurls: false
+  relativeurls: true
   credentials:
     username: "harbor_registry_user"
     password: "harbor_registry_password"
