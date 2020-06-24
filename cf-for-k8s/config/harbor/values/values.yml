@@ -24,6 +24,7 @@
 # https://github.com/jmcdice/cf-on-gke/blob/master/tas-on-k8s.sh
 # https://github.com/moby/moby/issues/37435
 # https://github.com/moby/moby/issues/40203
+# https://github.com/pivotal/kpack/issues/334
 # https://goharbor.io/docs/1.10/install-config/customize-token-service/
 # https://goharbor.io/docs/1.10/install-config/run-installer-script/
 # https://goharbor.io/docs/1.10/working-with-projects/working-with-images/pulling-pushing-images/#pulling-images-from-harbor-in-kubernetes
