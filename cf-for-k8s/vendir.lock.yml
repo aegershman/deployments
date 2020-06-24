@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Give ytt more time to complete...
-      sha: d3476b1e72210ec582453416896c70b62e35ba70
+      commitTitle: Override default minio resource utilization...
+      sha: cb09bb1eede5e3318dbfdd99659ba31638274781
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
