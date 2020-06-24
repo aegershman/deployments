@@ -8,15 +8,9 @@ tasks:
   full-install-steps:
     cmds:
       - task: clean-generated-values
-      # - task: apply-metrics-server
       - task: generate-values
       - task: apply-cf
       # - task: post-install
-
-  apply-metrics-server:
-    cmds:
-      - | # we're using metrics-server packaged with cf-for-k8s, but will leave this here
-        kubectl apply --recursive --filename config/cf/vendor/github.com/kubernetes-sigs
 
   clean-generated-values:
     cmds:

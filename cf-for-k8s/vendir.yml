@@ -6,13 +6,6 @@ kind: Config
 directories:
   - path: config/cf
     contents:
-      - path: vendor/github.com/kubernetes-sigs/metrics-server
-        githubRelease:
-          slug: kubernetes-sigs/metrics-server
-          tag: v0.3.6
-          disableAutoChecksumValidation: true
-        includePaths:
-          - components.yaml
       - path: vendor/github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
@@ -24,23 +17,6 @@ directories:
           - deploy/kind/**/*
           - hack/**/*
           - tests/smoke/assets/test-node-app/**/*
-      - path: values
-        manual: {}
-  - path: config/harbor
-    contents:
-      - path: vendor/github.com/goharbor/harbor-helm
-        git:
-          url: https://github.com/goharbor/harbor-helm
-          ref: 83428a9e39074a0498960cbfb961473748f73de3
-          disableAutoChecksumValidation: true
-        includePaths:
-          - cert/**/*
-          - conf/**/*
-          - templates/**/*
-          - .gitignore
-          - .helmignore
-          - Chart.yaml
-          - values.yaml
       - path: values
         manual: {}
   - path: config/minibroker
