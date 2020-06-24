@@ -1,0 +1,66 @@
+---
+expose:
+  type: clusterIP
+  tls:
+    enabled: false
+    commonName: harbor
+  clusterIP:
+    name: harbor
+    ports:
+      httpPort: 80
+      httpsPort: 443
+      notaryPort: 4443
+
+externalURL: http://harbor.harbor.svc.cluster.local:80
+
+internalTLS:
+  enabled: false
+
+persistence:
+  enabled: true
+  resourcePolicy: ""
+  persistentVolumeClaim:
+    registry:
+      storageClass: "standard"
+      size: 5Gi
+    chartmuseum:
+      storageClass: "standard"
+      size: 5Gi
+    jobservice:
+      storageClass: "standard"
+      size: 1Gi
+    database:
+      storageClass: "standard"
+      size: 1Gi
+    redis:
+      storageClass: "standard"
+      size: 1Gi
+
+logLevel: debug
+
+harborAdminPassword: admin
+
+registry:
+  relativeurls: true
+  credentials:
+    username: "harbor_registry_user"
+    password: "harbor_registry_password"
+    htpasswd: "harbor_registry_user:$2y$10$9L4Tc0DJbFFMB6RdSCunrOpTHdwhid4ktBJmLD00bYgqkkGOvll3m"
+
+chartmuseum:
+  enabled: false
+
+clair:
+  enabled: false
+
+trivy:
+  enabled: false
+
+notary:
+  enabled: false
+
+database:
+  type: internal
+
+redis:
+  type: internal

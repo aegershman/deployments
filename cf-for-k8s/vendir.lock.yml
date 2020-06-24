@@ -1,9 +1,6 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
-  - githubRelease:
-      url: https://api.github.com/repos/kubernetes-sigs/metrics-server/releases/20705532
-    path: vendor/github.com/kubernetes-sigs/metrics-server
   - git:
       commitTitle: Give ytt more time to complete...
       sha: d3476b1e72210ec582453416896c70b62e35ba70
@@ -11,14 +8,6 @@ directories:
   - manual: {}
     path: values
   path: config/cf
-- contents:
-  - git:
-      commitTitle: 'Merge pull request #620 from heww/lint-improvement...'
-      sha: 83428a9e39074a0498960cbfb961473748f73de3
-    path: vendor/github.com/goharbor/harbor-helm
-  - manual: {}
-    path: values
-  path: config/harbor
 - contents:
   - git:
       commitTitle: 'fix: remove hardcoded cluster domains (#73)...'
