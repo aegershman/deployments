@@ -1,44 +1,8 @@
-# https://blog.ziki.cn/post/k8s-harbor/
-# https://docs.gitlab.com/ee/administration/packages/container_registry.html
-# https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/master/api/v2.0/legacy_swagger.yaml
-# https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/master/api/v2.0/swagger.yaml
-# https://github.com/bitnami/bitnami-docker-harbor-jobservice/issues/1
-# https://github.com/buildpacks/pack/issues/100
-# https://github.com/cloudfoundry/capi-k8s-release/issues/19
-# https://github.com/cloudfoundry/cf-for-k8s/issues/249
-# https://github.com/cloudfoundry/cf-for-k8s/issues/71
-# https://github.com/cloudfoundry/cf-for-k8s/issues/74
-# https://github.com/cloudfoundry/cf-for-k8s/issues/98
-# https://github.com/docker/distribution/blob/master/docs/configuration.md#token
-# https://github.com/docker/distribution/blob/master/docs/spec/auth/token.md
-# https://github.com/docker/distribution/issues/970#issuecomment-284227065
-# https://github.com/goharbor/harbor-helm/blob/master/values.yaml
-# https://github.com/goharbor/harbor-helm/issues/174
-# https://github.com/goharbor/harbor-helm/issues/54
-# https://github.com/goharbor/harbor-helm/issues/585
-# https://github.com/goharbor/harbor-helm/issues/622
-# https://github.com/goharbor/harbor-helm/pull/271
-# https://github.com/goharbor/harbor/actions/runs/32563634/workflow
-# https://github.com/goharbor/harbor/blob/a63cc5c9dc7db80b8e98c9835641c8db8e998287/src/portal/src/lib/services/project.service.ts
-# https://github.com/goharbor/harbor/issues/12135
-# https://github.com/goharbor/harbor/issues/5291
-# https://github.com/goharbor/harbor/issues/9796#issuecomment-552200561
-# https://github.com/jmcdice/cf-on-gke/blob/master/tas-on-k8s.sh
-# https://github.com/moby/moby/issues/37435
-# https://github.com/moby/moby/issues/40203
-# https://github.com/pivotal/kpack/issues/334
-# https://goharbor.io/docs/1.10/install-config/customize-token-service/
-# https://goharbor.io/docs/1.10/install-config/run-installer-script/
-# https://goharbor.io/docs/1.10/working-with-projects/working-with-images/pulling-pushing-images/#pulling-images-from-harbor-in-kubernetes
-# https://goharbor.io/docs/2.0.0/install-config/configure-https/
-# https://goharbor.io/docs/2.0.0/install-config/configure-user-settings-cli/
-# https://goharbor.io/docs/2.0.0/install-config/configure-yml-file/
-# https://ruzickap.github.io/k8s-harbor/part-04/#install-harbor-using-helm
 ---
 expose:
   type: clusterIP
   tls:
-    enabled: false
+    enabled: true
     commonName: harbor
   clusterIP:
     name: harbor
@@ -47,7 +11,7 @@ expose:
       httpsPort: 443
       notaryPort: 4443
 
-externalURL: http://harbor.harbor.svc.cluster.local:80
+externalURL: https://harbor.harbor.svc.cluster.local
 
 internalTLS:
   enabled: false
@@ -72,19 +36,11 @@ persistence:
       storageClass: "standard"
       size: 1Gi
 
-# The update strategy for deployments with persistent volumes(jobservice, registry
-# and chartmuseum): "RollingUpdate" or "Recreate"
-# Set it as "Recreate" when "RWM" for volumes isn't supported
-updateStrategy:
-  type: RollingUpdate
-
-# debug, info, warning, error or fatal
 logLevel: debug
 
 harborAdminPassword: admin
 
 registry:
-  # If true, the registry returns relative URLs in Location headers. The client is responsible for resolving the correct URL.
   relativeurls: true
   credentials:
     username: "harbor_registry_user"
