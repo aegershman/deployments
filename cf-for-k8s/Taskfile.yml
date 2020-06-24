@@ -101,18 +101,14 @@ tasks:
 
   harbor:
     cmds:
+      - exit 1
       # for dockerhub, the registry auth target is "https://index.docker.io/v1/".
       # notice "library" is the project and "kuard-amd64" is the repository;
       # the repository was created automatically by virtue of the push.
       - |
-        exit 1
-        kubectl -n harbor port-forward svc/harbor 8080:80
-        kubectl -n harbor port-forward service/harbor-harbor-core 4107:80
-        kubectl -n harbor port-forward deployment/harbor-harbor-core 4107:8080
+        kubectl -n cf-workloads-staging get images
+        logs -namespace cf-workloads-staging -image IMAGEHERE
       - |
-        kubectl -n harbor logs -f -lapp=harbor -lcomponent=registry -c registry
-        kubectl -n harbor logs -f -lapp=harbor -lcomponent=nginx
-        kubectl -n harbor logs -f -lapp=harbor -lcomponent=core --tail 250
         kubectl -n harbor port-forward svc/harbor 8080:80
         kubectl -n cf-workloads-staging describe pods
         curl -u admin:admin localhost:8080/api/v2.0/systeminfo
@@ -121,6 +117,18 @@ tasks:
         curl -u admin:admin localhost:8080/api/v2.0/users/current
         curl -u admin:admin localhost:8080/api/v2.0/projects
         curl -u admin:admin localhost:8080/api/v2.0/projects/library/repositories
+      - |
+        kubectl -n harbor port-forward svc/harbor 8080:80
+        kubectl -n harbor port-forward service/harbor-harbor-core 4107:80
+        kubectl -n harbor port-forward deployment/harbor-harbor-core 4107:8080
+      - |
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=core --tail 250
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=database --tail 250
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=jobservice --tail 250
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=nginx
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=portal --tail 250
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=redis --tail 250
+        kubectl -n harbor logs -f -lapp=harbor -lcomponent=registry -c registry
       - |
         docker login --username admin --password Harbor12345 localhost:4107
         docker pull gcr.io/kuar-demo/kuard-amd64:blue

@@ -51,9 +51,19 @@ internalTLS:
   enabled: false
 
 persistence:
-  enabled: false # todo
+  enabled: false
   resourcePolicy: ""
-
+  persistentVolumeClaim:
+    registry:
+      storageClass: "standard"
+    chartmuseum:
+      storageClass: "standard"
+    jobservice:
+      storageClass: "standard"
+    database:
+      storageClass: "standard"
+    redis:
+      storageClass: "standard"
 logLevel: debug
 
 harborAdminPassword: admin
