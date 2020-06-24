@@ -53,19 +53,24 @@ internalTLS:
   enabled: false
 
 persistence:
-  enabled: false
+  enabled: true
   resourcePolicy: ""
   persistentVolumeClaim:
     registry:
       storageClass: "standard"
+      size: 5Gi
     chartmuseum:
       storageClass: "standard"
+      size: 5Gi
     jobservice:
       storageClass: "standard"
+      size: 1Gi
     database:
       storageClass: "standard"
+      size: 1Gi
     redis:
       storageClass: "standard"
+      size: 1Gi
 
 # The update strategy for deployments with persistent volumes(jobservice, registry
 # and chartmuseum): "RollingUpdate" or "Recreate"
