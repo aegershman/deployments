@@ -153,12 +153,12 @@ tasks:
         kubectl -n harbor logs -f -lapp=harbor -lcomponent=nginx
         kubectl -n harbor port-forward svc/harbor 8080:80
         kubectl -n cf-workloads-staging describe pods
-        curl -u admin:Harbor12345 localhost:8080/api/v2.0/systeminfo
+        curl -u admin:admin localhost:8080/api/v2.0/systeminfo
         curl localhost:8080/api/v2.0/systeminfo
         curl localhost:8080/api/v2.0/users/current
-        curl -u admin:Harbor12345 localhost:8080/api/v2.0/users/current
-        curl -u admin:Harbor12345 localhost:8080/api/v2.0/projects
-        curl -u admin:Harbor12345 localhost:8080/api/v2.0/projects/library/repositories
+        curl -u admin:admin localhost:8080/api/v2.0/users/current
+        curl -u admin:admin localhost:8080/api/v2.0/projects
+        curl -u admin:admin localhost:8080/api/v2.0/projects/library/repositories
       - |
         docker login --username admin --password Harbor12345 localhost:4107
         docker pull gcr.io/kuar-demo/kuard-amd64:blue
