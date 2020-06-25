@@ -39,7 +39,7 @@ releases:
   - name: jaeger-operator
     namespace: jaeger-operator
     chart: jaegertracing/jaeger-operator
-    installed: false
+    installed: true
     version: ~2.15.x
     values:
       - config/jaeger-operator/values.yml

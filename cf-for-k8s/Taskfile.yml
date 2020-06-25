@@ -196,10 +196,12 @@ tasks:
       - | # setup prometheus namespace with istio annotation injection label
         kubectl label --overwrite namespace prometheus-operator "istio-injection=enabled"
       - | # example of using a virtualservice for ingress against non-CF deployments
+        kubectl apply -f config/jaeger-operator/jaeger-virtual-service.yml
         kubectl apply -f config/prometheus-operator/alertmanager-virtual-service.yml
         kubectl apply -f config/prometheus-operator/grafana-virtual-service.yml
         kubectl apply -f config/prometheus-operator/prometheus-virtual-service.yml
       - |
+        kubectl delete -f config/jaeger-operator/jaeger-virtual-service.yml
         kubectl delete -f config/prometheus-operator/alertmanager-virtual-service.yml
         kubectl delete -f config/prometheus-operator/grafana-virtual-service.yml
         kubectl delete -f config/prometheus-operator/prometheus-virtual-service.yml
