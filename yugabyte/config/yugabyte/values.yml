@@ -1,10 +1,11 @@
 ---
 Image:
   repository: "yugabytedb/yugabyte"
-  tag: 2.1.4.0-b5
+  tag: 2.1.8.2-b1
   pullPolicy: IfNotPresent
 
 storage:
+  ephemeral: false # will not allocate PVs when true
   master:
     count: 1
     size: 2G
@@ -32,14 +33,19 @@ partition:
   master: 0
   tserver: 0
 
+tls:
+  enabled: false
+
 gflags:
   master:
     default_memory_limit_to_ram_ratio: 0.85
   tserver:
     use_cassandra_authentication: False
 
-# Flag to use to disable YugaByte SQL support on tservers.
-disableYsql: False
+PodManagementPolicy: Parallel
+enableLoadBalancer: false
+isMultiAz: false
+domainName: "cluster.local"
 
 serviceEndpoints:
   - name: "yb-master-ui"
