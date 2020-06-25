@@ -6,11 +6,11 @@ spec:
   servers:
     #@overlay/append
     - hosts:
-        - "*.apps.example.com"
+        - harbor/*.vcap.me
       port:
-        name: https-apps-example-com
+        name: https-harbor-test
         number: 443
         protocol: HTTPS
       tls:
-        credentialName: wildcard-apps-example-com-cert
+        credentialName: cf-system-cert
         mode: SIMPLE

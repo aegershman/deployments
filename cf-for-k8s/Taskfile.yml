@@ -1,5 +1,6 @@
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy-local.md
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
+# https://github.com/cloudfoundry/cf-k8s-networking/blob/917b615a745510ec944ab8f66efdd1fa78c5fc6b/doc/managing-certificates-for-application-ingress.md
 # https://github.com/cloudfoundry/cf-k8s-networking/tree/master/doc/no-loadbalancer
 ---
 version: "2"
@@ -23,6 +24,7 @@ tasks:
     cmds:
       - | # vcap.me == nip.io == xip.io, allowing for localhost dns
         ./config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
+          --silence-hack-warning \
           --cf-domain vcap.me \
           >config/cf/values/cf-values.yml
       - | # assumes harbor is deployed and ready to roll
@@ -34,6 +36,7 @@ tasks:
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
           -f config/cf/values/cf-values.yml \
           -f config/cf/values/config-optional/cf-registry-values.yml \
+          -f config/cf/values/config-optional/cf-system-cert-extra-hosts.yml \
           >config/cf/values/cf-for-k8s-rendered.yml
 
   apply-cf:
