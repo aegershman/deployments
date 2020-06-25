@@ -1,0 +1,16 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"istio-ingressgateway"}}), overlay.subset({"kind": "Gateway"}))
+---
+spec:
+  servers:
+    #@overlay/append
+    - hosts:
+        - harbor/*.vcap.me
+      port:
+        name: https-harbor-test
+        number: 443
+        protocol: HTTPS
+      tls:
+        credentialName: cf-system-cert
+        mode: SIMPLE
