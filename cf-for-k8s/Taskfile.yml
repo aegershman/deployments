@@ -199,4 +199,7 @@ tasks:
         kubectl apply -f config/prometheus-operator/alertmanager-virtual-service.yml
         kubectl apply -f config/prometheus-operator/grafana-virtual-service.yml
         kubectl apply -f config/prometheus-operator/prometheus-virtual-service.yml
+      - |
+        kubectl delete -f config/prometheus-operator/alertmanager-virtual-service.yml
         kubectl delete -f config/prometheus-operator/grafana-virtual-service.yml
+        kubectl delete -f config/prometheus-operator/prometheus-virtual-service.yml
