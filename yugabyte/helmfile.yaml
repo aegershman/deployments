@@ -1,6 +1,12 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
+  cleanupOnFail: false
+  createNamespace: true
+  force: false
+  historyMax: 3
+  recreatePods: false
+  wait: true
 
 repositories:
   - name: yugabytedb
@@ -9,7 +15,6 @@ repositories:
 releases:
   - name: yugabyte
     namespace: yugabyte
-    createNamespace: true
     chart: yugabytedb/yugabyte
     installed: true
     version: ~2.1.x
