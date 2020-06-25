@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:c0a2498d4e170e1070a8b5f8dfed51d5076beb88f33556f5b42a25df47ecb980
+        image: cloudfoundry/cloud-controller-ng@sha256:44ae4f99d69741f8b888871d203068b67681cff85865b3e3e071d17fcdda570d
         imagePullPolicy: Always
         volumeMounts:
         - name: server-sock
@@ -72,7 +72,7 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:c0a2498d4e170e1070a8b5f8dfed51d5076beb88f33556f5b42a25df47ecb980
+        image: cloudfoundry/cloud-controller-ng@sha256:44ae4f99d69741f8b888871d203068b67681cff85865b3e3e071d17fcdda570d
         imagePullPolicy: Always
         command:
         - /usr/local/bin/bundle
@@ -105,9 +105,9 @@ spec:
         - name: nginx-uploads
           mountPath: /tmp/uploads
       - name: statsd-exporter
-        image: prom/statsd-exporter:v0.15.0@sha256:e3174186628b401e4a441b78513ba06e957644267332436be0c77dd7af9bdddc
+        image: oratos/statsd_exporter:v0.15.0@sha256:10a64dc4ad0a3e3fe88372f0481dea5c02595c38d168617836a99a649d3ac407
         imagePullPolicy: Always
-      serviceAccountName: cc-api-service-account
+      serviceAccountName: cf-api-server-service-account
       volumes:
       - name: server-sock
         emptyDir: {}
@@ -164,7 +164,7 @@ spec:
       serviceAccountName: cf-api-kpack-watcher-service-account
       containers:
       - name: cf-api-kpack-watcher
-        image: cloudfoundry/capi-kpack-watcher@sha256:b7ef61b9966df01e9d1af96506dd92907e87b520c53e0174c3fa0207bf173412
+        image: cloudfoundry/capi-kpack-watcher@sha256:1d1ab7acf9b2829f42613ecea4ab6714090e3b41360d2ad9a0a8c88d00c3392a
         env:
         - name: UAA_CLIENT_SECRET
           value: iteojixvqs44rfhnbiv0
@@ -174,6 +174,8 @@ spec:
           value: capi_kpack_watcher
         - name: CAPI_HOST
           value: http://capi.cf-system.svc.cluster.local
+        - name: STAGING_NAMESPACE
+          value: cf-workloads-staging
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -250,7 +252,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:c0a2498d4e170e1070a8b5f8dfed51d5076beb88f33556f5b42a25df47ecb980
+        image: cloudfoundry/cloud-controller-ng@sha256:44ae4f99d69741f8b888871d203068b67681cff85865b3e3e071d17fcdda570d
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -340,7 +342,7 @@ data:
     logging:
       file: /dev/stdout
       syslog: vcap.cloud_controller_ng
-      level: debug
+      level: info
       max_retries: 1
     logcache:
       host: metric-proxy
@@ -351,9 +353,6 @@ data:
       cert_file: /config/metric_proxy/certs/tls.crt
       key_file: /config/metric_proxy/certs/tls.key
       subject_name: metric-proxy
-    loggregator:
-      router: 127.0.0.1:3457
-      internal_url: https://log-api.cf-system.svc.cluster.local:8081
     log_stream:
       url: https://log-stream.vcap.me
     doppler:
@@ -370,9 +369,9 @@ data:
       pool_timeout: 10
       log_level: debug2
       log_db_queries: false
-      ssl_verify_hostname: false
       read_timeout: 3600
       connection_validation_timeout: 3600
+      ssl_verify_hostname: false
     telemetry_log_path: /dev/null
     log_cache:
       url: https://log-cache.vcap.me
@@ -612,7 +611,7 @@ data:
       kpack:
         builder_namespace: cf-workloads-staging
         registry_service_account_name: cc-kpack-registry-service-account
-        registry_tag_base: harbor.harbor.svc.cluster.local/library
+        registry_tag_base: harbor.harbor.svc.cluster.local:80/library
     perform_blob_cleanup: true
     app_usage_events:
       cutoff_age_in_days: 31
@@ -644,14 +643,6 @@ metadata:
   name: cf-workloads-staging
   labels:
     istio-injection: enabled
----
-apiVersion: build.pivotal.io/v1alpha1
-kind: Builder
-metadata:
-  name: cf-autodetect-builder
-  namespace: cf-workloads-staging
-spec:
-  image: cloudfoundry/cnb:0.0.94-bionic@sha256:5b03a853e636b78c44e475bbc514e2b7b140cc41cca8ab907e9753431ae8c0b0
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -687,7 +678,7 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:c0a2498d4e170e1070a8b5f8dfed51d5076beb88f33556f5b42a25df47ecb980
+        image: cloudfoundry/cloud-controller-ng@sha256:44ae4f99d69741f8b888871d203068b67681cff85865b3e3e071d17fcdda570d
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -739,7 +730,7 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:c0a2498d4e170e1070a8b5f8dfed51d5076beb88f33556f5b42a25df47ecb980
+        image: cloudfoundry/cloud-controller-ng@sha256:44ae4f99d69741f8b888871d203068b67681cff85865b3e3e071d17fcdda570d
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -867,39 +858,99 @@ data:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: cc-api-service-account
+  name: cf-api-server-service-account
   namespace: cf-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: ClusterRole
 metadata:
-  name: cc-api-service-account-superuser
+  name: cf:routes-admin
+rules:
+- apiGroups:
+  - networking.cloudfoundry.org
+  resources:
+  - routes
+  verbs:
+  - create
+  - get
+  - update
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cf:kpack-builds-admin
+rules:
+- apiGroups:
+  - build.pivotal.io
+  resources:
+  - images
+  verbs:
+  - create
+  - get
+  - update
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cf-api-server-service-account-cf-routes-admin
+  namespace: cf-workloads
 subjects:
 - kind: ServiceAccount
-  name: cc-api-service-account
+  name: cf-api-server-service-account
   namespace: cf-system
 roleRef:
   kind: ClusterRole
-  name: cluster-admin
+  name: cf:routes-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cf-api-server-service-account-kpack-builds-admin
+  namespace: cf-workloads-staging
+subjects:
+- kind: ServiceAccount
+  name: cf-api-server-service-account
+  namespace: cf-system
+roleRef:
+  kind: ClusterRole
+  name: cf:kpack-builds-admin
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: cc-worker-service-account
+  name: cf-api-worker-service-account
   namespace: cf-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: cc-worker-service-account-superuser
+  name: cf-api-worker-service-account-cf-routes-admin
+  namespace: cf-workloads
 subjects:
 - kind: ServiceAccount
-  name: cc-worker-service-account
+  name: cf-api-worker-service-account
   namespace: cf-system
 roleRef:
   kind: ClusterRole
-  name: cluster-admin
+  name: cf:routes-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cf-api-worker-service-account-kpack-builds-admin
+  namespace: cf-workloads-staging
+subjects:
+- kind: ServiceAccount
+  name: cf-api-worker-service-account
+  namespace: cf-system
+roleRef:
+  kind: ClusterRole
+  name: cf:kpack-builds-admin
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
@@ -909,16 +960,57 @@ metadata:
   namespace: cf-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: ClusterRole
 metadata:
-  name: cf-api-kpack-watcher-service-account-superuser
+  name: cf:kpack-builds-informer
+rules:
+- apiGroups:
+  - build.pivotal.io
+  resources:
+  - builds
+  verbs:
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cf:service-accounts-secrets-fetcher
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  - secrets
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cf-api-kpack-watcher-service-account-kpack-builds-reader
+  namespace: cf-workloads-staging
 subjects:
 - kind: ServiceAccount
   name: cf-api-kpack-watcher-service-account
   namespace: cf-system
 roleRef:
   kind: ClusterRole
-  name: cluster-admin
+  name: cf:kpack-builds-informer
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cf-api-kpack-watcher-service-account-service-accounts-secrets-fetcher
+  namespace: cf-workloads-staging
+subjects:
+- kind: ServiceAccount
+  name: cf-api-kpack-watcher-service-account
+  namespace: cf-system
+roleRef:
+  kind: ClusterRole
+  name: cf:service-accounts-secrets-fetcher
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
@@ -927,7 +1019,7 @@ metadata:
   name: cc-kpack-registry-auth-secret
   namespace: cf-workloads-staging
   annotations:
-    build.pivotal.io/docker: https://harbor.harbor.svc.cluster.local
+    build.pivotal.io/docker: http://harbor.harbor.svc.cluster.local:80
     kapp.k14s.io/versioned: ""
 type: kubernetes.io/basic-auth
 stringData:
@@ -941,6 +1033,8 @@ metadata:
   namespace: cf-workloads-staging
 secrets:
 - name: cc-kpack-registry-auth-secret
+imagePullSecrets:
+- name: cc-kpack-registry-auth-docker-secret
 ---
 apiVersion: v1
 kind: Service
@@ -987,7 +1081,7 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:c0a2498d4e170e1070a8b5f8dfed51d5076beb88f33556f5b42a25df47ecb980
+        image: cloudfoundry/cloud-controller-ng@sha256:44ae4f99d69741f8b888871d203068b67681cff85865b3e3e071d17fcdda570d
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -998,7 +1092,7 @@ spec:
           mountPath: /config
         - name: eirini-certs
           mountPath: /config/eirini/certs
-      serviceAccountName: cc-worker-service-account
+      serviceAccountName: cf-api-worker-service-account
       volumes:
       - name: cloud-controller-ng-yaml
         configMap:
@@ -1049,7 +1143,7 @@ metadata:
   name: cf-default-builder
   namespace: cf-workloads-staging
 spec:
-  tag: harbor.harbor.svc.cluster.local/library/cf-default-builder
+  tag: harbor.harbor.svc.cluster.local:80/library/cf-default-builder
   serviceAccount: cc-kpack-registry-service-account
   stack: cflinuxfs3-stack
   store: cf-buildpack-store
@@ -1497,7 +1591,7 @@ metadata:
   namespace: cf-workloads
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2hhcmJvci5oYXJib3Iuc3ZjLmNsdXN0ZXIubG9jYWwiOnsiYXV0aCI6IllXUnRhVzQ2WVdSdGFXND0iLCJwYXNzd29yZCI6ImFkbWluIiwidXNlcm5hbWUiOiJhZG1pbiJ9fX0=
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MCI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
 ---
 apiVersion: v1
 kind: Secret
@@ -2333,6 +2427,17 @@ spec:
   peers:
   - mtls:
       mode: PERMISSIVE
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cc-kpack-registry-auth-docker-secret
+  namespace: cf-workloads-staging
+  annotations:
+    kapp.k14s.io/versioned: ""
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MCI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
 ---
 kind: ServiceAccount
 apiVersion: v1

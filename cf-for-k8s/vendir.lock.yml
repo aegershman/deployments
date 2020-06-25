@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Override default minio resource utilization...
-      sha: cb09bb1eede5e3318dbfdd99659ba31638274781
+      commitTitle: Bump capi-k8s-release to a57882ad77cf480bc7c7d5d9cc99eb347f34bda2
+      sha: 14e0bf140aab34874bbbda4a4cc21f70cbc34b78
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   - manual: {}
     path: values
