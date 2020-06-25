@@ -33,7 +33,7 @@ tasks:
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
           -f config/cf/values/cf-values.yml \
-          -f config/cf/values/cf-registry-values.yml \
+          -f config/cf/values/config-optional/cf-registry-values.yml \
           >config/cf/values/cf-for-k8s-rendered.yml
 
   apply-cf:

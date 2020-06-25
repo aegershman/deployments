@@ -1,0 +1,16 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"istio-ingressgateway"}}), overlay.subset({"kind": "Gateway"}))
+---
+spec:
+  servers:
+    #@overlay/append
+    - hosts:
+        - "*.apps.example.com"
+      port:
+        name: https-apps-example-com
+        number: 443
+        protocol: HTTPS
+      tls:
+        credentialName: wildcard-apps-example-com-cert
+        mode: SIMPLE
