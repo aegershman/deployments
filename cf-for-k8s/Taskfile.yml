@@ -48,9 +48,6 @@ tasks:
 
   post-install:
     cmds:
-      - | # setup prometheus namespace with istio annotation injection label
-        kubectl label --overwrite namespace prometheus-operator "istio-injection=enabled"
-
       - |
         cf api --skip-ssl-validation https://api.vcap.me
         cf auth admin $(yq r config/cf/values/cf-values.yml 'cf_admin_password')
@@ -190,9 +187,14 @@ tasks:
         svcat deprovision -n test-ns mini-instance
         kubectl delete clusterservicebrokers minibroker
 
-  istio-debug:
+  istio:
     cmds:
       - exit 1
       - | # https://istio.io/latest/docs/ops/common-problems/injection/
         kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml | grep "namespaceSelector:" -A5
         kubectl get namespace -L istio-injection
+      - | # setup prometheus namespace with istio annotation injection label
+        kubectl label --overwrite namespace prometheus-operator "istio-injection=enabled"
+      - | # example of using a virtualservice for ingress against non-CF deployments
+        kubectl apply -f config/prometheus-operator/grafana-virtual-service.yml
+        kubectl delete -f config/prometheus-operator/grafana-virtual-service.yml
