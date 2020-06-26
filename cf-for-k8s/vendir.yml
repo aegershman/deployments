@@ -8,7 +8,7 @@ directories:
     contents:
       - path: rendered
         manual: {}
-      - path: user-supplied
+      - path: user
         manual: {}
       - path: vendor/github.com/cloudfoundry/cf-for-k8s
         git:
@@ -30,7 +30,7 @@ directories:
           disableAutoChecksumValidation: true
         includePaths:
           - charts/minibroker/**/*
-      - path: values
+      - path: user
         manual: {}
   - path: config/service-catalog
     contents:
@@ -43,5 +43,5 @@ directories:
           - charts/catalog/**/*
           - charts/healthcheck/**/*
           - charts/ups-broker/**/*
-      - path: values
+      - path: user
         manual: {}

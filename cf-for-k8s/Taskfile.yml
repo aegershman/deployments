@@ -34,15 +34,15 @@ tasks:
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
           -f config/cf/rendered/cf-values-generated.yml \
-          -f config/cf/user-supplied/config-optional/alertmanager-virtual-service.yml \
-          -f config/cf/user-supplied/config-optional/grafana-virtual-service.yml \
-          -f config/cf/user-supplied/config-optional/cf-registry-values.yml \
-          -f config/cf/user-supplied/config-optional/harbor-namespace.yml \
-          -f config/cf/user-supplied/config-optional/harbor-virtual-service.yml \
-          -f config/cf/user-supplied/config-optional/jaeger-operator-namespace.yml \
-          -f config/cf/user-supplied/config-optional/jaeger-virtual-service.yml \
-          -f config/cf/user-supplied/config-optional/prometheus-operator-namespace.yml \
-          -f config/cf/user-supplied/config-optional/prometheus-virtual-service.yml \
+          -f config/cf/user/opsfiles/cf-registry-values.yml \
+          -f config/harbor/user/opsfiles/harbor-namespace.yml \
+          -f config/harbor/user/opsfiles/harbor-virtual-service.yml \
+          -f config/jaeger-operator/user/opsfiles/jaeger-operator-namespace.yml \
+          -f config/jaeger-operator/user/opsfiles/jaeger-virtual-service.yml \
+          -f config/prometheus-operator/user/opsfiles/alertmanager-virtual-service.yml \
+          -f config/prometheus-operator/user/opsfiles/grafana-virtual-service.yml \
+          -f config/prometheus-operator/user/opsfiles/prometheus-operator-namespace.yml \
+          -f config/prometheus-operator/user/opsfiles/prometheus-virtual-service.yml \
           >config/cf/rendered/cf-for-k8s-rendered.yml
 
   apply-cf:
@@ -65,9 +65,9 @@ tasks:
         cf target -o test-org -s test-space
       - | # push an app already built via docker:
         cf enable-feature-flag diego_docker
-        cf push -f config/cf/user-supplied/cf-manifests/example-docker-cf-manifest-hash-browns-no-web.yml
-        cf push -f config/cf/user-supplied/cf-manifests/example-docker-cf-manifest-hash-browns.yml
-        cf push -f config/cf/user-supplied/cf-manifests/example-docker-cf-manifest-todo-ui.yml
+        cf push -f config/cf/user/cf-manifests/hash-browns-docker-no-routes.yml
+        cf push -f config/cf/user/cf-manifests/hash-browns-docker-routes.yml
+        cf push -f config/cf/user/cf-manifests/todo-ui-docker-routes.yml
       - | # push an app from source code:
         cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env
@@ -123,20 +123,3 @@ tasks:
       - | # https://istio.io/latest/docs/ops/common-problems/injection/
         kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml | grep "namespaceSelector:" -A5
         kubectl get namespace -L istio-injection
-      - | # setup namespaces with istio annotation injection label
-        kubectl label --overwrite namespace prometheus-operator "istio-injection=enabled"
-        kubectl apply -f config/harbor/harbor-namespace.yml
-        kubectl apply -f config/jaeger-operator/jaeger-operator-namespace.yml
-        kubectl apply -f config/prometheus-operator/prometheus-operator-namespace.yml
-      - | # example of using a virtualservice for ingress against non-CF deployments
-        kubectl apply -f config/harbor/harbor-virtual-service.yml
-        kubectl apply -f config/jaeger-operator/jaeger-virtual-service.yml
-        kubectl apply -f config/prometheus-operator/alertmanager-virtual-service.yml
-        kubectl apply -f config/prometheus-operator/grafana-virtual-service.yml
-        kubectl apply -f config/prometheus-operator/prometheus-virtual-service.yml
-      - |
-        kubectl delete -f config/harbor/harbor-virtual-service.yml
-        kubectl delete -f config/jaeger-operator/jaeger-virtual-service.yml
-        kubectl delete -f config/prometheus-operator/alertmanager-virtual-service.yml
-        kubectl delete -f config/prometheus-operator/grafana-virtual-service.yml
-        kubectl delete -f config/prometheus-operator/prometheus-virtual-service.yml
