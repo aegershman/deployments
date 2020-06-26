@@ -6,6 +6,10 @@ kind: Config
 directories:
   - path: config/cf
     contents:
+      - path: rendered
+        manual: {}
+      - path: user-supplied
+        manual: {}
       - path: vendor/github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
@@ -17,8 +21,6 @@ directories:
           - deploy/kind/**/*
           - hack/**/*
           - tests/smoke/assets/test-node-app/**/*
-      - path: values
-        manual: {}
   - path: config/minibroker
     contents:
       - path: vendor/github.com/kubernetes-sigs/minibroker
