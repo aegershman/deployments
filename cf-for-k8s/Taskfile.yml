@@ -25,7 +25,7 @@ tasks:
         ./config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
           --silence-hack-warning \
           --cf-domain vcap.me \
-          >config/cf/rendered/cf-values-generated.yml
+          >rendered/cf/cf-values-generated.yml
       - |
         ytt \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config \
@@ -33,7 +33,7 @@ tasks:
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
-          -f config/cf/rendered/cf-values-generated.yml \
+          -f rendered/cf/cf-values-generated.yml \
           -f config/cf/user/opsfiles/cf-registry-values.yml \
           -f config/harbor/user/opsfiles/harbor-namespace.yml \
           -f config/harbor/user/opsfiles/harbor-virtual-service.yml \
@@ -43,12 +43,12 @@ tasks:
           -f config/prometheus-operator/user/opsfiles/grafana-virtual-service.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-operator-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-virtual-service.yml \
-          >config/cf/rendered/cf-for-k8s-rendered.yml
+          >rendered/cf/cf-for-k8s-rendered.yml
 
   apply-cf:
     cmds:
       - |
-        kapp deploy -a cf -f config/cf/rendered/cf-for-k8s-rendered.yml --yes
+        kapp deploy -a cf -f rendered/cf/cf-for-k8s-rendered.yml --yes
 
   delete-cf:
     cmds:
@@ -59,7 +59,7 @@ tasks:
     cmds:
       - |
         cf api --skip-ssl-validation https://api.vcap.me
-        cf auth admin $(yq r config/cf/rendered/cf-values-generated.yml 'cf_admin_password')
+        cf auth admin $(yq r rendered/cf/cf-values-generated.yml 'cf_admin_password')
         cf create-org test-org
         cf create-space -o test-org test-space
         cf target -o test-org -s test-space
