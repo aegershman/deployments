@@ -15,6 +15,7 @@
 # https://linuxacademy.com/blog/kubernetes/running-prometheus-on-kubernetes/
 # https://rancher.com/blog/2020/custom-monitoring
 # https://stackoverflow.com/questions/60168167/random-upstream-connect-error-or-disconnect-reset-before-headers-between-servi
+# kubectl label --overwrite namespace prometheus-operator "istio-injection=enabled"
 #
 # http://_x_.vcap.me:32080
 # https://_x_.vcap.me:32443

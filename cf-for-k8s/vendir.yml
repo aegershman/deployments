@@ -6,6 +6,8 @@ kind: Config
 directories:
   - path: config/cf
     contents:
+      - path: user
+        manual: {}
       - path: vendor/github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
@@ -17,10 +19,10 @@ directories:
           - deploy/kind/**/*
           - hack/**/*
           - tests/smoke/assets/test-node-app/**/*
-      - path: values
-        manual: {}
   - path: config/minibroker
     contents:
+      - path: user
+        manual: {}
       - path: vendor/github.com/kubernetes-sigs/minibroker
         git:
           url: https://github.com/kubernetes-sigs/minibroker
@@ -28,10 +30,10 @@ directories:
           disableAutoChecksumValidation: true
         includePaths:
           - charts/minibroker/**/*
-      - path: values
-        manual: {}
   - path: config/service-catalog
     contents:
+      - path: user
+        manual: {}
       - path: vendor/github.com/kubernetes-sigs/service-catalog
         git:
           url: https://github.com/kubernetes-sigs/service-catalog
@@ -41,5 +43,3 @@ directories:
           - charts/catalog/**/*
           - charts/healthcheck/**/*
           - charts/ups-broker/**/*
-      - path: values
-        manual: {}
