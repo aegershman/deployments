@@ -1,7 +1,7 @@
 ---
 helmDefaults:
   kubeContext: kind-kind
-  createNamespace: true
+  createNamespace: false
   recreatePods: false
   wait: false
 
