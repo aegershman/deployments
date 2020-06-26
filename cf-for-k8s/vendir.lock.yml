@@ -2,29 +2,27 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - manual: {}
-    path: rendered
-  - manual: {}
-    path: user-supplied
+    path: user
   - git:
       commitTitle: Bump capi-k8s-release to 213036a3af4e65997c51ec6b139e5757acbbcd42
       sha: d9cf7e018d84bcf07088c94e86a1bf7cada6b253
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   path: config/cf
 - contents:
+  - manual: {}
+    path: user
   - git:
       commitTitle: 'fix: remove hardcoded cluster domains (#73)...'
       sha: e50e4bc41f03ae2e10daaf9522f2aafb32bc7ea3
     path: vendor/github.com/kubernetes-sigs/minibroker
-  - manual: {}
-    path: values
   path: config/minibroker
 - contents:
+  - manual: {}
+    path: user
   - git:
       commitTitle: fix pb when use securityContext and add opportunity to add storageclass
         (#2818)...
       sha: 5068f67d9616bab9e21dae8a161578a034a0803a
     path: vendor/github.com/kubernetes-sigs/service-catalog
-  - manual: {}
-    path: values
   path: config/service-catalog
 kind: LockConfig
