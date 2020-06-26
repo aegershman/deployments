@@ -40,7 +40,7 @@ tasks:
           -f config/cf/user-supplied/config-optional/harbor-namespace.yml \
           -f config/cf/user-supplied/config-optional/harbor-virtual-service.yml \
           -f config/cf/user-supplied/config-optional/jaeger-operator-namespace.yml \
-          -f config/cf/user-supplied/config-optional/jaeger-operator-virtual-service.yml \
+          -f config/cf/user-supplied/config-optional/jaeger-virtual-service.yml \
           -f config/cf/user-supplied/config-optional/prometheus-operator-namespace.yml \
           -f config/cf/user-supplied/config-optional/prometheus-virtual-service.yml \
           >config/cf/rendered/cf-for-k8s-rendered.yml

@@ -14549,6 +14549,40 @@ subjects:
   name: metrics-server
   namespace: kube-system
 ---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: alertmanager-virtual-service
+  namespace: prometheus-operator
+spec:
+  hosts:
+  - alertmanager.vcap.me
+  gateways:
+  - cf-system/istio-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: prometheus-operator-alertmanager.prometheus-operator.svc.cluster.local
+        port:
+          number: 9093
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: grafana-virtual-service
+  namespace: prometheus-operator
+spec:
+  hosts:
+  - grafana.vcap.me
+  gateways:
+  - cf-system/istio-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: prometheus-operator-grafana.prometheus-operator.svc.cluster.local
+        port:
+          number: 80
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -14572,3 +14606,51 @@ spec:
         host: harbor.harbor.svc.cluster.local
         port:
           number: 80
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jaeger-operator
+  labels:
+    istio-injection: enabled
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: jaeger-virtual-service
+  namespace: jaeger-operator
+spec:
+  hosts:
+  - jaeger.vcap.me
+  gateways:
+  - cf-system/istio-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: jaeger-operator-jaeger-query.jaeger-operator.svc.cluster.local
+        port:
+          number: 16686
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prometheus-operator
+  labels:
+    istio-injection: enabled
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: prometheus-virtual-service
+  namespace: prometheus-operator
+spec:
+  hosts:
+  - prometheus.vcap.me
+  gateways:
+  - cf-system/istio-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: prometheus-operator-prometheus.prometheus-operator.svc.cluster.local
+        port:
+          number: 9090
