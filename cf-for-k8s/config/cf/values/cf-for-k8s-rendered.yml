@@ -1651,7 +1651,7 @@ spec:
       credentialName: cf-workloads-cert
       mode: SIMPLE
   - hosts:
-    - harbor/*.vcap.me
+    - harbor/*.xip.io
     port:
       name: https-harbor-test
       number: 443
