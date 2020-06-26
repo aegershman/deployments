@@ -14,6 +14,8 @@ repositories:
     url: https://minibroker.blob.core.windows.net/charts
   - name: quarks
     url: https://cloudfoundry-incubator.github.io/quarks-helm
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
   - name: stratos
     url: https://cloudfoundry.github.io/stratos
 
