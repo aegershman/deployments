@@ -1,6 +1,7 @@
 ---
 applications:
   - name: hash-browns
+    instances: 1
     memory: 256M
     routes:
       - route: hash-browns.vcap.me
