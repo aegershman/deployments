@@ -25,7 +25,7 @@ tasks:
         ./config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
           --silence-hack-warning \
           --cf-domain vcap.me \
-          >config/cf/values/cf-values.yml
+          >config/cf/rendered/cf-values-generated.yml
       - |
         ytt \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config \
@@ -33,14 +33,14 @@ tasks:
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
-          -f config/cf/values/cf-values.yml \
-          -f config/cf/values/config-optional/cf-registry-values.yml \
-          >config/cf/values/cf-for-k8s-rendered.yml
+          -f config/cf/rendered/cf-values-generated.yml \
+          -f config/cf/user-supplied/config-optional/cf-registry-values.yml \
+          >config/cf/rendered/cf-for-k8s-rendered.yml
 
   apply-cf:
     cmds:
       - |
-        kapp deploy -a cf -f config/cf/values/cf-for-k8s-rendered.yml --yes
+        kapp deploy -a cf -f config/cf/rendered/cf-for-k8s-rendered.yml --yes
 
   delete-cf:
     cmds:
@@ -51,15 +51,15 @@ tasks:
     cmds:
       - |
         cf api --skip-ssl-validation https://api.vcap.me
-        cf auth admin $(yq r config/cf/values/cf-values.yml 'cf_admin_password')
+        cf auth admin $(yq r config/cf/rendered/cf-values-generated.yml 'cf_admin_password')
         cf create-org test-org
         cf create-space -o test-org test-space
         cf target -o test-org -s test-space
       - | # push an app already built via docker:
         cf enable-feature-flag diego_docker
-        cf push -f config/cf/values/example-docker-cf-manifest-hash-browns.yml
-        cf push -f config/cf/values/example-docker-cf-manifest-hash-browns-no-web.yml
-        cf push -f config/cf/values/example-docker-cf-manifest-todo-ui.yml
+        cf push -f config/cf/user-supplied/misc/example-docker-cf-manifest-hash-browns-no-web.yml
+        cf push -f config/cf/user-supplied/misc/example-docker-cf-manifest-hash-browns.yml
+        cf push -f config/cf/user-supplied/misc/example-docker-cf-manifest-todo-ui.yml
       - | # push an app from source code:
         cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
         curl http://test-node-app.vcap.me/env

@@ -1,12 +1,14 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
+  - manual: {}
+    path: rendered
+  - manual: {}
+    path: user-supplied
   - git:
       commitTitle: Bump capi-k8s-release to 213036a3af4e65997c51ec6b139e5757acbbcd42
       sha: d9cf7e018d84bcf07088c94e86a1bf7cada6b253
     path: vendor/github.com/cloudfoundry/cf-for-k8s
-  - manual: {}
-    path: values
   path: config/cf
 - contents:
   - git:
