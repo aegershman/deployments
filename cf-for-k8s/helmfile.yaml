@@ -8,8 +8,6 @@ helmDefaults:
 repositories:
   - name: harbor
     url: https://helm.goharbor.io
-  - name: ingress-nginx
-    url: https://kubernetes.github.io/ingress-nginx
   - name: jaegertracing
     url: https://jaegertracing.github.io/helm-charts
   - name: minibroker
@@ -27,16 +25,6 @@ releases:
     version: ~1.3.x
     values:
       - config/harbor/user/helm/values.yml
-
-  - name: ingress-nginx
-    namespace: ingress-nginx
-    chart: ingress-nginx/ingress-nginx
-    installed: false
-    version: ~2.9.x
-    needs:
-      - prometheus-operator/prometheus-operator
-    values:
-      - config/ingress-nginx/user/helm/values.yml
 
   - name: jaeger-operator
     namespace: jaeger-operator

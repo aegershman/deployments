@@ -1,4 +1,3 @@
-# http://jaeger.vcap.me:32080
 ---
 jaeger:
   create: true
@@ -10,6 +9,6 @@ jaeger:
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: nginx
+        kubernetes.io/ingress.class: istio
       hosts:
         - jaeger.vcap.me
