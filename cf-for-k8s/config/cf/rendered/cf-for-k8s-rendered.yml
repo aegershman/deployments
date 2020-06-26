@@ -14548,3 +14548,27 @@ subjects:
 - kind: ServiceAccount
   name: metrics-server
   namespace: kube-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: harbor
+  labels:
+    istio-injection: enabled
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: harbor-virtual-service
+  namespace: harbor
+spec:
+  hosts:
+  - harbor.vcap.me
+  gateways:
+  - cf-system/istio-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: harbor.harbor.svc.cluster.local
+        port:
+          number: 80
