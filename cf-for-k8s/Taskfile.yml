@@ -38,10 +38,12 @@ tasks:
           -f config/harbor/user/opsfiles/harbor-virtual-service.yml \
           -f config/jaeger-operator/user/opsfiles/jaeger-operator-namespace.yml \
           -f config/jaeger-operator/user/opsfiles/jaeger-virtual-service.yml \
+          -f config/minibroker/user/opsfiles/minibroker-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/alertmanager-virtual-service.yml \
           -f config/prometheus-operator/user/opsfiles/grafana-virtual-service.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-operator-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-virtual-service.yml \
+          -f config/service-catalog/user/opsfiles/catalog-namespace.yml \
           >rendered/cf/cf-for-k8s-rendered.yml
 
   apply-cf:
@@ -53,3 +55,30 @@ tasks:
     cmds:
       - |
         kapp delete -a cf -y
+
+  cf-push:
+    cmds:
+      - |
+        cf api --skip-ssl-validation https://api.vcap.me
+        cf auth admin $(yq r rendered/cf/cf-values-generated.yml 'cf_admin_password')
+        cf create-org test-org
+        cf create-space -o test-org test-space
+        cf target -o test-org -s test-space
+      - | # push an app already built via docker:
+        cf enable-feature-flag diego_docker
+        cf push -f config/cf/user/cf-manifests/hash-browns-docker-no-routes.yml --strategy=rolling
+        cf push -f config/cf/user/cf-manifests/hash-browns-docker-routes.yml --strategy=rolling
+        cf push -f config/cf/user/cf-manifests/todo-ui-docker-routes.yml --strategy=rolling
+      - | # push an app from source code:
+        cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
+        curl http://test-node-app.vcap.me/env
+      - | # minibroker
+        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc
+        cf enable-service-access mysql
+        cf enable-service-access redis
+        cf enable-service-access mongodb
+        cf enable-service-access mariadb
+        cf create-service mariadb 10-3-22 mariadb-svc
+        cf service mariadb-svc
+        cf create-service-key mariadb-svc mykey
+        cf bind-service todo-ui mariadb-svc
