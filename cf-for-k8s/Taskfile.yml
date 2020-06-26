@@ -196,8 +196,10 @@ tasks:
       - | # https://istio.io/latest/docs/ops/common-problems/injection/
         kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml | grep "namespaceSelector:" -A5
         kubectl get namespace -L istio-injection
-      - | # setup prometheus namespace with istio annotation injection label
+      - | # setup namespaces with istio annotation injection label
         kubectl label --overwrite namespace prometheus-operator "istio-injection=enabled"
+        kubectl apply -f config/harbor/harbor-namespace.yml
+        kubectl apply -f config/jaeger-operator/jaeger-operator-namespace.yml
         kubectl apply -f config/prometheus-operator/prometheus-operator-namespace.yml
       - | # example of using a virtualservice for ingress against non-CF deployments
         kubectl apply -f config/harbor/harbor-virtual-service.yml
