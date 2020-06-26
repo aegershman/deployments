@@ -1661,15 +1661,6 @@ spec:
     tls:
       credentialName: cf-workloads-cert
       mode: SIMPLE
-  - hosts:
-    - harbor/*.xip.io
-    port:
-      name: https-harbor-test
-      number: 443
-      protocol: HTTPS
-    tls:
-      credentialName: cf-system-cert
-      mode: SIMPLE
 ---
 apiVersion: kapp.k14s.io/v1alpha1
 kind: Config

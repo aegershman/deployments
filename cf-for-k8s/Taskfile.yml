@@ -11,7 +11,6 @@ tasks:
       - task: clean-generated-values
       - task: generate-values
       - task: apply-cf
-      # - task: post-install
 
   clean-generated-values:
     cmds:
@@ -36,7 +35,6 @@ tasks:
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
           -f config/cf/values/cf-values.yml \
           -f config/cf/values/config-optional/cf-registry-values.yml \
-          -f config/cf/values/config-optional/cf-system-cert-extra-hosts.yml \
           >config/cf/values/cf-for-k8s-rendered.yml
 
   apply-cf:
@@ -75,26 +73,6 @@ tasks:
         cf service mariadb-svc
         cf create-service-key mariadb-svc mykey
         cf bind-service todo-ui mariadb-svc
-      - | # debugging
-        kubectl -n cf-system logs -f -lapp=log-cache --all-containers --max-log-requests=6
-        kubectl -n cf-system get pods
-        kubectl -n cf-system logs -f eirini-754669b789-z4jw5 -c istio-proxy
-        kubectl -n cf-system logs -f eirini-754669b789-z4jw5 -c opi
-        kubectl -n cf-system logs -f cf-api-kpack-watcher-77f9967c4b-mwltr -c cf-api-kpack-watcher
-        kubectl -n cf-system logs -f cf-api-server-64dbfb9d-dtcsh -c cf-api-server --tail 250
-        kubectl -n cf-system logs -f cf-api-worker-6c9dd76fcd-gr9h4 -c cf-api-worker
-        kubectl -n cf-system logs -f routecontroller-78d58969bb-4r4mf -c routecontroller
-        kubectl -n cf-workloads-staging get pods
-        kubectl -n cf-workloads-staging get images -o yaml
-        kubectl -n cf-workloads-staging describe images
-        kubectl -n cf-workloads-staging describe builds
-        kubectl -n cf-system get cm
-        kubectl -n cf-system get cm eirini-ver-1 -o yaml
-        kubectl -n cf-system get cm cloud-controller-ng-yaml-ver-1  -o yaml
-        kubectl -n cf-system get cm nginx-ver-1  -o yaml
-        kubectl -n cf-system get cm routecontroller-config-ver-1  -o yaml
-        kubectl -n cf-workloads-staging get secrets
-        kubectl -n cf-workloads-staging get secret cc-kpack-registry-auth-secret-ver-1 -o yaml
 
   harbor:
     cmds:
@@ -116,8 +94,6 @@ tasks:
         curl -u admin:admin localhost:8080/api/v2.0/projects/library/repositories
       - |
         kubectl -n harbor port-forward svc/harbor 8080:80
-        kubectl -n harbor port-forward service/harbor-harbor-core 4107:80
-        kubectl -n harbor port-forward deployment/harbor-harbor-core 4107:8080
       - |
         kubectl -n harbor logs -f -lapp=harbor -lcomponent=core --tail 250
         kubectl -n harbor logs -f -lapp=harbor -lcomponent=database --tail 250
@@ -132,63 +108,6 @@ tasks:
         docker tag gcr.io/kuar-demo/kuard-amd64:blue localhost:4107/library/kuard-amd64:blue
         docker images
         docker push localhost:4107/library/kuard-amd64:blue
-
-  prometheus-operator:
-    cmds:
-      - exit 1
-      - |
-        kubectl apply -f config/cf/values/cf-hash-browns-service-monitor.yaml
-        cf push -f config/cf/values/example-docker-cf-manifest-hash-browns.yml
-        cf push -f config/cf/values/example-docker-cf-manifest-hash-browns-no-web.yml
-      - |
-        kubectl delete -f config/cf/values/cf-hash-browns-service-monitor.yaml
-        kubectl -n cf-workloads get servicemonitor -o yaml
-        kubectl -n cf-workloads get endpoints -o yaml
-        kubectl -n ingress-nginx get servicemonitor -o yaml
-        kubectl -n prometheus-operator logs -f -lapp=prometheus-operator-operator --all-containers=true
-
-  svccat:
-    cmds:
-      - | # not intended to be ran as a task, just for holding command strings
-        exit 1
-      - | # minibroker
-        svcat register minibroker --url http://minibroker-minibroker.minibroker.svc --scope cluster
-        svcat get brokers
-        svcat sync broker minibroker
-        svcat marketplace
-        svcat provision redis-test --class redis --plan 5-0-7
-        svcat provision redis-test --class redis --plan 5-0-7 --param p1=foo --param p2=bar --secret 'creds[db]'
-        svcat bind redis-test --name redis-test
-        svcat describe instance redis-test
-        svcat deprovision redis-test
-        svcat get instances
-
-      - | # https://svc-cat.io/docs/cli/
-        svcat register ups-broker --url http://ups-broker-ups-broker.ups-broker.svc.cluster.local --scope cluster
-        svcat get brokers
-        svcat sync broker ups-broker
-        svcat marketplace
-        svcat provision ups-instance --class user-provided-service --plan default
-        svcat get instances
-        svcat bind ups-instance --name ups-binding
-        svcat bind ups-instance
-        svcat describe instance ups-instance
-        svcat unbind ups-instance
-        svcat unbind --name ups-binding
-        svcat deregister ups-broker --scope cluster
-        svcat get brokers --scope namespace
-
-      - | # https://svc-cat.io/docs/walkthrough/
-        svcat get classes
-        kubectl get clusterserviceclasses
-        svcat describe class mariadb
-        kubectl get clusterserviceclasses mariadb -o yaml
-        svcat get plans
-        kubectl get clusterserviceplans
-        svcat describe plan 10-3-22 --scope cluster
-        kubectl get clusterserviceplans mariadb-10-3-22 -o yaml
-        svcat deprovision -n test-ns mini-instance
-        kubectl delete clusterservicebrokers minibroker
 
   istio:
     cmds:
