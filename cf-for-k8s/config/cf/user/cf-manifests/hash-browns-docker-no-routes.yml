@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: hash-browns
+  - name: hash-browns-no-routes
     memory: 256M
     no-route: true
     health-check-type: process
@@ -9,6 +9,5 @@ applications:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
-        # prometheus.io/port: 80 # results in Get "http://10.244.0.52:80/metrics": EOF
-        prometheus.io/port: 8080 # success
+        prometheus.io/port: 8080
         prometheus.io/path: /metrics
