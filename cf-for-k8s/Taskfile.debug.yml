@@ -47,3 +47,16 @@ tasks:
       - | # https://istio.io/latest/docs/ops/common-problems/injection/
         kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml | grep "namespaceSelector:" -A5
         kubectl get namespace -L istio-injection
+
+  minibroker:
+    cmds:
+      - |
+        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc
+        cf enable-service-access mysql
+        cf enable-service-access redis
+        cf enable-service-access mongodb
+        cf enable-service-access mariadb
+        cf create-service mariadb 10-3-22 mariadb-svc
+        cf service mariadb-svc
+        cf create-service-key mariadb-svc mykey
+        cf bind-service todo-ui mariadb-svc

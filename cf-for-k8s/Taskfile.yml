@@ -53,3 +53,20 @@ tasks:
     cmds:
       - |
         kapp delete -a cf -y
+
+  cf-push:
+    cmds:
+      - |
+        cf api --skip-ssl-validation https://api.vcap.me
+        cf auth admin $(yq r rendered/cf/cf-values-generated.yml 'cf_admin_password')
+        cf create-org test-org
+        cf create-space -o test-org test-space
+        cf target -o test-org -s test-space
+      - | # push an app already built via docker:
+        cf enable-feature-flag diego_docker
+        cf push -f config/cf/user/cf-manifests/hash-browns-docker-no-routes.yml
+        cf push -f config/cf/user/cf-manifests/hash-browns-docker-routes.yml
+        cf push -f config/cf/user/cf-manifests/todo-ui-docker-routes.yml
+      - | # push an app from source code:
+        cf push test-node-app -p config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
+        curl http://test-node-app.vcap.me/env
