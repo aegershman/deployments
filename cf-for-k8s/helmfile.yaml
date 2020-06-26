@@ -24,7 +24,7 @@ releases:
     installed: true
     version: ~1.3.x
     values:
-      - config/harbor/user/values.yml
+      - config/harbor/user/helm/values.yml
 
   - name: ingress-nginx
     namespace: ingress-nginx
@@ -34,7 +34,7 @@ releases:
     needs:
       - prometheus-operator/prometheus-operator
     values:
-      - config/ingress-nginx/user/values.yml
+      - config/ingress-nginx/user/helm/values.yml
 
   - name: jaeger-operator
     namespace: jaeger-operator
@@ -42,7 +42,7 @@ releases:
     installed: true
     version: ~2.15.x
     values:
-      - config/jaeger-operator/user/values.yml
+      - config/jaeger-operator/user/helm/values.yml
 
   - name: minibroker
     namespace: minibroker
@@ -51,7 +51,7 @@ releases:
     installed: false
     version: ~0.x.x
     values:
-      - config/minibroker/user/values.yml
+      - config/minibroker/user/helm/values.yml
 
   - name: prometheus-operator
     namespace: prometheus-operator
@@ -59,7 +59,7 @@ releases:
     installed: true
     version: ~8.15.x
     values:
-      - config/prometheus-operator/user/values.yml
+      - config/prometheus-operator/user/helm/values.yml
 
   - name: service-catalog
     namespace: catalog
@@ -70,4 +70,4 @@ releases:
     needs:
       - minibroker/minibroker
     values:
-      - config/service-catalog/user/values.yml
+      - config/service-catalog/user/helm/values.yml
