@@ -12,6 +12,8 @@ repositories:
     url: https://kubernetes.github.io/ingress-nginx
   - name: jaegertracing
     url: https://jaegertracing.github.io/helm-charts
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
 
 releases:
   - name: ingress-nginx
