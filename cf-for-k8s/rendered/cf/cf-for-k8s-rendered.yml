@@ -14555,7 +14555,7 @@ kind: Namespace
 metadata:
   name: harbor
   labels:
-    istio-injection: enabled
+    istio-injection: disabled
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
