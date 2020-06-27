@@ -15,13 +15,14 @@ tasks:
     cmds:
       - | # when you remove these from /tmp and re-run the generate-values script it'll give you new passwords, certs, etc.
         rm -f /tmp/cf-values.yml
+        rm -f ./rendered/cf/cf-vars.yaml
         rm -f /tmp/cf-for-k8s-rendered.yml
         rm -rf /tmp/vcap.me
 
   generate-values:
     cmds:
       - | # vcap.me == nip.io == xip.io, allowing for localhost dns
-        ./config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh \
+        ./config/cf/user/generate/generate-values.sh \
           --silence-hack-warning \
           --cf-domain vcap.me \
           >rendered/cf/cf-values-generated.yml
@@ -34,16 +35,16 @@ tasks:
           -f config/cf/vendor/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
           -f rendered/cf/cf-values-generated.yml \
           -f config/cf/user/opsfiles/cf-registry-values.yml \
+          -f config/harbor/user/opsfiles/harbor-certificates.yml \
+          -f config/harbor/user/opsfiles/harbor-cf-istio-ingressgateway.yml \
           -f config/harbor/user/opsfiles/harbor-namespace.yml \
           -f config/harbor/user/opsfiles/harbor-virtual-service.yml \
           -f config/jaeger-operator/user/opsfiles/jaeger-operator-namespace.yml \
           -f config/jaeger-operator/user/opsfiles/jaeger-virtual-service.yml \
-          -f config/minibroker/user/opsfiles/minibroker-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/alertmanager-virtual-service.yml \
           -f config/prometheus-operator/user/opsfiles/grafana-virtual-service.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-operator-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-virtual-service.yml \
-          -f config/service-catalog/user/opsfiles/catalog-namespace.yml \
           >rendered/cf/cf-for-k8s-rendered.yml
 
   apply-cf:

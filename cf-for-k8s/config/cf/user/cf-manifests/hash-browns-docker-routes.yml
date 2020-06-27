@@ -4,6 +4,7 @@ applications:
     instances: 1
     memory: 256M
     routes:
+      - route: hash-browns.apps.vcap.me
       - route: hash-browns.vcap.me
     docker:
       image: alexellis2/hashbrowns:1.2.0
