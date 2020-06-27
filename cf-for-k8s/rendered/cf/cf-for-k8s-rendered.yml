@@ -2,7 +2,7 @@ apiVersion: kapp.k14s.io/v1alpha1
 kind: Config
 metadata:
   name: kapp-version
-minimumRequiredVersion: 0.26.0
+minimumRequiredVersion: 0.29.0
 ---
 apiVersion: kapp.k14s.io/v1alpha1
 kind: Config
@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:a3bc082e6908ffd5336c60f79990672026a40cb079f68069abaeb76b1c03270d
+        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
         imagePullPolicy: Always
         volumeMounts:
         - name: server-sock
@@ -72,7 +72,7 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:a3bc082e6908ffd5336c60f79990672026a40cb079f68069abaeb76b1c03270d
+        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
         imagePullPolicy: Always
         command:
         - /usr/local/bin/bundle
@@ -252,7 +252,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:a3bc082e6908ffd5336c60f79990672026a40cb079f68069abaeb76b1c03270d
+        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -678,7 +678,7 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:a3bc082e6908ffd5336c60f79990672026a40cb079f68069abaeb76b1c03270d
+        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -730,7 +730,7 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:a3bc082e6908ffd5336c60f79990672026a40cb079f68069abaeb76b1c03270d
+        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -1019,12 +1019,10 @@ metadata:
   name: cc-kpack-registry-auth-secret
   namespace: cf-workloads-staging
   annotations:
-    build.pivotal.io/docker: http://harbor.harbor.svc.cluster.local:80
     kapp.k14s.io/versioned: ""
-type: kubernetes.io/basic-auth
-stringData:
-  username: admin
-  password: admin
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MCI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -1034,7 +1032,7 @@ metadata:
 secrets:
 - name: cc-kpack-registry-auth-secret
 imagePullSecrets:
-- name: cc-kpack-registry-auth-docker-secret
+- name: cc-kpack-registry-auth-secret
 ---
 apiVersion: v1
 kind: Service
@@ -1081,7 +1079,7 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:a3bc082e6908ffd5336c60f79990672026a40cb079f68069abaeb76b1c03270d
+        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -2438,17 +2436,6 @@ spec:
   peers:
   - mtls:
       mode: PERMISSIVE
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: cc-kpack-registry-auth-docker-secret
-  namespace: cf-workloads-staging
-  annotations:
-    kapp.k14s.io/versioned: ""
-type: kubernetes.io/dockerconfigjson
-data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MCI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
 ---
 kind: ServiceAccount
 apiVersion: v1
