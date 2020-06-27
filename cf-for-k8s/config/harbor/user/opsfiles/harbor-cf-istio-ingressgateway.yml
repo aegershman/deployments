@@ -1,6 +1,8 @@
 #@ load("@ytt:overlay", "overlay")
 
-#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"istio-ingressgateway"}}), overlay.subset({"kind": "Gateway"}))
+#@ in_ns = overlay.subset({"metadata": {"namespace": "istio-ingressgateway"}})
+#@ is_kind = overlay.subset({"kind": "Gateway"})
+#@overlay/match by=overlay.and_op(in_ns, is_kind)
 ---
 spec:
   servers:
