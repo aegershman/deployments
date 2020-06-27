@@ -128,6 +128,8 @@ variables:
   options:
     ca: default_ca
     common_name: "*.cf-system.svc.cluster.local"
+    alternative_names:
+    - "*.harbor.svc.cluster.local"
     extended_key_usage:
     - client_auth
     - server_auth
@@ -238,6 +240,7 @@ workloads_certificate:
 
 internal_certificate:
   #! This certificates and keys are base64 encoded and should be valid for *.cf-system.svc.cluster.local
+  #! and *.harbor.svc.cluster.local
   crt: $(bosh interpolate ${VARS_FILE} --path=/internal_certificate/certificate | base64 | tr -d '\n')
   key: $(bosh interpolate ${VARS_FILE} --path=/internal_certificate/private_key | base64 | tr -d '\n')
   ca: $(bosh interpolate ${VARS_FILE} --path=/internal_certificate/ca | base64 | tr -d '\n')
