@@ -36,6 +36,7 @@ tasks:
           -f rendered/cf/cf-values-generated.yml \
           -f config/cf/user/opsfiles/cf-registry-values.yml \
           -f config/harbor/user/opsfiles/harbor-certificates.yml \
+          -f config/harbor/user/opsfiles/harbor-cf-istio-ingressgateway.yml \
           -f config/harbor/user/opsfiles/harbor-namespace.yml \
           -f config/harbor/user/opsfiles/harbor-virtual-service.yml \
           -f config/jaeger-operator/user/opsfiles/jaeger-operator-namespace.yml \

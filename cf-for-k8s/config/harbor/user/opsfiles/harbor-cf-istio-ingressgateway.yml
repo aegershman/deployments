@@ -1,18 +1,12 @@
 #@ load("@ytt:overlay", "overlay")
 
-#@ in_ns = overlay.subset({"metadata": {"namespace": "istio-ingressgateway"}})
-#@ is_kind = overlay.subset({"kind": "Gateway"})
-#@overlay/match by=overlay.and_op(in_ns, is_kind)
+#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"istio-ingressgateway"}}), overlay.subset({"kind": "Gateway"}))
 ---
 spec:
   servers:
-    #@overlay/append
+    #@overlay/match by=overlay.subset({"tls":{"credentialName":"cf-system-cert"}})
     - hosts:
+        #@overlay/append
         - "harbor/*.vcap.me"
-      port:
-        name: https-harbor-test
-        number: 443
-        protocol: HTTPS
-      tls:
-        credentialName: cf-system-cert
-        mode: SIMPLE
+        #@overlay/append
+        - "harbor/*.harbor.svc.cluster.local"

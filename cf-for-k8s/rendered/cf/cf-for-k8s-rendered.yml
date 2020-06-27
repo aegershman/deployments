@@ -1643,6 +1643,8 @@ spec:
       protocol: HTTP
   - hosts:
     - cf-system/*.vcap.me
+    - harbor/*.vcap.me
+    - harbor/*.harbor.svc.cluster.local
     port:
       name: https-system
       number: 443
