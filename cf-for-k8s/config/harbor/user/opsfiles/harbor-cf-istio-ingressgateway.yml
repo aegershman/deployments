@@ -6,7 +6,7 @@ spec:
   servers:
     #@overlay/append
     - hosts:
-        - "harbor/*.xip.io"
+        - "harbor/*.vcap.me"
       port:
         name: https-harbor-test
         number: 443

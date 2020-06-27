@@ -12,7 +12,7 @@ expose:
     # These files will be generated automatically if the "secretName" is not set
     # secretName: "harbor-internal-tls-certs"
     secretName: "harbor-internal-tls-certs-ver-1"
-    commonName: harbor.harbor.svc.cluster.local
+    # commonName: harbor.harbor.svc.cluster.local
   clusterIP:
     name: harbor
     ports:
@@ -49,8 +49,23 @@ logLevel: debug
 
 harborAdminPassword: admin
 
+nginx:
+  podAnnotations: {}
+
+portal:
+  podAnnotations: {}
+
+core:
+  podAnnotations:
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
+
+jobservice:
+  podAnnotations:
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
+
 registry:
   relativeurls: true
+  podAnnotations: {}
   credentials:
     username: "harbor_registry_user"
     password: "harbor_registry_password"
@@ -58,18 +73,25 @@ registry:
 
 chartmuseum:
   enabled: false
+  podAnnotations: {}
 
 clair:
   enabled: false
+  podAnnotations: {}
 
 trivy:
   enabled: false
+  podAnnotations: {}
 
 notary:
   enabled: false
+  podAnnotations: {}
 
 database:
   type: internal
+  podAnnotations:
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
 
 redis:
   type: internal
+  podAnnotations: {}
