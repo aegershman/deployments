@@ -11,7 +11,7 @@ expose:
     # link on portal to download the certificate of CA
     # These files will be generated automatically if the "secretName" is not set
     # secretName: "harbor-internal-tls-certs"
-    secretName: "harbor-internal-tls-certs-ver-1"
+    # secretName: "harbor-internal-tls-certs-ver-1"
     commonName: not-the-real-cn-harbor.harbor.svc.cluster.local
   clusterIP:
     name: harbor
@@ -20,7 +20,7 @@ expose:
       httpsPort: 443
       notaryPort: 4443
 
-externalURL: https://harbor.harbor.svc.cluster.local
+externalURL: http://harbor.harbor.svc.cluster.local:80
 
 internalTLS:
   enabled: false
