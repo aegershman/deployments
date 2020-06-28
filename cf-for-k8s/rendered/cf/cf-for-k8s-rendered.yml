@@ -14572,7 +14572,7 @@ spec:
     - destination:
         host: harbor.harbor.svc.cluster.local
         port:
-          number: 443
+          number: 80
 ---
 apiVersion: v1
 kind: Namespace
