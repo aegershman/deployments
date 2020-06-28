@@ -14560,6 +14560,23 @@ metadata:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
+  name: harbor-virtual-service-internal-tls
+  namespace: harbor
+spec:
+  hosts:
+  - harbor.harbor.svc.cluster.local
+  gateways:
+  - cf-system/istio-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: harbor.harbor.svc.cluster.local
+        port:
+          number: 443
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
   name: harbor-virtual-service
   namespace: harbor
 spec:
