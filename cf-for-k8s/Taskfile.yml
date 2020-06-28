@@ -41,10 +41,12 @@ tasks:
           -f config/harbor/user/opsfiles/harbor-virtual-service.yml \
           -f config/jaeger-operator/user/opsfiles/jaeger-operator-namespace.yml \
           -f config/jaeger-operator/user/opsfiles/jaeger-virtual-service.yml \
+          -f config/minibroker/user/opsfiles/minibroker-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/alertmanager-virtual-service.yml \
           -f config/prometheus-operator/user/opsfiles/grafana-virtual-service.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-operator-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-virtual-service.yml \
+          -f config/service-catalog/user/opsfiles/catalog-namespace.yml \
           >rendered/cf/cf-for-k8s-rendered.yml
 
   apply-cf:

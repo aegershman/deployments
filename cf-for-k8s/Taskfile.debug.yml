@@ -3,10 +3,24 @@
 # https://github.com/cloudfoundry/cf-k8s-networking/blob/917b615a745510ec944ab8f66efdd1fa78c5fc6b/doc/managing-certificates-for-application-ingress.md
 # https://github.com/cloudfoundry/cf-k8s-networking/tree/master/doc/no-loadbalancer
 # https://github.com/k14s/ytt/blob/develop/docs/lang-ref-ytt-overlay.md
+# https://istio.io/latest/docs/ops/common-problems/network-issues/#route-rules-have-no-effect-on-ingress-gateway-requests
+# https://istio.io/latest/docs/reference/config/networking/gateway/
+# https://istio.io/latest/docs/reference/config/networking/service-entry/
+# https://istio.io/latest/docs/reference/config/networking/virtual-service/
+# https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/
+# https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/
+# https://www.istioworkshop.io/09-traffic-management/01-ingress-gateway/
 ---
 version: "2"
 
 tasks:
+  cf-kpack:
+    cmds:
+      - exit 1
+      - |
+        kubectl -n cf-workloads-staging delete custombuilders cf-default-builder
+        kubectl -n cf-workloads-staging get custombuilders -o yaml
+
   harbor:
     cmds:
       - exit 1

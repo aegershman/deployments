@@ -7,6 +7,6 @@ spec:
     #@overlay/match by=overlay.subset({"tls":{"credentialName":"cf-system-cert"}})
     - hosts:
         #@overlay/append
-        - "harbor/*.vcap.me"
+        - "harbor/harbor.vcap.me"
         #@overlay/append
-        - "harbor/*.harbor.svc.cluster.local"
+        - "harbor/harbor.harbor.svc.cluster.local"

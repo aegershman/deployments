@@ -3,5 +3,11 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: minibroker
+
+#@ load("@ytt:overlay", "overlay")
+#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"minibroker"}}), overlay.subset({"kind": "Namespace"}))
+---
+metadata:
   labels:
+    #@overlay/replace
     istio-injection: disabled
