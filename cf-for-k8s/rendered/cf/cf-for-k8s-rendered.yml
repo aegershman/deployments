@@ -14598,6 +14598,13 @@ spec:
         port:
           number: 16686
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: minibroker
+  labels:
+    istio-injection: disabled
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -14655,3 +14662,10 @@ spec:
         host: prometheus-operator-prometheus.prometheus-operator.svc.cluster.local
         port:
           number: 9090
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: catalog
+  labels:
+    istio-injection: disabled
