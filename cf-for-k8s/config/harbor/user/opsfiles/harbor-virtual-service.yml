@@ -6,7 +6,6 @@ metadata:
   namespace: harbor
 spec:
   hosts:
-    - harbor.harbor.svc.cluster.local
     - harbor.vcap.me
   gateways:
     - cf-system/istio-ingressgateway
