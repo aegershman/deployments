@@ -95,6 +95,11 @@ tasks:
         nslookup s-3cd1c45a-0415-4b86-ac39-572d8d8db30a.cf-workloads.svc.cluster.local
         wget http://10.111.83.238:8080/metrics
         .
+      - |
+        kubectl -n cf-workloads get endpoints -o yaml
+        kubectl -n cf-workloads annotate endpoints ENDPOINT prometheus.io/scrape='true' prometheus.io/port='8080' prometheus.io/path='/metrics' --overwrite=true
+        kubectl -n cf-workloads annotate endpoints s-3cd1c45a-0415-4b86-ac39-572d8d8db30a prometheus.io/scrape='true' prometheus.io/port='8080' prometheus.io/path='/metrics' --overwrite=true
+        kubectl -n cf-workloads annotate svc s-3cd1c45a-0415-4b86-ac39-572d8d8db30a prometheus.io/scrape='true' prometheus.io/port='8080' prometheus.io/path='/metrics' --overwrite=true
       - | # https://istio.io/latest/docs/reference/commands/istioctl/
         istioctl analyze --all-namespaces
         istioctl dashboard envoy PODNAME.NAMESPACE
