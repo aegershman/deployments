@@ -42,6 +42,7 @@ tasks:
           -f config/minibroker/user/opsfiles/minibroker-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/alertmanager-virtual-service.yml \
           -f config/prometheus-operator/user/opsfiles/grafana-virtual-service.yml \
+          -f config/prometheus-operator/user/opsfiles/prometheus-network-policy.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-operator-namespace.yml \
           -f config/prometheus-operator/user/opsfiles/prometheus-virtual-service.yml \
           -f config/service-catalog/user/opsfiles/catalog-namespace.yml \

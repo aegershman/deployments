@@ -1194,6 +1194,9 @@ spec:
       podSelector:
         matchLabels:
           app.kubernetes.io/component: adapter
+    - namespaceSelector:
+        matchLabels:
+          name: prometheus-operator
   podSelector: {}
   policyTypes:
   - Ingress
@@ -1592,6 +1595,9 @@ spec:
       podSelector:
         matchLabels:
           istio: ingressgateway
+    - namespaceSelector:
+        matchLabels:
+          name: prometheus-operator
 ---
 apiVersion: v1
 kind: Secret
@@ -14630,7 +14636,7 @@ kind: Namespace
 metadata:
   name: prometheus-operator
   labels:
-    istio-injection: disabled
+    istio-injection: enabled
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService

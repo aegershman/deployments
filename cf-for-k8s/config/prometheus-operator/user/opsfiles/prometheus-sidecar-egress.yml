@@ -1,0 +1,10 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.and_op(overlay.subset({"kind": "Sidecar"}), overlay.subset({"metadata":{"name":"default","namespace":"cf-workloads"}}))
+---
+spec:
+  egress:
+    #@overlay/match by=overlay.all
+    - hosts:
+        #@overlay/append
+        - prometheus-operator/*

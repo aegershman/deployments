@@ -1,3 +1,4 @@
+# https://discuss.istio.io/t/scrape-with-prometheus-operator-mtls-results-in-503-service-unavailable/5363
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy-local.md
 # https://github.com/cloudfoundry/cf-for-k8s/blob/master/docs/deploy.md
 # https://github.com/cloudfoundry/cf-k8s-networking/blob/917b615a745510ec944ab8f66efdd1fa78c5fc6b/doc/managing-certificates-for-application-ingress.md
@@ -7,6 +8,7 @@
 # https://istio.io/latest/docs/reference/config/networking/gateway/
 # https://istio.io/latest/docs/reference/config/networking/service-entry/
 # https://istio.io/latest/docs/reference/config/networking/virtual-service/
+# https://istio.io/latest/docs/tasks/security/authentication/authn-policy/
 # https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/
 # https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/
 # https://www.istioworkshop.io/09-traffic-management/01-ingress-gateway/
@@ -60,5 +62,40 @@ tasks:
     cmds:
       - exit 1
       - | # https://istio.io/latest/docs/ops/common-problems/injection/
+        kubectl get crds | grep istio
         kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml | grep "namespaceSelector:" -A5
         kubectl get namespace -L istio-injection
+      - |
+        kubectl get destinationrules.networking.istio.io --all-namespaces
+        kubectl get destinationrules.networking.istio.io --all-namespaces -o yaml | grep "host:"
+        kubectl get gateways.networking.istio.io --all-namespaces
+        kubectl get instances.config.istio.io --all-namespaces
+        kubectl get meshpolicies.authentication.istio.io --all-namespaces
+        kubectl get networkpolicy.networking.k8s.io --all-namespaces
+        kubectl get policies.authentication.istio.io --all-namespaces
+        kubectl get rules.config.istio.io --all-namespaces
+        kubectl get sidecars.networking.istio.io --all-namespaces
+        kubectl get virtualservices.networking.istio.io --all-namespaces
+      - |
+        kubectl -n prometheus-operator exec -it prometheus-prometheus-operator-prometheus-0 -- /bin/sh
+        .
+        hash-browns.apps.vcap.me
+        wget http://10.244.0.59:15090/stats/prometheus
+        kubectl -n cf-workloads get svc s-8cfa43bb-2c8b-4877-bd28-b0b931a5491c -o wide
+        10.99.18.73
+        nslookup s-8cfa43bb-2c8b-4877-bd28-b0b931a5491c.cf-workloads.svc.cluster.local
+        wget http://10.99.18.73:8080/metrics
+        wget http://s-8cfa43bb-2c8b-4877-bd28-b0b931a5491c.cf-workloads.svc.cluster.local:8080/metrics
+        wget http://10.99.18.73:8080/metrics
+        .
+        hash-browns.vcap.me
+        wget http://s-3cd1c45a-0415-4b86-ac39-572d8d8db30a.cf-workloads.svc.cluster.local:8080/metrics
+        kubectl -n cf-workloads get svc s-3cd1c45a-0415-4b86-ac39-572d8d8db30a -o wide
+        10.111.83.238
+        nslookup s-3cd1c45a-0415-4b86-ac39-572d8d8db30a.cf-workloads.svc.cluster.local
+        wget http://10.111.83.238:8080/metrics
+        .
+      - | # https://istio.io/latest/docs/reference/commands/istioctl/
+        istioctl analyze --all-namespaces
+        istioctl dashboard envoy PODNAME.NAMESPACE
+        istioctl x describe pod -n cf-workloads PODNAME
