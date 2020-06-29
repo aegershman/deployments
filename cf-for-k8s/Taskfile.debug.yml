@@ -63,3 +63,5 @@ tasks:
       - | # https://istio.io/latest/docs/ops/common-problems/injection/
         kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml | grep "namespaceSelector:" -A5
         kubectl get namespace -L istio-injection
+      - | # https://istio.io/latest/docs/reference/commands/istioctl/
+        istioctl analyze --all-namespaces
