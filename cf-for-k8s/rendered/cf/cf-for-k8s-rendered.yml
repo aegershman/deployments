@@ -1196,7 +1196,7 @@ spec:
           app.kubernetes.io/component: adapter
     - namespaceSelector:
         matchLabels:
-          namespace: prometheus-operator
+          name: prometheus-operator
   podSelector: {}
   policyTypes:
   - Ingress
@@ -1595,6 +1595,9 @@ spec:
       podSelector:
         matchLabels:
           istio: ingressgateway
+    - namespaceSelector:
+        matchLabels:
+          name: prometheus-operator
 ---
 apiVersion: v1
 kind: Secret

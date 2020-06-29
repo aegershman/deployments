@@ -1,6 +1,8 @@
 #@ load("@ytt:overlay", "overlay")
 
-#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"deny-app-ingress"}}), overlay.subset({"kind": "NetworkPolicy"}))
+#@ kind_matches = overlay.subset({"kind": "NetworkPolicy"})
+#@ ns_matches = overlay.or_op(overlay.subset({"metadata":{"name":"allow-app-ingress-from-ingressgateway"}}), overlay.subset({"metadata":{"name":"deny-app-ingress"}}))
+#@overlay/match by=overlay.and_op(kind_matches, ns_matches),expects=2
 ---
 spec:
   ingress:
@@ -9,4 +11,4 @@ spec:
         #@overlay/append
         - namespaceSelector:
             matchLabels:
-              namespace: prometheus-operator
+              name: prometheus-operator

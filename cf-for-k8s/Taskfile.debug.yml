@@ -7,6 +7,7 @@
 # https://istio.io/latest/docs/reference/config/networking/gateway/
 # https://istio.io/latest/docs/reference/config/networking/service-entry/
 # https://istio.io/latest/docs/reference/config/networking/virtual-service/
+# https://istio.io/latest/docs/tasks/security/authentication/authn-policy/
 # https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/
 # https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/
 # https://www.istioworkshop.io/09-traffic-management/01-ingress-gateway/
