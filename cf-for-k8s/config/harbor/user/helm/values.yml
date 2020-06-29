@@ -2,7 +2,7 @@
 expose:
   type: clusterIP
   tls:
-    enabled: true
+    enabled: false
     # Fill the name of secret if you want to use your own TLS certificate.
     # The secret contains keys named:
     # "tls.crt" - the certificate (required)
@@ -11,8 +11,8 @@ expose:
     # link on portal to download the certificate of CA
     # These files will be generated automatically if the "secretName" is not set
     # secretName: "harbor-internal-tls-certs"
-    secretName: "harbor-internal-tls-certs-ver-1"
-    # commonName: harbor.harbor.svc.cluster.local
+    # secretName: "harbor-internal-tls-certs-ver-1"
+    commonName: not-the-real-cn-harbor.harbor.svc.cluster.local
   clusterIP:
     name: harbor
     ports:
@@ -20,7 +20,7 @@ expose:
       httpsPort: 443
       notaryPort: 4443
 
-externalURL: https://harbor.harbor.svc.cluster.local
+externalURL: http://harbor.harbor.svc.cluster.local:80
 
 internalTLS:
   enabled: false

@@ -29,7 +29,7 @@ releases:
   - name: jaeger-operator
     namespace: jaeger-operator
     chart: jaegertracing/jaeger-operator
-    installed: true
+    installed: false
     version: ~2.15.x
     values:
       - config/jaeger-operator/user/helm/values.yml
@@ -38,7 +38,7 @@ releases:
     namespace: minibroker
     # chart: minibroker/minibroker
     chart: config/minibroker/vendor/github.com/kubernetes-sigs/minibroker/charts/minibroker
-    installed: true
+    installed: false
     version: ~0.x.x
     values:
       - config/minibroker/user/helm/values.yml
@@ -46,7 +46,7 @@ releases:
   - name: prometheus-operator
     namespace: prometheus-operator
     chart: stable/prometheus-operator
-    installed: true
+    installed: false
     version: ~8.15.x
     values:
       - config/prometheus-operator/user/helm/values.yml
@@ -55,7 +55,7 @@ releases:
     namespace: catalog
     # chart: svc-cat/catalog
     chart: config/service-catalog/vendor/github.com/kubernetes-sigs/service-catalog/charts/catalog
-    installed: true
+    installed: false
     version: ~0.x.x
     needs:
       - minibroker/minibroker
