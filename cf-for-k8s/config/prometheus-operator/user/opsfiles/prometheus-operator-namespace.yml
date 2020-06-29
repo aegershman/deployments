@@ -10,4 +10,4 @@ metadata:
 metadata:
   labels:
     #@overlay/replace
-    istio-injection: disabled
+    istio-injection: enabled

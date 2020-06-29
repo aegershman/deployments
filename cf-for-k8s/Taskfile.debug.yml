@@ -70,3 +70,4 @@ tasks:
         istioctl analyze --all-namespaces
         istioctl dashboard envoy PODNAME.NAMESPACE
         istioctl dashboard envoy hash-browns-test-space-a4ecc5f951-0.cf-workloads
+        istioctl x describe pod -n cf-workloads hash-browns-test-space-a4ecc5f951-0

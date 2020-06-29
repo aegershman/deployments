@@ -14636,7 +14636,7 @@ kind: Namespace
 metadata:
   name: prometheus-operator
   labels:
-    istio-injection: disabled
+    istio-injection: enabled
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
