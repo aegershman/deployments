@@ -63,5 +63,10 @@ tasks:
       - | # https://istio.io/latest/docs/ops/common-problems/injection/
         kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml | grep "namespaceSelector:" -A5
         kubectl get namespace -L istio-injection
+      - |
+        kubectl -n prometheus-operator exec -it prometheus-prometheus-operator-prometheus-0 -- /bin/sh
+        wget http://10.244.0.59:15090/stats/prometheus
       - | # https://istio.io/latest/docs/reference/commands/istioctl/
         istioctl analyze --all-namespaces
+        istioctl dashboard envoy PODNAME.NAMESPACE
+        istioctl dashboard envoy hash-browns-test-space-a4ecc5f951-0.cf-workloads
