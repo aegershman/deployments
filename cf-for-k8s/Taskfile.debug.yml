@@ -61,13 +61,24 @@ tasks:
     cmds:
       - exit 1
       - | # https://istio.io/latest/docs/ops/common-problems/injection/
+        kubectl get crds | grep istio
         kubectl get mutatingwebhookconfiguration istio-sidecar-injector -o yaml | grep "namespaceSelector:" -A5
         kubectl get namespace -L istio-injection
+      - |
+        kubectl get destinationrules.networking.istio.io --all-namespaces
+        kubectl get destinationrules.networking.istio.io --all-namespaces -o yaml | grep "host:"
+        kubectl get gateways.networking.istio.io --all-namespaces
+        kubectl get instances.config.istio.io --all-namespaces
+        kubectl get meshpolicies.authentication.istio.io --all-namespaces
+        kubectl get networkpolicy.networking.k8s.io --all-namespaces
+        kubectl get policies.authentication.istio.io --all-namespaces
+        kubectl get rules.config.istio.io --all-namespaces
+        kubectl get sidecars.networking.istio.io --all-namespaces
+        kubectl get virtualservices.networking.istio.io --all-namespaces
       - |
         kubectl -n prometheus-operator exec -it prometheus-prometheus-operator-prometheus-0 -- /bin/sh
         wget http://10.244.0.59:15090/stats/prometheus
       - | # https://istio.io/latest/docs/reference/commands/istioctl/
         istioctl analyze --all-namespaces
         istioctl dashboard envoy PODNAME.NAMESPACE
-        istioctl dashboard envoy hash-browns-test-space-a4ecc5f951-0.cf-workloads
-        istioctl x describe pod -n cf-workloads hash-browns-test-space-a4ecc5f951-0
+        istioctl x describe pod -n cf-workloads PODNAME
