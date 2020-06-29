@@ -46,7 +46,7 @@ releases:
   - name: prometheus-operator
     namespace: prometheus-operator
     chart: stable/prometheus-operator
-    installed: false
+    installed: true
     version: ~8.15.x
     values:
       - config/prometheus-operator/user/helm/values.yml
