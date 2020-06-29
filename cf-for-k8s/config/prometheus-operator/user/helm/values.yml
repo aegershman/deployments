@@ -99,9 +99,9 @@ prometheus:
         kubernetes_sd_configs: [{ role: pod }]
         scheme: https
         tls_config:
-          caFile: /etc/prometheus/secrets/istio.default/root-cert.pem
-          certFile: /etc/prometheus/secrets/istio.default/cert-chain.pem
-          keyFile: /etc/prometheus/secrets/istio.default/key.pem
+          ca_file: /etc/prometheus/secrets/istio.default/root-cert.pem
+          cert_file: /etc/prometheus/secrets/istio.default/cert-chain.pem
+          key_file: /etc/prometheus/secrets/istio.default/key.pem
           insecure_skip_verify: true # prometheus does not support secure naming.
         relabel_configs:
           - source_labels:
