@@ -1,3 +1,0 @@
----
-paths-ignore:
-  - "cf-for-k8s/rendered/**/*"
