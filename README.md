@@ -8,6 +8,8 @@ Sometimes I leave commented notes and links scattered in yaml documents, which i
 
 ## structure
 
+Yeah this is about to get a little wild and unruly:
+
 ```sh
-./environments/{iaas}/{region}/{environment}/{cluster_name}/
+./foundations/{iaas}/{region}/{environment}/{cluster_name}/deployments/{deployment_grouping}
 ```
