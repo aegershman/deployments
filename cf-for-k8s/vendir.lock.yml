@@ -4,8 +4,8 @@ directories:
   - manual: {}
     path: user
   - git:
-      commitTitle: Bump capi-k8s-release to 5fb4c89475b347fce449068e9f260732a0e43d74
-      sha: 9854f5b0e250fbdf11b33abd956ae5a53efe7866
+      commitTitle: Bump metric-proxy to 6b2d05e6348b7620645ec3f12cfb24a40d006b00
+      sha: 9e8556471b4b34910405423e9f69f941174960ee
     path: vendor/github.com/cloudfoundry/cf-for-k8s
   path: config/cf
 - contents:
