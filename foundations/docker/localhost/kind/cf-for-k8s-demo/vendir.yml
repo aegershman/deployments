@@ -5,20 +5,16 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
-  - path: config/cf
+  - path: deployments/cf-for-k8s/build/_vendir
     contents:
-      - path: user
-        manual: {}
-      - path: vendor/github.com/cloudfoundry/cf-for-k8s
+      - path: github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
           ref: 9e8556471b4b34910405423e9f69f941174960ee # beyond v0.4.0
         includePaths:
-          - bin/**/*
           - config-optional/**/*
           - config/**/*
-          - deploy/kind/**/*
-          - hack/**/*
+          - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
       # - path: vendor/github.com/cloudfoundry/cf-for-k8s-networking
       #   git:
