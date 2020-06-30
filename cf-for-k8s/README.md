@@ -13,19 +13,3 @@ These contain credentials and will be picked up by `git`; I'm keeping it under v
 ## generate-values.sh and you
 
 Note, we don't use the `generate-values.sh` provided with `cf-for-k8s`; we copy that script and modify it to output to a file in `rendered/` instead of `/tmp/` for version control purposes, and in case we want to modify any of the `bosh` vars properties.
-
-## structure theory
-
-Configuration and deployment management is everything now.
-
-```sh
-build/{PRODUCT}/_vendir/**/*
-```
-
-location for vendoring products. no user modifications at all, ONLY for `vendir`-placed items.
-
-```sh
-build/{PRODUCT}/user/**/*
-```
-
-anything at this level is user-provided scripting
