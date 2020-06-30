@@ -1,0 +1,46 @@
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.8.0
+directories:
+  - path: deployments/cf-for-k8s/build/_vendir
+    contents:
+      - path: github.com/cloudfoundry/cf-for-k8s
+        git:
+          url: https://github.com/cloudfoundry/cf-for-k8s
+          ref: 9e8556471b4b34910405423e9f69f941174960ee # beyond v0.4.0
+        includePaths:
+          - config-optional/**/*
+          - config/**/*
+          - hack/generate-values.sh
+          - tests/smoke/assets/test-node-app/**/*
+      # - path: vendor/github.com/cloudfoundry/cf-for-k8s-networking
+      #   git:
+      #     url: https://github.com/cloudfoundry/cf-for-k8s-networking
+      #     ref: 94e61142eab08f591dfcbc93ace54e0dae26d064
+      #   includePaths:
+      #     - config/*
+      #     - config/crd/**/*
+      #     - config/istio-config/**/*
+      #     - config/istio/generated/**/*
+      #     - config/routecontroller/**/*
+  - path: deployments/minibroker/build/_vendir
+    contents:
+      - path: github.com/kubernetes-sigs/minibroker
+        git:
+          url: https://github.com/kubernetes-sigs/minibroker
+          ref: e50e4bc41f03ae2e10daaf9522f2aafb32bc7ea3
+          disableAutoChecksumValidation: true
+        includePaths:
+          - charts/minibroker/**/*
+  - path: deployments/service-catalog/build/_vendir
+    contents:
+      - path: github.com/kubernetes-sigs/service-catalog
+        git:
+          url: https://github.com/kubernetes-sigs/service-catalog
+          ref: 5068f67d9616bab9e21dae8a161578a034a0803a
+          disableAutoChecksumValidation: true
+        includePaths:
+          - charts/catalog/**/*
+          - charts/healthcheck/**/*
+          - charts/ups-broker/**/*

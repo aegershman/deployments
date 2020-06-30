@@ -1,0 +1,22 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Bump metric-proxy to 6b2d05e6348b7620645ec3f12cfb24a40d006b00
+      sha: 9e8556471b4b34910405423e9f69f941174960ee
+    path: github.com/cloudfoundry/cf-for-k8s
+  path: deployments/cf-for-k8s/build/_vendir
+- contents:
+  - git:
+      commitTitle: 'fix: remove hardcoded cluster domains (#73)...'
+      sha: e50e4bc41f03ae2e10daaf9522f2aafb32bc7ea3
+    path: github.com/kubernetes-sigs/minibroker
+  path: deployments/minibroker/build/_vendir
+- contents:
+  - git:
+      commitTitle: fix pb when use securityContext and add opportunity to add storageclass
+        (#2818)...
+      sha: 5068f67d9616bab9e21dae8a161578a034a0803a
+    path: github.com/kubernetes-sigs/service-catalog
+  path: deployments/service-catalog/build/_vendir
+kind: LockConfig
