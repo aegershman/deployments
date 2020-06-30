@@ -1,3 +1,8 @@
+# https://github.com/coreos/prometheus-operator/issues/2502
+# https://github.com/istio/istio/blob/master/manifests/charts/global.yaml
+# https://github.com/istio/istio/pull/2030/files
+# https://github.com/istio/istio/tree/master/manifests/charts
+# https://medium.com/@alexandrev/kubernetes-service-discovery-for-prometheus-fcab74237db6
 ---
 alertmanager:
   ingress:
@@ -174,6 +179,76 @@ prometheus:
             action: replace
             target_label: kubernetes_name
 
+      # https://github.com/askmeegs/istiobyexample/blob/888a7b5c573c9ba6bf2c0e046e44bf4f8d8d2506/content/blog/prometheus/configmap.yaml
+      - job_name: "istio-mesh"
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - istio-system
+        relabel_configs:
+          - source_labels:
+              [
+                __meta_kubernetes_service_name,
+                __meta_kubernetes_endpoint_port_name,
+              ]
+            action: keep
+            regex: istio-telemetry;prometheus
+
+      # Scrape config for envoy stats
+      - job_name: "envoy-stats"
+        metrics_path: /stats/prometheus
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_container_port_name]
+            action: keep
+            regex: ".*-envoy-prom"
+          - source_labels:
+              [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:15090
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: pod_name
+
+      - job_name: "istio-policy"
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - istio-system
+        relabel_configs:
+          - source_labels:
+              [
+                __meta_kubernetes_service_name,
+                __meta_kubernetes_endpoint_port_name,
+              ]
+            action: keep
+            regex: istio-policy;http-monitoring
+
+      - job_name: "istio-telemetry"
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - istio-system
+        relabel_configs:
+          - source_labels:
+              [
+                __meta_kubernetes_service_name,
+                __meta_kubernetes_endpoint_port_name,
+              ]
+            action: keep
+            regex: istio-telemetry;http-monitoring
+
       - job_name: pilot
         kubernetes_sd_configs:
           - role: endpoints
@@ -188,3 +263,71 @@ prometheus:
               ]
             action: keep
             regex: istio-pilot;http-monitoring
+
+      - job_name: "galley"
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - istio-system
+        relabel_configs:
+          - source_labels:
+              [
+                __meta_kubernetes_service_name,
+                __meta_kubernetes_endpoint_port_name,
+              ]
+            action: keep
+            regex: istio-galley;http-monitoring
+
+      - job_name: "citadel"
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - istio-system
+        relabel_configs:
+          - source_labels:
+              [
+                __meta_kubernetes_service_name,
+                __meta_kubernetes_endpoint_port_name,
+              ]
+            action: keep
+            regex: istio-citadel;http-monitoring
+
+      - job_name: "kubernetes-pods-istiobyexample"
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs: # If first two labels are present, pod should be scraped  by the istio-secure job.
+          - source_labels:
+              [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          # Keep target if there's no sidecar or if prometheus.io/scheme is explicitly set to "http"
+          - source_labels:
+              [
+                __meta_kubernetes_pod_annotation_sidecar_istio_io_status,
+                __meta_kubernetes_pod_annotation_prometheus_io_scheme,
+              ]
+            action: keep
+            regex: ((;.*)|(.*;http))
+          - source_labels: [__meta_kubernetes_pod_annotation_istio_mtls]
+            action: drop
+            regex: (true)
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels:
+              [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: pod_name
