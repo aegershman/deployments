@@ -1,4 +1,8 @@
 # https://github.com/coreos/prometheus-operator/issues/2502
+# https://github.com/istio/istio/blob/master/manifests/charts/global.yaml
+# https://github.com/istio/istio/pull/2030/files
+# https://github.com/istio/istio/tree/master/manifests/charts
+# https://medium.com/@alexandrev/kubernetes-service-discovery-for-prometheus-fcab74237db6
 ---
 alertmanager:
   ingress:
