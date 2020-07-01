@@ -13,5 +13,7 @@ case "$1" in
   ./deployments/cluster-api/build/_vendir/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64 --config ./deployments/cluster-api/build/clusterctl.yaml config repositories
   ./deployments/cluster-api/build/_vendir/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64 --config ./deployments/cluster-api/build/clusterctl.yaml config provider --infrastructure aws -o yaml
   ./deployments/cluster-api/build/_vendir/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64 -v5 --config ./deployments/cluster-api/build/clusterctl.yaml config provider --infrastructure aws -o yaml
+
+  ./deployments/cluster-api/build/_vendir/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64 -v5 --config ./deployments/cluster-api/build/clusterctl.yaml config provider --infrastructure aws -o yaml
   ;;
 esac
