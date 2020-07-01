@@ -23,7 +23,7 @@ tasks:
   apply-cf:
     cmds:
       - |
-        kapp deploy -a cf -f _rendered/cf/cf-for-k8s-rendered.yml --yes
+        kapp deploy -a cf -f ./deployments/cf-for-k8s/_rendered/cf/cf-for-k8s-rendered.yml --yes
 
   delete-cf:
     cmds:
