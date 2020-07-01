@@ -9,14 +9,14 @@ cf-for-k8s-full-install)
   ./deploy-ctl.sh cf-for-k8s-apply
   ;;
 
-cf-for-k8s-build)
-  cd ./deployments/cf-for-k8s/build
-  ./build.sh build
-  ;;
-
 cf-for-k8s-clean-values)
   cd ./deployments/cf-for-k8s/build
   ./build.sh clean-generated-cf-values
+  ;;
+
+cf-for-k8s-build)
+  cd ./deployments/cf-for-k8s/build
+  ./build.sh build
   ;;
 
 cf-for-k8s-apply)
