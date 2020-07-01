@@ -14,7 +14,7 @@ directories:
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
-      - path: github.com/cloudfoundry/cf-for-k8s-networking
+      - path: github.com/cloudfoundry/cf-k8s-networking
         git:
           url: https://github.com/cloudfoundry/cf-k8s-networking
           ref: 94e61142eab08f591dfcbc93ace54e0dae26d064

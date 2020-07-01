@@ -5,6 +5,10 @@ directories:
       commitTitle: 'DEV: post reminder to clean pool clusters on Tues and Fri'
       sha: 5e97f4786b7a540c74f83f23812dec1f5b0008b4
     path: github.com/cloudfoundry/cf-for-k8s
+  - git:
+      commitTitle: 'chore: save acceptance_config on deploy...'
+      sha: 94e61142eab08f591dfcbc93ace54e0dae26d064
+    path: github.com/cloudfoundry/cf-k8s-networking
   path: deployments/cf-for-k8s/build/_vendir
 - contents:
   - git:

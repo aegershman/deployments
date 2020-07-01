@@ -1,0 +1,13 @@
+#@data/values
+---
+#! Default values for cf-k8s-networking.
+#! This is a YTT-formatted file.
+
+systemNamespace: cf-system
+workloadsNamespace: cf-workloads
+
+routecontroller:
+  image: gcr.io/cf-networking-images/cf-k8s-networking/routecontroller@sha256:ee0a7ac6b2e2659ad3452963c6157e710f75c77698e6d9e1d29fabf80823d350
+
+service:
+  externalPort: 80
