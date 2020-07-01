@@ -9,5 +9,7 @@ case "$1" in
   exit 1
   chmod +x ./deployments/cluster-api/build/_vendir/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64
   ./deployments/cluster-api/build/_vendir/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64 -h
+  ./deployments/cluster-api/build/_vendir/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64 config -h
+  ./deployments/cluster-api/build/_vendir/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64 --config ./deployments/cluster-api/build/clusterctl.yaml config repositories
   ;;
 esac
