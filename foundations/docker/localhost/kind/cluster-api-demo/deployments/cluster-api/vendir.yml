@@ -1,11 +1,11 @@
-# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
 ---
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
+minimumRequiredVersion: 0.8.0
 directories:
-  - path: config
+  - path: deployments/cluster-api-demo/build/_vendir
     contents:
-      - path: components
+      - path: github.com/kubernetes-sigs/cluster-api
         githubRelease:
           slug: kubernetes-sigs/cluster-api
           tag: v0.3.6
@@ -16,5 +16,3 @@ directories:
           - clusterctl-darwin-amd64
           - control-plane-components.yaml
           - core-components.yaml
-      - path: values
-        manual: {}
