@@ -1196,7 +1196,7 @@ spec:
           app.kubernetes.io/component: adapter
     - namespaceSelector:
         matchLabels:
-          name: prometheus-operator
+          cf-system-networking: friendly
   podSelector: {}
   policyTypes:
   - Ingress
@@ -1597,7 +1597,7 @@ spec:
           istio: ingressgateway
     - namespaceSelector:
         matchLabels:
-          name: prometheus-operator
+          cf-system-networking: friendly
 ---
 apiVersion: v1
 kind: Secret
@@ -14636,6 +14636,7 @@ kind: Namespace
 metadata:
   name: prometheus-operator
   labels:
+    cf-system-networking: friendly
     istio-injection: enabled
 ---
 apiVersion: networking.istio.io/v1alpha3
