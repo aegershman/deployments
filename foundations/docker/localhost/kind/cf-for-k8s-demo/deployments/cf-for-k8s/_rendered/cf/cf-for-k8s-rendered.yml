@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
+        image: cloudfoundry/cloud-controller-ng@sha256:d6a3b3635205974f1ca4fbe33c8c493deebe59798fbcd7344c997fedf8ef6a08
         imagePullPolicy: Always
         volumeMounts:
         - name: server-sock
@@ -72,7 +72,7 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
+        image: cloudfoundry/cloud-controller-ng@sha256:d6a3b3635205974f1ca4fbe33c8c493deebe59798fbcd7344c997fedf8ef6a08
         imagePullPolicy: Always
         command:
         - /usr/local/bin/bundle
@@ -252,7 +252,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
+        image: cloudfoundry/cloud-controller-ng@sha256:d6a3b3635205974f1ca4fbe33c8c493deebe59798fbcd7344c997fedf8ef6a08
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -678,7 +678,7 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
+        image: cloudfoundry/cloud-controller-ng@sha256:d6a3b3635205974f1ca4fbe33c8c493deebe59798fbcd7344c997fedf8ef6a08
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -730,7 +730,7 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
+        image: cloudfoundry/cloud-controller-ng@sha256:d6a3b3635205974f1ca4fbe33c8c493deebe59798fbcd7344c997fedf8ef6a08
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -1079,7 +1079,7 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:eee7019f38a84297b45ab69b25ea7bf67c4373c2da508fefe20f87e19b765a2a
+        image: cloudfoundry/cloud-controller-ng@sha256:d6a3b3635205974f1ca4fbe33c8c493deebe59798fbcd7344c997fedf8ef6a08
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -2956,7 +2956,7 @@ spec:
       serviceAccountName: metric-proxy
       containers:
       - name: metric-proxy
-        image: oratos/metric-proxy@sha256:0e933b4f7208d3d6453ee28044126392a92055a565288434f2c522bf18a44fe1
+        image: oratos/metric-proxy@sha256:dd340c789169485f256b36d4552182dfa789f82bb5e5e95b4d709b1decf72734
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

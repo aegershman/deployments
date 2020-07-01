@@ -48,6 +48,13 @@ tasks:
           -f config/service-catalog/user/opsfiles/catalog-namespace.yml \
           >rendered/cf/cf-for-k8s-rendered.yml
 
+  build-cf:
+    dir: deployments/cf-for-k8s/build
+    cmds:
+      - |
+        ./build.sh generate-values
+        ./build.sh ytt
+
   apply-cf:
     cmds:
       - |
