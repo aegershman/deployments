@@ -14,16 +14,16 @@ directories:
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
-      # - path: vendor/github.com/cloudfoundry/cf-for-k8s-networking
-      #   git:
-      #     url: https://github.com/cloudfoundry/cf-for-k8s-networking
-      #     ref: 94e61142eab08f591dfcbc93ace54e0dae26d064
-      #   includePaths:
-      #     - config/*
-      #     - config/crd/**/*
-      #     - config/istio-config/**/*
-      #     - config/istio/generated/**/*
-      #     - config/routecontroller/**/*
+      - path: github.com/cloudfoundry/cf-k8s-networking
+        git:
+          url: https://github.com/cloudfoundry/cf-k8s-networking
+          ref: 94e61142eab08f591dfcbc93ace54e0dae26d064
+        includePaths:
+          - config/*
+          - config/crd/**/*
+          - config/istio-config/**/*
+          - config/istio/generated/**/*
+          - config/routecontroller/**/*
   - path: deployments/minibroker/build/_vendir
     contents:
       - path: github.com/kubernetes-sigs/minibroker

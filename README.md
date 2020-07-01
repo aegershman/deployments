@@ -13,3 +13,5 @@ Yeah this is about to get a little wild and unruly:
 ```sh
 ./foundations/{iaas}/{region}/{environment}/{cluster_name}/deployments/{deployment_grouping}
 ```
+
+If a folder starts with an underscore, such as `_rendered/` or `_common`, it implies the contents of the folder is not for humans to modify-- only for build scripts, vendoring, or the output of build scripts.
