@@ -18,6 +18,12 @@ directories:
   path: deployments/minibroker/build/_vendir
 - contents:
   - git:
+      commitTitle: '[stable/prometheus-operator] Adding hostNetwork for operator (#22726)...'
+      sha: 71d71d6bbc59d1c4172f5f431f1bd4b8b88e92d4
+    path: github.com/helm/charts/prometheus-operator
+  path: deployments/prometheus-operator/build/_vendir
+- contents:
+  - git:
       commitTitle: fix pb when use securityContext and add opportunity to add storageclass
         (#2818)...
       sha: 5068f67d9616bab9e21dae8a161578a034a0803a
