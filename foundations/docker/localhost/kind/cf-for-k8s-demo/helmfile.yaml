@@ -24,7 +24,7 @@ releases:
     installed: false
     version: ~1.3.x
     values:
-      - config/harbor/user/helm/values.yml
+      - ./deployments/harbor/user/helm/values.yml
 
   - name: jaeger-operator
     namespace: jaeger-operator
@@ -32,16 +32,16 @@ releases:
     installed: false
     version: ~2.15.x
     values:
-      - config/jaeger-operator/user/helm/values.yml
+      - ./deployments/jaeger-operator/user/helm/values.yml
 
   - name: minibroker
     namespace: minibroker
     # chart: minibroker/minibroker
-    chart: config/minibroker/vendor/github.com/kubernetes-sigs/minibroker/charts/minibroker
+    chart: ./deployments/minibroker/build/_vendir/github.com/kubernetes-sigs/minibroker/charts/minibroker
     installed: false
     version: ~0.x.x
     values:
-      - config/minibroker/user/helm/values.yml
+      - ./deployments/minibroker/user/helm/values.yml
 
   - name: prometheus-operator
     namespace: prometheus-operator
@@ -49,15 +49,15 @@ releases:
     installed: true
     version: ~8.15.x
     values:
-      - config/prometheus-operator/user/helm/values.yml
+      - ./deployments/prometheus-operator/user/helm/values.yml
 
   - name: service-catalog
     namespace: catalog
     # chart: svc-cat/catalog
-    chart: config/service-catalog/vendor/github.com/kubernetes-sigs/service-catalog/charts/catalog
+    chart: ./deployments/service-catalog/build/_vendir/github.com/kubernetes-sigs/service-catalog/charts/catalog
     installed: false
     version: ~0.x.x
     needs:
       - minibroker/minibroker
     values:
-      - config/service-catalog/user/helm/values.yml
+      - ./deployments/service-catalog/user/helm/values.yml
