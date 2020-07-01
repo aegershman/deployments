@@ -33,6 +33,15 @@ directories:
           disableAutoChecksumValidation: true
         includePaths:
           - charts/minibroker/**/*
+  - path: deployments/prometheus-operator/build/_vendir
+    contents:
+      - path: github.com/helm/charts/prometheus-operator
+        git:
+          url: https://github.com/helm/charts
+          ref: 71d71d6bbc59d1c4172f5f431f1bd4b8b88e92d4 # 8.15.6
+          disableAutoChecksumValidation: true
+        includePaths:
+          - stable/prometheus-operator/**/*
   - path: deployments/service-catalog/build/_vendir
     contents:
       - path: github.com/kubernetes-sigs/service-catalog
