@@ -3,8 +3,6 @@ directories:
 - contents:
   - githubRelease:
       url: https://api.github.com/repos/kubernetes-sigs/cluster-api/releases/26564556
-    path: components
-  - manual: {}
-    path: values
-  path: config
+    path: github.com/kubernetes-sigs/cluster-api
+  path: deployments/cluster-api/build/_vendir
 kind: LockConfig
