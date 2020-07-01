@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Bump metric-proxy to 6b2d05e6348b7620645ec3f12cfb24a40d006b00
-      sha: 9e8556471b4b34910405423e9f69f941174960ee
+      commitTitle: 'DEV: post reminder to clean pool clusters on Tues and Fri'
+      sha: 5e97f4786b7a540c74f83f23812dec1f5b0008b4
     path: github.com/cloudfoundry/cf-for-k8s
   path: deployments/cf-for-k8s/build/_vendir
 - contents:
