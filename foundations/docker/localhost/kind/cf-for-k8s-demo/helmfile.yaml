@@ -49,7 +49,7 @@ releases:
     installed: true
     version: ~8.15.x
     values:
-      - ./deployments/prometheus-operator/user/helm/values.yml
+      - ./deployments/prometheus-operator/build/values.yml
 
   - name: service-catalog
     namespace: catalog

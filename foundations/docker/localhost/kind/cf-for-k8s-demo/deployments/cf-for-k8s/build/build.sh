@@ -25,6 +25,7 @@ render)
     -f _vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
     -f ../_rendered/cf/cf-values-generated.yml \
     -f ../config/user/opsfiles/cf-registry-values.yml \
+    -f ../config/user/opsfiles/label-cf-system-namespace.yml \
     -f ../../harbor/user/opsfiles/harbor-namespace.yml \
     -f ../../harbor/user/opsfiles/harbor-virtual-service.yml \
     -f ../../jaeger-operator/user/opsfiles/jaeger-operator-namespace.yml \
