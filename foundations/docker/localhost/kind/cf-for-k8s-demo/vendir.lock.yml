@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'DEV: post reminder to clean pool clusters on Tues and Fri'
-      sha: 5e97f4786b7a540c74f83f23812dec1f5b0008b4
+      commitTitle: 'Merge pull request #254 from akhinos/enable_tls_ccdb...'
+      sha: e484e392fd88e6ae0a936665495f7a4d86eae214
     path: github.com/cloudfoundry/cf-for-k8s
   - git:
       commitTitle: 'chore: save acceptance_config on deploy...'

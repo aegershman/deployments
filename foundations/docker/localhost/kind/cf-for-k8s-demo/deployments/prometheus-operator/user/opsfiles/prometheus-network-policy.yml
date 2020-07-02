@@ -11,4 +11,4 @@ spec:
         #@overlay/append
         - namespaceSelector:
             matchLabels:
-              cf-for-k8s.cloudfoundry.org/cf-system-ns: ""
+              aegershman.com/name: prometheus-operator
