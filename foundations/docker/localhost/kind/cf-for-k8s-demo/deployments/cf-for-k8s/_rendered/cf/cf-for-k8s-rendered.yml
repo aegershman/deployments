@@ -1196,7 +1196,7 @@ spec:
           app.kubernetes.io/component: adapter
     - namespaceSelector:
         matchLabels:
-          cf-system-networking: friendly
+          cf-for-k8s.cloudfoundry.org/cf-system-ns: ""
   podSelector: {}
   policyTypes:
   - Ingress
@@ -1597,7 +1597,7 @@ spec:
           istio: ingressgateway
     - namespaceSelector:
         matchLabels:
-          cf-system-networking: friendly
+          cf-for-k8s.cloudfoundry.org/cf-system-ns: ""
 ---
 apiVersion: v1
 kind: Secret
@@ -13765,6 +13765,7 @@ metadata:
   name: cf-system
   labels:
     istio-injection: enabled
+    cf-for-k8s.cloudfoundry.org/cf-system-ns: ""
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -14636,7 +14637,7 @@ kind: Namespace
 metadata:
   name: prometheus-operator
   labels:
-    cf-system-networking: friendly
+    cf-for-k8s.cloudfoundry.org/cf-system-ns: ""
     istio-injection: enabled
 ---
 apiVersion: networking.istio.io/v1alpha3

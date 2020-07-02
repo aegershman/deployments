@@ -4,7 +4,7 @@ kind: Namespace
 metadata:
   name: prometheus-operator
   labels:
-    cf-system-networking: friendly
+    cf-for-k8s.cloudfoundry.org/cf-system-ns: ""
 
 #@ load("@ytt:overlay", "overlay")
 #@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"prometheus-operator"}}), overlay.subset({"kind": "Namespace"}))
