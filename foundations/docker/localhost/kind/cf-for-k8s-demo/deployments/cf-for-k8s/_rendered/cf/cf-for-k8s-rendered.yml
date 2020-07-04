@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:28bf950c47c6884fb908614d24f5d19b268bb3cc62504deae1c9a877d05ccd24
+        image: cloudfoundry/cloud-controller-ng@sha256:899b59bd95308b2c6cc1f25cf80f4eb9fbb01581fe8ec0bcec9df7afdb59a924
         imagePullPolicy: Always
         volumeMounts:
         - name: server-sock
@@ -72,7 +72,7 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:28bf950c47c6884fb908614d24f5d19b268bb3cc62504deae1c9a877d05ccd24
+        image: cloudfoundry/cloud-controller-ng@sha256:899b59bd95308b2c6cc1f25cf80f4eb9fbb01581fe8ec0bcec9df7afdb59a924
         imagePullPolicy: Always
         command:
         - /usr/local/bin/bundle
@@ -252,7 +252,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:28bf950c47c6884fb908614d24f5d19b268bb3cc62504deae1c9a877d05ccd24
+        image: cloudfoundry/cloud-controller-ng@sha256:899b59bd95308b2c6cc1f25cf80f4eb9fbb01581fe8ec0bcec9df7afdb59a924
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -680,7 +680,7 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:28bf950c47c6884fb908614d24f5d19b268bb3cc62504deae1c9a877d05ccd24
+        image: cloudfoundry/cloud-controller-ng@sha256:899b59bd95308b2c6cc1f25cf80f4eb9fbb01581fe8ec0bcec9df7afdb59a924
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -732,7 +732,7 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:28bf950c47c6884fb908614d24f5d19b268bb3cc62504deae1c9a877d05ccd24
+        image: cloudfoundry/cloud-controller-ng@sha256:899b59bd95308b2c6cc1f25cf80f4eb9fbb01581fe8ec0bcec9df7afdb59a924
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -1108,7 +1108,7 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:28bf950c47c6884fb908614d24f5d19b268bb3cc62504deae1c9a877d05ccd24
+        image: cloudfoundry/cloud-controller-ng@sha256:899b59bd95308b2c6cc1f25cf80f4eb9fbb01581fe8ec0bcec9df7afdb59a924
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -1525,8 +1525,10 @@ kind: Deployment
 metadata:
   annotations:
     kbld.k14s.io/images: |
-      - Metas: null
-        URL: index.docker.io/eirini/opi@sha256:c8bf721839e7828a4591fba8463f885912006007b58949eb9cd23acd775fe8e0
+      - Metas:
+        - Type: preresolved
+          URL: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini@sha256:d3eaaab9681a9a7611d3e92b9bd2cc2f3c12f31d883d7470826639fe8b0fc289
+        URL: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini@sha256:d3eaaab9681a9a7611d3e92b9bd2cc2f3c12f31d883d7470826639fe8b0fc289
     kapp.k14s.io/change-rule.istio-sidecar-injector: upsert after upserting cf-for-k8s.cloudfoundry.org/istio-sidecar-injector
   name: eirini
   namespace: cf-system
@@ -1544,7 +1546,7 @@ spec:
         sidecar.istio.io/proxyMemory: 0M
     spec:
       containers:
-      - image: index.docker.io/eirini/opi@sha256:c8bf721839e7828a4591fba8463f885912006007b58949eb9cd23acd775fe8e0
+      - image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini@sha256:d3eaaab9681a9a7611d3e92b9bd2cc2f3c12f31d883d7470826639fe8b0fc289
         imagePullPolicy: Always
         name: opi
         ports:
