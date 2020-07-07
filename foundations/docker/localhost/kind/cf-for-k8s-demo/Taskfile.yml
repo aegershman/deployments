@@ -18,6 +18,11 @@
 version: "2"
 
 tasks:
+  diff-cf-generate-values:
+    cmds:
+      - |
+        diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh
+
   cf-push:
     cmds:
       - |
