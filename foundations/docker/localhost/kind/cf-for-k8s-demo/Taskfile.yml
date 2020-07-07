@@ -28,6 +28,7 @@ tasks:
       - |
         cf api --skip-ssl-validation https://api.vcap.me
         cf auth admin $(yq r ./deployments/cf-for-k8s/_rendered/cf/cf-values-generated.yml 'cf_admin_password')
+        cf target
         cf enable-feature-flag diego_docker
         cf create-org test-org
         cf create-space -o test-org test-space
