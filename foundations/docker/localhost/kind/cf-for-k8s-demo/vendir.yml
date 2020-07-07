@@ -8,7 +8,7 @@ directories:
       - path: github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: a0004ac6abedbeec4e5f25fd1aac19e3cb99406e # beyond v0.4.0
+          ref: ee805a629c4a33fb347db07526a0ca0ec3737ae7 # beyond v0.4.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -17,7 +17,7 @@ directories:
       - path: github.com/cloudfoundry/cf-k8s-networking
         git:
           url: https://github.com/cloudfoundry/cf-k8s-networking
-          ref: 94e61142eab08f591dfcbc93ace54e0dae26d064
+          ref: 366d671101a846b7c6cfd1d1b2cd18ffd750ecb1
         includePaths:
           - config/*
           - config/crd/**/*
@@ -29,7 +29,7 @@ directories:
       - path: github.com/kubernetes-sigs/minibroker
         git:
           url: https://github.com/kubernetes-sigs/minibroker
-          ref: e50e4bc41f03ae2e10daaf9522f2aafb32bc7ea3
+          ref: 35de1ab212e2698abeb8451660fea8d1f938eb12
           disableAutoChecksumValidation: true
         includePaths:
           - charts/minibroker/**/*
@@ -38,7 +38,7 @@ directories:
       - path: github.com/helm/charts/prometheus-operator
         git:
           url: https://github.com/helm/charts
-          ref: 71d71d6bbc59d1c4172f5f431f1bd4b8b88e92d4 # 8.15.6
+          ref: 0a7733450100af14cd8705c611b9a1ac048e5000 # 8.15.11
           disableAutoChecksumValidation: true
         includePaths:
           - stable/prometheus-operator/**/*
