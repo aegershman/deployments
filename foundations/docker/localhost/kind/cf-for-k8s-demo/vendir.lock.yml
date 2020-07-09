@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Bump metric-proxy to a6de26a1be2613a20dbd0b3a6fa9844ba62a6154
-      sha: b59c50941ce03c488c4434bb02b1f4a34ab2639f
+      commitTitle: Enable eirini crash events...
+      sha: 0dd4940c144ff1d6ff9ce4a37c1e73050aae1c7e
     path: github.com/cloudfoundry/cf-for-k8s
   - git:
       commitTitle: 'doc: fix ADR 15 title...'
