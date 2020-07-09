@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Bump metric-proxy to a6de26a1be2613a20dbd0b3a6fa9844ba62a6154
-      sha: b59c50941ce03c488c4434bb02b1f4a34ab2639f
+      commitTitle: Enable eirini crash events...
+      sha: 0dd4940c144ff1d6ff9ce4a37c1e73050aae1c7e
     path: github.com/cloudfoundry/cf-for-k8s
   - git:
-      commitTitle: 'doc: fix ADR 15 title...'
-      sha: 366d671101a846b7c6cfd1d1b2cd18ffd750ecb1
+      commitTitle: Update routecontroller image digest to sha256:edc7b9b45703e202c6d7c3cd1f90fcebcd36e3c9f3ac33c950ebd5cd578bad51
+      sha: 49a20550eb6f7d6597dc5da278f5f159f8ef60b3
     path: github.com/cloudfoundry/cf-k8s-networking
   path: deployments/cf-for-k8s/build/_vendir
 - contents:
   - git:
-      commitTitle: 'refactor: improve timeouts for integration tests (#76)...'
-      sha: 35de1ab212e2698abeb8451660fea8d1f938eb12
+      commitTitle: 'feat: use Helm 3 for the minibroker internals (#72)...'
+      sha: bed714fc885018e2252c7e1a1a96b9c8b1c967b5
     path: github.com/kubernetes-sigs/minibroker
   path: deployments/minibroker/build/_vendir
 - contents:

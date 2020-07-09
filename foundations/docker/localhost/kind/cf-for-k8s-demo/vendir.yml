@@ -8,7 +8,7 @@ directories:
       - path: github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: b59c50941ce03c488c4434bb02b1f4a34ab2639f # beyond v0.4.0
+          ref: 0dd4940c144ff1d6ff9ce4a37c1e73050aae1c7e # beyond v0.4.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -17,7 +17,7 @@ directories:
       - path: github.com/cloudfoundry/cf-k8s-networking
         git:
           url: https://github.com/cloudfoundry/cf-k8s-networking
-          ref: 366d671101a846b7c6cfd1d1b2cd18ffd750ecb1
+          ref: 49a20550eb6f7d6597dc5da278f5f159f8ef60b3
         includePaths:
           - config/*
           - config/crd/**/*
@@ -29,7 +29,7 @@ directories:
       - path: github.com/kubernetes-sigs/minibroker
         git:
           url: https://github.com/kubernetes-sigs/minibroker
-          ref: 35de1ab212e2698abeb8451660fea8d1f938eb12
+          ref: bed714fc885018e2252c7e1a1a96b9c8b1c967b5
           disableAutoChecksumValidation: true
         includePaths:
           - charts/minibroker/**/*
