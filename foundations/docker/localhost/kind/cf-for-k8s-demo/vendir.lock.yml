@@ -2,12 +2,12 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Bump capi-k8s-release to 39cc43dde1b86714f6a3fe97d01dab07c9cc1038
-      sha: a339593d222cec1481a4e2a35be4e6bab0be881a
+      commitTitle: 'Merge pull request #272 from cloudfoundry/split-docs-for-operators-and-component-authors...'
+      sha: 56db8a14723cae48ea2e995929954aeeb49cdd6c
     path: github.com/cloudfoundry/cf-for-k8s
   - git:
-      commitTitle: 'Merge pull request #54 from cloudfoundry/remove-alex...'
-      sha: 994575c1331b64f4e8d0a63edd3b2329258d6f00
+      commitTitle: tag newly created k8s clusters with ephemeral=true...
+      sha: bc73158c3b446b72e4f5b9365cee58b4383d835e
     path: github.com/cloudfoundry/cf-k8s-networking
   path: deployments/cf-for-k8s/build/_vendir
 - contents:
@@ -18,15 +18,15 @@ directories:
   path: deployments/minibroker/build/_vendir
 - contents:
   - git:
-      commitTitle: '[stable/prometheus-operator] Added option to disable kube-apiserver-availability
-        rules (#23136)...'
-      sha: f191697fdec967f2df92e41514a56535927e40b0
+      commitTitle: '[stable/prometheus-operator] Version bump alertmanager and prometheus
+        (#23150)...'
+      sha: fbf8233ea49d5ac62b1f0323012badff13246efe
     path: github.com/helm/charts/prometheus-operator
   path: deployments/prometheus-operator/build/_vendir
 - contents:
   - git:
-      commitTitle: Fix RemoveFinalizer methods in svcat cli (#2823)
-      sha: 18c0d73e1fbc16542276c314689a20bc81a98221
+      commitTitle: Update feature-gates.md (#2829)...
+      sha: f7c033da6649968820d17bc8cf35e7fd7b9623bb
     path: github.com/kubernetes-sigs/service-catalog
   path: deployments/service-catalog/build/_vendir
 kind: LockConfig
