@@ -45,3 +45,13 @@ releases:
       - ingress-nginx/ingress-nginx
     values:
       - ./deployments/kubecf/values.yml
+
+  - name: prometheus-operator
+    namespace: prometheus-operator
+    chart: stable/prometheus-operator
+    installed: true
+    version: ~9.0.x
+    needs:
+      - ingress-nginx/ingress-nginx
+    values:
+      - ./deployments/prometheus-operator/values.yml
