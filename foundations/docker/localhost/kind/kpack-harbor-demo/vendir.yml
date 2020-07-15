@@ -2,8 +2,9 @@
 ---
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
+minimumRequiredVersion: 0.8.0
 directories:
-  - path: config/kpack
+  - path: deployments/kpack
     contents:
       - path: build-examples
         manual: {}
