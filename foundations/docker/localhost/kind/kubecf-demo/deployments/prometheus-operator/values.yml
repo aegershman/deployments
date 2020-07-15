@@ -28,7 +28,7 @@ kubeProxy:
 prometheusOperator:
   enabled: true
   admissionWebhooks:
-    enabled: false
+    enabled: true
 
 prometheus:
   ingress:
