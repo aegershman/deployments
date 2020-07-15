@@ -3694,7 +3694,7 @@ spec:
       serviceAccountName: metric-proxy
       containers:
       - name: metric-proxy
-        image: oratos/metric-proxy@sha256:dd340c789169485f256b36d4552182dfa789f82bb5e5e95b4d709b1decf72734
+        image: oratos/metric-proxy@sha256:20c1af2d40457f343ff8b00d487aca24099b5d67921b57dead910f05084c9536
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
