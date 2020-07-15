@@ -24,7 +24,7 @@ releases:
     needs:
       - ingress-nginx/ingress-nginx
     values:
-      - deployments/cf-operator/values.yml
+      - ./deployments/cf-operator/values.yml
 
   - name: ingress-nginx
     namespace: ingress-nginx
@@ -32,7 +32,7 @@ releases:
     installed: true
     version: ~2.11.x
     values:
-      - deployments/ingress-nginx/values.yml
+      - ./deployments/ingress-nginx/values.yml
 
   - name: kubecf
     namespace: kubecf
@@ -44,4 +44,4 @@ releases:
       - cf-operator/cf-operator
       - ingress-nginx/ingress-nginx
     values:
-      - deployments/kubecf/values.yml
+      - ./deployments/kubecf/values.yml
