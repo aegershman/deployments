@@ -21,7 +21,7 @@ releases:
   - name: cf-operator
     namespace: cf-operator
     chart: quarks/cf-operator
-    version: 5.0.0
+    version: 5.1.0
     installed: true
     needs:
       - ingress-nginx/ingress-nginx
