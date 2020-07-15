@@ -26,7 +26,7 @@ releases:
     needs:
       - ingress-nginx/ingress-nginx
     values:
-      - config/cf-operator/values.yml
+      - deployments/cf-operator/values.yml
 
   - name: ingress-nginx
     namespace: ingress-nginx
@@ -34,19 +34,19 @@ releases:
     installed: true
     version: ~2.11.x
     values:
-      - config/ingress-nginx/values.yml
+      - deployments/ingress-nginx/values.yml
 
   - name: kubecf
     namespace: kubecf
     createNamespace: false
-    chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.2.2/kubecf-v2.2.2.tgz
+    chart: https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.3.0/kubecf-v2.3.0.tgz
     installed: true
     wait: false
     needs:
       - cf-operator/cf-operator
       - ingress-nginx/ingress-nginx
     values:
-      - config/kubecf/values.yml
+      - deployments/kubecf/values.yml
 
   - name: stratos
     namespace: stratos
@@ -57,4 +57,4 @@ releases:
       - ingress-nginx/ingress-nginx
       - kubecf/kubecf
     values:
-      - config/stratos/values.yml
+      - deployments/stratos/values.yml
