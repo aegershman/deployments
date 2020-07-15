@@ -11,9 +11,13 @@ features:
     enabled: true
   suse_buildpacks:
     enabled: true
+  credhub:
+    # Enable credhub; this is only used as a service broker for applications, and is not used for
+    # authentication with the Cloud Foundry deployment.
+    enabled: false
   # Disabling routing_api will also disable the tcp_router instance_group
   routing_api:
-    enabled: true
+    enabled: false
 
 eirini:
   services:

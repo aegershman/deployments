@@ -1,0 +1,14 @@
+---
+applications:
+  - name: hash-browns
+    instances: 1
+    memory: 256M
+    routes:
+      - route: hash-browns.kubecf.vcap.me
+    docker:
+      image: alexellis2/hashbrowns:1.2.0
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: 8080
+        prometheus.io/path: /metrics
