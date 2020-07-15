@@ -14,8 +14,6 @@ repositories:
     url: https://cloudfoundry-incubator.github.io/quarks-helm
   - name: stable
     url: https://kubernetes-charts.storage.googleapis.com
-  - name: stratos
-    url: https://cloudfoundry.github.io/stratos
 
 releases:
   - name: cf-operator
@@ -47,14 +45,3 @@ releases:
       - ingress-nginx/ingress-nginx
     values:
       - deployments/kubecf/values.yml
-
-  - name: stratos
-    namespace: stratos
-    chart: stratos/console
-    installed: false
-    version: ~3.2.x
-    needs:
-      - ingress-nginx/ingress-nginx
-      - kubecf/kubecf
-    values:
-      - deployments/stratos/values.yml
