@@ -1,7 +1,3 @@
-# http://alertmanager.vcap.me
-# http://grafana.vcap.me
-# http://prometheus.vcap.me
-# https://github.com/helm/charts/issues/11310
 ---
 alertmanager:
   ingress:

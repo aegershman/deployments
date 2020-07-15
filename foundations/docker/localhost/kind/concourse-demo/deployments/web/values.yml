@@ -1,6 +1,3 @@
-# https://concourse-ci.org/tracing.html
-# https://discuss.istio.io/t/help-with-production-jaeger-and-istio/4002
-# https://medium.com/@masroor.hasan/tracing-infrastructure-with-jaeger-on-kubernetes-6800132a677
 ---
 postgresql:
   enabled: true
