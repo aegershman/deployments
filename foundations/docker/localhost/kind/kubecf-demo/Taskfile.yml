@@ -7,29 +7,6 @@ tasks:
       - |
         kubectl get node kind-control-plane --output jsonpath='{ .status.addresses[?(@.type == "InternalIP")].address }'
 
-  rm-crds:
-    cmds:
-      - |
-        kubectl delete crd boshdeployments.quarks.cloudfoundry.org
-        kubectl delete crd quarksjobs.quarks.cloudfoundry.org
-        kubectl delete crd quarkssecrets.quarks.cloudfoundry.org
-        kubectl delete crd quarksstatefulsets.quarks.cloudfoundry.org
-
-  crds-placeholder:
-    cmds: # not to be actually ran as a task; just here for copy-paste-ability
-      - exit 1
-      - |
-        kubectl get crds
-        kubectl describe boshdeployments.quarks.cloudfoundry.org
-        kubectl describe quarksjobs.quarks.cloudfoundry.org
-        kubectl describe quarkssecrets.quarks.cloudfoundry.org
-        kubectl describe quarksstatefulsets.quarks.cloudfoundry.org
-      - |
-        kubectl get boshdeployments.quarks.cloudfoundry.org
-        kubectl get quarksjobs.quarks.cloudfoundry.org
-        kubectl get quarkssecrets.quarks.cloudfoundry.org
-        kubectl get quarksstatefulsets.quarks.cloudfoundry.org
-
   logs-placeholder:
     cmds: # not to be actually ran as a task; just here for copy-paste-ability
       - exit 1
@@ -99,23 +76,3 @@ tasks:
         uaa target uaa.kubecf.vcap.me --skip-ssl-validation
         uaa get-password-token cf -s "" -u admin -p "$(kubectl -n kubecf get secret var-cf-admin-password -o jsonpath='{.data.password}' | base64 --decode)"
         uaa userinfo -v
-
-  post-install-minibroker:
-    cmds:
-      - |
-        cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc.cluster.local
-        cf service-access
-        cf enable-service-access mysql
-        cf enable-service-access redis
-        cf enable-service-access mongodb
-        cf enable-service-access mariadb
-        cf marketplace
-      - |
-        cf create-service mariadb 10-3-22 mariadb-svc
-        cf create-service mariadb 10-3-22 mariadb-svc -c '{"db": {"name": "my_database"}}'
-        cf service mariadb-svc
-        cf services
-      - |
-        cf create-service-key mariadb-svc mykey
-        cf service-keys mariadb-svc
-        cf service-key mariadb-svc mykey

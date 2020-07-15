@@ -6,9 +6,9 @@ controller:
   config:
     proxy-body-size: 64m
     proxy-buffer-size: 16k
-  dnsPolicy: ClusterFirstWithHostNet # ClusterFirst
-  reportNodeInternalIp: true # false
-  hostNetwork: true # false
+  dnsPolicy: ClusterFirstWithHostNet
+  reportNodeInternalIp: true
+  hostNetwork: true
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
