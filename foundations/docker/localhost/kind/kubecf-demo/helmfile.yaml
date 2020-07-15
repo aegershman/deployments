@@ -50,6 +50,7 @@ releases:
     namespace: prometheus-operator
     chart: stable/prometheus-operator
     installed: true
+    wait: false
     version: ~9.0.x
     needs:
       - ingress-nginx/ingress-nginx
