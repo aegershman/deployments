@@ -20,11 +20,11 @@ releases:
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
     installed: true
-    version: ~2.9.x
+    version: ~2.11.x
     needs:
       - prometheus-operator/prometheus-operator
     values:
-      - config/ingress-nginx/values.yml
+      - deployments/ingress-nginx/values.yml
 
   - name: jaeger-operator
     namespace: jaeger-operator
@@ -32,15 +32,15 @@ releases:
     installed: true
     version: ~2.15.x
     values:
-      - config/jaeger-operator/values.yml
+      - deployments/jaeger-operator/values.yml
 
   - name: prometheus-operator
     namespace: prometheus-operator
     chart: stable/prometheus-operator
     installed: true
-    version: ~8.15.x
+    version: ~9.0.x
     values:
-      - config/prometheus-operator/values.yml
+      - deployments/prometheus-operator/values.yml
 
   - name: web
     namespace: concourse-web
@@ -50,7 +50,7 @@ releases:
     needs:
       - prometheus-operator/prometheus-operator
     values:
-      - config/web/values.yml
+      - deployments/web/values.yml
 
   - name: workers
     namespace: concourse-workers
@@ -58,4 +58,4 @@ releases:
     installed: true
     version: ~11.2.x
     values:
-      - config/workers/values.yml
+      - deployments/workers/values.yml
