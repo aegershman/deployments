@@ -1,5 +1,5 @@
 ---
-createWatchNamespace: true
 global:
-  operator:
-    watchNamespace: kubecf
+  singleNamespace:
+    create: true
+    name: kubecf
