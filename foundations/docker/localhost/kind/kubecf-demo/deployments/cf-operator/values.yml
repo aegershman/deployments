@@ -1,0 +1,5 @@
+---
+global:
+  singleNamespace:
+    create: true
+    name: kubecf
