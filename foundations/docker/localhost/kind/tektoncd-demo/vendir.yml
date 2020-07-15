@@ -4,7 +4,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-  - path: config/tektoncd-pipeline
+  - path: deployments/tektoncd-pipeline
     contents:
       - path: vendor/github.com/tektoncd/pipeline
         githubRelease:
@@ -17,7 +17,7 @@ directories:
         manual: {}
       - path: user-supplied-pipelines
         manual: {}
-  - path: config/tektoncd-dashboard
+  - path: deployments/tektoncd-dashboard
     contents:
       - path: vendor/github.com/tektoncd/dashboard
         githubRelease:
