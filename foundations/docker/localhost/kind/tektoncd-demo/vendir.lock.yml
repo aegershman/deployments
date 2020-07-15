@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - githubRelease:
-      url: https://api.github.com/repos/tektoncd/pipeline/releases/27474766
+      url: https://api.github.com/repos/tektoncd/pipeline/releases/28407799
     path: vendor/github.com/tektoncd/pipeline
   - manual: {}
     path: user-supplied-config
   - manual: {}
     path: user-supplied-pipelines
-  path: config/tektoncd-pipeline
+  path: deployments/tektoncd-pipeline
 - contents:
   - githubRelease:
-      url: https://api.github.com/repos/tektoncd/dashboard/releases/27212042
+      url: https://api.github.com/repos/tektoncd/dashboard/releases/28065648
     path: vendor/github.com/tektoncd/dashboard
   - manual: {}
     path: user-supplied-config
-  path: config/tektoncd-dashboard
+  path: deployments/tektoncd-dashboard
 kind: LockConfig
