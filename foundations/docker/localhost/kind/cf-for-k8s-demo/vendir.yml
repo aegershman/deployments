@@ -8,7 +8,7 @@ directories:
       - path: github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: a339593d222cec1481a4e2a35be4e6bab0be881a # beyond v0.4.0
+          ref: 56db8a14723cae48ea2e995929954aeeb49cdd6c # beyond v0.4.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -17,7 +17,7 @@ directories:
       - path: github.com/cloudfoundry/cf-k8s-networking
         git:
           url: https://github.com/cloudfoundry/cf-k8s-networking
-          ref: 994575c1331b64f4e8d0a63edd3b2329258d6f00
+          ref: bc73158c3b446b72e4f5b9365cee58b4383d835e
         includePaths:
           - config/*
           - config/crd/**/*
@@ -38,7 +38,7 @@ directories:
       - path: github.com/helm/charts/prometheus-operator
         git:
           url: https://github.com/helm/charts
-          ref: f191697fdec967f2df92e41514a56535927e40b0 # 8.16.1
+          ref: fbf8233ea49d5ac62b1f0323012badff13246efe # 9.0.1
           disableAutoChecksumValidation: true
         includePaths:
           - stable/prometheus-operator/**/*
@@ -47,7 +47,7 @@ directories:
       - path: github.com/kubernetes-sigs/service-catalog
         git:
           url: https://github.com/kubernetes-sigs/service-catalog
-          ref: 18c0d73e1fbc16542276c314689a20bc81a98221
+          ref: f7c033da6649968820d17bc8cf35e7fd7b9623bb
           disableAutoChecksumValidation: true
         includePaths:
           - charts/catalog/**/*
