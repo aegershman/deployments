@@ -19,11 +19,11 @@ releases:
     chart: harbor/harbor
     version: ~1.4.x
     values:
-      - config/harbor/values.yml
+      - deployments/harbor/values.yml
 
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
-    version: ~2.9.x
+    version: ~2.11.x
     values:
-      - config/ingress-nginx/values.yml
+      - deployments/ingress-nginx/values.yml

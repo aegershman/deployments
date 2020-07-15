@@ -3,6 +3,7 @@ helmDefaults:
   kubeContext: kind-kind
   createNamespace: true
   recreatePods: false
+  wait: true
 
 repositories:
   - name: ingress-nginx
@@ -12,8 +13,7 @@ releases:
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
-    version: ~2.9.x
+    version: ~2.11.x
     installed: true
-    wait: true
     values:
-      - config/ingress-nginx/values.yml
+      - deployments/ingress-nginx/values.yml

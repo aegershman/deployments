@@ -19,4 +19,4 @@ releases:
     installed: true
     version: ~2.1.x
     values:
-      - config/yugabyte/values.yml
+      - deployments/yugabyte/values.yml

@@ -5,17 +5,17 @@ tasks:
   install:
     cmds:
       - | # vendir sync
-        kubectl apply --recursive --filename config/tektoncd-pipeline/vendor
-        kubectl apply --recursive --filename config/tektoncd-pipeline/user-supplied-config
+        kubectl apply --recursive --filename deployments/tektoncd-pipeline/vendor
+        kubectl apply --recursive --filename deployments/tektoncd-pipeline/user-supplied-config
       - | # dashboard
-        kubectl apply --recursive --filename config/tektoncd-dashboard/vendor
-        kubectl apply --recursive --filename config/tektoncd-dashboard/user-supplied-config
+        kubectl apply --recursive --filename deployments/tektoncd-dashboard/vendor
+        kubectl apply --recursive --filename deployments/tektoncd-dashboard/user-supplied-config
 
   start:
     cmds:
       - exit 1
       - |
-        kubectl apply --filename config/tektoncd-pipeline/user-supplied-pipelines/echo.yaml
+        kubectl apply --filename deployments/tektoncd-pipeline/user-supplied-pipelines/echo.yaml
         tkn task start echo --dry-run
       - | # option 1 with kubectl...
         tkn task start echo --dry-run > taskRun.yaml
