@@ -14,6 +14,8 @@ repositories:
     url: https://minibroker.blob.core.windows.net/charts
   - name: stable
     url: https://kubernetes-charts.storage.googleapis.com
+  - name: stratos
+    url: https://cloudfoundry.github.io/stratos
   - name: svc-cat
     url: https://svc-catalog-charts.storage.googleapis.com
 
@@ -61,3 +63,12 @@ releases:
       - minibroker/minibroker
     values:
       - ./deployments/service-catalog/user/helm/values.yml
+
+  - name: stratos
+    namespace: stratos
+    chart: stratos/console
+    installed: false
+    version: ~3.2.x
+    needs: []
+    values:
+      - ./deployments/stratos/values.yml

@@ -15,7 +15,7 @@ controller:
       maxSurge: 1
 
   admissionWebhooks:
-    enabled: true
+    enabled: false
 
 defaultBackend:
   enabled: false
