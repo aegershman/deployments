@@ -8,7 +8,7 @@ directories:
       - path: github.com/kubernetes-sigs/cluster-api
         githubRelease:
           slug: kubernetes-sigs/cluster-api
-          tag: v0.3.6
+          tag: v0.3.7
           disableAutoChecksumValidation: true
         includePaths:
           - bootstrap-components.yaml
