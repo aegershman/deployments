@@ -2,31 +2,27 @@
 version: "2"
 
 tasks:
-  vendir:
-    cmds:
-      - vendir sync
-
   apply:
     cmds:
       - |
-        kubectl apply -f config/kpack/kpack-release/release-*.yaml
+        kubectl apply -f deployments/kpack/kpack-release/release-*.yaml
         kubectl -n kpack get pods --watch
       - |
-        kubectl apply -f config/kpack/kpack-components/cluster_builder.yaml
+        kubectl apply -f deployments/kpack/kpack-components/cluster_builder.yaml
         kubectl describe clusterbuilder default
       - |
-        kubectl apply -R -f config/kpack/generics
-        kubectl apply -f config/kpack/build-examples/image.yaml
+        kubectl apply -R -f deployments/kpack/generics
+        kubectl apply -f deployments/kpack/build-examples/image.yaml
 
   delete:
     cmds:
-      - kubectl delete -R -f config/kpack
+      - kubectl delete -R -f deployments/kpack
 
   kpack-reset:
     cmds:
       - |
-        kubectl delete -f config/kpack/build-examples/image.yaml
-        kubectl apply -f config/kpack/build-examples/image.yaml
+        kubectl delete -f deployments/kpack/build-examples/image.yaml
+        kubectl apply -f deployments/kpack/build-examples/image.yaml
 
   kpack-logs:
     cmds:
