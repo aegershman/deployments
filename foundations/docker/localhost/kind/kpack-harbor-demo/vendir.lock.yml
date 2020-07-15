@@ -10,5 +10,5 @@ directories:
   - githubRelease:
       url: https://api.github.com/repos/pivotal/kpack/releases/27343776
     path: kpack-release
-  path: config/kpack
+  path: deployments/kpack
 kind: LockConfig
