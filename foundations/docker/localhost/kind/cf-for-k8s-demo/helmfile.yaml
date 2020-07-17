@@ -49,7 +49,7 @@ releases:
     namespace: prometheus-operator
     chart: stable/prometheus-operator
     installed: true
-    version: ~9.0.x
+    version: ~9.1.x
     values:
       - ./deployments/prometheus-operator/build/values.yml
 

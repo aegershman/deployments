@@ -8,7 +8,7 @@ directories:
       - path: github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: 56db8a14723cae48ea2e995929954aeeb49cdd6c # beyond v0.4.0
+          ref: df86d8c04478ed6f21c0ea96b7514a29b59dcb28 # beyond v0.4.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -17,7 +17,7 @@ directories:
       - path: github.com/cloudfoundry/cf-k8s-networking
         git:
           url: https://github.com/cloudfoundry/cf-k8s-networking
-          ref: bc73158c3b446b72e4f5b9365cee58b4383d835e
+          ref: 0f78d318413ccd3cbb59f3105fbae0417d9265d3
         includePaths:
           - config/*
           - config/crd/**/*
@@ -38,7 +38,7 @@ directories:
       - path: github.com/helm/charts/prometheus-operator
         git:
           url: https://github.com/helm/charts
-          ref: fbf8233ea49d5ac62b1f0323012badff13246efe # 9.0.1
+          ref: f019fd53a81e7124df65be0d4da620795c251a2e # 9.1.0
           disableAutoChecksumValidation: true
         includePaths:
           - stable/prometheus-operator/**/*

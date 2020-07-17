@@ -2,12 +2,12 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'Merge pull request #272 from cloudfoundry/split-docs-for-operators-and-component-authors...'
-      sha: 56db8a14723cae48ea2e995929954aeeb49cdd6c
+      commitTitle: 'Merge pull request #281 from cloudfoundry/uaa-cert...'
+      sha: df86d8c04478ed6f21c0ea96b7514a29b59dcb28
     path: github.com/cloudfoundry/cf-for-k8s
   - git:
-      commitTitle: tag newly created k8s clusters with ephemeral=true...
-      sha: bc73158c3b446b72e4f5b9365cee58b4383d835e
+      commitTitle: 'ci: build upgrade-sidecars image in pipeline...'
+      sha: 0f78d318413ccd3cbb59f3105fbae0417d9265d3
     path: github.com/cloudfoundry/cf-k8s-networking
   path: deployments/cf-for-k8s/build/_vendir
 - contents:
@@ -18,9 +18,8 @@ directories:
   path: deployments/minibroker/build/_vendir
 - contents:
   - git:
-      commitTitle: '[stable/prometheus-operator] Version bump alertmanager and prometheus
-        (#23150)...'
-      sha: fbf8233ea49d5ac62b1f0323012badff13246efe
+      commitTitle: '[stable/prometheus-operator] Add docker checksum option (#23194)...'
+      sha: f019fd53a81e7124df65be0d4da620795c251a2e
     path: github.com/helm/charts/prometheus-operator
   path: deployments/prometheus-operator/build/_vendir
 - contents:
