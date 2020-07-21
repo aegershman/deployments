@@ -3,7 +3,7 @@ helmDefaults:
   kubeContext: gershman-admin@aegershman-example-0.us-east-2.eksctl.io
   createNamespace: true
   recreatePods: false
-  wait: false
+  wait: true
 
 repositories:
   - name: concourse

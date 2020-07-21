@@ -6,7 +6,7 @@ persistence:
   enabled: true
   worker:
     size: 2Gi
-    storageClass: standard
+    storageClass: gp2
 
 worker:
   enabled: true

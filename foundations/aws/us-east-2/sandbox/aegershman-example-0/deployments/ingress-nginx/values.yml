@@ -1,13 +1,13 @@
 ---
 controller:
-  replicaCount: 2
-  ingressClass: nginx-private
+  replicaCount: 1
+  ingressClass: nginx-public
   service:
     enabled: true
     annotations:
       service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
       service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "false"
-      service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+      service.beta.kubernetes.io/aws-load-balancer-internal: "false"
       service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
     labels: {}
     type: LoadBalancer
@@ -27,4 +27,4 @@ controller:
       maxSurge: 1
 
 defaultBackend:
-  enabled: false
+  enabled: true
