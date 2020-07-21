@@ -1,12 +1,12 @@
+# https://gist.github.com/mgoodness/1a2926f3b02d8e8149c224d25cc57dc1
 ---
 controller:
-  replicaCount: 1
+  replicaCount: 2
   ingressClass: nginx-public
   service:
     enabled: true
     annotations:
       service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
-      service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "false"
       service.beta.kubernetes.io/aws-load-balancer-internal: "false"
       service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
     labels: {}
