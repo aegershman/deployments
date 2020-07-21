@@ -6,6 +6,8 @@ helmDefaults:
   wait: true
 
 repositories:
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
   - name: concourse
     url: https://concourse-charts.storage.googleapis.com/
   - name: ingress-nginx
@@ -14,6 +16,15 @@ repositories:
     url: https://kubernetes-charts.storage.googleapis.com
 
 releases:
+  - name: external-dns
+    namespace: external-dns
+    chart: bitnami/external-dns
+    installed: true
+    version: ~ 3.2.x
+    needs: []
+    values:
+      - ./deployments/external-dns/values.yml
+
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx

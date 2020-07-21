@@ -1,0 +1,20 @@
+---
+provider: aws
+
+## Limit sources of endpoints to a specific namespace (default: all namespaces)
+##
+namespace: ""
+
+## AWS configuration to be set via arguments/env. variables
+##
+aws:
+  region: "us-east-2"
+
+domainFilters: []
+excludeDomains: []
+zoneIdFilters: []
+
+dryRun: true
+logLevel: info # panic, debug, info, warn, error, fatal
+interval: 1m
+policy: upsert-only # sync, upsert-only
