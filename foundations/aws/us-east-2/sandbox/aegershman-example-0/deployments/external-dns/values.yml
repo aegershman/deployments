@@ -14,7 +14,7 @@ domainFilters: []
 excludeDomains: []
 zoneIdFilters: []
 
-dryRun: true
+dryRun: false
 logLevel: info # panic, debug, info, warn, error, fatal
 interval: 1m
 policy: upsert-only # sync, upsert-only
