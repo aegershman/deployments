@@ -6,6 +6,7 @@ controller:
   service:
     enabled: true
     annotations:
+      external-dns.alpha.kubernetes.io/hostname: "*.gershman.io"
       external-dns.alpha.kubernetes.io/ttl: "60"
       service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
       service.beta.kubernetes.io/aws-load-balancer-internal: "false"

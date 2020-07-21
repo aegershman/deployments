@@ -16,6 +16,23 @@ repositories:
     url: https://kubernetes-charts.storage.googleapis.com
 
 releases:
+  - name: concourse-web
+    namespace: concourse-web
+    chart: concourse/concourse
+    installed: true
+    version: ~11.4.x
+    needs: []
+    values:
+      - ./deployments/concourse-web/values.yml
+
+  - name: concourse-workers
+    namespace: concourse-workers
+    chart: concourse/concourse
+    installed: false
+    version: ~11.4.x
+    values:
+      - ./deployments/concourse-workers/values.yml
+
   - name: external-dns
     namespace: external-dns
     chart: bitnami/external-dns
@@ -33,20 +50,3 @@ releases:
     needs: []
     values:
       - ./deployments/ingress-nginx/values.yml
-
-  - name: web
-    namespace: concourse-web
-    chart: concourse/concourse
-    installed: false
-    version: ~11.2.x
-    needs: []
-    values:
-      - ./deployments/web/values.yml
-
-  - name: workers
-    namespace: concourse-workers
-    chart: concourse/concourse
-    installed: false
-    version: ~11.2.x
-    values:
-      - ./deployments/workers/values.yml

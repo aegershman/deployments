@@ -46,7 +46,7 @@ releases:
     namespace: concourse-web
     chart: concourse/concourse
     installed: true
-    version: ~11.2.x
+    version: ~11.4.x
     needs:
       - prometheus-operator/prometheus-operator
     values:
@@ -56,6 +56,6 @@ releases:
     namespace: concourse-workers
     chart: concourse/concourse
     installed: true
-    version: ~11.2.x
+    version: ~11.4.x
     values:
       - deployments/workers/values.yml
