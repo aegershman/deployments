@@ -2,30 +2,30 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'Merge pull request #281 from cloudfoundry/uaa-cert...'
-      sha: df86d8c04478ed6f21c0ea96b7514a29b59dcb28
+      commitTitle: Bump capi-k8s-release to 7bd5d10d9c9126542f1d6007b65eb703d52898c2
+      sha: 76653da9f10248d61e7417769698576c1e991547
     path: github.com/cloudfoundry/cf-for-k8s
   - git:
-      commitTitle: 'ci: build upgrade-sidecars image in pipeline...'
-      sha: 0f78d318413ccd3cbb59f3105fbae0417d9265d3
+      commitTitle: move update job into top level config
+      sha: 6d26155fb8187363d7638dd2340137e640cc3fad
     path: github.com/cloudfoundry/cf-k8s-networking
   path: deployments/cf-for-k8s/build/_vendir
 - contents:
   - git:
-      commitTitle: 'feat: deployment readiness and liveness probes (#81)...'
-      sha: e04f5d07aa58a0af06cd87b26a5f90842d3b9e0a
+      commitTitle: 'feat: Add support for deploying rabbitmq (#82)...'
+      sha: 95ea5724ff5ff46079d103e610c3921d4280ee22
     path: github.com/kubernetes-sigs/minibroker
   path: deployments/minibroker/build/_vendir
 - contents:
   - git:
-      commitTitle: '[stable/prometheus-operator] Add docker checksum option (#23194)...'
-      sha: f019fd53a81e7124df65be0d4da620795c251a2e
+      commitTitle: '[stable/prometheus-operator] Fix ordering (#23260)...'
+      sha: f4f0938345f048e91679d9f06b512113e1a0513c
     path: github.com/helm/charts/prometheus-operator
   path: deployments/prometheus-operator/build/_vendir
 - contents:
   - git:
-      commitTitle: Update feature-gates.md (#2829)...
-      sha: f7c033da6649968820d17bc8cf35e7fd7b9623bb
+      commitTitle: Remove Secret listener from controller (#2830)...
+      sha: 8e85904ae5ec4d228ebd0c463b7718f1a7891f69
     path: github.com/kubernetes-sigs/service-catalog
   path: deployments/service-catalog/build/_vendir
 kind: LockConfig
