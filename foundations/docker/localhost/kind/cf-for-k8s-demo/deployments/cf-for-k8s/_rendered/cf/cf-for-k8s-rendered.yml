@@ -56,8 +56,9 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:1b980690ba0fb753ff71225e755104b2cbff9359e3156c9b4bdc970b26e01080
+        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
         imagePullPolicy: Always
+        resources: {}
         volumeMounts:
         - name: server-sock
           mountPath: /data/cloud_controller_ng
@@ -72,8 +73,9 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:1b980690ba0fb753ff71225e755104b2cbff9359e3156c9b4bdc970b26e01080
+        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
         imagePullPolicy: Always
+        resources: {}
         command:
         - /usr/local/bin/bundle
         args:
@@ -86,7 +88,7 @@ spec:
         - name: nginx-uploads
           mountPath: /tmp/uploads
       - name: nginx
-        image: cloudfoundry/capi-nginx@sha256:abfa8900163892fae1ebdaffbe3619ef821b769646d51279278bff4334b3d8bc
+        image: cloudfoundry/capi-nginx@sha256:980f50e190cbff72d23300bc422da23faa888271c2d07ac3abaa65af55a5316a
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -134,109 +136,6 @@ spec:
       - name: nginx-uploads
         emptyDir: {}
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: cf-api-kpack-watcher
-  namespace: cf-system
-  labels:
-    app.kubernetes.io/name: cf-api-kpack-watcher
-    app.kubernetes.io/instance: cf-api-kpack-watcher-0
-  annotations:
-    kapp.k14s.io/change-rule.istio-sidecar-injector: upsert after upserting cf-for-k8s.cloudfoundry.org/istio-sidecar-injector
-spec:
-  replicas: 1
-  strategy:
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: cf-api-kpack-watcher
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: cf-api-kpack-watcher
-      annotations:
-        sidecar.istio.io/proxyCPU: 0m
-        sidecar.istio.io/proxyMemory: 0M
-    spec:
-      serviceAccountName: cf-api-kpack-watcher-service-account
-      containers:
-      - name: cf-api-kpack-watcher
-        image: cloudfoundry/capi-kpack-watcher@sha256:bedd92701264b77cffeb8639f107ba1cc7b5e0b45370d4a7a6508545b5b5a56b
-        env:
-        - name: UAA_CLIENT_SECRET
-          value: q30wr9rx6fj66carrcya
-        - name: UAA_ENDPOINT
-          value: http://uaa.cf-system.svc.cluster.local:8080
-        - name: UAA_CLIENT_NAME
-          value: capi_kpack_watcher
-        - name: CAPI_HOST
-          value: http://capi.cf-system.svc.cluster.local
-        - name: STAGING_NAMESPACE
-          value: cf-workloads-staging
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: kpack-watcher
-rules:
-- apiGroups:
-  - build.pivotal.io
-  resources:
-  - images
-  - builds
-  - builds/status
-  - images/status
-  verbs:
-  - get
-  - watch
-  - list
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: kpack-watcher-binding
-subjects:
-- kind: ServiceAccount
-  namespace: cf-system
-  name: default
-roleRef:
-  kind: ClusterRole
-  name: kpack-watcher
-  apiGroup: rbac.authorization.k8s.io
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: kpack-watcher-pod-logs-reader
-  namespace: cf-workloads
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - pods/log
-  verbs:
-  - get
-  - watch
-  - list
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: kpack-watcher-pod-logs-binding
-  namespace: cf-workloads
-subjects:
-- kind: ServiceAccount
-  namespace: cf-system
-  name: default
-roleRef:
-  kind: Role
-  name: kpack-watcher-pod-logs-reader
-  apiGroup: rbac.authorization.k8s.io
----
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -252,7 +151,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:1b980690ba0fb753ff71225e755104b2cbff9359e3156c9b4bdc970b26e01080
+        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -639,6 +538,81 @@ data:
     deployment_updater:
       update_frequency_in_seconds: 1
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cf-api-kpack-watcher
+  namespace: cf-system
+  labels:
+    app.kubernetes.io/name: cf-api-kpack-watcher
+    app.kubernetes.io/instance: cf-api-kpack-watcher-0
+  annotations:
+    kapp.k14s.io/change-rule.istio-sidecar-injector: upsert after upserting cf-for-k8s.cloudfoundry.org/istio-sidecar-injector
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cf-api-kpack-watcher
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cf-api-kpack-watcher
+      annotations:
+        sidecar.istio.io/proxyCPU: 0m
+        sidecar.istio.io/proxyMemory: 0M
+    spec:
+      serviceAccountName: cf-api-kpack-watcher-service-account
+      containers:
+      - name: manager
+        image: cloudfoundry/capi-kpack-watcher@sha256:8a228d2d8ffbd5959e9768f3b173c9b448873137393c9ef6e85905e2dcd0f735
+        env:
+        - name: UAA_CLIENT_SECRET
+          value: q30wr9rx6fj66carrcya
+        - name: UAA_ENDPOINT
+          value: http://uaa.cf-system.svc.cluster.local:8080
+        - name: UAA_CLIENT_NAME
+          value: capi_kpack_watcher
+        - name: CF_API_HOST
+          value: http://capi.cf-system.svc.cluster.local
+        - name: STAGING_NAMESPACE
+          value: cf-workloads-staging
+        resources: {}
+      terminationGracePeriodSeconds: 10
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kpack-watcher
+rules:
+- apiGroups:
+  - build.pivotal.io
+  resources:
+  - images
+  - builds
+  - builds/status
+  - images/status
+  verbs:
+  - get
+  - watch
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kpack-watcher-binding
+subjects:
+- kind: ServiceAccount
+  namespace: cf-system
+  name: cf-api-kpack-watcher-service-account
+roleRef:
+  kind: ClusterRole
+  name: kpack-watcher
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -680,8 +654,9 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:1b980690ba0fb753ff71225e755104b2cbff9359e3156c9b4bdc970b26e01080
+        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
         imagePullPolicy: Always
+        resources: {}
         readinessProbe:
           tcpSocket:
             port: 4446
@@ -732,8 +707,9 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:1b980690ba0fb753ff71225e755104b2cbff9359e3156c9b4bdc970b26e01080
+        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
         imagePullPolicy: Always
+        resources: {}
         readinessProbe:
           tcpSocket:
             port: 4445
@@ -1108,8 +1084,9 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:1b980690ba0fb753ff71225e755104b2cbff9359e3156c9b4bdc970b26e01080
+        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
         imagePullPolicy: Always
+        resources: {}
         readinessProbe:
           tcpSocket:
             port: 4444
@@ -1144,6 +1121,50 @@ spec:
         host: capi.cf-system.svc.cluster.local
         port:
           number: 80
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: capi-database-password
+  namespace: cf-system
+  annotations:
+    kapp.k14s.io/versioned: ""
+type: Opaque
+stringData:
+  password: 1p9vj9oezx9nzng4qq4t
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: capi-blobstore-secret-key
+  namespace: cf-system
+  annotations:
+    kapp.k14s.io/versioned: ""
+type: Opaque
+stringData:
+  password: euuh827v61z71x1afb3o
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kpack-watcher-client-secret
+  namespace: cf-system
+  annotations:
+    kapp.k14s.io/versioned: ""
+type: Opaque
+stringData:
+  password: q30wr9rx6fj66carrcya
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloud-controller-username-lookup-client-secret
+  namespace: cf-system
+  annotations:
+    kapp.k14s.io/versioned: ""
+type: Opaque
+stringData:
+  password: q30wr9rx6fj66carrcya
 ---
 apiVersion: experimental.kpack.pivotal.io/v1alpha1
 kind: Store
@@ -15115,6 +15136,17 @@ type: Opaque
 data:
   uaa.key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlHNGdJQkFBS0NBWUVBbXJQOUhRdFZGVlFsT0haaTROeUdJL2lSb3JUWnloakRvR0R0bUdwSkl0RzJ2RmtZCkNERjNPNTlCZzYyS1laZVd6SEpsM0lUL1Rkb3NtczV3cGtBblZ0T2FFNWJyajhVOWYydHh6eEpUaGtOaERsN3oKZHc2QUJ3TVlGMDlnL0V6NVJXMUNobkZnbG1Wc3hxOTBnT1Q2a2tWRk4yVHZSVldBVmJZeng1dEozNmtreEI5ZApsMFk5QXJhR0tydDVVRi80aU9xTnc2L0loOUd6ODNXSWpJOGxWRXk2Ylg2R1NkR0t2U2FueHBSK2k1WjdzUTNBCnFIT0o0R0JoVWFaMDE4c3h5V0wyN09VRDBHV3I1a3lOcXlvZHJTSWthN2FhZUQ5d2l5L1VubWJ3ZVlXcDRqK0wKaEg0YXEwM0VpRWtENS9UTmRHcHdjMkVkOUZxY3lxTXFlWFlMRDd6L0tlY2c5d3p0M2ROckcydGxzNVpuR3hjYgpNY293Y0hWZ1AzM3JwWlZ4N2V5M2Q2aHhuZ3lCbUpiVHNpTDgzclVrcXFQeHpmYkNRNWwvTWU0TWt6WlFNK1JkCmpFZFF2UGdSc25FdzlsdVNabW9yOHdHTVd2SDhuTmRobURXNWdrNXVKaVRhRnpobnd5UFFCNlRnQ3JCMkkwbTIKaVc1UlhRVUEySmhpYTN4UEFnTUJBQUVDZ2dHQVNKMTNqNnlFRVhEZno3THlFcTR3WUs0S1hoOFpvMTBnWmlWWgpJUk95cEo5ZmNPVTQvSStMY2ZiODMzd1QybDgzTDF2N0tCbGRaUU9sc0R4NmIrN3BDRDVtc2c5REhzYnNhT1RjCkZPQjdTQ2hVWkZSNVgwYjFIVlY4ZDJTUkY1eGgzUTYrRFRFbXJ6R0liM0puOHlDSDVTU1Nxcis3K0FWOEtiOU8KYXNFZldkYWhKVlc3cm9nUGx6aHBuYUZGL2s0dDhNWjRLSVJZVWpoQ2lXSi81OHBCTVdLYWwwNnVaZlB2ZFgyeApmdXF3dzRDdEtweFQ5RDNYVi9TbGVaZnlmR0Fwa1ljcnF6aHZKa1o0eFQ4TGZXVFM4SlNQRm41akZEdzVTN2UyCjF5bFp0L0FyNVRybS8xaU5vZjE5N24vdXpXWHNmV2hPWEN1ZVRwQ1M0RzF4anBTazBoVVlRZTFSZjNpTGJkZlQKUnQ1dlJCZ3FGdU1RSWhZMXZCcGVRTG1YaEt0NlZ3UkdxeTl2MURkYktSRG4rQ2JvN0JFQXJ5K1haREc1dkR1cwpKNTVwNDdGMWgrZ1hxSVAwS2JIVzhSeS94UDRVcGxWV1Q0RnVnOCsvSTF0ZHBhc2NUbXY0ekViNlR0azFjM200CmpSL25sK1RMS2dyMnR0VnVFNG9qS09qenpDTVJBb0hCQU1KUjJ6RFB3ZTR4MlIwSTZvOEtFa01pcU91cmJ1cTgKbXVnaHlQQjVPbjFwdmtFbk5XL1NJV1N5SUVZSEszSnV4MWlscHZhRXlRa0lnR3E4a2hGaFdTajJQeVR4QU8vcApRdGtkaUFrM1piRi9XRElFbkRKUlhtQnJRdzVvVnhJYWtVcTEyLytyVGV1VVdQL0VEZ0FaNldGSUZIQUEwNUlzClBHQU9lNjIrNVRrbll2dFhQMTVaZ1JCbFRGd0pEY09rYy9zeGhLU0FKYUFpRWhMYXFLV1lZVEJJL21YdGF0TFcKOEZSRFJUS29vSVhKUWt3cktOY05zVUNpaXZYb2RZK3hsUUtCd1FETHp2QlhQSm01YVU3bTlWOFEzd3dlT1BDaAptaVVXK3B1bWFKVjNrV1Y3NzJwK2dKdkVTUkZGbFZXUkJHOXhDaytEZ09wRnMvTVo5MTkxT0F6L09QZU0yWnJVCkVLMUxlcGQ1cUNWOXZla05RMHZWeGJuVEdLL1Mwb1U1Umo3Q0JsUVRXeGY5amlxQjVIKzlzR1RhTk4rOFkveDQKbmVkY1FRdDlaMzRPQWZnM0lNOEVlYjk4dFRNYmxwTzJ6NWExZ1NFREI5Q2dZUWRaaXdDaUNKQ0hGcklyQ2ZRWgo1Vk5LUnRWeTZXNFFjME5FQlo1bmdSUkR0ZndHOGdxc1lJK3BCVk1DZ2NBVlhua1RRaFdhZ3lMVUhaSGx6djY1CklVdWdOd2NJaTFzaG9lMTkvR2JoT2NxeFVZVi8yWVRRbFFJVmtWNUd4RVhweXJXMHNGK0hQY2NaZGNrK1hnMDMKQXZWb3M1UWR6ZklLL0VOa2VCSVgxZUEyQituQllzOVZIUmFQdEF1M012SzlXNGhvOGthc1hIRDVGMjlPdFlyRApwdkNRYkpiWG9VTzJjSUZMVnczUUhqTzFYaC9hMlU3bkpheWpCbC9jSHU2ZU5oRFhJanlCQXA0b01xR1BMRldyCndLc3hQRTJlQ0FMLzBUSC80eWxiN1FqOFpWYWxaNTBSZFk2QWdtTERQWTBDZ2NBY2ZmK25rbmRETG0relpoWTIKTzVoc0dUVzZ3ZHZ4akhONkhpRFhLR0p4b3hUV1BwQ0lMbGJWelh5NjIwM2hGYm5yL25mQjZ0aFBodiszV1hDbgp0WVVXRWMzTlc4OStQOU14Vk1wNCs3VzYvdTk1SVQxTFA2WkU2TjFyRm1EcnF3clI4ZWcyc0V0TkFXN0NUQWl0CllMcnVrV1BZVU9ycFFNYWtiM1YxNjl5UmlHcW9pNFN6b0hsV29BUmlpRDdmZlAvcWRvczZBSmFRZEJoUWpyWDEKekx4M3U5cCtURXNLbFVCOTRoaGJBR0lrL2t3WTJEakhCb2dIU0lzcGNnNWphTFVDZ2NCOUx6TXBWRkZTYVMxVgpjU1FqTnJUcVpjRjhvOVpmWDZtYUdQUDN6ODlHSmNrQnZ6NDVjTTlCM0svT0pESnNacjNjNkhDRWFqTUlwQVFuCk9laVV4Zy94OW1nZGFYZCtwT1B6T3BPeitMdm5FTTh3WkRxaXErVVhWSXV3Mm5CL1ZnbzkxMThxNlFUcEtwSEwKSDJ1bU4wbWgraUZZMS93RW4vU2dhVHRUUmFZSnlRdS8wK29USVdPMSs3bGhUSHNIaUJtemhVVXFVOTNyaWlOMQpnTW1KZHd0M3drR1ZCSnp5cldxRzI5My8vSVFGbm1iWVJZa3RPQVowL1U2SDZDelZteHc9Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCgo=
   uaa.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVpakNDQXZLZ0F3SUJBZ0lRSzhXcUdUQTl0SG9SQWZ6TVNYWWt2VEFOQmdrcWhraUc5dzBCQVFzRkFEQXoKTVF3d0NnWURWUVFHRXdOVlUwRXhGakFVQmdOVkJBb1REVU5zYjNWa0lFWnZkVzVrY25reEN6QUpCZ05WQkFNVApBbU5oTUI0WERUSXdNRGN4TnpJeE1EUXhOVm9YRFRJeE1EY3hOekl4TURReE5Wb3dUakVNTUFvR0ExVUVCaE1EClZWTkJNUll3RkFZRFZRUUtFdzFEYkc5MVpDQkdiM1Z1WkhKNU1TWXdKQVlEVlFRRERCMHFMbU5tTFhONWMzUmwKYlM1emRtTXVZMngxYzNSbGNpNXNiMk5oYkRDQ0FhSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnR1BBRENDQVlvQwpnZ0dCQUpxei9SMExWUlZVSlRoMll1RGNoaVA0a2FLMDJjb1l3NkJnN1pocVNTTFJ0cnhaR0FneGR6dWZRWU90CmltR1hsc3h5WmR5RS8wM2FMSnJPY0taQUoxYlRtaE9XNjQvRlBYOXJjYzhTVTRaRFlRNWU4M2NPZ0FjREdCZFAKWVB4TStVVnRRb1p4WUpabGJNYXZkSURrK3BKRlJUZGs3MFZWZ0ZXMk04ZWJTZCtwSk1RZlhaZEdQUUsyaGlxNwplVkJmK0lqcWpjT3Z5SWZScy9OMWlJeVBKVlJNdW0xK2hrblJpcjBtcDhhVWZvdVdlN0VOd0toemllQmdZVkdtCmROZkxNY2xpOXV6bEE5QmxxK1pNamFzcUhhMGlKR3UybW5nL2NJc3YxSjVtOEhtRnFlSS9pNFIrR3F0TnhJaEoKQStmMHpYUnFjSE5oSGZSYW5NcWpLbmwyQ3crOC95bm5JUGNNN2QzVGF4dHJaYk9XWnhzWEd6SEtNSEIxWUQ5OQo2NldWY2Uzc3QzZW9jWjRNZ1ppVzA3SWkvTjYxSktxajhjMzJ3a09aZnpIdURKTTJVRFBrWFl4SFVMejRFYkp4Ck1QWmJrbVpxSy9NQmpGcngvSnpYWVpnMXVZSk9iaVlrMmhjNFo4TWowQWVrNEFxd2RpTkp0b2x1VVYwRkFOaVkKWW10OFR3SURBUUFCbzM4d2ZUQU9CZ05WSFE4QkFmOEVCQU1DQmFBd0hRWURWUjBsQkJZd0ZBWUlLd1lCQlFVSApBd0lHQ0NzR0FRVUZCd01CTUF3R0ExVWRFd0VCL3dRQ01BQXdIUVlEVlIwT0JCWUVGTWJ5ZlVUbzJWUjducjI5CjAvSUJnYW1OSHhpVE1COEdBMVVkSXdRWU1CYUFGUG5XSUlDVVc2N25GTjhSUVdhMllrd3lTbkdCTUEwR0NTcUcKU0liM0RRRUJDd1VBQTRJQmdRQlE2TUNVYnBaYlZBd0hZbWo3NWRXVUk4UUFmcU82K1pUb2lQb2JuL1d1YjAwWQpQbWFIWnh2M1dYWGVZb2ltTkVxcmYvZzdiaG50QUdpV2RTa0lzOUoxUGpmVDVkR3hRZkIvOUNHVllHeDd4K0c5ClZXWWhNN2xqKzdFYmI0YlBSZFZEU0hyMkZISllIWUxZcmp6cDBEUHFDZTQ2QlVkeDJtZ3hYeklteWx2RjF2dTAKYWl5S1NxcDd3RVRmcG5NSERGRkh0S3FMUzVaQjR1eGhVUU0vL2h3bGNsdnhGZVBkMkV2b2F4bGF5MVgrTjYyVgowbjk2WnRmS05WczRzV3UvRTVUemVHT09zZ0NGSWhMM21IL1dJTkJ0WGpNZ0FlRG1XSFNSZGIvdEtFMTFQZ1c5CkVyek9yWWlQQi95M3kzL2lROFJHL2dhVWxsMWZxMlVlZHllUUVTVXFkNUQ0L290SU9JYlg5azJyWEg4MmxsQU4KbytEL0lTcWVvZUdxdTh6aG95ZUl2UDBlaFBrMWRNWVRNbjFVRDZOcTB2ZksrV2oxQzlDVjdlb2t2blZUeEhXdQpMRzJaZU5ZMWNudmpDQVBRUTNmOGJ6RWZuUFVRUzdUb0FDclFiT3pYTGUvMWpTNFg2RFdTdlZPaWZkb3grMmI5CnRjY3pCTHlPY1Npa3JLRzRNSVE9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KCg==
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: uaa-encryption-key-passphrase
+  namespace: cf-system
+  annotations:
+    kapp.k14s.io/versioned: ""
+type: Opaque
+stringData:
+  password: 9ryaxlu86q79iponzeat
 ---
 apiVersion: v1
 kind: Namespace
