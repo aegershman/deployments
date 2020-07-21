@@ -1,0 +1,41 @@
+---
+helmDefaults:
+  kubeContext: gershman-admin@aegershman-example-0.us-east-2.eksctl.io
+  createNamespace: true
+  recreatePods: false
+  wait: false
+
+repositories:
+  - name: concourse
+    url: https://concourse-charts.storage.googleapis.com/
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
+
+releases:
+  - name: ingress-nginx
+    namespace: ingress-nginx
+    chart: ingress-nginx/ingress-nginx
+    installed: true
+    version: ~2.11.x
+    needs: []
+    values:
+      - ./deployments/ingress-nginx/values.yml
+
+  - name: web
+    namespace: concourse-web
+    chart: concourse/concourse
+    installed: false
+    version: ~11.2.x
+    needs: []
+    values:
+      - ./deployments/web/values.yml
+
+  - name: workers
+    namespace: concourse-workers
+    chart: concourse/concourse
+    installed: false
+    version: ~11.2.x
+    values:
+      - ./deployments/workers/values.yml

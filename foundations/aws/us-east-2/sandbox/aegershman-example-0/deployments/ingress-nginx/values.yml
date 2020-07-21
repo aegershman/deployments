@@ -1,0 +1,30 @@
+---
+controller:
+  replicaCount: 2
+  ingressClass: nginx-private
+  service:
+    enabled: true
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+      service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "false"
+      service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    labels: {}
+    type: LoadBalancer
+  config:
+    proxy-body-size: 64m
+    proxy-buffer-size: 16k
+  metrics:
+    enabled: false
+    service:
+      annotations: {}
+      type: ClusterIP
+    serviceMonitor:
+      enabled: false
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+defaultBackend:
+  enabled: false
