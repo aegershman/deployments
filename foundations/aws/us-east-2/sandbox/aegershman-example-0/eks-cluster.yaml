@@ -31,5 +31,5 @@ nodeGroups:
       withAddonPolicies:
         albIngress: true
         certManager: true
-        elb: true
+        ebs: true
         externalDNS: true
