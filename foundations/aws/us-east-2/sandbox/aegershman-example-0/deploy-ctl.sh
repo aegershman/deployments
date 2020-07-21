@@ -4,7 +4,7 @@ set -euo pipefail
 
 case "$1" in
 eksctl-create)
-  eksctl create cluster --config-file ./eks-cluster.yaml
+  eksctl create cluster --config-file=eks-cluster.yaml
   ;;
 
 eksctl-write-kubeconfig)
