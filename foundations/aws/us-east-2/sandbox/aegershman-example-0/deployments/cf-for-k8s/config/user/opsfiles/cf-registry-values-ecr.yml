@@ -1,0 +1,7 @@
+#@data/values
+---
+app_registry:
+  hostname: x
+  repository_prefix: x
+  username: x
+  password: x
