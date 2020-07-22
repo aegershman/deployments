@@ -1,0 +1,56 @@
+# https://github.com/crazy-max/ghaction-github-labeler
+---
+- name: area/docs
+  color: 0075ca
+  description: improvements or additions to documentation
+- name: area/deployment-mgmt
+  color: 0075ca
+  description: improvements or additions to deployments and workflows such as helmfile changes, .github/** workflows, editorconfig, ytt, kapp, vendir changes, etc.
+
+- name: iaas/aws
+  color: 0075ca
+  description: related to aws
+- name: iaas/docker
+  color: 0075ca
+  description: related to docker
+
+- name: deployment/cloudfoundry
+  color: 1c778c
+  description: code changes affecting cf-for-k8s, kubecf, stratos, harbor, etc.
+- name: deployment/ci-cd
+  color: 1c778c
+  description: code changes affecting ci-cd systems like concourse, tektoncd, etc.
+- name: deployment/auxillary
+  color: 1c778c
+  description: code changes affecting auxillary deployments such as nginx-ingress, external-dns, prometheus, grafana, harbor, ecs, etc., etc.
+
+- name: kind/bug
+  color: f1b0f2
+  description: something isn't working
+- name: kind/enhancement
+  color: f1b0f2
+  description: an enhancement of an existing feature
+
+- name: priority/just-a-thought
+  color: f9e25e
+  description: what's lower than low? ice-low
+- name: priority/low
+  color: f9e25e
+  description: low priority
+- name: priority/medium
+  color: f9e25e
+  description: medium priority
+- name: priority/high
+  color: f9e25e
+  description: highest priority
+
+- name: status/parking-lot
+  color: efc092
+  description: on hold or soon to be abandonded
+- name: status/probably-vaporware
+  color: efc092
+  description: just goofing around with something or other
+
+- name: wontfix
+  color: cfd3d7
+  description: this will not be worked on
