@@ -25,6 +25,10 @@ cf-for-k8s-build)
   ./build.sh build
   ;;
 
+cf-for-k8s-diff-cf-generate-values)
+  diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh
+  ;;
+
 cf-for-k8s-apply)
   kapp deploy -a cf -f ./deployments/cf-for-k8s/_rendered/cf/cf-for-k8s-rendered.yml --yes
   ;;

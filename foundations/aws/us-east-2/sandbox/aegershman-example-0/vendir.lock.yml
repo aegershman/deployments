@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'Merge pull request #295 from cloudfoundry/separate-secrets...'
-      sha: 56523bc71c7994da5090a1e28c35f337adbc59b9
+      commitTitle: 'Merge pull request #297 from cloudfoundry/add-capi-encryption-key-secret...'
+      sha: 26cf0ca17e6cc9ee59ad1630f39dbc29f34fd788
     path: github.com/cloudfoundry/cf-for-k8s
   path: deployments/cf-for-k8s/build/_vendir
 kind: LockConfig
