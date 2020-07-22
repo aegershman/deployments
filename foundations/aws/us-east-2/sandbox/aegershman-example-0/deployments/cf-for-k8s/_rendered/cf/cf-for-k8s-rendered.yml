@@ -512,7 +512,7 @@ data:
       kpack:
         builder_namespace: cf-workloads-staging
         registry_service_account_name: cc-kpack-registry-service-account
-        registry_tag_base: harbor.harbor.svc.cluster.local:80/library
+        registry_tag_base: x
     perform_blob_cleanup: true
     app_usage_events:
       cutoff_age_in_days: 31
@@ -1027,7 +1027,7 @@ metadata:
     kapp.k14s.io/versioned: ""
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MCI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
+  .dockerconfigjson: eyJhdXRocyI6eyJ4Ijp7ImF1dGgiOiJlRHA0IiwicGFzc3dvcmQiOiJ4IiwidXNlcm5hbWUiOiJ4In19fQ==
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -1198,7 +1198,7 @@ metadata:
   name: cf-default-builder
   namespace: cf-workloads-staging
 spec:
-  tag: harbor.harbor.svc.cluster.local:80/library/cf-default-builder
+  tag: x/cf-default-builder
   serviceAccount: cc-kpack-registry-service-account
   stack: cflinuxfs3-stack
   store: cf-buildpack-store
@@ -2387,7 +2387,7 @@ metadata:
   namespace: cf-workloads
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwOi8vaGFyYm9yLmhhcmJvci5zdmMuY2x1c3Rlci5sb2NhbDo4MCI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
+  .dockerconfigjson: eyJhdXRocyI6eyJ4Ijp7ImF1dGgiOiJlRHA0IiwicGFzc3dvcmQiOiJ4IiwidXNlcm5hbWUiOiJ4In19fQ==
 ---
 apiVersion: v1
 kind: Secret
