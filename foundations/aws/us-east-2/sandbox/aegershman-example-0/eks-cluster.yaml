@@ -14,22 +14,15 @@ vpc:
   nat:
     gateway: Single # Disable, Single (default), HighlyAvailable
 
-nodeGroups:
+managedNodeGroups:
   - name: ng-1
-    instanceType: t3.small
-    availabilityZones:
-      - us-east-2a
-      - us-east-2b
-      - us-east-2c
-    desiredCapacity: 1
+    instanceType: m5.large
+    desiredCapacity: 5
     volumeSize: 80
-    labels:
-      somelabelkey: some-label-value
-    privateNetworking: false # if only 'private' subnets are given, this must be enabled
+    labels: {}
     tags: {}
     iam:
       withAddonPolicies:
-        albIngress: true
         certManager: true
         ebs: true
         externalDNS: true

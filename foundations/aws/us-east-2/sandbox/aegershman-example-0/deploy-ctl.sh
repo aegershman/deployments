@@ -29,6 +29,10 @@ cf-for-k8s-apply)
   kapp deploy -a cf -f ./deployments/cf-for-k8s/_rendered/cf/cf-for-k8s-rendered.yml --yes
   ;;
 
+cf-for-k8s-delete)
+  kapp delete -a cf --yes
+  ;;
+
 *)
   exit 1
   ;;
