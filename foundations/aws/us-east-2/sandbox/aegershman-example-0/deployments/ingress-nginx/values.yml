@@ -29,4 +29,4 @@ controller:
       maxSurge: 1
 
 defaultBackend:
-  enabled: true
+  enabled: false
