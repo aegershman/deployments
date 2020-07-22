@@ -27,7 +27,7 @@ iaas/docker:
   - foundations/docker/*
 
 deployment/cloudfoundry:
-  - foundations/**/deployments/cf-for-k8s/*
+  - foundations/**/deployments/cf-for-k8s/**/*
   - foundations/**/deployments/cf-operator/*
   - foundations/**/deployments/harbor/*
   - foundations/**/deployments/kubecf/*
