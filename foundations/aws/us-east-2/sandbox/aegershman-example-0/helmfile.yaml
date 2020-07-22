@@ -28,7 +28,7 @@ releases:
   - name: concourse-workers
     namespace: concourse-workers
     chart: concourse/concourse
-    installed: false
+    installed: true
     version: ~11.4.x
     values:
       - ./deployments/concourse-workers/values.yml
