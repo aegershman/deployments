@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
+        image: cloudfoundry/cloud-controller-ng@sha256:7d50a37242a552231295791c45a18dde07c7c03d57ad70b941706a1a84431355
         imagePullPolicy: Always
         resources: {}
         volumeMounts:
@@ -73,7 +73,7 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
+        image: cloudfoundry/cloud-controller-ng@sha256:7d50a37242a552231295791c45a18dde07c7c03d57ad70b941706a1a84431355
         imagePullPolicy: Always
         resources: {}
         command:
@@ -151,7 +151,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
+        image: cloudfoundry/cloud-controller-ng@sha256:7d50a37242a552231295791c45a18dde07c7c03d57ad70b941706a1a84431355
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -398,7 +398,7 @@ data:
     uaa_client_secret: TODO
     uaa_client_scope: openid,cloud_controller_service_permissions.read
     cloud_controller_username_lookup_client_name: cloud_controller_username_lookup
-    cloud_controller_username_lookup_client_secret: 00kad5f4hserk28xi1wr
+    cloud_controller_username_lookup_client_secret: ""
     cc_service_key_client_name: cc_service_key_client
     cc_service_key_client_secret: TODO
     allow_app_ssh_access: true
@@ -571,7 +571,7 @@ spec:
         image: cloudfoundry/capi-kpack-watcher@sha256:8a228d2d8ffbd5959e9768f3b173c9b448873137393c9ef6e85905e2dcd0f735
         env:
         - name: UAA_CLIENT_SECRET
-          value: 00kad5f4hserk28xi1wr
+          value: ""
         - name: UAA_ENDPOINT
           value: http://uaa.cf-system.svc.cluster.local:8080
         - name: UAA_CLIENT_NAME
@@ -654,7 +654,7 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
+        image: cloudfoundry/cloud-controller-ng@sha256:7d50a37242a552231295791c45a18dde07c7c03d57ad70b941706a1a84431355
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
@@ -707,7 +707,7 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
+        image: cloudfoundry/cloud-controller-ng@sha256:7d50a37242a552231295791c45a18dde07c7c03d57ad70b941706a1a84431355
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
@@ -1084,7 +1084,7 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:340b8afa79072558eef76bff7c899fec0bd42bfd5aa34d40e0fd48cb9f54ca6d
+        image: cloudfoundry/cloud-controller-ng@sha256:7d50a37242a552231295791c45a18dde07c7c03d57ad70b941706a1a84431355
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
@@ -1153,7 +1153,7 @@ metadata:
     kapp.k14s.io/versioned: ""
 type: Opaque
 stringData:
-  password: 00kad5f4hserk28xi1wr
+  password: ""
 ---
 apiVersion: v1
 kind: Secret
@@ -1164,7 +1164,7 @@ metadata:
     kapp.k14s.io/versioned: ""
 type: Opaque
 stringData:
-  password: 00kad5f4hserk28xi1wr
+  password: ""
 ---
 apiVersion: experimental.kpack.pivotal.io/v1alpha1
 kind: Store
@@ -14686,18 +14686,14 @@ data:
           access-token-validity: 600
           refresh-token-validity: 2592000
           secret: ""
-        cf-k8s-networking:
-          authorities: uaa.resource,cloud_controller.admin_read_only
-          authorized-grant-types: client_credentials
-          secret: 00kad5f4hserk28xi1wr
         cloud_controller_username_lookup:
           authorities: scim.userids
           authorized-grant-types: client_credentials
-          secret: 00kad5f4hserk28xi1wr
+          secret: ""
         capi_kpack_watcher:
           authorities: cloud_controller.write,cloud_controller.update_build_state
           authorized-grant-types: client_credentials
-          secret: 00kad5f4hserk28xi1wr
+          secret: ""
       user:
         authorities:
         - openid
