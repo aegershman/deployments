@@ -1,0 +1,26 @@
+# https://github.com/crazy-max/ghaction-github-labeler
+---
+name: "configure-repo-labels"
+
+on:
+  push:
+    paths:
+      - .github/**/*
+  schedule:
+    - cron: "0 */12 * * *"
+
+jobs:
+  configure-repo-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: run-labeler
+        if: success()
+        uses: crazy-max/ghaction-github-labeler@v2
+        with:
+          yaml_file: .github/labels.yml
+          skip_delete: false
+          dry_run: false
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

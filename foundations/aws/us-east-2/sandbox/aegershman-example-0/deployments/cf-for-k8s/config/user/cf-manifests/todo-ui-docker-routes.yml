@@ -4,8 +4,7 @@ applications:
     instances: 1
     memory: 256M
     routes:
-      - route: todo.apps.vcap.me
-      - route: todo.vcap.me
+      - route: todo.apps.cf.gershman.io
     docker:
       image: dbbaskette/todos-ui
     metadata:

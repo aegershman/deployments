@@ -1,0 +1,59 @@
+# https://github.com/actions/labeler
+---
+area/docs:
+  - ./docs/**/*
+  - README.md
+  - ./**/*README.md
+  - LICENSE
+area/deployment-mgmt:
+  - .github/**/*
+  - .editorconfig
+  - .gitignore
+  - ./**/.gitignore
+  - ./**/.gitkeep
+  - ./**/vendir.yml
+  - ./**/vendir.lock.yml
+  - ./**/_vendir/**/*
+  - foundations/**/deployments/cluster-api/**/*
+  - foundations/**/helmfile.yml
+  - foundations/**/Taskfile.yml
+  - foundations/**/deploy-ctl.sh
+  - foundations/**/kind.config.yaml
+  - foundations/**/eks-cluster.yaml
+
+foundation/iaas:aws:
+  - foundations/aws/**/*
+foundation/iaas:docker:
+  - foundations/docker/**/*
+
+foundation/region:us-east-2:
+  - foundations/**/us-east-2/**/*
+foundation/region:localhost:
+  - foundations/**/localhost/**/*
+
+foundation/env:sandbox:
+  - foundations/**/sandbox/**/*
+foundation/env:corp:
+  - foundations/**/corp/**/*
+foundation/env:kind:
+  - foundations/**/kind/**/*
+foundation/env:minikube:
+  - foundations/**/minikube/**/*
+
+deployment/cloudfoundry:
+  - foundations/**/deployments/cf-for-k8s/**/*
+  - foundations/**/deployments/cf-operator/**/*
+  - foundations/**/deployments/harbor/**/*
+  - foundations/**/deployments/kubecf/**/*
+  - foundations/**/deployments/stratos/**/*
+deployment/ci-cd:
+  - foundations/**/deployments/concourse*/**/*
+  - foundations/**/deployments/tektoncd*/**/*
+deployment/auxillary:
+  - foundations/**/deployments/cert-manager/**/*
+  - foundations/**/deployments/external-dns*/**/*
+  - foundations/**/deployments/ingress-nginx/**/*
+  - foundations/**/deployments/jaeger-operator/**/*
+  - foundations/**/deployments/prometheus-operator/**/*
+  - foundations/**/deployments/yugabyte/**/*
+  - foundations/**/deployments/cluster-api/**/*
