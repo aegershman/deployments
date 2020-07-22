@@ -1,0 +1,28 @@
+# https://github.com/weaveworks/eksctl/tree/master/examples
+# https://eksctl.io/usage/schema/
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: aegershman-example-0
+  region: us-east-2
+  version: "1.17"
+  tags: {}
+
+vpc:
+  nat:
+    gateway: Single # Disable, Single (default), HighlyAvailable
+
+managedNodeGroups:
+  - name: ng-1
+    instanceType: m5.large
+    desiredCapacity: 5
+    volumeSize: 80
+    labels: {}
+    tags: {}
+    iam:
+      withAddonPolicies:
+        certManager: true
+        ebs: true
+        externalDNS: true

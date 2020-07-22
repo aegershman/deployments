@@ -1,0 +1,21 @@
+# https://prefetch.net/blog/2020/01/28/using-external-dns-to-managed-dns-entries-in-kubernetes-clusters/
+---
+provider: aws
+
+## Limit sources of endpoints to a specific namespace (default: all namespaces)
+##
+namespace: ""
+
+## AWS configuration to be set via arguments/env. variables
+##
+aws:
+  region: "us-east-2"
+
+domainFilters: []
+excludeDomains: []
+zoneIdFilters: []
+
+dryRun: false
+logLevel: info # panic, debug, info, warn, error, fatal
+interval: 1m
+policy: sync # sync, upsert-only

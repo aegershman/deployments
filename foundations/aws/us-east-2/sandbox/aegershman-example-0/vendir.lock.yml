@@ -1,0 +1,9 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: 'Merge pull request #293 from cloudfoundry/templates-refactor-eirini-2...'
+      sha: 12b75908c9950c5230d7e1d2e9e3784d6819840f
+    path: github.com/cloudfoundry/cf-for-k8s
+  path: deployments/cf-for-k8s/build/_vendir
+kind: LockConfig
