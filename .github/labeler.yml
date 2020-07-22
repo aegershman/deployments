@@ -21,10 +21,24 @@ area/deployment-mgmt:
   - foundations/**/kind.config.yaml
   - foundations/**/eks-cluster.yaml
 
-iaas/aws:
+foundation/iaas:aws:
   - foundations/aws/**/*
-iaas/docker:
+foundation/iaas:docker:
   - foundations/docker/**/*
+
+foundation/region:us-east-2:
+  - foundations/**/us-east-2/**/*
+foundation/region:localhost:
+  - foundations/**/localhost/**/*
+
+foundation/env:sandbox:
+  - foundations/**/sandbox/**/*
+foundation/env:corp:
+  - foundations/**/corp/**/*
+foundation/env:kind:
+  - foundations/**/kind/**/*
+foundation/env:minikube:
+  - foundations/**/minikube/**/*
 
 deployment/cloudfoundry:
   - foundations/**/deployments/cf-for-k8s/**/*

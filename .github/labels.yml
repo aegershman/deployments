@@ -7,12 +7,32 @@
   color: 0075ca
   description: changes to workflows like helmfile, .github/**, etc.
 
-- name: iaas/aws
+- name: foundation/iaas:aws
   color: 0075ca
   description: related to aws
-- name: iaas/docker
+- name: foundation/iaas:docker
   color: 0075ca
   description: related to docker
+
+- name: foundation/region:us-east-2
+  color: 0075ca
+  description: related to us-east-2
+- name: foundation/region:localhost
+  color: 0075ca
+  description: related to localhost
+
+- name: foundation/env:sandbox
+  color: 0075ca
+  description: related to sandbox
+- name: foundation/env:corp
+  color: 0075ca
+  description: related to corp
+- name: foundation/env:kind
+  color: 0075ca
+  description: related to kind
+- name: foundation/env:minikube
+  color: 0075ca
+  description: related to minikube
 
 - name: deployment/cloudfoundry
   color: 1c778c
