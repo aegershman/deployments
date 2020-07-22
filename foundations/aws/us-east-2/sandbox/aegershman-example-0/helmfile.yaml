@@ -45,7 +45,7 @@ releases:
   - name: ingress-nginx
     namespace: ingress-nginx
     chart: ingress-nginx/ingress-nginx
-    installed: true
+    installed: false
     version: ~2.11.x
     needs: []
     values:
