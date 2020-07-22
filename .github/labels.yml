@@ -2,10 +2,10 @@
 ---
 - name: area/docs
   color: 0075ca
-  description: improvements or additions to documentation
+  description: changes to documentation
 - name: area/deployment-mgmt
   color: 0075ca
-  description: improvements or additions to deployments and workflows such as helmfile changes, .github/** workflows, editorconfig, ytt, kapp, vendir changes, etc.
+  description: changes to workflows like helmfile, .github/**, etc.
 
 - name: iaas/aws
   color: 0075ca
@@ -16,13 +16,13 @@
 
 - name: deployment/cloudfoundry
   color: 1c778c
-  description: code changes affecting cf-for-k8s, kubecf, stratos, harbor, etc.
+  description: changes on cf-for-k8s, kubecf, stratos, harbor, etc.
 - name: deployment/ci-cd
   color: 1c778c
-  description: code changes affecting ci-cd systems like concourse, tektoncd, etc.
+  description: changes on ci-cd systems like concourse, tektoncd, etc.
 - name: deployment/auxillary
   color: 1c778c
-  description: code changes affecting auxillary deployments such as nginx-ingress, external-dns, prometheus, grafana, harbor, ecs, etc., etc.
+  description: changes on auxillary deployments like nginx-ingress, prometheus, etc.
 
 - name: kind/bug
   color: f1b0f2
