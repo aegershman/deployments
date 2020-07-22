@@ -16,7 +16,7 @@ web:
 
 concourse:
   web:
-    clusterName: aegershman-example-0
+    clusterName: aegershman-example-1
     externalUrl: http://concourse.gershman.io
     kubernetes:
       enabled: false
