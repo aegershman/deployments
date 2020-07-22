@@ -54,6 +54,13 @@ cf-for-k8s-post-install-push)
   curl http://test-node-app.apps.cf.gershman.io/env
   ;;
 
+cf-for-k8s-kpack-ecr-debug)
+  exit 1
+  # aws ecr get-login-password --region us-east-2
+  kubectl -n cf-workloads-staging describe images
+  kubectl -n cf-workloads-staging describe CustomBuilder
+  ;;
+
 *)
   exit 1
   ;;
