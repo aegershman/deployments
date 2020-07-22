@@ -1,12 +1,16 @@
-# https://github.com/actions/labeler
 # https://github.com/crazy-max/ghaction-github-labeler
 ---
-name: "apply-labels"
+name: "configure-repo-labels"
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - .github/**/*
+  schedule:
+    - cron: "0 */12 * * *"
 
 jobs:
-  configure-repository-labels:
+  configure-repo-labels:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -20,10 +24,3 @@ jobs:
           dry_run: false
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-  apply-labels:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/labeler@v2
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"

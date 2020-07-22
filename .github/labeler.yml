@@ -14,7 +14,7 @@ area/deployment-mgmt:
   - ./**/vendir.yml
   - ./**/vendir.lock.yml
   - ./**/_vendir/**/*
-  - foundations/**/deployments/cluster-api/*
+  - foundations/**/deployments/cluster-api/**/*
   - foundations/**/helmfile.yml
   - foundations/**/Taskfile.yml
   - foundations/**/deploy-ctl.sh
@@ -22,24 +22,24 @@ area/deployment-mgmt:
   - foundations/**/eks-cluster.yaml
 
 iaas/aws:
-  - foundations/aws/*
+  - foundations/aws/**/*
 iaas/docker:
-  - foundations/docker/*
+  - foundations/docker/**/*
 
 deployment/cloudfoundry:
   - foundations/**/deployments/cf-for-k8s/**/*
-  - foundations/**/deployments/cf-operator/*
-  - foundations/**/deployments/harbor/*
-  - foundations/**/deployments/kubecf/*
-  - foundations/**/deployments/stratos/*
+  - foundations/**/deployments/cf-operator/**/*
+  - foundations/**/deployments/harbor/**/*
+  - foundations/**/deployments/kubecf/**/*
+  - foundations/**/deployments/stratos/**/*
 deployment/ci-cd:
-  - foundations/**/deployments/concourse*/*
-  - foundations/**/deployments/tektoncd*/*
+  - foundations/**/deployments/concourse*/**/*
+  - foundations/**/deployments/tektoncd*/**/*
 deployment/auxillary:
-  - foundations/**/deployments/cert-manager/*
-  - foundations/**/deployments/external-dns*/*
-  - foundations/**/deployments/ingress-nginx/*
-  - foundations/**/deployments/jaeger-operator/*
-  - foundations/**/deployments/prometheus-operator/*
-  - foundations/**/deployments/yugabyte/*
-  - foundations/**/deployments/cluster-api/*
+  - foundations/**/deployments/cert-manager/**/*
+  - foundations/**/deployments/external-dns*/**/*
+  - foundations/**/deployments/ingress-nginx/**/*
+  - foundations/**/deployments/jaeger-operator/**/*
+  - foundations/**/deployments/prometheus-operator/**/*
+  - foundations/**/deployments/yugabyte/**/*
+  - foundations/**/deployments/cluster-api/**/*
