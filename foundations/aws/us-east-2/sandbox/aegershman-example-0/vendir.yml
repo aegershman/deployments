@@ -33,13 +33,9 @@ directories:
         includePaths:
           - cert/**/*
           - conf/**/*
-          - docs/**/*
           - templates/**/*
-          - test/**/*
-          - .gitignore
           - .helmignore
-          - CONTRIBUTING.md
           - Chart.yaml
           - LICENSE
           - README.md
-          - values.yml
+          - values.yaml
