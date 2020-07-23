@@ -20,7 +20,9 @@ releases:
 
   - name: harbor
     namespace: harbor
-    chart: ./deployments/harbor/build/_vendir/github.com/goharbor/harbor-helm
+    chart: harbor/harbor
+    # chart: ./deployments/harbor/build/_vendir/github.com/goharbor/harbor-helm
+    version: ~1.3.x
     installed: true
     values:
       - ./deployments/harbor/config/helm/values.yml

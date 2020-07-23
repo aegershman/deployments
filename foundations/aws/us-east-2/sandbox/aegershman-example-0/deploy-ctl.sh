@@ -26,7 +26,7 @@ cf-for-k8s-build)
   ;;
 
 helmfile-template)
-  helmfile --selector chart=external-dns --selector chart=harbor template --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile"
+  helmfile template --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile"
   ;;
 
 cf-for-k8s-diff-cf-generate-values)
