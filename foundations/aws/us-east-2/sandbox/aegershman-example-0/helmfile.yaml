@@ -19,4 +19,13 @@ releases:
     version: ~3.2.x
     needs: []
     values:
-      - ./deployments/external-dns/values.yml
+      - ./deployments/external-dns/config/helm/values.yml
+
+  - name: prometheus-operator
+    namespace: prometheus-operator
+    chart: stable/prometheus-operator
+    installed: false
+    version: ~9.2.x
+    needs: []
+    values:
+      - ./deployments/prometheus-operator/config/helm/values.yml
