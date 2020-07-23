@@ -5,6 +5,9 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 case "$1" in
+helmfile)
+  helmfile --selector chart=external-dns template --output-dir="deployments/external-dns/_rendered/test"
+  ;;
 *)
   echo "generating external-dns resource definitions..."
   helm template external-dns --namespace=external-dns "${SCRIPT_DIR}/_vendir/github.com/bitnami/charts/bitnami/external-dns" \
