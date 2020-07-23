@@ -19,7 +19,7 @@ render)
     -f _vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
     -f _vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/use-external-dns-for-wildcard.yml \
     -f ../_rendered/cf/cf-values-generated.yml \
-    -f ../config/user/opsfiles/cf-registry-values-ecr.yml \
+    -f ../config/opsfiles/cf-registry-values-ecr.yml \
     >../_rendered/cf/cf-for-k8s-rendered.yml
   ;;
 
