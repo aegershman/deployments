@@ -15445,3 +15445,10 @@ subjects:
 - kind: ServiceAccount
   name: metrics-server
   namespace: kube-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prometheus-operator
+  labels:
+    istio-injection: enabled
