@@ -6,4 +6,10 @@ directories:
       sha: b892ece915d5968a312e0abe6d37cca9a1520d60
     path: github.com/cloudfoundry/cf-for-k8s
   path: deployments/cf-for-k8s/build/_vendir
+- contents:
+  - git:
+      commitTitle: '[bitnami/external-dns] Release 3.2.4 updating components versions...'
+      sha: a0d9242d3aa21296ffe0584e5eda478bcc961ea7
+    path: github.com/bitnami/charts
+  path: deployments/external-dns/build/_vendir
 kind: LockConfig
