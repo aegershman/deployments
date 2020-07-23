@@ -25,6 +25,11 @@ cf-for-k8s-build)
   ./build.sh build
   ;;
 
+helmfile-template)
+  # helmfile --selector chart=external-dns template --output-dir="./deployments/external-dns/_rendered/test" --output-dir-template="{{ .OutputDir }}/{{ .State.BaseName }}-{{ .Release.Name}}"
+  helmfile --selector chart=external-dns template --output-dir="./deployments/external-dns/_rendered/test" --output-dir-template="{{ .OutputDir }}/{{ .State.BaseName }}-{{ .Release.Name}}"
+  ;;
+
 cf-for-k8s-diff-cf-generate-values)
   diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh
   ;;
