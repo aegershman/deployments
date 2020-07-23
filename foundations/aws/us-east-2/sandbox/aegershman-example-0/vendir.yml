@@ -14,9 +14,9 @@ directories:
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
-  - path: deployments/external-dns/build/_vendir/external-dns
+  - path: deployments/external-dns/build/_vendir
     contents:
-      - path: .
+      - path: github.com/bitnami/charts
         git:
           url: https://github.com/bitnami/charts
           ref: a0d9242d3aa21296ffe0584e5eda478bcc961ea7 # 3.2.4
