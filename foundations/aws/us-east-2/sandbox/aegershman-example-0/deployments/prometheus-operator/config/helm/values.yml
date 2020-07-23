@@ -1,20 +1,14 @@
 ---
 alertmanager:
+  enabled: true
   ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: istio
-    hosts:
-      - alertmanager.cf.gershman.io
+    enabled: false
 
 grafana:
+  enabled: true
   adminPassword: prom-operator
   ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: istio
-    hosts:
-      - grafana.cf.gershman.io
+    enabled: false
 
 kubelet:
   enabled: false
@@ -38,12 +32,9 @@ prometheusOperator:
   logLevel: info
 
 prometheus:
+  enabled: true
   ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: istio
-    hosts:
-      - prometheus.cf.gershman.io
+    enabled: false
   logLevel: info
   retention: 10m
   prometheusSpec:
