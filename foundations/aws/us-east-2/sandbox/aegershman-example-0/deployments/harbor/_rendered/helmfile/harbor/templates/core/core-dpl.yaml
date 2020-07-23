@@ -24,9 +24,9 @@ spec:
         app: "harbor"
         component: core
       annotations:
-        checksum/configmap: 8b9204d422fa54d94f258f0b885d941ea00d43553459d8c0d62f00edb8e319c8
-        checksum/secret: c7221e1da0819790f2bdeb65523bd98840b852ef686e450765168649c57e2d8e
-        checksum/secret-jobservice: a12790c1b1a2c7acfdec2eb1c545783c1afe331086577aabeaf8dc4420d7c361
+        checksum/configmap: b864f5035347fb4fa46f175b9c811346e2f3f8cd1b96340bdaff741e5d4077e4
+        checksum/secret: 6e63b3b93540c48933ff7db21367a3b2e31ecf53fa375b7c223c7903f3b6bcb4
+        checksum/secret-jobservice: 2d66267a3e0059affdd9f28d3d904d70c2fc8170671a0ad5027269d47b27f691
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       securityContext:

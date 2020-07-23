@@ -18,7 +18,7 @@ data:
     [dev]
     httpport = 8080
     EnableXSRF = true
-    XSRFKey = qHySKWAGcNtZdlLjC81bHEPnCcPQaxmX6HuPrqnC
+    XSRFKey = 345wvfADO1O5aIoQo6bPqgidC1WH9NvLxEEeoCJv
     XSRFExpire = 3600
   DATABASE_TYPE: "postgresql"
   POSTGRESQL_HOST: "harbor-harbor-database"
