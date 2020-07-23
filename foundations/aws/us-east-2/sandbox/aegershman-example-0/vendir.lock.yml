@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'Merge pull request #299 from ewrenn8/master...'
-      sha: a0c3c381c6dd4598d0823171229898e23dd2f6fd
+      commitTitle: Bump capi-k8s-release to 9f3eb359e5546ce34ddc2ab5f8625c9c0a6abde7
+      sha: 3fa14de015688f5fcff20c4d88558069c3da505e
     path: github.com/cloudfoundry/cf-for-k8s
   path: deployments/cf-for-k8s/build/_vendir
 kind: LockConfig
