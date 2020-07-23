@@ -27,7 +27,7 @@ cf-for-k8s-build)
 
 helmfile-template)
   # helmfile --selector chart=external-dns template --output-dir="./deployments/external-dns/_rendered/test" --output-dir-template="{{ .OutputDir }}/{{ .State.BaseName }}-{{ .Release.Name}}"
-  helmfile --selector chart=external-dns template --output-dir="./deployments/external-dns/_rendered/test" --output-dir-template="{{ .OutputDir }}/{{ .State.BaseName }}-{{ .Release.Name}}"
+  helmfile --selector chart=external-dns template --output-dir="./deployments/" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile"
   ;;
 
 cf-for-k8s-diff-cf-generate-values)
