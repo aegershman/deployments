@@ -1,7 +1,6 @@
 ---
 helmDefaults:
   kubeContext: gershman-admin@aegershman-example-0.us-east-2.eksctl.io
-  createNamespace: true
   recreatePods: false
   wait: false
 
@@ -14,6 +13,7 @@ repositories:
 releases:
   - name: external-dns
     namespace: external-dns
+    createNamespace: true
     chart: bitnami/external-dns
     installed: true
     version: ~3.2.x
@@ -23,8 +23,9 @@ releases:
 
   - name: prometheus-operator
     namespace: prometheus-operator
+    createNamespace: false
     chart: stable/prometheus-operator
-    installed: false
+    installed: true
     version: ~9.2.x
     needs: []
     values:
