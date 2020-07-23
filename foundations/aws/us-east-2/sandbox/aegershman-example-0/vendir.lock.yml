@@ -12,4 +12,10 @@ directories:
       sha: a0d9242d3aa21296ffe0584e5eda478bcc961ea7
     path: github.com/bitnami/charts
   path: deployments/external-dns/build/_vendir
+- contents:
+  - git:
+      commitTitle: 'Merge pull request #668 from ywk253100/200716_1.3.4...'
+      sha: 768a3b2c03bcb708fc7c2bfc6b9552437efff067
+    path: github.com/goharbor/harbor-helm
+  path: deployments/harbor/build/_vendir
 kind: LockConfig
