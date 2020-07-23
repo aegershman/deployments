@@ -14,12 +14,12 @@ directories:
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
-  - path: deployments/external-dns/build/_vendir
+  - path: deployments/external-dns/build/_vendir/external-dns
     contents:
-      - path: github.com/bitnami/charts
+      - path: .
         git:
           url: https://github.com/bitnami/charts
           ref: a0d9242d3aa21296ffe0584e5eda478bcc961ea7 # 3.2.4
           disableAutoChecksumValidation: true
         includePaths:
-          - charts/bitnami/external-dns/**/*
+          - bitnami/external-dns/**/*
