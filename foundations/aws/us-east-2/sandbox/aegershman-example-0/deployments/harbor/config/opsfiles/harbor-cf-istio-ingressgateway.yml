@@ -1,0 +1,12 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"istio-ingressgateway"}}), overlay.subset({"kind": "Gateway"}))
+---
+spec:
+  servers:
+    #@overlay/match by=overlay.subset({"tls":{"credentialName":"cf-system-cert"}})
+    - hosts:
+        #@overlay/append
+        - "harbor/harbor.vcap.me"
+        #@overlay/append
+        - "harbor/harbor.harbor.svc.cluster.local"

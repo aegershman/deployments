@@ -1,0 +1,11 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-internal-tls-certs
+  namespace: harbor
+data:
+  tls.crt: #@ data.values.internal_certificate.crt
+  tls.key: #@ data.values.internal_certificate.key
+  tls.ca: #@ data.values.internal_certificate.ca

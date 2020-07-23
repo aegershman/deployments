@@ -19,7 +19,9 @@ render)
     -f _vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
     -f _vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/use-external-dns-for-wildcard.yml \
     -f ../_rendered/cf/cf-values-generated.yml \
-    -f ../config/opsfiles/cf-registry-values-ecr.yml \
+    -f ../config/opsfiles/cf-registry-values-harbor.yml \
+    -f ../../harbor/config/opsfiles/harbor-namespace.yml \
+    -f ../../harbor/config/opsfiles/harbor-virtual-service.yml \
     -f ../../prometheus-operator/config/opsfiles/grafana-virtual-service.yml \
     -f ../../prometheus-operator/config/opsfiles/prometheus-operator-namespace.yml \
     >../_rendered/cf/cf-for-k8s-rendered.yml
