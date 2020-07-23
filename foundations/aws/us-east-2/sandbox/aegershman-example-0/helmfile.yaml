@@ -1,9 +1,6 @@
 ---
 helmDefaults:
   kubeContext: gershman-admin@aegershman-example-0.us-east-2.eksctl.io
-  recreatePods: false
-  createNamespace: false
-  wait: false
 
 repositories:
   - name: bitnami
@@ -18,8 +15,6 @@ releases:
     namespace: external-dns
     chart: ./deployments/external-dns/build/_vendir/github.com/bitnami/charts/bitnami/external-dns
     installed: true
-    version: ~3.2.x
-    needs: []
     values:
       - ./deployments/external-dns/config/helm/values.yml
 
@@ -27,15 +22,13 @@ releases:
     namespace: harbor
     chart: ./deployments/harbor/build/_vendir/github.com/goharbor/harbor-helm
     installed: true
-    version: ~1.3.x
     values:
       - ./deployments/harbor/config/helm/values.yml
 
   - name: prometheus-operator
     namespace: prometheus-operator
     chart: stable/prometheus-operator
-    installed: true
+    installed: false
     version: ~9.2.x
-    needs: []
     values:
       - ./deployments/prometheus-operator/config/helm/values.yml
