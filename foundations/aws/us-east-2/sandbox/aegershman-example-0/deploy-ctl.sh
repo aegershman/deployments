@@ -50,9 +50,9 @@ cf-for-k8s-post-install)
 cf-for-k8s-post-install-push)
   exit 1
   # push an app already built via docker
-  cf push -f ./deployments/cf-for-k8s/config/user/cf-manifests/hash-browns-docker-no-routes.yml --strategy=rolling
-  cf push -f ./deployments/cf-for-k8s/config/user/cf-manifests/hash-browns-docker-routes.yml --strategy=rolling
-  cf push -f ./deployments/cf-for-k8s/config/user/cf-manifests/todo-ui-docker-routes.yml --strategy=rolling
+  cf push -f ./deployments/cf-for-k8s/config/cf-manifests/hash-browns-docker-no-routes.yml --strategy=rolling
+  cf push -f ./deployments/cf-for-k8s/config/cf-manifests/hash-browns-docker-routes.yml --strategy=rolling
+  cf push -f ./deployments/cf-for-k8s/config/cf-manifests/todo-ui-docker-routes.yml --strategy=rolling
   # push an app from source code
   cf push test-node-app -p ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/tests/smoke/assets/test-node-app
   curl http://test-node-app.apps.cf.gershman.io/env

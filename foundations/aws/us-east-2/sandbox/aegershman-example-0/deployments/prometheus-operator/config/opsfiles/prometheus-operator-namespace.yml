@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prometheus-operator
+
+#@ load("@ytt:overlay", "overlay")
+#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"prometheus-operator"}}), overlay.subset({"kind": "Namespace"}))
+---
+metadata:
+  labels:
+    #@overlay/replace
+    istio-injection: enabled

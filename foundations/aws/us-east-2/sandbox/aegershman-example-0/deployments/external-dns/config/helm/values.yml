@@ -19,3 +19,6 @@ dryRun: false
 logLevel: info # panic, debug, info, warn, error, fatal
 interval: 1m
 policy: sync # sync, upsert-only
+
+metrics:
+  enabled: true

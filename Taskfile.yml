@@ -17,3 +17,10 @@ tasks:
       - |
         kind delete cluster
         docker system prune --all --volumes --force
+
+  cd:
+    cmds:
+      - | # purely for copy-paste convenience
+        exit 1
+        cd ./foundations/aws/us-east-2/sandbox/aegershman-example-0
+        cd ./foundations/docker/localhost/kind/cf-for-k8s-demo
