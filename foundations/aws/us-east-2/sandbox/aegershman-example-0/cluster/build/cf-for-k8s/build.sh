@@ -5,15 +5,15 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 case "$1" in
-c | clean)
+clean)
   rm -f "${SCRIPT_DIR}/cf-vars.yaml"
   ;;
 
-g | generate | generate-values)
+generate)
   "${SCRIPT_DIR}"/generate-values.sh --silence-hack-warning --cf-domain cf.gershman.io >"${SCRIPT_DIR}/cf-values-generated.yml"
   ;;
 
-d | diff | diff-generate-values-script-with-upstream)
+diff)
   diff "${SCRIPT_DIR}"/generate-values.sh "${SCRIPT_DIR}"/_vendir/cf-for-k8s/hack/generate-values.sh
   ;;
 

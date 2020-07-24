@@ -25,11 +25,15 @@ build)
     ./build.sh
     popd
     ;;
-  cfc | cf-clean | cf-regenerate-values)
+  cfd | cf-diff-generated-values)
     pushd ./cluster/build/cf-for-k8s
-    ./build.sh diff-generate-values-script-with-upstream
+    ./build.sh diff
+    popd
+    ;;
+  cfr | cf-regenerate-values)
+    pushd ./cluster/build/cf-for-k8s
     ./build.sh clean
-    ./build.sh generate-values
+    ./build.sh generate
     popd
     ;;
   all)
@@ -42,11 +46,13 @@ build)
     ;;
   *)
     echo "usage: ./deploy.sh build all"
-    echo "usage: ./deploy.sh build <kapp-env>"
-    echo "usage: ./deploy.sh build cf-regenerate-values"
-    echo "example: ./deploy-ctl.sh build harbor"
     echo "example: ./deploy-ctl.sh build all"
-    echo "example: ./deploy-ctl.sh build {cfc, cf-clean, cf-regenerate-values}"
+    echo "usage: ./deploy.sh build {kapp-env}"
+    echo "example: ./deploy-ctl.sh build harbor"
+    echo "usage: ./deploy-ctl.sh build {cfd, cf-diff-generated-values}"
+    echo "example: ./deploy-ctl.sh build cfd"
+    echo "usage: ./deploy-ctl.sh build {cfr, cf-regenerate-values}"
+    echo "example: ./deploy.sh build cf-regenerate-values"
     exit 1
     ;;
   esac
