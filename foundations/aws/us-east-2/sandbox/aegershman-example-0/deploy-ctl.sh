@@ -73,8 +73,16 @@ a | apply | deploy)
     shift
     kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml "$@"
     ;;
+  all)
+    shift
+    kapp deploy -a external-dns -f <(ytt -f ./cluster/config/external-dns/) "$@"
+    kapp deploy -a harbor -f <(ytt -f ./cluster/config/harbor/) "$@"
+    kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml "$@"
+    ;;
+
   *)
-    echo "usage: ./deploy.sh apply <kapp-env> [optional-args...]"
+    echo "usage: ./deploy.sh apply all [optional-args...]"
+    echo "usage: ./deploy.sh apply {kapp-env} [optional-args...]"
     echo "example: ./deploy-ctl.sh apply cf --yes"
     exit 1
     ;;
@@ -96,8 +104,15 @@ d | delete)
     shift
     kapp delete -a cf "$@"
     ;;
+  all)
+    shift
+    kapp delete -a cf "$@"
+    kapp delete -a harbor "$@"
+    kapp delete -a external-dns "$@"
+    ;;
   *)
-    echo "usage: ./deploy.sh delete <kapp-env> [optional-args...]"
+    echo "usage: ./deploy.sh delete {kapp-env} [optional-args...]"
+    echo "usage: ./deploy.sh delete all [optional-args...]"
     echo "example: ./deploy-ctl.sh delete harbor --yes"
     exit 1
     ;;
