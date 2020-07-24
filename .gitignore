@@ -1,6 +1,7 @@
-bin
 .DS_Store
 *.dec
+*.tar.gz
+clusterctl-*-amd64
 
 # Local .terraform directories
 **/.terraform/*
@@ -11,11 +12,3 @@ bin
 
 # .tfvars files
 *.tfvars
-
-creds.yml
-state.json
-
-dist
-hack
-
-clusterctl-*-amd64

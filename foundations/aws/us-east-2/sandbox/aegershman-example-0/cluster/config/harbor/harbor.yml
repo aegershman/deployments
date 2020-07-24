@@ -1,1 +1,21 @@
+#@ load("@ytt:library", "library")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:template", "template")
+
+#@ def add_harbor_namespace():
+#@overlay/match by=overlay.all, expects="1+"
 ---
+metadata:
+  #@overlay/match missing_ok=True
+  namespace: harbor
+#@ end
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: harbor
+  labels:
+    istio-injection: disabled
+
+--- #@ template.replace(overlay.apply(library.get("harbor").eval(), add_harbor_namespace()))

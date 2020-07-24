@@ -3,14 +3,22 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
-  # TODO putting a path on harbor because it feels weird not putting
-  # it some sort of grouping
+  - path: cluster/build/cert-manager/_vendir
+    contents:
+      - path: .
+        githubRelease:
+          slug: jetstack/cert-manager
+          tag: v0.16.0
+          disableAutoChecksumValidation: true
+        includePaths:
+          - cert-manager.yaml
+          - kubectl-cert_manager-darwin-amd64.tar.gz
   - path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
     contents:
       - path: .
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: b892ece915d5968a312e0abe6d37cca9a1520d60 # beyond v0.4.0
+          ref: 5016da8f1ab0b90d1e626109897801301f01b4d1 # beyond v0.4.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -22,18 +30,14 @@ directories:
         git:
           url: https://github.com/bitnami/charts
           ref: a0d9242d3aa21296ffe0584e5eda478bcc961ea7 # 3.2.4
-          disableAutoChecksumValidation: true
         includePaths:
           - bitnami/external-dns/**/*
-    # TODO putting a path on harbor because it feels weird not putting
-    # it some sort of grouping
   - path: cluster/build/harbor/_vendir/harbor-helm
     contents:
       - path: .
         git:
           url: https://github.com/goharbor/harbor-helm
-          ref: 768a3b2c03bcb708fc7c2bfc6b9552437efff067 # 1.3.4
-          disableAutoChecksumValidation: true
+          ref: tags/v1.3.4
         includePaths:
           - cert/**/*
           - conf/**/*
@@ -49,13 +53,16 @@ directories:
         git:
           url: https://github.com/helm/charts
           ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
-          disableAutoChecksumValidation: true
         includePaths:
           - stable/prometheus-operator/**/*
 
   # the components in this section below are handled by their corresponding build scripts
   # the manual param tells vendir to not override/touch the contents of these directories
-  - path: cluster/config/cf-for-k8s/_ytt_lib # TODO on cf-for-k8s, it's a special case
+  - path: cluster/config/cert-manager/_ytt_lib
+    contents:
+      - path: cert-manager
+        manual: {}
+  - path: cluster/config/cf-for-k8s/_ytt_lib
     contents:
       - path: cf-for-k8s
         manual: {}

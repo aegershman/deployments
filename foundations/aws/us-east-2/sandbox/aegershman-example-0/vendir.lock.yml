@@ -1,9 +1,14 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
+  - githubRelease:
+      url: https://api.github.com/repos/jetstack/cert-manager/releases/28877573
+    path: .
+  path: cluster/build/cert-manager/_vendir
+- contents:
   - git:
-      commitTitle: accommodate occasional emacs use...
-      sha: b892ece915d5968a312e0abe6d37cca9a1520d60
+      commitTitle: Bump capi-k8s-release to bb40b9d67db1c3d150791d773752d1d788cdef91
+      sha: 5016da8f1ab0b90d1e626109897801301f01b4d1
     path: .
   path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
 - contents:
@@ -26,6 +31,10 @@ directories:
   path: cluster/build/prometheus-operator/_vendir
 - contents:
   - manual: {}
+    path: cert-manager
+  path: cluster/config/cert-manager/_ytt_lib
+- contents:
+  - manual: {}
     path: cf-for-k8s
   path: cluster/config/cf-for-k8s/_ytt_lib
 - contents:
@@ -36,4 +45,8 @@ directories:
   - manual: {}
     path: harbor
   path: cluster/config/harbor/_ytt_lib
+- contents:
+  - manual: {}
+    path: prometheus-operator
+  path: cluster/config/prometheus-operator/_ytt_lib
 kind: LockConfig

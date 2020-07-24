@@ -1,0 +1,14 @@
+#@ load("@ytt:library", "library")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:template", "template")
+
+--- #@ template.replace(library.get("cert-manager").eval())
+
+#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"cert-manager"}}), overlay.subset({"kind": "Namespace"}))
+---
+metadata:
+  #@overlay/match missing_ok=True
+  labels:
+    #@overlay/match missing_ok=True
+    #@overlay/replace
+    istio-injection: disabled

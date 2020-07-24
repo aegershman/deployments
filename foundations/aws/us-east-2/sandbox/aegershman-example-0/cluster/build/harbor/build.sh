@@ -10,7 +10,6 @@ case "$1" in
   helm template harbor "${SCRIPT_DIR}/_vendir/harbor-helm" \
     --values="${SCRIPT_DIR}/helm-values.yml" |
     ytt --ignore-unknown-comments -f - \
-      -f "${SCRIPT_DIR}/namespace.yml" \
       >"${SCRIPT_DIR}/../../config/harbor/_ytt_lib/harbor/rendered.yml"
   ;;
 esac
