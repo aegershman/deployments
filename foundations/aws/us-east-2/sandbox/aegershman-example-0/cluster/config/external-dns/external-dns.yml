@@ -8,11 +8,6 @@
 metadata:
   #@overlay/match missing_ok=True
   namespace: external-dns
-  #@overlay/match missing_ok=True
-  labels:
-    #@overlay/match missing_ok=True
-    #@overlay/replace
-    istio-injection: disabled
 #@ end
 
 ---
@@ -20,5 +15,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: external-dns
+  labels:
+    istio-injection: disabled
 
 --- #@ template.replace(overlay.apply(library.get("external-dns").eval(), add_external_dns_namespace()))
