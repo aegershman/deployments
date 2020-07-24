@@ -17,6 +17,22 @@ cf-for-k8s-build)
   ./build.sh build
   ;;
 
+_render)
+  ytt \
+    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config \
+    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
+    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
+    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
+    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/use-external-dns-for-wildcard.yml \
+    -f ./deployments/cf-for-k8s/_rendered/cf/cf-values-generated.yml \
+    -f ./deployments/cf-for-k8s/build/config/opsfiles/cf-registry-values-harbor.yml \
+    -f ./deployments/harbor/build/config/opsfiles/harbor-namespace.yml \
+    -f ./deployments/harbor/build/config/opsfiles/harbor-virtual-service.yml \
+    -f ./deployments/prometheus-operator/build/config/opsfiles/grafana-virtual-service.yml \
+    -f ./deployments/prometheus-operator/build/config/opsfiles/prometheus-operator-namespace.yml \
+    >./deployments/_rendered/cf-for-k8s-rendered.yml
+  ;;
+
 helmfile-template) helmfile template --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile" ;;
 cf-for-k8s-diff-cf-generate-values) diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh ;;
 cf-for-k8s-apply) kapp deploy -a cf -f ./deployments/cf-for-k8s/_rendered/cf/cf-for-k8s-rendered.yml --yes ;;
