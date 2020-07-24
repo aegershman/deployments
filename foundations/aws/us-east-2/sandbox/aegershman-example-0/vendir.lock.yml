@@ -1,6 +1,11 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
+  - githubRelease:
+      url: https://api.github.com/repos/jetstack/cert-manager/releases/28877573
+    path: .
+  path: cluster/build/cert-manager/_vendir
+- contents:
   - git:
       commitTitle: Bump capi-k8s-release to bb40b9d67db1c3d150791d773752d1d788cdef91
       sha: 5016da8f1ab0b90d1e626109897801301f01b4d1
@@ -24,6 +29,10 @@ directories:
       sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6
     path: .
   path: cluster/build/prometheus-operator/_vendir
+- contents:
+  - manual: {}
+    path: cert-manager
+  path: cluster/config/cert-manager/_ytt_lib
 - contents:
   - manual: {}
     path: cf-for-k8s

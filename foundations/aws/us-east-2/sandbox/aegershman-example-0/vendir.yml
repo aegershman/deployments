@@ -3,6 +3,16 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
+  - path: cluster/build/cert-manager/_vendir
+    contents:
+      - path: .
+        githubRelease:
+          slug: jetstack/cert-manager
+          tag: v0.16.0
+          disableAutoChecksumValidation: true
+        includePaths:
+          - cert-manager.crds.yaml
+          - cert-manager.yaml
   - path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
     contents:
       - path: .
@@ -20,7 +30,6 @@ directories:
         git:
           url: https://github.com/bitnami/charts
           ref: a0d9242d3aa21296ffe0584e5eda478bcc961ea7 # 3.2.4
-          disableAutoChecksumValidation: true
         includePaths:
           - bitnami/external-dns/**/*
   - path: cluster/build/harbor/_vendir/harbor-helm
@@ -29,7 +38,6 @@ directories:
         git:
           url: https://github.com/goharbor/harbor-helm
           ref: 768a3b2c03bcb708fc7c2bfc6b9552437efff067 # 1.3.4
-          disableAutoChecksumValidation: true
         includePaths:
           - cert/**/*
           - conf/**/*
@@ -45,12 +53,15 @@ directories:
         git:
           url: https://github.com/helm/charts
           ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
-          disableAutoChecksumValidation: true
         includePaths:
           - stable/prometheus-operator/**/*
 
   # the components in this section below are handled by their corresponding build scripts
   # the manual param tells vendir to not override/touch the contents of these directories
+  - path: cluster/config/cert-manager/_ytt_lib
+    contents:
+      - path: cert-manager
+        manual: {}
   - path: cluster/config/cf-for-k8s/_ytt_lib
     contents:
       - path: cf-for-k8s
