@@ -17,8 +17,26 @@ build)
   ;;
 
 a | apply | deploy)
-  kapp deploy -a external-dns -f <(ytt -f ./cluster/config/external-dns/) --yes
-  kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml --yes
+  # ./deploy-ctl.sh apply cf --yes
+  shift
+  target="${1}"
+  shift
+  case "${target}" in
+  external-dns)
+    kapp deploy -a external-dns -f <(ytt -f ./cluster/config/external-dns/) "$@"
+    ;;
+  harbor)
+    kapp deploy -a harbor -f <(ytt -f ./cluster/config/harbor/) "$@"
+    ;;
+  cf)
+    kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml "$@"
+    ;;
+  *)
+    echo "usage: ./deploy.sh apply <kapp-env> [optional-args...]"
+    echo "example: ./deploy-ctl.sh apply cf --yes"
+    exit 1
+    ;;
+  esac
   ;;
 
 d | delete)
