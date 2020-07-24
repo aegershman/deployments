@@ -130,13 +130,13 @@ pi | cf-for-k8s-post-install)
   ;;
 
 pip | cf-for-k8s-post-install-push)
-  # push an app already built via docker
+  # push apps already built via docker
   cf push -f ./cluster/config-optional/cf-manifests/hash-browns-docker-no-routes.yml --strategy=rolling
   cf push -f ./cluster/config-optional/cf-manifests/hash-browns-docker-routes.yml --strategy=rolling
   cf push -f ./cluster/config-optional/cf-manifests/todo-ui-docker-routes.yml --strategy=rolling
-
+  ;;
+pip-source | cf-for-k8s-post-install-push-source-code-apps)
   # push an app from source code
-  exit 0
   cf push test-node-app -p ./cluster/build/cf-for-k8s/_vendir/cf-for-k8s/tests/smoke/assets/test-node-app
   curl http://test-node-app.apps.cf.gershman.io/env
   ;;
