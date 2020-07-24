@@ -13,5 +13,4 @@ bin
 *.tfvars
 
 creds.yml
-state.json
 clusterctl-*-amd64
