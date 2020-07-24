@@ -18,7 +18,7 @@ area/deployment-mgmt:
   - ./**/deploy-ctl.sh
   - ./**/kind.config.yaml
   - ./**/eks-cluster.yaml
-  - foundations/**/deployments/cluster-api/**/*
+  - foundations/**/cluster/cluster-api/**/*
 
 foundation/iaas:aws:
   - foundations/aws/**/*
@@ -40,19 +40,19 @@ foundation/env:minikube:
   - foundations/**/minikube/**/*
 
 deployment/cloudfoundry:
-  - foundations/**/deployments/cf-for-k8s/**/*
-  - foundations/**/deployments/cf-operator/**/*
-  - foundations/**/deployments/harbor/**/*
-  - foundations/**/deployments/kubecf/**/*
-  - foundations/**/deployments/stratos/**/*
+  - foundations/**/cluster/cf-for-k8s/**/*
+  - foundations/**/cluster/cf-operator/**/*
+  - foundations/**/cluster/harbor/**/*
+  - foundations/**/cluster/kubecf/**/*
+  - foundations/**/cluster/stratos/**/*
 deployment/ci-cd:
-  - foundations/**/deployments/concourse*/**/*
-  - foundations/**/deployments/tektoncd*/**/*
+  - foundations/**/cluster/concourse*/**/*
+  - foundations/**/cluster/tektoncd*/**/*
 deployment/auxillary:
-  - foundations/**/deployments/cert-manager/**/*
-  - foundations/**/deployments/external-dns*/**/*
-  - foundations/**/deployments/ingress-nginx/**/*
-  - foundations/**/deployments/jaeger-operator/**/*
-  - foundations/**/deployments/prometheus-operator/**/*
-  - foundations/**/deployments/yugabyte/**/*
-  - foundations/**/deployments/cluster-api/**/*
+  - foundations/**/cluster/cert-manager/**/*
+  - foundations/**/cluster/external-dns*/**/*
+  - foundations/**/cluster/ingress-nginx/**/*
+  - foundations/**/cluster/jaeger-operator/**/*
+  - foundations/**/cluster/prometheus-operator/**/*
+  - foundations/**/cluster/yugabyte/**/*
+  - foundations/**/cluster/cluster-api/**/*

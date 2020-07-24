@@ -69,7 +69,10 @@ a | apply | deploy)
   cm | cert-manager)
     shift
     kapp deploy -a cert-manager -f <(
-      ytt -f ./cluster/config/cert-manager/
+      ytt --ignore-unknown-comments \
+        -f ./cluster/config/cert-manager \
+        -f ./cluster/config-optional/cert-manager-letsencrypt-prod.yml \
+        -f ./cluster/config-optional/cert-manager-letsencrypt-staging.yml
     ) "$@"
     ;;
   ed | external-dns)
@@ -170,6 +173,8 @@ cf-for-k8s-kpack-ecr-debug)
   # aws ecr get-login-password --region us-east-2
   kubectl -n cf-workloads-staging describe images
   kubectl -n cf-workloads-staging describe CustomBuilder
+  kubectl -n cf-workloads-staging get images
+  logs -namespace cf-workloads-staging -image XXX
   ;;
 
 *)
