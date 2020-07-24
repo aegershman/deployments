@@ -1,1 +1,1031 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-harbor-core
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+type: Opaque
+data:
+  secretKey: bm90LWEtc2VjdXJlLWtleQ==
+  secret: aTlSaHp3dEs1OURNM0NIaA==
+  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUUwekNDQXJ1Z0F3SUJBZ0lKQVBZL096TE1lVnEyTUEwR0NTcUdTSWIzRFFFQkN3VUFNQUF3SGhjTk1Ua3cKTkRFNE1ESXlOek0zV2hjTk1qa3dOREUxTURJeU56TTNXakFBTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQwpBZzhBTUlJQ0NnS0NBZ0VBM3hsVUpzMmIvYUkyTkxveTRPSVErZG4veU1iL085OWlLRFJ5WktwSDhyU09tUytvCkY5dW5tU0F6TDY1WEEvdjZuWTBPTEkvZEFTRGprcWtCcElkVEd6b2dSNWY4VWlCNm9zdUVZN1Y3MVhaZHpXTHIKUGpuSnE2WkxBYW9LbXdHODBXNStXZDZWOFB5Z094NTJta3IxdzdJV0t6KzFaTEk1aXpicHBvbjdYVkdWUmFBVApSdk5aRGlKNkNlSnBjSjVINzIzbGtmNVJ2SldhdFpMQ1lJWURiUmZUaUtzeVEvU2xSY3Y1QlZmSGcvTEpTSDlRCkxHUmhQTUFSbGRsOXd5WkN3WlpESHhoZUk0YSsyNmFhOE1ZM3U5c3QvbDAvT282VkNUR3BNaUVoaUdGMkxWanAKVVdxLytCUDRTRkV2SmZxL0R1aW5JMTM5Vy81YVpaNy9Id1JQbG1ZVTZwWFRSTHlJZzdqZCsxOWZKd1I3WDM3cQp3MG84dDA2RmhqbXJDemFZQ1Vqb1JlcURtSGFObVpOL2Rkdkc3alpXQnUrak5oMFlhdnN5UXlDSVZtdjZ5cVNjCmpQaUQ5dWl2eHFUd2pKaWRJQlJmdVVyejNhRVJRN2NRZ2YwcWhxakl6Zmx6SGJGS2hJTG9jQldxN3p5Tmw5aHIKdlVHVC9XWmN3MHQvT3RNNzJTUGFwbG1UZ1ZiYlFSeGYyVkh6eXB0R0l2dHlkbFhLOHRoeE9NcFhvNGUrU2w4ZAoxZ2RRY0M0b2lzTjlGMjlvTnM4UDV5RlFQLy94WXV2OEM2MDduQ2oxRHpySWQ1YXZHL05WZktCL2ZiREtFRmdOCjJXaEhJblR6UExFY2pGNGZFcmNVQUV1V1cwYnVYLzZGSENHM2lUdHJxeUQ5MktUVkRmTjFKNTZycmNzQ0F3RUEKQWFOUU1FNHdIUVlEVlIwT0JCWUVGRmhOaFRvNFVBQzJQVXNmOGpZYVdqMTYwdkdFTUI4R0ExVWRJd1FZTUJhQQpGRmhOaFRvNFVBQzJQVXNmOGpZYVdqMTYwdkdFTUF3R0ExVWRFd1FGTUFNQkFmOHdEUVlKS29aSWh2Y05BUUVMCkJRQURnZ0lCQU1Bc0V0VmxFTE13ZHRjaWZIZU9UMGtPbWY1d285SW4vZUZTZ3NjQ3pCTURhUngyQjNxMzZBb1MKSWw3WFdBWnBldmFSN1c3eWVBUkthQXNoQkxoeWdVcUxEMHpXYktsU045SHByZDF3ZHBNMGZmeVBwTjVkeE9ZQQplcjA0eTEyR1JuQ2JNWXFpNGN2enRQNFRpblhxcTJ5SFNZaExiTzlxa0k1Z2JXVnhrUnVJY01Ldml4ZGRsbE5ZClEzb2JKYURESG1vdk0zK2cvRysxWUZndDRxRVMzOFhuSjdCclNzaEhubjVFSVFoMjg2eGZKcml5cksyaEhiTEoKcXowWXVGNkczRFhQZVdHZ1h2ajBIaXBjMGY4VURaa0tray9lR0VJNnZFa3l0eXZvZXBvWkkyWGJBZi9aTXk1bgpLd3VoRW40aGhrRk13V2FTV3AvaDBRZE1DYXhrNEJWU09xbU5WYUxTQjcrRmpzSWo0Q2FzRm90WWl5SjJncFJCCk5mOFFhUzRiejBUbjFlQmJDOGtzaitlM1pXZVgyYjV3Vk1qcWw5alR0MlgxSUNzOEtLZTN2RUJranFUMkFVaTIKNTJUdEt6bTczYVdyei9HUHkvUTJMQ29yM0ZoOUZHVlNCT0JCRFhHeTZNSnBOSEpuWVZIOUVFTkZHT2g4NW9sMQoycEFET0JCNXZBVS9rTEI1TEhQajJrdWUvRk1pSGFObnJTWUlHck1sQlNYMmpqOUVZYTF1dVVIK3BkNE1CajFGCjV1SDhPUmlhUTZodDIrV0hrbHhpYzFSajV5VFlRd1ZsSDcwQ0JPbitxVkVkbzYzeVF3ekFNSktGSXdsR1VRRVgKamlsamdjODZxNGNadFVURnJjd01pZGJrKzhRNitKYkRWZzdIVi8rcG5DK3dudjE5N2t3ZQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  tls.key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKS1FJQkFBS0NBZ0VBM3hsVUpzMmIvYUkyTkxveTRPSVErZG4veU1iL085OWlLRFJ5WktwSDhyU09tUytvCkY5dW5tU0F6TDY1WEEvdjZuWTBPTEkvZEFTRGprcWtCcElkVEd6b2dSNWY4VWlCNm9zdUVZN1Y3MVhaZHpXTHIKUGpuSnE2WkxBYW9LbXdHODBXNStXZDZWOFB5Z094NTJta3IxdzdJV0t6KzFaTEk1aXpicHBvbjdYVkdWUmFBVApSdk5aRGlKNkNlSnBjSjVINzIzbGtmNVJ2SldhdFpMQ1lJWURiUmZUaUtzeVEvU2xSY3Y1QlZmSGcvTEpTSDlRCkxHUmhQTUFSbGRsOXd5WkN3WlpESHhoZUk0YSsyNmFhOE1ZM3U5c3QvbDAvT282VkNUR3BNaUVoaUdGMkxWanAKVVdxLytCUDRTRkV2SmZxL0R1aW5JMTM5Vy81YVpaNy9Id1JQbG1ZVTZwWFRSTHlJZzdqZCsxOWZKd1I3WDM3cQp3MG84dDA2RmhqbXJDemFZQ1Vqb1JlcURtSGFObVpOL2Rkdkc3alpXQnUrak5oMFlhdnN5UXlDSVZtdjZ5cVNjCmpQaUQ5dWl2eHFUd2pKaWRJQlJmdVVyejNhRVJRN2NRZ2YwcWhxakl6Zmx6SGJGS2hJTG9jQldxN3p5Tmw5aHIKdlVHVC9XWmN3MHQvT3RNNzJTUGFwbG1UZ1ZiYlFSeGYyVkh6eXB0R0l2dHlkbFhLOHRoeE9NcFhvNGUrU2w4ZAoxZ2RRY0M0b2lzTjlGMjlvTnM4UDV5RlFQLy94WXV2OEM2MDduQ2oxRHpySWQ1YXZHL05WZktCL2ZiREtFRmdOCjJXaEhJblR6UExFY2pGNGZFcmNVQUV1V1cwYnVYLzZGSENHM2lUdHJxeUQ5MktUVkRmTjFKNTZycmNzQ0F3RUEKQVFLQ0FnRUFrOHE4czRQcnZZYnk3OVVWbFdKTktxY2V5a3dCa3hFMWZqcllPUldRMmhpQWlyeEdWNSs4bERULwprNnVqbTFFV3diNUswSHh4UktrYitQRWExSHFOTkhFNkp4TnBKS0s5ZXhEbFlBUSt4N2RGQnFWci8ybmF6bW80Ck1COE1MWWxtSXp0V1dvU1l3ZThvMm1FZzRxK2J4WXM1SW1kdTdBa2hFN2RKNjNobTIzZ0xNZmVNTGFsUnFvcHUKWEJQd0U1blhQNmFHdVVOSHRHMUs4dFFKRGxaWStMRWJBZU9mUmVOUWhUOU5kUnVrWVNXNTc5dmZLYmxKclN2egp1bGc4OXNWbTNjV0VLNXBCNnJqOXdKYks5NHZvS2Z0VnFiYnVCd1dqZDFhOXBpYktod1ZCZTJMMkZXaHBTWmM1CkYvY29DN25qVGFZVDZ0cjkxeTVWaGhKaElaUUNmL3Z2NFpsNVhoRkhzNVZUWk5iTS9PZnF5RlFMWVhWSk80OEsKRjd0bWF6QUVRUUJRd1ZacUg5QzlOUWR6UEhXbWMzOE9raHRjMXd6YXFuL3JnOSsxc2dBTUQ4aFdDdFFKVWU5NwpiOXltaDVBMFo0UVhLcHlGVDBiK3BYY0QxalJoYTA3VXRrWCsvekxKOUhwQVhjVW16a0crajVDWE5wbnhzSXE1CmZKRmVxM2hCajl3Nm40aCs1ME00VzBGc2U1WW9FVXNjM0IwZno4QmxRQmIrWUpMRkxOSDM0TUg4cDFsMFpEWUoKeWFlMHBzeGxCaWpnNE9QWitXQ0JhK2p0Rlc0TGlXZ0VjeHdnejh3K2hFT0FRcjJhMURjN3c4amQrWTRJSzhVbQpsVFZzNWRicDRtT21QTWxSdi9HTTdrRHVkRnFiTWczWUZ3WGczUWJxdVZxTFp6RXpqVmtDZ2dFQkFQSktaYkNXCllmTGVqa1MvZmtSeVYzVkliNTRtS3dRSG9NV3ViODh0UGdHdVh6anNKeWQ1UVRRNThQcFVqWHJMSG1uOGxTMisKdmlFOEdKeWxLd04xeU1sWnc0MCtrWmhwSFVwQ1d4LzJaS2pBcXZxQTlPT0tvMmZ2NkhkL3dPQW5VNEN0aW9DMQpwcmk3bEtGWVhvUDhEdFFWd0hZdkl6Q1JxRG5oYzRtd0pEcXpUQzl4ZHVJK3N2eHpsNHhIODJmeDBqclBpRlkrCi93T2RYanlmSVBqeWhIQzRqUFRXYmFpcndYUzlkQmpTbDEyOGFJUlQ1ODAveVhFL1NZQXVnZzA1akt0ZzV6UUEKU28xM01UZXpYUkhYZE8wZGkzdEVNSEdSRUVrRnBlVm5uUFF2Q0NlZEswRFYzNmlOd2lXYzhwd2RmTE1WbmVUdApES3daZWRDeCtvLzdldjBDZ2dFQkFPdTQ4REdFSkpKekh4VlI1bVkxSzJBbFp5WXRwVE9XZWhLMXpYNzRKdk0zCll4TjRuZCtaeDVuOXVTUG1tS3pxRjNUVSs0NFJWdGRKSzZlam9GRThkTURUTldhU0xXL1pEbU4xblQwbmp2T24KSVdKbjU5eW5PQ2hXV0taZ1haLzlVcUdSN1B0Nk94U2trZXg5Yy9mWUJzTVgveHVzZFhRaWdlb2dsMGlPWVZGVwpnWElpaUxSTEhwSEpzSy91TnhJaXpqMGhUWVluN3VEN1BSRU53RlJjQ1lmOEoxZVVGYmQ2RHVDVldlUUNLV2dmCk5kMnRTV29pMFZ5bGo0dVVYOEl3MHRqTE5NRDVDUkVKRWs0R1N2NEVEU212VWR2MUxpQktKQ0wybEVjZ29QZUMKb09EMmlDYzVLcWdubVFyYVJpbEZGazhSVlhBOVBXWkdZM0MwYjZUVm1tY0NnZ0VBTlpPMkFPS0FMbENBYlR0YgpGSStrUDA4UlA0dDVINThBTWpac2l3ZWFHbzBRaVduUERxK0ZkNk1JWXBLbjVtdGNBbHZVTVJWb3ZiaW9TSnROCmM2cHNCL3BOZjhKQ044Mm1xSEViN1dseXdNNDZBTUxiWkNXWUZMZThWQkJ2K2lFNEdkQkdQRWZ1NGhLNHZ5VG4KWVpBdlJ6NjRIR280QWRsenRiamc3NlYvbld0Z2dXMDV1TFhjcG01NUtKQVFodisyV1VMakJ3OVBIT0dEb1N3ZgpBbTIrVTU2N3JMaHQ3MHByc1FEajEwbGFKMlF1U0hTMVlYR2xmZUZjdzNlRlVwOVROK0pwdmRvQ29sMmxDSWdsCklIamdaajZPUldmQ3Zwb3hXN1JnQnVadWtxQ0QwUjYwSGRZdGF2eE4zanRpZXBzYXBBODNweE8wSmFwTWdaV1oKcnBVUmtRS0NBUUJPY0V2OUxpdTlUL0dYOXBqa2llelZJWjBoWnk4QjY2RFRlUXZZcEZyUnRDeVQzaDhxdU5GaQp2THRPNXYwSERSNmhFZjVqV0FHOXdldDA3VTM3dWxKZmwraTlLUWRWb0xUWkE5bys3MXJ5V1RzU3MrREQzQ0VqCnl4ZlV4VnhpVUxtZWFpQ2h6aHE2MDhoN0dZUHRoVVU2eGxGdHRBV2hqNW9MZnF6WXlBZzZPTDc2YStOeG0wMmcKMWF5bDNtOFU2ZUFYRjIza3BvVW0rSE5wcVZuR3VKbXpWb1VBNzVZS1orTnJlRWRoU0JiZlB3TjlzSnd0WlVpbAp1N0g0a0hjTTk1SXg4ZXlzQ2pLcUtJcWV6QmxJVGJEVG5qTnZMamNiSjVDKzBhNmx2SVhUMXZRUjUvZUdsYzlNCkJXRTM2MHBOa1YvTEQ4bU9mOUplcGkyUTQzb0RMOUVoQW9JQkFRRFRXSW1meTBLOWdHekEyclB5MTY5bVdZUUsKT2xjbkQzK2hRcTZ4NTFabjFlL3RleEZlVmxoSG40cnJuUmRDRk9BcDQ3dUZrSjJtNzJHQ1ZENzRFd1F1Y0s5eQpBRDVqb3JxZ1ZIcUNLWmRrSGpiMlY2ME16bTZnM3J0TDlXSlhGVkx2TkJiL1FHQjJ2Z0hWT08wenFpcUdaajRlCkV4N2wybS8vNVNFNERMdG43MEo5Q2dHMUh0WENTOGRXckdQTDFwekRuazhWWHRub1h6YjBMQ2hMVUZFZ1pSbWgKY1Y2QUZIRUsySDh3Qkh2aU55ZWhzUlFpRGtsMkFpV09jSk52a3pXNjhjazJuSmpSV3lQWUsxSkwzTkNLcEIzUQpPb2hyUDBmSGNXQVhNVzk3d0ZYWmhSZm5RZkR4eElPbGozTWNZVDBBbGFuWGQwRjROR2MyTnZtcGh4MDQKLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0K
+  HARBOR_ADMIN_PASSWORD: YWRtaW4=
+  POSTGRESQL_PASSWORD: Y2hhbmdlaXQ=
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-harbor-database
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+type: Opaque
+data:
+  POSTGRES_PASSWORD: Y2hhbmdlaXQ=
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-harbor-jobservice
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+type: Opaque
+data:
+  secret: dE8zSlZrckh1NVphUFRpVA==
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-harbor-registry
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+type: Opaque
+data:
+  REGISTRY_HTTP_SECRET: Yk1UYzlQYWhwaDg2a0Vqag==
+  REGISTRY_REDIS_PASSWORD: ""
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-harbor-core
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+data:
+  app.conf: |
+    appname = Harbor
+    runmode = dev
+    enablegzip = true
+
+    [dev]
+    httpport = 8080
+    EnableXSRF = true
+    XSRFKey = qOnpBP986Bk1wYtyNzttIoVWoJiFIqAh1XwkvJV3
+    XSRFExpire = 3600
+  DATABASE_TYPE: postgresql
+  POSTGRESQL_HOST: harbor-harbor-database
+  POSTGRESQL_PORT: "5432"
+  POSTGRESQL_USERNAME: postgres
+  POSTGRESQL_DATABASE: registry
+  POSTGRESQL_SSLMODE: disable
+  POSTGRESQL_MAX_IDLE_CONNS: "50"
+  POSTGRESQL_MAX_OPEN_CONNS: "100"
+  EXT_ENDPOINT: https://harbor.cf.gershman.io
+  CORE_URL: http://harbor-harbor-core
+  JOBSERVICE_URL: http://harbor-harbor-jobservice
+  REGISTRY_URL: http://harbor-harbor-registry:5000
+  TOKEN_SERVICE_URL: http://harbor-harbor-core/service/token
+  WITH_NOTARY: "false"
+  NOTARY_URL: http://harbor-harbor-notary-server:4443
+  CFG_EXPIRATION: "5"
+  ADMIRAL_URL: NA
+  WITH_CLAIR: "false"
+  CLAIR_DB_HOST: harbor-harbor-database
+  CLAIR_DB_PORT: "5432"
+  CLAIR_DB_USERNAME: postgres
+  CLAIR_DB: postgres
+  CLAIR_DB_SSLMODE: disable
+  CLAIR_URL: http://harbor-harbor-clair:6060
+  CLAIR_ADAPTER_URL: http://harbor-harbor-clair:8080
+  REGISTRY_STORAGE_PROVIDER_NAME: filesystem
+  WITH_CHARTMUSEUM: "false"
+  CHART_REPOSITORY_URL: http://harbor-harbor-chartmuseum
+  LOG_LEVEL: debug
+  CONFIG_PATH: /etc/core/app.conf
+  SYNC_REGISTRY: "false"
+  CHART_CACHE_DRIVER: redis
+  _REDIS_URL: harbor-harbor-redis:6379,100,
+  _REDIS_URL_REG: redis://harbor-harbor-redis:6379/2
+  PORTAL_URL: http://harbor-harbor-portal
+  REGISTRYCTL_URL: http://harbor-harbor-registry:8080
+  CLAIR_HEALTH_CHECK_SERVER_URL: http://harbor-harbor-clair:6061
+  HTTP_PROXY: ""
+  HTTPS_PROXY: ""
+  NO_PROXY: harbor-harbor-core,harbor-harbor-jobservice,harbor-harbor-database,harbor-harbor-chartmuseum,harbor-harbor-clair,harbor-harbor-notary-server,harbor-harbor-notary-signer,harbor-harbor-registry,harbor-harbor-portal,127.0.0.1,localhost,.local,.internal
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-harbor-jobservice
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+data:
+  config.yml: |
+    protocol: "http"
+    port: 8080
+    worker_pool:
+      workers: 10
+      backend: "redis"
+      redis_pool:
+        redis_url: "harbor-harbor-redis:6379/1"
+        namespace: "harbor_job_service_namespace"
+    job_loggers:
+      - name: "FILE"
+        level: DEBUG
+        settings: # Customized settings of logger
+          base_dir: "/var/log/jobs"
+        sweeper:
+          duration: 14 #days
+          settings: # Customized settings of sweeper
+            work_dir: "/var/log/jobs"
+    #Loggers for the job service
+    loggers:
+      - name: "STD_OUTPUT"
+        level: DEBUG
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-harbor-nginx
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+data:
+  nginx.conf: "worker_processes auto;\npid /tmp/nginx.pid;\n\nevents {\n  worker_connections
+    1024;\n  use epoll;\n  multi_accept on;\n}\n\nhttp {\n  client_body_temp_path
+    /tmp/client_body_temp;\n  proxy_temp_path /tmp/proxy_temp;\n  fastcgi_temp_path
+    /tmp/fastcgi_temp;\n  uwsgi_temp_path /tmp/uwsgi_temp;\n  scgi_temp_path /tmp/scgi_temp;\n
+    \ tcp_nodelay on;\n\n  # this is necessary for us to be able to disable request
+    buffering in all cases\n  proxy_http_version 1.1;\n\n  upstream core {\n    server
+    harbor-harbor-core;\n  }\n\n  upstream portal {\n    server harbor-harbor-portal;\n
+    \ }\n\n  log_format timed_combined '[$time_local]:$remote_addr - '\n    '\"$request\"
+    $status $body_bytes_sent '\n    '\"$http_referer\" \"$http_user_agent\" '\n    '$request_time
+    $upstream_response_time $pipe';\n\n  access_log /dev/stdout timed_combined;\n\n
+    \ server {\n    listen 8080;\n    server_tokens off;\n    # disable any limits
+    to avoid HTTP 413 for large image uploads\n    client_max_body_size 0;\n\n    #
+    Add extra headers\n    add_header X-Frame-Options DENY;\n    add_header Content-Security-Policy
+    \"frame-ancestors 'none'\";\n\n    location / {\n      proxy_pass http://portal/;\n
+    \     proxy_set_header Host $host;\n      proxy_set_header X-Real-IP $remote_addr;\n
+    \     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n      \n      #
+    When setting up Harbor behind other proxy, such as an Nginx instance, remove the
+    below line if the proxy already has similar settings.\n      proxy_set_header
+    X-Forwarded-Proto $scheme;\n      \n      proxy_buffering off;\n      proxy_request_buffering
+    off;\n    }\n\n    location /api/ {\n      proxy_pass http://core/api/;\n      proxy_set_header
+    Host $host;\n      proxy_set_header X-Real-IP $remote_addr;\n      proxy_set_header
+    X-Forwarded-For $proxy_add_x_forwarded_for;\n\n      # When setting up Harbor
+    behind other proxy, such as an Nginx instance, remove the below line if the proxy
+    already has similar settings.\n      proxy_set_header X-Forwarded-Proto $scheme;\n
+    \     \n      proxy_buffering off;\n      proxy_request_buffering off;\n    }\n
+    \   \n    location /chartrepo/ {\n      proxy_pass http://core/chartrepo/;\n      proxy_set_header
+    Host $host;\n      proxy_set_header X-Real-IP $remote_addr;\n      proxy_set_header
+    X-Forwarded-For $proxy_add_x_forwarded_for;\n\n      # When setting up Harbor
+    behind other proxy, such as an Nginx instance, remove the below line if the proxy
+    already has similar settings.\n      proxy_set_header X-Forwarded-Proto $scheme;\n\n
+    \     proxy_buffering off;\n      proxy_request_buffering off;\n    }\n\n    location
+    /c/ {\n      proxy_pass http://core/c/;\n      proxy_set_header Host $host;\n
+    \     proxy_set_header X-Real-IP $remote_addr;\n      proxy_set_header X-Forwarded-For
+    $proxy_add_x_forwarded_for;\n\n      # When setting up Harbor behind other proxy,
+    such as an Nginx instance, remove the below line if the proxy already has similar
+    settings.\n      proxy_set_header X-Forwarded-Proto $scheme;\n      \n      proxy_buffering
+    off;\n      proxy_request_buffering off;\n    }\n\n    location /v1/ {\n      return
+    404;\n    }\n\n    location /v2/ {\n      proxy_pass http://core/v2/;\n      proxy_set_header
+    Host $http_host;\n      proxy_set_header X-Real-IP $remote_addr;\n      proxy_set_header
+    X-Forwarded-For $proxy_add_x_forwarded_for;\n      \n      # When setting up Harbor
+    behind other proxy, such as an Nginx instance, remove the below line if the proxy
+    already has similar settings.\n      proxy_set_header X-Forwarded-Proto $scheme;\n
+    \     proxy_buffering off;\n      proxy_request_buffering off;\n    }\n\n    location
+    /service/ {\n      proxy_pass http://core/service/;\n      proxy_set_header Host
+    $host;\n      proxy_set_header X-Real-IP $remote_addr;\n      proxy_set_header
+    X-Forwarded-For $proxy_add_x_forwarded_for;\n      \n      # When setting up Harbor
+    behind other proxy, such as an Nginx instance, remove the below line if the proxy
+    already has similar settings.\n      proxy_set_header X-Forwarded-Proto $scheme;\n
+    \     \n      proxy_buffering off;\n      proxy_request_buffering off;\n    }\n
+    \ \n  location /service/notifications {\n      return 404;\n    }\n  }\n}\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-harbor-registry
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+data:
+  config.yml: |
+    version: 0.1
+    log:
+      level: debug
+      fields:
+        service: registry
+    storage:
+      filesystem:
+        rootdirectory: /storage
+      cache:
+        layerinfo: redis
+      maintenance:
+        uploadpurging:
+          enabled: false
+      delete:
+        enabled: true
+      redirect:
+        disable: false
+    redis:
+      addr: "harbor-harbor-redis:6379"
+      db: 2
+    http:
+      relativeurls: true
+      addr: :5000
+      # set via environment variable
+      # secret: placeholder
+      debug:
+        addr: localhost:5001
+    auth:
+      token:
+        issuer: harbor-token-issuer
+        realm: "https://harbor.cf.gershman.io/service/token"
+        rootcertbundle: /etc/registry/root.crt
+        service: harbor-registry
+    validation:
+      disabled: true
+    notifications:
+      endpoints:
+        - name: harbor
+          disabled: false
+          url: http://harbor-harbor-core/service/notifications
+          timeout: 3000ms
+          threshold: 5
+          backoff: 1s
+          ignoredmediatypes:
+            - application/vnd.docker.image.rootfs.diff.tar.gzip
+            - application/vnd.docker.image.rootfs.foreign.diff.tar.gzip
+            - application/vnd.oci.image.layer.v1.tar
+            - application/vnd.oci.image.layer.v1.tar+gzip
+            - application/vnd.oci.image.layer.v1.tar+zstd
+            - application/vnd.oci.image.layer.nondistributable.v1.tar
+            - application/vnd.oci.image.layer.nondistributable.v1.tar+gzip
+            - application/vnd.oci.image.layer.nondistributable.v1.tar+zstd
+            - application/octet-stream
+  ctl-config.yml: |
+    ---
+    protocol: "http"
+    port: 8080
+    log_level: debug
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: harbor-harbor-jobservice
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: jobservice
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: gp2
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: harbor-harbor-registry
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: registry
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: gp2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-harbor-core
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    release: harbor
+    app: harbor
+    component: core
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-harbor-database
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+spec:
+  ports:
+  - port: 5432
+  selector:
+    release: harbor
+    app: harbor
+    component: database
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-harbor-jobservice
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    release: harbor
+    app: harbor
+    component: jobservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    release: harbor
+    app: harbor
+    component: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-harbor-portal
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    release: harbor
+    app: harbor
+    component: portal
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-harbor-redis
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+spec:
+  ports:
+  - port: 6379
+  selector:
+    release: harbor
+    app: harbor
+    component: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-harbor-registry
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+spec:
+  ports:
+  - name: registry
+    port: 5000
+  - name: controller
+    port: 8080
+  selector:
+    release: harbor
+    app: harbor
+    component: registry
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harbor-harbor-core
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      release: harbor
+      app: harbor
+      component: core
+  template:
+    metadata:
+      labels:
+        release: harbor
+        app: harbor
+        component: core
+      annotations:
+        checksum/configmap: b1e42c0a337dafef4d2ce42432ed3bca170523ca6436f0224e9c9538a5c4a78c
+        checksum/secret: b2945c81c3200aaa001eacc7c5198b31f4cd3583b65427f40c6353ef6fead0be
+        checksum/secret-jobservice: 00cdc4823d4b8f40474855685e8bcf7b6dd92ac046436b621e823270d932e501
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      securityContext:
+        fsGroup: 10000
+      containers:
+      - name: core
+        image: goharbor/harbor-core:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /api/ping
+            port: 8080
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/ping
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: harbor-harbor-core
+        - secretRef:
+            name: harbor-harbor-core
+        env:
+        - name: CORE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: harbor-harbor-core
+              key: secret
+        - name: JOBSERVICE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: harbor-harbor-jobservice
+              key: secret
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config
+          mountPath: /etc/core/app.conf
+          subPath: app.conf
+        - name: secret-key
+          mountPath: /etc/core/key
+          subPath: key
+        - name: token-service-private-key
+          mountPath: /etc/core/private_key.pem
+          subPath: tls.key
+        - name: psc
+          mountPath: /etc/core/token
+      volumes:
+      - name: config
+        configMap:
+          name: harbor-harbor-core
+          items:
+          - key: app.conf
+            path: app.conf
+      - name: secret-key
+        secret:
+          secretName: harbor-harbor-core
+          items:
+          - key: secretKey
+            path: key
+      - name: token-service-private-key
+        secret:
+          secretName: harbor-harbor-core
+      - name: psc
+        emptyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harbor-harbor-jobservice
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: jobservice
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      release: harbor
+      app: harbor
+      component: jobservice
+  template:
+    metadata:
+      labels:
+        heritage: Helm
+        release: harbor
+        chart: harbor
+        app: harbor
+        component: jobservice
+      annotations:
+        checksum/configmap: 23a75a60a28dbe0ba49e366d2004dce405a18eb4cd61cd61b62155e1d5887ce4
+        checksum/secret: 3716dd18d6153df1f68c347a860ce01cb1bdf9cee59102052ab329ba65cef630
+        checksum/secret-core: 990003eee41d95f65b0a5a83970da1c1cb674df739acc5fe604dd67a605be3d4
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      securityContext:
+        fsGroup: 10000
+      containers:
+      - name: jobservice
+        image: goharbor/harbor-jobservice:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /api/v1/stats
+            port: 8080
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/v1/stats
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        env:
+        - name: CORE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: harbor-harbor-core
+              key: secret
+        - name: JOBSERVICE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: harbor-harbor-jobservice
+              key: secret
+        - name: CORE_URL
+          value: http://harbor-harbor-core
+        - name: REGISTRY_CONTROLLER_URL
+          value: http://harbor-harbor-registry:8080
+        - name: LOG_LEVEL
+          value: debug
+        - name: HTTP_PROXY
+          value: ""
+        - name: HTTPS_PROXY
+          value: ""
+        - name: NO_PROXY
+          value: harbor-harbor-core,harbor-harbor-jobservice,harbor-harbor-database,harbor-harbor-chartmuseum,harbor-harbor-clair,harbor-harbor-notary-server,harbor-harbor-notary-signer,harbor-harbor-registry,harbor-harbor-portal,127.0.0.1,localhost,.local,.internal
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: jobservice-config
+          mountPath: /etc/jobservice/config.yml
+          subPath: config.yml
+        - name: job-logs
+          mountPath: /var/log/jobs
+          subPath: null
+      volumes:
+      - name: jobservice-config
+        configMap:
+          name: harbor-harbor-jobservice
+      - name: job-logs
+        persistentVolumeClaim:
+          claimName: harbor-harbor-jobservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harbor-harbor-nginx
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      release: harbor
+      app: harbor
+      component: nginx
+  template:
+    metadata:
+      labels:
+        heritage: Helm
+        release: harbor
+        chart: harbor
+        app: harbor
+        component: nginx
+      annotations:
+        checksum/configmap: 5edd589ec623ce16d50869b7767a598d879bf1d5be1596194356f9a1048dc753
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      securityContext:
+        fsGroup: 10000
+      containers:
+      - name: nginx
+        image: goharbor/nginx-photon:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 8080
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        ports:
+        - containerPort: 8080
+        - containerPort: 8443
+        - containerPort: 4443
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: config
+        configMap:
+          name: harbor-harbor-nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harbor-harbor-portal
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      release: harbor
+      app: harbor
+      component: portal
+  template:
+    metadata:
+      labels:
+        release: harbor
+        app: harbor
+        component: portal
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      containers:
+      - name: portal
+        image: goharbor/harbor-portal:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harbor-harbor-registry
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: registry
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      release: harbor
+      app: harbor
+      component: registry
+  template:
+    metadata:
+      labels:
+        heritage: Helm
+        release: harbor
+        chart: harbor
+        app: harbor
+        component: registry
+      annotations:
+        checksum/configmap: 262e4997f794e097e2302ba72bdd63e4e0654848d258d64c9e1c446d890a13d4
+        checksum/secret: 1c679ae386aa350b07b355fead4d73d68ee249f3b26f234978ba658817bcb944
+        checksum/secret-jobservice: 14dfaac1ebeb8ae4cbfbb8da793a69444b2831e8525daa76ceb26372a7b615a3
+        checksum/secret-core: a2d6f064dee1ab955a0ec3414557c51fe410dc575a27a51b93318b75cc978446
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      securityContext:
+        fsGroup: 10000
+      containers:
+      - name: registry
+        image: goharbor/registry-photon:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        args:
+        - serve
+        - /etc/registry/config.yml
+        envFrom:
+        - secretRef:
+            name: harbor-harbor-registry
+        ports:
+        - containerPort: 5000
+        - containerPort: 5001
+        volumeMounts:
+        - name: registry-data
+          mountPath: /storage
+          subPath: null
+        - name: registry-root-certificate
+          mountPath: /etc/registry/root.crt
+          subPath: tls.crt
+        - name: registry-config
+          mountPath: /etc/registry/config.yml
+          subPath: config.yml
+      - name: registryctl
+        image: goharbor/harbor-registryctl:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        args:
+        - serve
+        - /etc/registry/config.yml
+        envFrom:
+        - secretRef:
+            name: harbor-harbor-registry
+        env:
+        - name: CORE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: harbor-harbor-core
+              key: secret
+        - name: JOBSERVICE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: harbor-harbor-jobservice
+              key: secret
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: registry-data
+          mountPath: /storage
+          subPath: null
+        - name: registry-config
+          mountPath: /etc/registry/config.yml
+          subPath: config.yml
+        - name: registry-config
+          mountPath: /etc/registryctl/config.yml
+          subPath: ctl-config.yml
+      volumes:
+      - name: registry-root-certificate
+        secret:
+          secretName: harbor-harbor-core
+      - name: registry-config
+        configMap:
+          name: harbor-harbor-registry
+      - name: registry-data
+        persistentVolumeClaim:
+          claimName: harbor-harbor-registry
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: harbor-harbor-database
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: database
+spec:
+  replicas: 1
+  serviceName: harbor-harbor-database
+  selector:
+    matchLabels:
+      release: harbor
+      app: harbor
+      component: database
+  template:
+    metadata:
+      labels:
+        heritage: Helm
+        release: harbor
+        chart: harbor
+        app: harbor
+        component: database
+      annotations:
+        checksum/secret: 4ff26e469c2bc466552f28d545ad293be56c436790a6f26c8e0cf2497aaa08b2
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      initContainers:
+      - name: change-permission-of-directory
+        image: busybox:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/sh
+        args:
+        - -c
+        - chown -R 999:999 /var/lib/postgresql/data
+        volumeMounts:
+        - name: database-data
+          mountPath: /var/lib/postgresql/data
+          subPath: null
+      - name: remove-lost-found
+        image: goharbor/harbor-db:v1.10.4
+        imagePullPolicy: IfNotPresent
+        command:
+        - rm
+        - -Rf
+        - /var/lib/postgresql/data/lost+found
+        volumeMounts:
+        - name: database-data
+          mountPath: /var/lib/postgresql/data
+          subPath: null
+      containers:
+      - name: database
+        image: goharbor/harbor-db:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - /docker-healthcheck.sh
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - /docker-healthcheck.sh
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        envFrom:
+        - secretRef:
+            name: harbor-harbor-database
+        volumeMounts:
+        - name: database-data
+          mountPath: /var/lib/postgresql/data
+          subPath: null
+  volumeClaimTemplates:
+  - metadata:
+      name: database-data
+      labels:
+        heritage: Helm
+        release: harbor
+        chart: harbor
+        app: harbor
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: gp2
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: harbor-harbor-redis
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: harbor
+    component: redis
+spec:
+  replicas: 1
+  serviceName: harbor-harbor-redis
+  selector:
+    matchLabels:
+      release: harbor
+      app: harbor
+      component: redis
+  template:
+    metadata:
+      labels:
+        heritage: Helm
+        release: harbor
+        chart: harbor
+        app: harbor
+        component: redis
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      securityContext:
+        fsGroup: 999
+      containers:
+      - name: redis
+        image: goharbor/redis-photon:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/redis
+          subPath: null
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      labels:
+        heritage: Helm
+        release: harbor
+        chart: harbor
+        app: harbor
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: gp2
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: harbor
+  labels:
+    istio-injection: disabled
