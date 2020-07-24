@@ -4,18 +4,36 @@ directories:
   - git:
       commitTitle: accommodate occasional emacs use...
       sha: b892ece915d5968a312e0abe6d37cca9a1520d60
-    path: github.com/cloudfoundry/cf-for-k8s
-  path: deployments/cf-for-k8s/build/_vendir
+    path: .
+  path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
 - contents:
   - git:
       commitTitle: '[bitnami/external-dns] Release 3.2.4 updating components versions...'
       sha: a0d9242d3aa21296ffe0584e5eda478bcc961ea7
-    path: github.com/bitnami/charts
-  path: deployments/external-dns/build/_vendir
+    path: .
+  path: cluster/build/external-dns/_vendir
 - contents:
   - git:
       commitTitle: 'Merge pull request #668 from ywk253100/200716_1.3.4...'
       sha: 768a3b2c03bcb708fc7c2bfc6b9552437efff067
-    path: github.com/goharbor/harbor-helm
-  path: deployments/harbor/build/_vendir
+    path: .
+  path: cluster/build/harbor/_vendir/harbor-helm
+- contents:
+  - git:
+      commitTitle: '[prometheus-operator] Fixing scope issue (#23014) (#23022)...'
+      sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6
+    path: .
+  path: cluster/build/prometheus-operator/_vendir
+- contents:
+  - manual: {}
+    path: cf-for-k8s
+  path: cluster/config/cf-for-k8s/_ytt_lib
+- contents:
+  - manual: {}
+    path: external-dns
+  path: cluster/config/external-dns/_ytt_lib
+- contents:
+  - manual: {}
+    path: harbor
+  path: cluster/config/harbor/_ytt_lib
 kind: LockConfig

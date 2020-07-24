@@ -3,9 +3,11 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
-  - path: deployments/cf-for-k8s/build/_vendir
+  # TODO putting a path on harbor because it feels weird not putting
+  # it some sort of grouping
+  - path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
     contents:
-      - path: github.com/cloudfoundry/cf-for-k8s
+      - path: .
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
           ref: b892ece915d5968a312e0abe6d37cca9a1520d60 # beyond v0.4.0
@@ -14,18 +16,20 @@ directories:
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
-  - path: deployments/external-dns/build/_vendir
+  - path: cluster/build/external-dns/_vendir
     contents:
-      - path: github.com/bitnami/charts
+      - path: .
         git:
           url: https://github.com/bitnami/charts
           ref: a0d9242d3aa21296ffe0584e5eda478bcc961ea7 # 3.2.4
           disableAutoChecksumValidation: true
         includePaths:
           - bitnami/external-dns/**/*
-  - path: deployments/harbor/build/_vendir
+    # TODO putting a path on harbor because it feels weird not putting
+    # it some sort of grouping
+  - path: cluster/build/harbor/_vendir/harbor-helm
     contents:
-      - path: github.com/goharbor/harbor-helm
+      - path: .
         git:
           url: https://github.com/goharbor/harbor-helm
           ref: 768a3b2c03bcb708fc7c2bfc6b9552437efff067 # 1.3.4
@@ -39,3 +43,31 @@ directories:
           - LICENSE
           - README.md
           - values.yaml
+  - path: cluster/build/prometheus-operator/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/helm/charts
+          ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
+          disableAutoChecksumValidation: true
+        includePaths:
+          - stable/prometheus-operator/**/*
+
+  # the components in this section below are handled by their corresponding build scripts
+  # the manual param tells vendir to not override/touch the contents of these directories
+  - path: cluster/config/cf-for-k8s/_ytt_lib # TODO on cf-for-k8s, it's a special case
+    contents:
+      - path: cf-for-k8s
+        manual: {}
+  - path: cluster/config/external-dns/_ytt_lib
+    contents:
+      - path: external-dns
+        manual: {}
+  - path: cluster/config/harbor/_ytt_lib
+    contents:
+      - path: harbor
+        manual: {}
+  - path: cluster/config/prometheus-operator/_ytt_lib
+    contents:
+      - path: prometheus-operator
+        manual: {}
