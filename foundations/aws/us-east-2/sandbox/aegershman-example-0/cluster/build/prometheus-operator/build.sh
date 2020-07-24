@@ -6,6 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 case "$1" in
 *)
+  exit 0 # TODO
   echo "generating prometheus-operator resource definitions..."
   helm template prometheus-operator "${SCRIPT_DIR}/_vendir/stable/prometheus-operator" \
     --values="${SCRIPT_DIR}/helm-values.yml" |
