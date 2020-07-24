@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -e
 
 case "$1" in
 eksc | eksctl-create) eksctl create cluster --config-file=eks-cluster.yaml ;;
@@ -22,8 +22,10 @@ a | apply | deploy)
   ;;
 
 d | delete)
-  kapp delete -a cf --yes
-  kapp delete -a external-dns --yes
+  shift
+  # ./deploy-ctl.sh delete --yes
+  kapp delete -a cf "$@"
+  kapp delete -a external-dns "$@"
   ;;
 
 pi | cf-for-k8s-post-install)
