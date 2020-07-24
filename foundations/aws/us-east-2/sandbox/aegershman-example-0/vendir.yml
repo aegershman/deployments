@@ -44,7 +44,15 @@ directories:
 
   # the components in this section below are handled by their corresponding build scripts
   # the manual param tells vendir to not override/touch the contents of these directories
+  - path: config/cf-for-k8s/_ytt_lib # TODO on cf-for-k8s, it's a special case
+    contents:
+      - path: cf-for-k8s
+        manual: {}
   - path: config/external-dns/_ytt_lib
     contents:
       - path: external-dns
+        manual: {}
+  - path: config/harbor/_ytt_lib
+    contents:
+      - path: harbor
         manual: {}
