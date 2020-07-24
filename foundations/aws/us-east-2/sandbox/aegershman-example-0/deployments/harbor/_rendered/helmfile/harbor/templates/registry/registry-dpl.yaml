@@ -29,9 +29,9 @@ spec:
         component: registry
       annotations:
         checksum/configmap: 262e4997f794e097e2302ba72bdd63e4e0654848d258d64c9e1c446d890a13d4
-        checksum/secret: 913779a33b0f1118d6bd0fe464925c74b759045a241cd3ade2903a23e26d1e54
-        checksum/secret-jobservice: c06826c30706a48c19f858c0b7c732bda28f0579ed00eb87fdcf71a799dc8a52
-        checksum/secret-core: 3fac665173e13fa3cc59cb2c60129740956fd63f810057bdc337af10f5abe33b
+        checksum/secret: 09ba064b8d4fdf1f7fd8f1c674468704d9a3ba9508b2e4c6dbd1598a78ae75b5
+        checksum/secret-jobservice: b5447bb976dfa13a182b15000485a9ccd8df071b87a420effb7b6145471e4633
+        checksum/secret-core: 11eac30f0c6ff987c03045eeae0de321eb9ca54c2bbf4089ad200c3a70673787
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       securityContext:
