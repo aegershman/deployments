@@ -67,7 +67,11 @@ a | apply | deploy)
     ;;
   h | harbor)
     shift
-    kapp deploy -a harbor -f <(ytt -f ./cluster/config/harbor/) "$@"
+    kapp deploy -a harbor -f <(
+      ytt \
+        -f ./cluster/config/harbor/ \
+        -f ./cluster/config-optional/harbor-virtual-service.yml
+    ) "$@"
     ;;
   cf | cf-for-k8s)
     shift
