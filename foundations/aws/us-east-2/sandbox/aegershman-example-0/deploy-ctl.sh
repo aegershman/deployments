@@ -17,6 +17,12 @@ cf-for-k8s-build)
   ./build.sh build
   ;;
 
+helmfile-template)
+  # TODO having some issues with harbor continuously regenerating it's secrets every time 'template' is ran, which is annoying
+  # but also definitely needs to be investigated to make sure it doesn't break other things
+  helmfile --selector=name!=harbor template --skip-deps --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile"
+  ;;
+
 render)
   ytt --ignore-unknown-comments \
     -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config \
@@ -33,10 +39,6 @@ render)
     -f ./deployments/prometheus-operator/build/config/opsfiles/grafana-virtual-service.yml \
     -f ./deployments/prometheus-operator/build/config/opsfiles/prometheus-operator-namespace.yml \
     >./deployments/_rendered/cf-for-k8s-rendered.yml
-  ;;
-
-helmfile-template)
-  helmfile template --selector=name!=harbor --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile"
   ;;
 
 cf-for-k8s-diff-cf-generate-values) diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh ;;
