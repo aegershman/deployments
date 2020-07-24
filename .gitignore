@@ -14,5 +14,4 @@ bin
 
 creds.yml
 state.json
-dist
 clusterctl-*-amd64
