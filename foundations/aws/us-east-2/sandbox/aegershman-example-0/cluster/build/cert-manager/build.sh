@@ -8,7 +8,7 @@ case "$1" in
 *)
   echo "generating cert-manager resource definitions..."
   ytt --ignore-unknown-comments \
-    -f ${SCRIPT_DIR}/_vendir/cert-manager \
+    -f ${SCRIPT_DIR}/_vendir \
     >"${SCRIPT_DIR}/../../config/cert-manager/_ytt_lib/cert-manager/rendered.yml"
   ;;
 esac
