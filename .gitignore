@@ -1,5 +1,6 @@
 .DS_Store
 *.dec
+clusterctl-*-amd64
 
 # Local .terraform directories
 **/.terraform/*
@@ -10,6 +11,3 @@
 
 # .tfvars files
 *.tfvars
-
-creds.yml
-clusterctl-*-amd64
