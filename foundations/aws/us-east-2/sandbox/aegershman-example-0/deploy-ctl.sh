@@ -75,13 +75,15 @@ a | apply | deploy)
     ;;
   cf | cf-for-k8s)
     shift
-    kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml "$@"
+    kapp deploy -a cf -f <(
+      ytt -f ./cluster/config/cf-for-k8s/
+    ) "$@"
     ;;
   all)
     shift
-    kapp deploy -a external-dns -f <(ytt -f ./cluster/config/external-dns/) "$@"
-    kapp deploy -a harbor -f <(ytt -f ./cluster/config/harbor/) "$@"
-    kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml "$@"
+    ./deploy-ctl.sh apply cf-for-k8s "$@"
+    ./deploy-ctl.sh apply external-dns "$@"
+    ./deploy-ctl.sh apply harbor "$@"
     ;;
 
   *)
