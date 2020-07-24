@@ -10,7 +10,6 @@ case "$1" in
   helm template external-dns "${SCRIPT_DIR}/_vendir/bitnami/external-dns" \
     --values="${SCRIPT_DIR}/helm-values.yml" |
     ytt --ignore-unknown-comments -f - \
-      -f "${SCRIPT_DIR}/namespace.yml" \
       >"${SCRIPT_DIR}/../../config/external-dns/_ytt_lib/external-dns/rendered.yml"
   ;;
 esac

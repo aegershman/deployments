@@ -1,1 +1,24 @@
+#@ load("@ytt:library", "library")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:template", "template")
+
+#@ def add_external_dns_namespace():
+#@overlay/match by=overlay.all, expects="1+"
 ---
+metadata:
+  #@overlay/match missing_ok=True
+  namespace: external-dns
+  #@overlay/match missing_ok=True
+  labels:
+    #@overlay/match missing_ok=True
+    #@overlay/replace
+    istio-injection: disabled
+#@ end
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external-dns
+
+--- #@ template.replace(overlay.apply(library.get("external-dns").eval(), add_external_dns_namespace()))

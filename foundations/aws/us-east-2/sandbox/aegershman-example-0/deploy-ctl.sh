@@ -18,6 +18,8 @@ build)
 
 a | apply | deploy)
   kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml --yes
+  exit 0 # TODO
+  kapp deploy -a external-dns -f <(ytt -f ./cluster/config/external-dns/) --yes
   ;;
 
 d | delete)
