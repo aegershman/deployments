@@ -8,9 +8,9 @@ case "$1" in
 *)
   echo "generating external-dns resource definitions..."
   helm template external-dns --namespace=external-dns "${SCRIPT_DIR}/_vendir/github.com/bitnami/charts/bitnami/external-dns" \
-    --values="${SCRIPT_DIR}/../config/helm/values.yml" |
+    --values="${SCRIPT_DIR}/config/helm/values.yml" |
     ytt --ignore-unknown-comments -f - \
-      -f "${SCRIPT_DIR}/../config/opsfiles/external-dns-ns.yml" \
+      -f "${SCRIPT_DIR}/config/opsfiles/external-dns-ns.yml" \
       >"${SCRIPT_DIR}/../_rendered/external-dns-rendered.yml"
   ;;
 esac

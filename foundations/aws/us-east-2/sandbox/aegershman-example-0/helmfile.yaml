@@ -12,14 +12,14 @@ releases:
     chart: ./deployments/external-dns/build/_vendir/github.com/bitnami/charts/bitnami/external-dns
     installed: true
     values:
-      - ./deployments/external-dns/config/helm/values.yml
+      - ./deployments/external-dns/build/config/helm/values.yml
 
   - name: harbor
     namespace: harbor
     chart: ./deployments/harbor/build/_vendir/github.com/goharbor/harbor-helm
     installed: true
     values:
-      - ./deployments/harbor/config/helm/values.yml
+      - ./deployments/harbor/build/config/helm/values.yml
 
   - name: prometheus-operator
     namespace: prometheus-operator
@@ -27,4 +27,4 @@ releases:
     installed: false
     version: ~9.2.x
     values:
-      - ./deployments/prometheus-operator/config/helm/values.yml
+      - ./deployments/prometheus-operator/build/config/helm/values.yml
