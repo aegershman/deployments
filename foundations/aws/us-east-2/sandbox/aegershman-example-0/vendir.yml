@@ -23,7 +23,9 @@ directories:
           disableAutoChecksumValidation: true
         includePaths:
           - bitnami/external-dns/**/*
-  - path: cluster/build/harbor/_vendir
+    # TODO putting a path on harbor because it feels weird not putting
+    # it some sort of grouping
+  - path: cluster/build/harbor/_vendir/harbor-helm
     contents:
       - path: .
         git:
@@ -39,3 +41,10 @@ directories:
           - LICENSE
           - README.md
           - values.yaml
+
+  # the components in this section below are handled by their corresponding build scripts
+  # the manual param tells vendir to not override/touch the contents of these directories
+  - path: config/external-dns/_ytt_lib
+    contents:
+      - path: external-dns
+        manual: {}
