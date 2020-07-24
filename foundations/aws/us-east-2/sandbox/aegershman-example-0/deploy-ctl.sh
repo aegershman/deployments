@@ -17,24 +17,6 @@ helmfile-template)
   helmfile --selector=name!=harbor template --skip-deps --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile"
   ;;
 
-render)
-  ytt --ignore-unknown-comments \
-    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config \
-    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
-    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
-    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
-    -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/use-external-dns-for-wildcard.yml \
-    -f ./deployments/cf-for-k8s/_rendered/cf-values-generated.yml \
-    -f ./deployments/cf-for-k8s/build/config/opsfiles/cf-registry-values-harbor.yml \
-    -f ./deployments/external-dns/_rendered \
-    -f ./deployments/external-dns/build/config/opsfiles/external-dns-ns.yml \
-    -f ./deployments/harbor/build/config/opsfiles/harbor-namespace.yml \
-    -f ./deployments/harbor/build/config/opsfiles/harbor-virtual-service.yml \
-    -f ./deployments/prometheus-operator/build/config/opsfiles/grafana-virtual-service.yml \
-    -f ./deployments/prometheus-operator/build/config/opsfiles/prometheus-operator-namespace.yml \
-    >./deployments/_rendered/_rendered.yml
-  ;;
-
 cf-for-k8s-apply) kapp deploy -a cf -f ./deployments/_rendered/_rendered.yml --yes ;;
 cf-for-k8s-delete) kapp delete -a cf --yes ;;
 

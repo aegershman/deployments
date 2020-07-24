@@ -3,7 +3,9 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
-  - path: cluster/build/cf-for-k8s/_vendir
+  # TODO putting a path on harbor because it feels weird not putting
+  # it some sort of grouping
+  - path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
     contents:
       - path: .
         git:
