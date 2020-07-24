@@ -79,7 +79,8 @@ if [[ -n ${GCP_SERVICE_ACCOUNT_JSON_FILE:=} ]]; then
   fi
 fi
 
-VARS_FILE="./_rendered/cf-vars.yaml"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+VARS_FILE="${SCRIPT_DIR}/../_rendered/cf-vars.yaml"
 
 # Make sure bosh binary exists
 bosh --version >/dev/null
