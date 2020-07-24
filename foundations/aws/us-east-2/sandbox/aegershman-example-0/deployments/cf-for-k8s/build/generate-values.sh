@@ -79,7 +79,7 @@ if [[ -n ${GCP_SERVICE_ACCOUNT_JSON_FILE:=} ]]; then
   fi
 fi
 
-VARS_FILE="../_rendered/cf-vars.yaml"
+VARS_FILE="./_rendered/cf-vars.yaml"
 
 # Make sure bosh binary exists
 bosh --version >/dev/null
