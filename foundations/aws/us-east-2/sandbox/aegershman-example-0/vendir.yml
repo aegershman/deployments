@@ -37,7 +37,7 @@ directories:
       - path: .
         git:
           url: https://github.com/goharbor/harbor-helm
-          ref: origin/v1.3.4
+          ref: tags/v1.3.4
         includePaths:
           - cert/**/*
           - conf/**/*
