@@ -17,7 +17,7 @@ cf-for-k8s-build)
   ./build.sh build
   ;;
 
-_render)
+render)
   ytt \
     -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config \
     -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
