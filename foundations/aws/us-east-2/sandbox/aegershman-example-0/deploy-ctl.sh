@@ -8,27 +8,54 @@ eksctl-write-kubeconfig) eksctl utils write-kubeconfig --region=us-east-2 --clus
 eksd | eksctl-delete) eksctl delete cluster -f ./eks-cluster.yaml ;;
 
 build)
-  for b in ./cluster/build/*; do
-    pushd "${b}"
-    echo "in ${b}..."
+  shift
+  case "${1}" in
+  ed | external-dns)
+    pushd ./cluster/build/external-dns
     ./build.sh
     popd
-  done
+    ;;
+  h | harbor)
+    pushd ./cluster/build/harbor
+    ./build.sh
+    popd
+    ;;
+  cf | cf-for-k8s)
+    pushd ./cluster/build/cf-for-k8s
+    ./build.sh
+    popd
+    ;;
+  all)
+    for b in ./cluster/build/*; do
+      pushd "${b}"
+      echo "in ${b}..."
+      ./build.sh
+      popd
+    done
+    ;;
+  *)
+    echo "usage: ./deploy.sh build all"
+    echo "usage: ./deploy.sh build <kapp-env>"
+    echo "example: ./deploy-ctl.sh build harbor"
+    echo "example: ./deploy-ctl.sh build all"
+    exit 1
+    ;;
+  esac
   ;;
 
 a | apply | deploy)
-  # ./deploy-ctl.sh apply cf --yes
   shift
-  target="${1}"
-  shift
-  case "${target}" in
-  external-dns)
+  case "${1}" in
+  ed | external-dns)
+    shift
     kapp deploy -a external-dns -f <(ytt -f ./cluster/config/external-dns/) "$@"
     ;;
-  harbor)
+  h | harbor)
+    shift
     kapp deploy -a harbor -f <(ytt -f ./cluster/config/harbor/) "$@"
     ;;
-  cf)
+  cf | cf-for-k8s)
+    shift
     kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml "$@"
     ;;
   *)
@@ -41,9 +68,25 @@ a | apply | deploy)
 
 d | delete)
   shift
-  # ./deploy-ctl.sh delete --yes
-  kapp delete -a cf "$@"
-  kapp delete -a external-dns "$@"
+  case "${1}" in
+  ed | external-dns)
+    shift
+    kapp delete -a external-dns "$@"
+    ;;
+  h | harbor)
+    shift
+    kapp delete -a harbor "$@"
+    ;;
+  cf | cf-for-k8s)
+    shift
+    kapp delete -a cf "$@"
+    ;;
+  *)
+    echo "usage: ./deploy.sh delete <kapp-env> [optional-args...]"
+    echo "example: ./deploy-ctl.sh delete harbor --yes"
+    exit 1
+    ;;
+  esac
   ;;
 
 pi | cf-for-k8s-post-install)
