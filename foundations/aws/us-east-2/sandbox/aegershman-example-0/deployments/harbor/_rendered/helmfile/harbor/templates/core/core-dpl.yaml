@@ -1,0 +1,97 @@
+---
+# Source: harbor/templates/core/core-dpl.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harbor-harbor-core
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: "harbor"
+    component: core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      release: harbor
+      app: "harbor"
+      component: core
+  template:
+    metadata:
+      labels:
+        release: harbor
+        app: "harbor"
+        component: core
+      annotations:
+        checksum/configmap: aa4c175f2c47d482653fcf49f4dc55defbc6f075b79d97fb09f6dde189120128
+        checksum/secret: 5e27dcee360b4d752e7b336cf11a96a26b1799d031329eecf0927422c86f2b72
+        checksum/secret-jobservice: 78dc511fa0ebf3abafed20349b7b4d4a496c8588b5bec63ccc530275086b02f2
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      securityContext:
+        fsGroup: 10000
+      containers:
+      - name: core
+        image: goharbor/harbor-core:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /api/ping
+            port: 8080
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/ping
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: "harbor-harbor-core"
+        - secretRef:
+            name: "harbor-harbor-core"
+        env:
+          - name: CORE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: harbor-harbor-core
+                key: secret
+          - name: JOBSERVICE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: "harbor-harbor-jobservice"
+                key: secret
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config
+          mountPath: /etc/core/app.conf
+          subPath: app.conf
+        - name: secret-key
+          mountPath: /etc/core/key
+          subPath: key
+        - name: token-service-private-key
+          mountPath: /etc/core/private_key.pem
+          subPath: tls.key
+        - name: psc
+          mountPath: /etc/core/token
+      volumes:
+      - name: config
+        configMap:
+          name: harbor-harbor-core
+          items:
+            - key: app.conf
+              path: app.conf
+      - name: secret-key
+        secret:
+          secretName: harbor-harbor-core
+          items:
+            - key: secretKey
+              path: key
+      - name: token-service-private-key
+        secret:
+          secretName: harbor-harbor-core
+      - name: psc
+        emptyDir: {}

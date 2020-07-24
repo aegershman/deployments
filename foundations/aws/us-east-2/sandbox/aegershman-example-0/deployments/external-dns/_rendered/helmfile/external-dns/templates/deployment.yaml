@@ -1,0 +1,75 @@
+---
+# Source: external-dns/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  labels: 
+    app.kubernetes.io/name: external-dns
+    helm.sh/chart: external-dns-3.2.4
+    app.kubernetes.io/instance: external-dns
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app.kubernetes.io/name: external-dns
+      app.kubernetes.io/instance: external-dns
+  template:
+    metadata:
+      labels: 
+        app.kubernetes.io/name: external-dns
+        helm.sh/chart: external-dns-3.2.4
+        app.kubernetes.io/instance: external-dns
+        app.kubernetes.io/managed-by: Helm
+      annotations:
+        
+        gershman.io/purpose: none
+    spec:      
+      securityContext: 
+        fsGroup: 1001
+        runAsUser: 1001
+      serviceAccountName: external-dns
+      containers:
+        - name: external-dns
+          image: "docker.io/bitnami/external-dns:0.7.2-debian-10-r46"
+          imagePullPolicy: "IfNotPresent"
+          args:
+            # Generic arguments
+            - --log-level=info
+            - --log-format=text
+            - --policy=sync
+            - --provider=aws
+            - --registry=txt
+            - --interval=1m
+            - --source=service
+            - --source=ingress
+            # AWS arguments
+            - --aws-batch-change-size=1000
+          env:
+            # AWS environment variables
+            - name: AWS_DEFAULT_REGION
+              value: us-east-2
+          ports:
+            - name: http
+              containerPort: 7979
+          readinessProbe: 
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          livenessProbe: 
+            failureThreshold: 2
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          volumeMounts:
+      volumes:

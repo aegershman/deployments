@@ -1,0 +1,123 @@
+---
+# Source: harbor/templates/registry/registry-dpl.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "harbor-harbor-registry"
+  labels:
+    heritage: Helm
+    release: harbor
+    chart: harbor
+    app: "harbor"
+    component: registry
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      release: harbor
+      app: "harbor"
+      component: registry
+  template:
+    metadata:
+      labels:
+        heritage: Helm
+        release: harbor
+        chart: harbor
+        app: "harbor"
+        component: registry
+      annotations:
+        checksum/configmap: 262e4997f794e097e2302ba72bdd63e4e0654848d258d64c9e1c446d890a13d4
+        checksum/secret: 272e81599b35ab3d91d5f1c4ebaf5555dd4e18e68818fac6be50801e809f837b
+        checksum/secret-jobservice: 344247343528427ad6c4a882ea76c1e984d8dfc461e9bede839c5ec4f2688ae6
+        checksum/secret-core: 235d5a568b3a9b5e301c6674602ef64d5e1bc264905d1ffaba47e9ca6a6d220c
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      securityContext:
+        fsGroup: 10000
+      containers:
+      - name: registry
+        image: goharbor/registry-photon:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        args: ["serve", "/etc/registry/config.yml"]
+        envFrom:
+        - secretRef:
+            name: "harbor-harbor-registry"
+        ports:
+        - containerPort: 5000
+        - containerPort: 5001
+        volumeMounts:
+        - name: registry-data
+          mountPath: /storage
+          subPath: 
+        - name: registry-root-certificate
+          mountPath: /etc/registry/root.crt
+          subPath: tls.crt
+        - name: registry-config
+          mountPath: /etc/registry/config.yml
+          subPath: config.yml
+      - name: registryctl
+        image: goharbor/harbor-registryctl:v1.10.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        args: ["serve", "/etc/registry/config.yml"]
+        envFrom:
+        - secretRef:
+            name: "harbor-harbor-registry"
+        env:
+          - name: CORE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: harbor-harbor-core
+                key: secret
+          - name: JOBSERVICE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: harbor-harbor-jobservice
+                key: secret
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: registry-data
+          mountPath: /storage
+          subPath: 
+        - name: registry-config
+          mountPath: /etc/registry/config.yml
+          subPath: config.yml
+        - name: registry-config
+          mountPath: /etc/registryctl/config.yml
+          subPath: ctl-config.yml
+      volumes:
+      - name: registry-root-certificate
+        secret:
+          secretName: harbor-harbor-core
+      - name: registry-config
+        configMap:
+          name: "harbor-harbor-registry"
+      - name: registry-data
+        persistentVolumeClaim:
+          claimName: harbor-harbor-registry
