@@ -25,6 +25,13 @@ build)
     ./build.sh
     popd
     ;;
+  cfc | cf-clean | cf-regenerate-values)
+    pushd ./cluster/build/cf-for-k8s
+    ./build.sh diff-generate-values-script-with-upstream
+    ./build.sh clean
+    ./build.sh generate-values
+    popd
+    ;;
   all)
     for b in ./cluster/build/*; do
       pushd "${b}"
@@ -36,8 +43,10 @@ build)
   *)
     echo "usage: ./deploy.sh build all"
     echo "usage: ./deploy.sh build <kapp-env>"
+    echo "usage: ./deploy.sh build cf-regenerate-values"
     echo "example: ./deploy-ctl.sh build harbor"
     echo "example: ./deploy-ctl.sh build all"
+    echo "example: ./deploy-ctl.sh build {cfc, cf-clean, cf-regenerate-values}"
     exit 1
     ;;
   esac
