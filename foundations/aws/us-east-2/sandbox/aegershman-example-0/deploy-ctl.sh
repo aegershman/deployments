@@ -7,15 +7,9 @@ eksctl-create) eksctl create cluster --config-file=eks-cluster.yaml ;;
 eksctl-write-kubeconfig) eksctl utils write-kubeconfig --region=us-east-2 --cluster=aegershman-example-0 --auto-kubeconfig ;;
 eksctl-delete) eksctl delete cluster -f ./eks-cluster.yaml ;;
 
-cf-for-k8s-clean-values)
-  cd ./deployments/cf-for-k8s/build
-  ./build.sh clean-generated-cf-values
-  ;;
-
-cf-for-k8s-build)
-  cd ./deployments/cf-for-k8s/build
-  ./build.sh build
-  ;;
+cf-for-k8s-diff-cf-generate-values) diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh ;;
+cf-for-k8s-clean-values) ./deployments/cf-for-k8s/build/build.sh clean-generated-cf-values ;;
+cf-for-k8s-generate-values) ./deployments/cf-for-k8s/build/build.sh generate-values ;;
 
 helmfile-template)
   # TODO having some issues with harbor continuously regenerating it's secrets every time 'template' is ran, which is annoying
@@ -30,7 +24,7 @@ render)
     -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
     -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
     -f ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/use-external-dns-for-wildcard.yml \
-    -f ./deployments/cf-for-k8s/_rendered/cf/cf-values-generated.yml \
+    -f ./deployments/cf-for-k8s/_rendered/cf-values-generated.yml \
     -f ./deployments/cf-for-k8s/build/config/opsfiles/cf-registry-values-harbor.yml \
     -f ./deployments/external-dns/_rendered \
     -f ./deployments/external-dns/build/config/opsfiles/external-dns-ns.yml \
@@ -38,16 +32,15 @@ render)
     -f ./deployments/harbor/build/config/opsfiles/harbor-virtual-service.yml \
     -f ./deployments/prometheus-operator/build/config/opsfiles/grafana-virtual-service.yml \
     -f ./deployments/prometheus-operator/build/config/opsfiles/prometheus-operator-namespace.yml \
-    >./deployments/_rendered/cf-for-k8s-rendered.yml
+    >./deployments/_rendered/_rendered.yml
   ;;
 
-cf-for-k8s-diff-cf-generate-values) diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh ;;
-cf-for-k8s-apply) kapp deploy -a cf -f ./deployments/cf-for-k8s/_rendered/cf/cf-for-k8s-rendered.yml --yes ;;
+cf-for-k8s-apply) kapp deploy -a cf -f ./deployments/_rendered/_rendered.yml --yes ;;
 cf-for-k8s-delete) kapp delete -a cf --yes ;;
 
 cf-for-k8s-post-install)
   cf api --skip-ssl-validation https://api.cf.gershman.io
-  cf auth admin $(yq r ./deployments/cf-for-k8s/_rendered/cf/cf-values-generated.yml 'cf_admin_password')
+  cf auth admin $(yq r ./deployments/cf-for-k8s/_rendered/cf-values-generated.yml 'cf_admin_password')
   cf target
   cf enable-feature-flag diego_docker
   cf create-org test-org
