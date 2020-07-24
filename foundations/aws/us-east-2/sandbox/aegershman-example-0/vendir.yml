@@ -3,14 +3,12 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
-  # TODO putting a path on harbor because it feels weird not putting
-  # it some sort of grouping
   - path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
     contents:
       - path: .
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: b892ece915d5968a312e0abe6d37cca9a1520d60 # beyond v0.4.0
+          ref: 5016da8f1ab0b90d1e626109897801301f01b4d1 # beyond v0.4.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -25,8 +23,6 @@ directories:
           disableAutoChecksumValidation: true
         includePaths:
           - bitnami/external-dns/**/*
-    # TODO putting a path on harbor because it feels weird not putting
-    # it some sort of grouping
   - path: cluster/build/harbor/_vendir/harbor-helm
     contents:
       - path: .
@@ -55,7 +51,7 @@ directories:
 
   # the components in this section below are handled by their corresponding build scripts
   # the manual param tells vendir to not override/touch the contents of these directories
-  - path: cluster/config/cf-for-k8s/_ytt_lib # TODO on cf-for-k8s, it's a special case
+  - path: cluster/config/cf-for-k8s/_ytt_lib
     contents:
       - path: cf-for-k8s
         manual: {}
