@@ -19,6 +19,12 @@ directories:
     path: .
   path: cluster/build/harbor/_vendir/harbor-helm
 - contents:
+  - git:
+      commitTitle: '[prometheus-operator] Fixing scope issue (#23014) (#23022)...'
+      sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6
+    path: .
+  path: cluster/build/prometheus-operator/_vendir
+- contents:
   - manual: {}
     path: cf-for-k8s
   path: cluster/config/cf-for-k8s/_ytt_lib

@@ -67,3 +67,7 @@ directories:
     contents:
       - path: harbor
         manual: {}
+  - path: cluster/config/prometheus-operator/_ytt_lib
+    contents:
+      - path: prometheus-operator
+        manual: {}
