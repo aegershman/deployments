@@ -7,6 +7,15 @@ eksc | eksctl-create) eksctl create cluster --config-file=eks-cluster.yaml ;;
 eksctl-write-kubeconfig) eksctl utils write-kubeconfig --region=us-east-2 --cluster=aegershman-example-0 --auto-kubeconfig ;;
 eksd | eksctl-delete) eksctl delete cluster -f ./eks-cluster.yaml ;;
 
+build)
+  for b in ./cluster/build/*; do
+    pushd "${b}"
+    echo "in ${b}..."
+    ./build.sh
+    popd
+  done
+  ;;
+
 a | apply | deploy)
   kapp deploy -a cf -f ./cluster/config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml --yes
   ;;

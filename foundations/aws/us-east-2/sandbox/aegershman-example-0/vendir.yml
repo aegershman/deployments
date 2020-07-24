@@ -43,6 +43,15 @@ directories:
           - LICENSE
           - README.md
           - values.yaml
+  - path: cluster/build/prometheus-operator/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/helm/charts
+          ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
+          disableAutoChecksumValidation: true
+        includePaths:
+          - stable/prometheus-operator/**/*
 
   # the components in this section below are handled by their corresponding build scripts
   # the manual param tells vendir to not override/touch the contents of these directories
