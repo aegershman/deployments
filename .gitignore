@@ -1,6 +1,7 @@
 .credentials/*
 .DS_Store
 *.dec
+*.tar.gz
 clusterctl-*-amd64
 
 # Local .terraform directories
