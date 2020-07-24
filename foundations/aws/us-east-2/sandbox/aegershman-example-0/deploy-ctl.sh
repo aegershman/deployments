@@ -3,17 +3,9 @@
 set -euo pipefail
 
 case "$1" in
-eksctl-create)
-  eksctl create cluster --config-file=eks-cluster.yaml
-  ;;
-
-eksctl-write-kubeconfig)
-  eksctl utils write-kubeconfig --region=us-east-2 --cluster=aegershman-example-0 --auto-kubeconfig
-  ;;
-
-eksctl-delete)
-  eksctl delete cluster -f ./eks-cluster.yaml
-  ;;
+eksctl-create) eksctl create cluster --config-file=eks-cluster.yaml ;;
+eksctl-write-kubeconfig) eksctl utils write-kubeconfig --region=us-east-2 --cluster=aegershman-example-0 --auto-kubeconfig ;;
+eksctl-delete) eksctl delete cluster -f ./eks-cluster.yaml ;;
 
 cf-for-k8s-clean-values)
   cd ./deployments/cf-for-k8s/build
@@ -25,21 +17,10 @@ cf-for-k8s-build)
   ./build.sh build
   ;;
 
-helmfile-template)
-  helmfile template --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile"
-  ;;
-
-cf-for-k8s-diff-cf-generate-values)
-  diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh
-  ;;
-
-cf-for-k8s-apply)
-  kapp deploy -a cf -f ./deployments/cf-for-k8s/_rendered/cf/cf-for-k8s-rendered.yml --yes
-  ;;
-
-cf-for-k8s-delete)
-  kapp delete -a cf --yes
-  ;;
+helmfile-template) helmfile template --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile" ;;
+cf-for-k8s-diff-cf-generate-values) diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh ;;
+cf-for-k8s-apply) kapp deploy -a cf -f ./deployments/cf-for-k8s/_rendered/cf/cf-for-k8s-rendered.yml --yes ;;
+cf-for-k8s-delete) kapp delete -a cf --yes ;;
 
 cf-for-k8s-post-install)
   cf api --skip-ssl-validation https://api.cf.gershman.io
