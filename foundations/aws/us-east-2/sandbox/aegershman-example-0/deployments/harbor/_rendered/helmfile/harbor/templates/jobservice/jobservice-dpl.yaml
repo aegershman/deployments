@@ -29,8 +29,8 @@ spec:
         component: jobservice
       annotations:
         checksum/configmap: 23a75a60a28dbe0ba49e366d2004dce405a18eb4cd61cd61b62155e1d5887ce4
-        checksum/secret: 0fee9dacdd2346dfb76d2604efbf298c2438c9856e87e936a17efff85872eaa7
-        checksum/secret-core: a11c255cafb8b1c6135a7824e4105ac6c752e82022e05445c302232d40874732
+        checksum/secret: 6f1dd093f0ddf3e73e0cb2131f6c4777fca8051e7dd4cde42a2f0c6610ce1d7c
+        checksum/secret-core: cb1da6970488e5486b0a3ec59f89cd8d52350258fe63742ea5bcb38044d2ea2c
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       securityContext:

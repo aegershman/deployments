@@ -35,7 +35,10 @@ render)
     >./deployments/_rendered/cf-for-k8s-rendered.yml
   ;;
 
-helmfile-template) helmfile template --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile" ;;
+helmfile-template)
+  helmfile template --selector=name!=harbor --output-dir="./deployments" --output-dir-template="{{ .OutputDir }}/{{ .Release.Name }}/_rendered/helmfile"
+  ;;
+
 cf-for-k8s-diff-cf-generate-values) diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh ;;
 cf-for-k8s-apply) kapp deploy -a cf -f ./deployments/cf-for-k8s/_rendered/cf/cf-for-k8s-rendered.yml --yes ;;
 cf-for-k8s-delete) kapp delete -a cf --yes ;;

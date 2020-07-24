@@ -24,7 +24,7 @@ spec:
         app.kubernetes.io/managed-by: Helm
       annotations:
         
-        
+        gershman.io/purpose: none
     spec:      
       securityContext: 
         fsGroup: 1001

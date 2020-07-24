@@ -20,5 +20,20 @@ logLevel: info # panic, debug, info, warn, error, fatal
 interval: 1m
 policy: sync # sync, upsert-only
 
+# TODO there has to be some annotation which triggers helm to
+# render the annotations block in the deployment.yaml, or else
+# it'll be an empty map with a key/value of "annotations:", and
+# it'll cause a weird yaml rendering junk.
+# https://github.com/bitnami/charts/blob/master/bitnami/external-dns/values.yaml#L408
+# as such, for the time being we're just going to include a placeholder annotation
+#
+# alternatively, we can turn on "metrics" and use podAnnotations
+# such as prometheus.io/scrape which will substitute this and work
+podAnnotations:
+  gershman.io/purpose: none
+
 metrics:
   enabled: false
+  # podAnnotations:
+  #   prometheus.io/scrape: "true"
+  #   prometheus.io/port: "7979"
