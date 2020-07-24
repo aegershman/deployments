@@ -3,13 +3,9 @@
 set -euo pipefail
 
 case "$1" in
-clean-generated-cf-values)
-  rm -f ../_rendered/cf/cf-vars.yaml
-  ;;
 
-generate-values)
-  ./generate-values.sh --silence-hack-warning --cf-domain cf.gershman.io >../_rendered/cf/cf-values-generated.yml
-  ;;
+clean-generated-cf-values) rm -f ../_rendered/cf/cf-vars.yaml ;;
+generate-values) ./generate-values.sh --silence-hack-warning --cf-domain cf.gershman.io >../_rendered/cf/cf-values-generated.yml ;;
 
 render)
   ytt \
@@ -19,11 +15,11 @@ render)
     -f _vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
     -f _vendir/github.com/cloudfoundry/cf-for-k8s/config-optional/use-external-dns-for-wildcard.yml \
     -f ../_rendered/cf/cf-values-generated.yml \
-    -f ../config/opsfiles/cf-registry-values-harbor.yml \
-    -f ../../harbor/config/opsfiles/harbor-namespace.yml \
-    -f ../../harbor/config/opsfiles/harbor-virtual-service.yml \
-    -f ../../prometheus-operator/config/opsfiles/grafana-virtual-service.yml \
-    -f ../../prometheus-operator/config/opsfiles/prometheus-operator-namespace.yml \
+    -f ./config/opsfiles/cf-registry-values-harbor.yml \
+    -f ../../harbor/build/config/opsfiles/harbor-namespace.yml \
+    -f ../../harbor/build/config/opsfiles/harbor-virtual-service.yml \
+    -f ../../prometheus-operator/build/config/opsfiles/grafana-virtual-service.yml \
+    -f ../../prometheus-operator/build/config/opsfiles/prometheus-operator-namespace.yml \
     >../_rendered/cf/cf-for-k8s-rendered.yml
   ;;
 
