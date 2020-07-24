@@ -10,6 +10,11 @@ eksd | eksctl-delete) eksctl delete cluster -f ./eks-cluster.yaml ;;
 build)
   shift
   case "${1}" in
+  cm | cert-manager)
+    pushd ./cluster/build/cert-manager
+    ./build.sh
+    popd
+    ;;
   ed | external-dns)
     pushd ./cluster/build/external-dns
     ./build.sh
@@ -61,6 +66,12 @@ build)
 a | apply | deploy)
   shift
   case "${1}" in
+  cm | cert-manager)
+    shift
+    kapp deploy -a cert-manager -f <(
+      ytt -f ./cluster/config/cert-manager/
+    ) "$@"
+    ;;
   ed | external-dns)
     shift
     kapp deploy -a external-dns -f <(
@@ -84,6 +95,7 @@ a | apply | deploy)
   all)
     shift
     ./deploy-ctl.sh apply cf-for-k8s "$@"
+    ./deploy-ctl.sh apply cert-manager "$@"
     ./deploy-ctl.sh apply external-dns "$@"
     ./deploy-ctl.sh apply harbor "$@"
     ;;
@@ -99,6 +111,10 @@ a | apply | deploy)
 d | delete)
   shift
   case "${1}" in
+  cm | cert-manager)
+    shift
+    kapp delete -a cert-manager "$@"
+    ;;
   ed | external-dns)
     shift
     kapp delete -a external-dns "$@"
@@ -116,6 +132,7 @@ d | delete)
     kapp delete -a cf "$@"
     kapp delete -a harbor "$@"
     kapp delete -a external-dns "$@"
+    kapp delete -a cert-manager "$@"
     ;;
   *)
     echo "usage: ./deploy.sh delete {kapp-env} [optional-args...]"
