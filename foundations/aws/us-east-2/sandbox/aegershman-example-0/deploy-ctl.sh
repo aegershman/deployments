@@ -63,7 +63,9 @@ a | apply | deploy)
   case "${1}" in
   ed | external-dns)
     shift
-    kapp deploy -a external-dns -f <(ytt -f ./cluster/config/external-dns/) "$@"
+    kapp deploy -a external-dns -f <(
+      ytt -f ./cluster/config/external-dns/
+    ) "$@"
     ;;
   h | harbor)
     shift
@@ -85,7 +87,6 @@ a | apply | deploy)
     ./deploy-ctl.sh apply external-dns "$@"
     ./deploy-ctl.sh apply harbor "$@"
     ;;
-
   *)
     echo "usage: ./deploy.sh apply all [optional-args...]"
     echo "usage: ./deploy.sh apply {kapp-env} [optional-args...]"
