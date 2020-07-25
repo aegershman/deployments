@@ -12,6 +12,11 @@ directories:
     path: .
   path: cluster/build/ingress-nginx/_vendir
 - contents:
+  - githubRelease:
+      url: https://api.github.com/repos/cloudfoundry-incubator/kubecf/releases/27827596
+    path: .
+  path: cluster/build/kubecf/_vendir
+- contents:
   - git:
       commitTitle: '[prometheus-operator] Fixing scope issue (#23014) (#23022)...'
       sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6

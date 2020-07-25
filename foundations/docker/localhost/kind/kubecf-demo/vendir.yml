@@ -27,7 +27,7 @@ directories:
       - path: .
         githubRelease:
           slug: cloudfoundry-incubator/kubecf
-          tag: 2.3.0
+          tag: v2.3.0
           disableAutoChecksumValidation: true
           unpackArchive:
             path: kubecf-v2.3.0.tgz
