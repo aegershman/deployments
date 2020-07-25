@@ -22,5 +22,5 @@ tasks:
     cmds:
       - | # purely for copy-paste convenience
         exit 1
-        cd ./foundations/aws/us-east-2/sandbox/aegershman-example-0
+        cd ./foundations/aws/us-east-2/sandbox/cf-for-k8s-demo
         cd ./foundations/docker/localhost/kind/cf-for-k8s-demo

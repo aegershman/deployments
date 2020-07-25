@@ -1,0 +1,26 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: concourse-demo
+  region: us-east-2
+  version: "1.17"
+  tags: {}
+
+vpc:
+  nat:
+    gateway: Single
+
+managedNodeGroups:
+  - name: ng-1
+    instanceType: t3.medium
+    desiredCapacity: 2
+    volumeSize: 80
+    labels: {}
+    tags: {}
+    iam:
+      withAddonPolicies:
+        certManager: true
+        ebs: true
+        externalDNS: true

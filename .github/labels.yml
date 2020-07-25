@@ -7,6 +7,15 @@
 - name: area/deployment-mgmt
   color: 0F111A
   description: changes to workflows like helmfile, .github/**, etc.
+- name: area/security
+  color: 0F111A
+  description: changes related to security
+- name: area/networking
+  color: 0F111A
+  description: changes to istio, ingress, networking, etc.
+- name: area/go-learn-about
+  color: 0F111A
+  description: something to go research and learn about
 
 - name: foundation/iaas:aws
   color: 23395B
@@ -75,3 +84,7 @@
 - name: wontfix
   color: EF9CDA
   description: this will not be worked on
+
+- name: duplicate
+  color: EF9CDA
+  description: duplicate issue

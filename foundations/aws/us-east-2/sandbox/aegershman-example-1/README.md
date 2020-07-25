@@ -1,1 +1,0 @@
-# aegershman-example-1

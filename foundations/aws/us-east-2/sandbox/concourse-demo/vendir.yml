@@ -1,0 +1,62 @@
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.8.0
+directories:
+  - path: cluster/build/concourse-web/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/concourse/concourse-chart
+          ref: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78 # 11.4.0
+        includePaths:
+          - templates/**/*
+          - .gitignore
+          - Chart.yaml
+          - README.md
+          - values.yaml
+  - path: cluster/build/concourse-workers/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/concourse/concourse-chart
+          ref: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78 # 11.4.0
+        includePaths:
+          - templates/**/*
+          - .gitignore
+          - Chart.yaml
+          - README.md
+          - values.yaml
+  - path: cluster/build/external-dns/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/bitnami/charts
+          ref: a0d9242d3aa21296ffe0584e5eda478bcc961ea7 # 3.2.4
+        includePaths:
+          - bitnami/external-dns/**/*
+  - path: cluster/build/ingress-nginx/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/kubernetes/ingress-nginx
+          ref: 1d250bcbd99d2baa786df0c7a5537c852eab33b5 # 2.1.1
+        includePaths:
+          - charts/ingress-nginx/**/*
+
+  - path: cluster/config/concourse-web/_ytt_lib
+    contents:
+      - path: concourse-web
+        manual: {}
+  - path: cluster/config/concourse-workers/_ytt_lib
+    contents:
+      - path: concourse-workers
+        manual: {}
+  - path: cluster/config/external-dns/_ytt_lib
+    contents:
+      - path: external-dns
+        manual: {}
+  - path: cluster/config/ingress-nginx/_ytt_lib
+    contents:
+      - path: ingress-nginx
+        manual: {}
