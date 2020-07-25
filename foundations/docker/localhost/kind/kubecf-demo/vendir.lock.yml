@@ -1,9 +1,8 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
-  - git:
-      commitTitle: Merge remote-tracking branch 'origin/master' into v5.0.x
-      sha: a696f719d146325ff85b93f8d71e2efcc8e68e57
+  - githubRelease:
+      url: https://api.github.com/repos/cloudfoundry-incubator/quarks-operator/releases/28442259
     path: .
   path: cluster/build/cf-operator/_vendir
 - contents:
