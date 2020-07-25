@@ -40,7 +40,7 @@ directories:
       - path: .
         git:
           url: https://github.com/kubernetes/ingress-nginx
-          ref: 1d250bcbd99d2baa786df0c7a5537c852eab33b5 # 2.1.1
+          ref: 1d250bcbd99d2baa786df0c7a5537c852eab33b5 # 2.11.1
         includePaths:
           - charts/ingress-nginx/**/*
 
