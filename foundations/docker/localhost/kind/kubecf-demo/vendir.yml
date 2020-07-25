@@ -12,8 +12,8 @@ directories:
           disableAutoChecksumValidation: true
           unpackArchive:
             path: cf-operator-5.1.0+0.ga696f719.tgz
-        # includePaths:
-        #   - cf-operator-5.1.0+0.ga696f719.tgz
+        excludePaths:
+          - requirements.yaml
   - path: cluster/build/ingress-nginx/_vendir
     contents:
       - path: .
