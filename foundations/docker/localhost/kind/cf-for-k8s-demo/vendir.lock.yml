@@ -18,6 +18,12 @@ directories:
   path: cluster/build/harbor/_vendir/harbor-helm
 - contents:
   - git:
+      commitTitle: 'fix: bump jaeger-operator chart version to 2.15.1...'
+      sha: c1df2ceb25a7ac283344242e84296b1968dd684d
+    path: .
+  path: cluster/build/jaeger-operator/_vendir
+- contents:
+  - git:
       commitTitle: 'feat: Add support for deploying rabbitmq (#82)...'
       sha: 95ea5724ff5ff46079d103e610c3921d4280ee22
     path: .
@@ -34,6 +40,12 @@ directories:
       sha: 8e85904ae5ec4d228ebd0c463b7718f1a7891f69
     path: .
   path: cluster/build/service-catalog/_vendir
+- contents:
+  - git:
+      commitTitle: 'Merge pull request #4329 from cloudfoundry/v3.2.1-release-notes...'
+      sha: ca4f7be47eeb6a7fad2fbaafb98452019857c802
+    path: .
+  path: cluster/build/stratos/_vendir
 - contents:
   - manual: {}
     path: cf-for-k8s

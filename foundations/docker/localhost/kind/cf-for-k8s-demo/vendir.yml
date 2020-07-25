@@ -39,6 +39,14 @@ directories:
           - LICENSE
           - README.md
           - values.yaml
+  - path: cluster/build/jaeger-operator/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/jaegertracing/helm-charts
+          ref: c1df2ceb25a7ac283344242e84296b1968dd684d # 2.15.1
+        includePaths:
+          - charts/jaeger-operator/**/*
   - path: cluster/build/minibroker/_vendir
     contents:
       - path: .
@@ -65,9 +73,15 @@ directories:
           - charts/catalog/**/*
           - charts/healthcheck/**/*
           - charts/ups-broker/**/*
+  - path: cluster/build/stratos/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/cloudfoundry/stratos
+          ref: tags/3.2.1
+        includePaths:
+          - deploy/kubernetes/console/**/*
 
-  # the components in this section below are handled by their corresponding build scripts
-  # the manual param tells vendir to not override/touch the contents of these directories
   - path: cluster/config/cf-for-k8s/_ytt_lib
     contents:
       - path: cf-for-k8s
