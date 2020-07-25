@@ -1,0 +1,37 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Merge remote-tracking branch 'origin/master' into v5.0.x
+      sha: a696f719d146325ff85b93f8d71e2efcc8e68e57
+    path: .
+  path: cluster/build/cf-operator/_vendir
+- contents:
+  - git:
+      commitTitle: Release helm chart for v0.34.1
+      sha: 1d250bcbd99d2baa786df0c7a5537c852eab33b5
+    path: .
+  path: cluster/build/ingress-nginx/_vendir
+- contents:
+  - git:
+      commitTitle: '[prometheus-operator] Fixing scope issue (#23014) (#23022)...'
+      sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6
+    path: .
+  path: cluster/build/prometheus-operator/_vendir
+- contents:
+  - manual: {}
+    path: cf-operator
+  path: cluster/config/cf-operator/_ytt_lib
+- contents:
+  - manual: {}
+    path: ingress-nginx
+  path: cluster/config/ingress-nginx/_ytt_lib
+- contents:
+  - manual: {}
+    path: kubecf
+  path: cluster/config/kubecf/_ytt_lib
+- contents:
+  - manual: {}
+    path: prometheus-operator
+  path: cluster/config/prometheus-operator/_ytt_lib
+kind: LockConfig

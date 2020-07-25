@@ -6,11 +6,12 @@ directories:
   - path: cluster/build/cf-operator/_vendir
     contents:
       - path: .
-        git:
-          url: https://github.com/cloudfoundry-incubator/quarks-operator
-          ref: tags/5.1.4
+        githubRelease:
+          slug: cloudfoundry-incubator/quarks-operator
+          tag: v5.1.0
+          disableAutoChecksumValidation: true
         includePaths:
-          - deploy/helm/cf-operator/**/*
+          - cf-operator-5.1.0+0.ga696f719.tgz
   - path: cluster/build/ingress-nginx/_vendir
     contents:
       - path: .
@@ -18,7 +19,10 @@ directories:
           url: https://github.com/kubernetes/ingress-nginx
           ref: 1d250bcbd99d2baa786df0c7a5537c852eab33b5 # 2.11.1
         includePaths:
-          - charts/ingress-nginx/**/*
+          - charts/ingress-nginx/templates/**/*
+          - charts/ingress-nginx/.helmignore
+          - charts/ingress-nginx/Chart.yaml
+          - charts/ingress-nginx/values.yaml
   - path: cluster/build/prometheus-operator/_vendir
     contents:
       - path: .
