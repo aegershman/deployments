@@ -1,32 +1,4 @@
-# https://gist.github.com/mgoodness/1a2926f3b02d8e8149c224d25cc57dc1
----
-controller:
-  replicaCount: 1
-  ingressClass: nginx-public
-  service:
-    enabled: true
-    annotations:
-      external-dns.alpha.kubernetes.io/hostname: "*.gershman.io"
-      external-dns.alpha.kubernetes.io/ttl: "60"
-      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
-      service.beta.kubernetes.io/aws-load-balancer-internal: "false"
-      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
-    labels: {}
-    type: LoadBalancer
-  config:
-    proxy-body-size: 64m
-    proxy-buffer-size: 16k
-  metrics:
-    enabled: false
-    service:
-      annotations: {}
-      type: ClusterIP
-    serviceMonitor:
-      enabled: false
-  updateStrategy:
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
+#@ load("@ytt:library", "library")
+#@ load("@ytt:template", "template")
 
-defaultBackend:
-  enabled: false
+--- #@ template.replace(library.get("ingress-nginx").eval())

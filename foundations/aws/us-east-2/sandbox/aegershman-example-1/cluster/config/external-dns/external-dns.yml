@@ -1,21 +1,19 @@
-# https://prefetch.net/blog/2020/01/28/using-external-dns-to-managed-dns-entries-in-kubernetes-clusters/
+#@ load("@ytt:library", "library")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:template", "template")
+
+#@ def add_external_dns_namespace():
+#@overlay/match by=overlay.all, expects="1+"
 ---
-provider: aws
+metadata:
+  #@overlay/match missing_ok=True
+  namespace: external-dns
+#@ end
 
-## Limit sources of endpoints to a specific namespace (default: all namespaces)
-##
-namespace: ""
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external-dns
 
-## AWS configuration to be set via arguments/env. variables
-##
-aws:
-  region: "us-east-2"
-
-domainFilters: []
-excludeDomains: []
-zoneIdFilters: []
-
-dryRun: true
-logLevel: info # panic, debug, info, warn, error, fatal
-interval: 1m
-policy: sync # sync, upsert-only
+--- #@ template.replace(overlay.apply(library.get("external-dns").eval(), add_external_dns_namespace()))

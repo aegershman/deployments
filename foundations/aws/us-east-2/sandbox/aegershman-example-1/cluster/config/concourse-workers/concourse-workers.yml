@@ -1,23 +1,4 @@
----
-postgresql:
-  enabled: false
+#@ load("@ytt:library", "library")
+#@ load("@ytt:template", "template")
 
-persistence:
-  enabled: true
-  worker:
-    size: 2Gi
-    storageClass: gp2
-
-worker:
-  enabled: true
-  replicas: 1
-
-web:
-  enabled: false
-
-concourse:
-  worker:
-    ephemeral: true
-    tsa:
-      hosts:
-        - concourse-web-web-worker-gateway.concourse-web.svc.cluster.local:2222
+--- #@ template.replace(library.get("concourse-workers").eval())
