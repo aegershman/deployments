@@ -1,0 +1,13 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Update the version to 2.2.0.0
+      sha: d1590f42fb16e138c7c1c8afc906f833c10bc75c
+    path: .
+  path: cluster/build/yugabyte/_vendir
+- contents:
+  - manual: {}
+    path: yugabyte
+  path: cluster/config/yugabyte/_ytt_lib
+kind: LockConfig
