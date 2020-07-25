@@ -5,7 +5,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: aegershman-example-0
+  name: cf-for-k8s-demo
   region: us-east-2
   version: "1.17"
   tags: {}

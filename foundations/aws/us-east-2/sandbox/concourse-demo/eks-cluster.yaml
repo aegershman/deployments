@@ -3,7 +3,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: aegershman-example-1
+  name: concourse-demo
   region: us-east-2
   version: "1.17"
   tags: {}
