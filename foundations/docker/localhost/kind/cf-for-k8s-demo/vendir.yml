@@ -63,6 +63,10 @@ directories:
           ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
         includePaths:
           - stable/prometheus-operator/**/*
+        excludePaths:
+          - stable/prometheus-operator/ci/**/*
+          - stable/prometheus-operator/hack/**/*
+          - stable/prometheus-operator/requirements.*
   - path: cluster/build/service-catalog/_vendir
     contents:
       - path: .
