@@ -11,7 +11,14 @@ directories:
           ref: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78 # 11.4.0
         includePaths:
           - templates/**/*
+          - CHANGELOG.md
           - Chart.yaml
+          - CODE_OF_CONDUCT.md
+          - LICENSE.md
+          - OWNERS
+          - README.md
+          - requirements.lock
+          - requirements.yaml
           - values.yaml
   - path: cluster/build/concourse-workers/_vendir
     contents:
@@ -21,7 +28,14 @@ directories:
           ref: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78 # 11.4.0
         includePaths:
           - templates/**/*
+          - CHANGELOG.md
           - Chart.yaml
+          - CODE_OF_CONDUCT.md
+          - LICENSE.md
+          - OWNERS
+          - README.md
+          - requirements.lock
+          - requirements.yaml
           - values.yaml
   - path: cluster/build/external-dns/_vendir
     contents:
