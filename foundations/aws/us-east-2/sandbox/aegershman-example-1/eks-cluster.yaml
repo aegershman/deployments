@@ -10,12 +10,12 @@ metadata:
 
 vpc:
   nat:
-    gateway: Single # Disable, Single (default), HighlyAvailable
+    gateway: Single
 
 managedNodeGroups:
   - name: ng-1
     instanceType: t3.medium
-    desiredCapacity: 1
+    desiredCapacity: 2
     volumeSize: 80
     labels: {}
     tags: {}
