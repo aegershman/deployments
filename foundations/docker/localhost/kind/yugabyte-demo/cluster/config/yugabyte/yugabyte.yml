@@ -1,4 +1,4 @@
 #@ load("@ytt:library", "library")
 #@ load("@ytt:template", "template")
 
---- #@ template.replace(library.get("cluster-api").eval())
+--- #@ template.replace(library.get("yugabyte").eval())
