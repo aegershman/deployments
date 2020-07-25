@@ -22,6 +22,15 @@ directories:
           - charts/ingress-nginx/**/*
         excludePaths:
           - charts/ingress-nginx/ci/**/*
+  - path: cluster/build/kubecf/_vendir
+    contents:
+      - path: .
+        githubRelease:
+          slug: cloudfoundry-incubator/kubecf
+          tag: 2.3.0
+          disableAutoChecksumValidation: true
+          unpackArchive:
+            path: kubecf-v2.3.0.tgz
   - path: cluster/build/prometheus-operator/_vendir
     contents:
       - path: .
