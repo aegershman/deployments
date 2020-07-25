@@ -1,0 +1,27 @@
+---
+postgresql:
+  enabled: true
+
+worker:
+  enabled: false
+
+web:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx-public
+    hosts:
+      - concourse.gershman.io
+
+concourse:
+  web:
+    clusterName: aegershman-example-1
+    externalUrl: http://concourse.gershman.io
+    kubernetes:
+      enabled: false
+
+    prometheus:
+      enabled: false
+      serviceMonitor:
+        enabled: false
