@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
 eksc | eksctl-create) eksctl create cluster --config-file=eks-cluster.yaml ;;
-eksctl-write-kubeconfig) eksctl utils write-kubeconfig --region=us-east-2 --cluster=aegershman-example-0 --auto-kubeconfig ;;
+eksctl-write-kubeconfig) eksctl utils write-kubeconfig --region=us-east-2 --cluster=cf-for-k8s-demo --auto-kubeconfig ;;
 eksd | eksctl-delete) eksctl delete cluster -f ./eks-cluster.yaml ;;
 
 build)
