@@ -12,14 +12,8 @@ directories:
         includePaths:
           - templates/**/*
           - .gitignore
-          - CHANGELOG.md
           - Chart.yaml
-          - CODE_OF_CONDUCT.md
-          - LICENSE.md
-          - OWNERS
           - README.md
-          - requirements.lock
-          - requirements.yaml
           - values.yaml
   - path: cluster/build/concourse-workers/_vendir
     contents:
@@ -30,14 +24,8 @@ directories:
         includePaths:
           - templates/**/*
           - .gitignore
-          - CHANGELOG.md
           - Chart.yaml
-          - CODE_OF_CONDUCT.md
-          - LICENSE.md
-          - OWNERS
           - README.md
-          - requirements.lock
-          - requirements.yaml
           - values.yaml
   - path: cluster/build/external-dns/_vendir
     contents:
