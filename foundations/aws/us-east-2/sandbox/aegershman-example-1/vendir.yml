@@ -11,6 +11,7 @@ directories:
           ref: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78 # 11.4.0
         includePaths:
           - templates/**/*
+          - .gitignore
           - CHANGELOG.md
           - Chart.yaml
           - CODE_OF_CONDUCT.md
@@ -28,6 +29,7 @@ directories:
           ref: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78 # 11.4.0
         includePaths:
           - templates/**/*
+          - .gitignore
           - CHANGELOG.md
           - Chart.yaml
           - CODE_OF_CONDUCT.md

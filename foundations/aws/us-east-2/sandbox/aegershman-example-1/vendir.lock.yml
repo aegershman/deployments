@@ -1,0 +1,43 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: bump chart version
+      sha: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78
+    path: .
+  path: cluster/build/concourse-web/_vendir
+- contents:
+  - git:
+      commitTitle: bump chart version
+      sha: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78
+    path: .
+  path: cluster/build/concourse-workers/_vendir
+- contents:
+  - git:
+      commitTitle: '[bitnami/external-dns] Release 3.2.4 updating components versions...'
+      sha: a0d9242d3aa21296ffe0584e5eda478bcc961ea7
+    path: .
+  path: cluster/build/external-dns/_vendir
+- contents:
+  - git:
+      commitTitle: Release helm chart for v0.34.1
+      sha: 1d250bcbd99d2baa786df0c7a5537c852eab33b5
+    path: .
+  path: cluster/build/ingress-nginx/_vendir
+- contents:
+  - manual: {}
+    path: concourse-web
+  path: cluster/config/concourse-web/_ytt_lib
+- contents:
+  - manual: {}
+    path: concourse-workers
+  path: cluster/config/concourse-workers/_ytt_lib
+- contents:
+  - manual: {}
+    path: external-dns
+  path: cluster/config/external-dns/_ytt_lib
+- contents:
+  - manual: {}
+    path: ingress-nginx
+  path: cluster/config/ingress-nginx/_ytt_lib
+kind: LockConfig
