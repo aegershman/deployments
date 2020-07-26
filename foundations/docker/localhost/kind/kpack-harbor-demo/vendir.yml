@@ -1,21 +1,46 @@
-# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
 ---
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
-  - path: deployments/kpack
+  - path: cluster/build/ingress-nginx/_vendir
     contents:
-      - path: build-examples
-        manual: {}
-      - path: generics
-        manual: {}
-      - path: kpack-components
-        manual: {}
-      - path: kpack-release
+      - path: .
+        git:
+          url: https://github.com/kubernetes/ingress-nginx
+          ref: 1d250bcbd99d2baa786df0c7a5537c852eab33b5 # 2.11.1
+        includePaths:
+          - charts/ingress-nginx/**/*
+        excludePaths:
+          - charts/ingress-nginx/ci/**/*
+  - path: cluster/build/harbor/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/goharbor/harbor-helm
+          ref: tags/v1.3.4
+        excludePaths:
+          - .helmignore
+          - LICENSE
+  - path: cluster/build/kpack/_vendir
+    contents:
+      - path: .
         githubRelease:
           slug: pivotal/kpack
           tag: v0.0.9
           disableAutoChecksumValidation: true
         includePaths:
           - release-*.yaml
+
+  - path: cluster/config/harbor/_ytt_lib
+    contents:
+      - path: harbor
+        manual: {}
+  - path: cluster/config/ingress-nginx/_ytt_lib
+    contents:
+      - path: ingress-nginx
+        manual: {}
+  - path: cluster/config/kpack/_ytt_lib
+    contents:
+      - path: kpack
+        manual: {}
