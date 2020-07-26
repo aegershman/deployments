@@ -97,9 +97,9 @@ a | apply | deploy)
     ;;
   all)
     shift
-    ./deploy-ctl.sh apply cf-for-k8s "$@"
-    ./deploy-ctl.sh apply cert-manager "$@"
     ./deploy-ctl.sh apply external-dns "$@"
+    ./deploy-ctl.sh apply cert-manager "$@"
+    ./deploy-ctl.sh apply cf-for-k8s "$@"
     ./deploy-ctl.sh apply harbor "$@"
     ;;
   *)
