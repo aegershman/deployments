@@ -7,8 +7,8 @@ directories:
   path: cluster/build/cert-manager/_vendir
 - contents:
   - git:
-      commitTitle: Bump capi-k8s-release to bb40b9d67db1c3d150791d773752d1d788cdef91
-      sha: 5016da8f1ab0b90d1e626109897801301f01b4d1
+      commitTitle: Bump metric-proxy to 717e715949f723f9022244ce019d555ca2ab63d5
+      sha: dfcca413380a0087c8ecf3c8436ec1a5dcda50d8
     path: .
   path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
 - contents:
