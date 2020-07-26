@@ -1,30 +1,46 @@
-# https://github.com/k14s/vendir/blob/master/docs/vendir-spec.md
-# https://github.com/k14s/vendir/blob/master/examples/git-and-manual/vendir.yml
 ---
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
+minimumRequiredVersion: 0.8.0
 directories:
-  - path: deployments/tektoncd-pipeline
+  - path: cluster/build/ingress-nginx/_vendir
     contents:
-      - path: vendor/github.com/tektoncd/pipeline
+      - path: .
+        git:
+          url: https://github.com/kubernetes/ingress-nginx
+          ref: 1d250bcbd99d2baa786df0c7a5537c852eab33b5 # 2.11.1
+        includePaths:
+          - charts/ingress-nginx/**/*
+        excludePaths:
+          - charts/ingress-nginx/ci/**/*
+  - path: cluster/build/tektoncd-pipeline/_vendir
+    contents:
+      - path: .
         githubRelease:
           slug: tektoncd/pipeline
           tag: v0.14.1
           disableAutoChecksumValidation: true
         includePaths:
           - release.yaml
-      - path: user-supplied-config
-        manual: {}
-      - path: user-supplied-pipelines
-        manual: {}
-  - path: deployments/tektoncd-dashboard
+  - path: cluster/build/tektoncd-dashboard/_vendir
     contents:
-      - path: vendor/github.com/tektoncd/dashboard
+      - path: .
         githubRelease:
           slug: tektoncd/dashboard
           tag: v0.7.1
           disableAutoChecksumValidation: true
         includePaths:
           - tekton-dashboard-release.yaml
-      - path: user-supplied-config
+
+  - path: cluster/config/ingress-nginx/_ytt_lib
+    contents:
+      - path: ingress-nginx
+        manual: {}
+  - path: cluster/config/tektoncd-dashboard/_ytt_lib
+    contents:
+      - path: tektoncd-dashboard
+        manual: {}
+  - path: cluster/config/tektoncd-pipeline/_ytt_lib
+    contents:
+      - path: tektoncd-pipeline
         manual: {}

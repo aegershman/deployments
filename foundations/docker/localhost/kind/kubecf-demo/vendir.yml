@@ -1,0 +1,62 @@
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.8.0
+directories:
+  - path: cluster/build/cf-operator/_vendir
+    contents:
+      - path: .
+        githubRelease:
+          slug: cloudfoundry-incubator/quarks-operator
+          tag: v5.1.0
+          disableAutoChecksumValidation: true
+          unpackArchive:
+            path: cf-operator-5.1.0+0.ga696f719.tgz
+  - path: cluster/build/ingress-nginx/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/kubernetes/ingress-nginx
+          ref: 1d250bcbd99d2baa786df0c7a5537c852eab33b5 # 2.11.1
+        includePaths:
+          - charts/ingress-nginx/**/*
+        excludePaths:
+          - charts/ingress-nginx/ci/**/*
+  - path: cluster/build/kubecf/_vendir
+    contents:
+      - path: .
+        githubRelease:
+          slug: cloudfoundry-incubator/kubecf
+          tag: v2.3.0
+          disableAutoChecksumValidation: true
+          unpackArchive:
+            path: kubecf-v2.3.0.tgz
+  - path: cluster/build/prometheus-operator/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/helm/charts
+          ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
+        includePaths:
+          - stable/prometheus-operator/**/*
+        excludePaths:
+          - stable/prometheus-operator/ci/**/*
+          - stable/prometheus-operator/hack/**/*
+          - stable/prometheus-operator/requirements.*
+
+  - path: cluster/config/cf-operator/_ytt_lib
+    contents:
+      - path: cf-operator
+        manual: {}
+  - path: cluster/config/ingress-nginx/_ytt_lib
+    contents:
+      - path: ingress-nginx
+        manual: {}
+  - path: cluster/config/kubecf/_ytt_lib
+    contents:
+      - path: kubecf
+        manual: {}
+  - path: cluster/config/prometheus-operator/_ytt_lib
+    contents:
+      - path: prometheus-operator
+        manual: {}

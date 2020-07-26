@@ -136,30 +136,6 @@ cf-for-k8s-post-install-istio-debug)
   istioctl x describe pod -n cf-workloads PODNAME
   ;;
 
-cf-for-k8s-diff-cf-generate-values)
-  diff ./deployments/cf-for-k8s/build/_vendir/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh ./deployments/cf-for-k8s/build/generate-values.sh
-  ;;
-
-harbor-apply)
-  :
-  ;;
-
-jaeger-operator-apply)
-  :
-  ;;
-
-minibroker-apply)
-  :
-  ;;
-
-prometheus-operator-apply)
-  :
-  ;;
-
-service-catalog-apply)
-  :
-  ;;
-
 *)
   exit 1
   ;;

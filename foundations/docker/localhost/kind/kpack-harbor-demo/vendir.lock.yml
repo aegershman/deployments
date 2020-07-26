@@ -1,14 +1,32 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
-  - manual: {}
-    path: build-examples
-  - manual: {}
-    path: generics
-  - manual: {}
-    path: kpack-components
+  - git:
+      commitTitle: Release helm chart for v0.34.1
+      sha: 1d250bcbd99d2baa786df0c7a5537c852eab33b5
+    path: .
+  path: cluster/build/ingress-nginx/_vendir
+- contents:
+  - git:
+      commitTitle: 'Merge pull request #668 from ywk253100/200716_1.3.4...'
+      sha: 768a3b2c03bcb708fc7c2bfc6b9552437efff067
+    path: .
+  path: cluster/build/harbor/_vendir
+- contents:
   - githubRelease:
       url: https://api.github.com/repos/pivotal/kpack/releases/27343776
-    path: kpack-release
-  path: deployments/kpack
+    path: .
+  path: cluster/build/kpack/_vendir
+- contents:
+  - manual: {}
+    path: harbor
+  path: cluster/config/harbor/_ytt_lib
+- contents:
+  - manual: {}
+    path: ingress-nginx
+  path: cluster/config/ingress-nginx/_ytt_lib
+- contents:
+  - manual: {}
+    path: kpack
+  path: cluster/config/kpack/_ytt_lib
 kind: LockConfig

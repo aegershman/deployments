@@ -1,0 +1,9 @@
+dependencies:
+- name: quarks-job
+  repository: https://cloudfoundry-incubator.github.io/quarks-helm
+  version: 1.0.179
+- name: quarks-secret
+  repository: https://cloudfoundry-incubator.github.io/quarks-helm
+  version: 1.0.687
+digest: sha256:f5a8d95981d6132eca16ff1d7b0da025af7ebb68e649cb76283dd77ed199d6d3
+generated: "2020-07-10T13:15:23.105274619Z"

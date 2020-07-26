@@ -1,19 +1,31 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
+  - git:
+      commitTitle: Release helm chart for v0.34.1
+      sha: 1d250bcbd99d2baa786df0c7a5537c852eab33b5
+    path: .
+  path: cluster/build/ingress-nginx/_vendir
+- contents:
   - githubRelease:
       url: https://api.github.com/repos/tektoncd/pipeline/releases/28407799
-    path: vendor/github.com/tektoncd/pipeline
-  - manual: {}
-    path: user-supplied-config
-  - manual: {}
-    path: user-supplied-pipelines
-  path: deployments/tektoncd-pipeline
+    path: .
+  path: cluster/build/tektoncd-pipeline/_vendir
 - contents:
   - githubRelease:
       url: https://api.github.com/repos/tektoncd/dashboard/releases/28065648
-    path: vendor/github.com/tektoncd/dashboard
+    path: .
+  path: cluster/build/tektoncd-dashboard/_vendir
+- contents:
   - manual: {}
-    path: user-supplied-config
-  path: deployments/tektoncd-dashboard
+    path: ingress-nginx
+  path: cluster/config/ingress-nginx/_ytt_lib
+- contents:
+  - manual: {}
+    path: tektoncd-dashboard
+  path: cluster/config/tektoncd-dashboard/_ytt_lib
+- contents:
+  - manual: {}
+    path: tektoncd-pipeline
+  path: cluster/config/tektoncd-pipeline/_ytt_lib
 kind: LockConfig

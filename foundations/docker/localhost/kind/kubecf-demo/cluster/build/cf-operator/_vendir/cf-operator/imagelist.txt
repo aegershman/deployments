@@ -1,0 +1,4 @@
+cfcontainerization/cf-operator:v5.1.0-0.ga696f719
+cfcontainerization/coredns:0.1.0-1.6.7-bp152.1.8
+cfcontainerization/quarks-job:v1.0.179
+cfcontainerization/quarks-secret:v1.0.687

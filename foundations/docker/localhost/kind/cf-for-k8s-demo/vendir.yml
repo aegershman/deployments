@@ -3,12 +3,12 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
-  - path: deployments/cf-for-k8s/build/_vendir
+  - path: cluster/build/cf-for-k8s/_vendir
     contents:
       - path: github.com/cloudfoundry/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: 76653da9f10248d61e7417769698576c1e991547 # beyond v0.4.0
+          ref: 5016da8f1ab0b90d1e626109897801301f01b4d1 # beyond v0.4.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -24,32 +24,93 @@ directories:
           - config/istio-config/**/*
           - config/istio/generated/**/*
           - config/routecontroller/**/*
-  - path: deployments/minibroker/build/_vendir
+  - path: cluster/build/harbor/_vendir/harbor-helm
     contents:
-      - path: github.com/kubernetes-sigs/minibroker
+      - path: .
+        git:
+          url: https://github.com/goharbor/harbor-helm
+          ref: tags/v1.3.4
+        includePaths:
+          - cert/**/*
+          - conf/**/*
+          - templates/**/*
+          - .helmignore
+          - Chart.yaml
+          - LICENSE
+          - README.md
+          - values.yaml
+  - path: cluster/build/jaeger-operator/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/jaegertracing/helm-charts
+          ref: c1df2ceb25a7ac283344242e84296b1968dd684d # 2.15.1
+        includePaths:
+          - charts/jaeger-operator/**/*
+  - path: cluster/build/minibroker/_vendir
+    contents:
+      - path: .
         git:
           url: https://github.com/kubernetes-sigs/minibroker
           ref: 95ea5724ff5ff46079d103e610c3921d4280ee22
-          disableAutoChecksumValidation: true
         includePaths:
           - charts/minibroker/**/*
-  - path: deployments/prometheus-operator/build/_vendir
+  - path: cluster/build/prometheus-operator/_vendir
     contents:
-      - path: github.com/helm/charts/prometheus-operator
+      - path: .
         git:
           url: https://github.com/helm/charts
-          ref: f4f0938345f048e91679d9f06b512113e1a0513c # 9.1.1
-          disableAutoChecksumValidation: true
+          ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
         includePaths:
           - stable/prometheus-operator/**/*
-  - path: deployments/service-catalog/build/_vendir
+        excludePaths:
+          - stable/prometheus-operator/ci/**/*
+          - stable/prometheus-operator/hack/**/*
+          - stable/prometheus-operator/requirements.*
+  - path: cluster/build/service-catalog/_vendir
     contents:
-      - path: github.com/kubernetes-sigs/service-catalog
+      - path: .
         git:
           url: https://github.com/kubernetes-sigs/service-catalog
           ref: 8e85904ae5ec4d228ebd0c463b7718f1a7891f69
-          disableAutoChecksumValidation: true
         includePaths:
           - charts/catalog/**/*
           - charts/healthcheck/**/*
           - charts/ups-broker/**/*
+  - path: cluster/build/stratos/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/cloudfoundry/stratos
+          ref: tags/3.2.1
+        includePaths:
+          - deploy/kubernetes/console/**/*
+
+  - path: cluster/config/cf-for-k8s/_ytt_lib
+    contents:
+      - path: cf-for-k8s
+        manual: {}
+  - path: cluster/config/harbor/_ytt_lib
+    contents:
+      - path: harbor
+        manual: {}
+  - path: cluster/config/jaeger-operator/_ytt_lib
+    contents:
+      - path: jaeger-operator
+        manual: {}
+  - path: cluster/config/minibroker/_ytt_lib
+    contents:
+      - path: minibroker
+        manual: {}
+  - path: cluster/config/prometheus-operator/_ytt_lib
+    contents:
+      - path: prometheus-operator
+        manual: {}
+  - path: cluster/config/service-catalog/_ytt_lib
+    contents:
+      - path: service-catalog
+        manual: {}
+  - path: cluster/config/stratos/_ytt_lib
+    contents:
+      - path: stratos
+        manual: {}
