@@ -1,5 +1,7 @@
 # deployments
 
+NOTE: currently the most active workspace cluster is `aws/us-east-2/sandbox/cf-for-k8s-demo`
+
 `k8s` deployments. These are for experimentation and demonstrations of stitching together systems. Emphasis on being as declarative and `git`-driven as technically possible. Emphasis on being `kind`/`minikube`-friendly. Emphasis on accounting for multiple environments. Trying to work out ideas of promoting from environment to environment. Conceptually this focuses on clusters as a whole; deployments might be built, configured, and applied independently, but the end-result emphasizes the cumulative result of everything happening on the cluster.
 
 Ideally, the discrete processes of building, configuring, and applying will be self-contained as much as possible and not require significant additional steps which wouldn't be possible to re-create on an individual's workspace. Ideally, a CI/CD system (like `concourse`, etc.) would really only be an orchestrator, rather than used to apply additional functions or values which aren't otherwise captured here in this repository. This makes it easier to predict and reproduce what build outputs will look like without having significant dependance on a specific system (like `spinnaker`, etc.); it means that whatever system is used (like ... `jenkins`? etc.?) just has to orchestrate the different "functions", like "build", "configure", "apply", etc. That makes it much easier to swap out, and reproduce what's happening locally. We'll see to what extent that's possible, but that's the ideal state.
