@@ -19,9 +19,15 @@ directories:
         git:
           url: https://github.com/goharbor/harbor-helm
           ref: tags/v1.3.4
-        excludePaths:
+        includePaths:
+          - cert/**/*
+          - conf/**/*
+          - templates/**/*
           - .helmignore
+          - Chart.yaml
           - LICENSE
+          - README.md
+          - values.yaml
   - path: cluster/build/kpack/_vendir
     contents:
       - path: .
