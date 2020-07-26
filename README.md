@@ -1,17 +1,5 @@
 # deployments
 
-k8s deployments, focused on being `kind`/`minikube`-friendly. These are for experimentation and demonstrations of stitching together systems.
+`k8s` deployments. These are for experimentation and demonstrations of stitching together systems. Emphasis on being as declarative and `git`-driven as technically possible. Emphasis on being `kind`/`minikube`-friendly. Emphasis on accounting for multiple environments. Trying to work out ideas of promoting from environment to environment. Conceptually this focuses on clusters as a whole; deployments might be built, configured, and applied independently, but the end-result emphasizes the cumulative result of everything happening on the cluster.
 
-Each folder is it's own grouping of one-or-more deployments. So for example, a folder for `cf-for-k8s` might have `cf-for-k8s` _and_ `prometheus` and `harbor` and `minibroker`, etc. Or the `concourse` folder will be `concourse` _and_ `jaeger` and `prometheus` and `so-on` and `so-on` and `etc.` The groupings are whatever fits thoughts and needs.
-
-Sometimes I leave commented notes and links scattered in yaml documents, which is a little arbitrary. Sometimes I put down values in the `values.yml` which are the same value as what ships by default, but I'm putting it there because it serves as a reminder about what the default value is or what the configurable options are.
-
-## structure
-
-Yeah this is about to get a little wild and unruly:
-
-```sh
-./foundations/{iaas}/{region}/{environment}/{cluster_name}/deployments/{deployment_grouping}
-```
-
-If a folder starts with an underscore, such as `_rendered/` or `_common`, it implies the contents of the folder is not for humans to modify-- only for build scripts, vendoring, or the output of build scripts.
+Ideally, the discrete processes of building, configuring, and applying will be self-contained as much as possible and not require significant additional steps which wouldn't be possible to re-create on an individual's workspace. Ideally, a CI/CD system (like `concourse`, etc.) would really only be an orchestrator, rather than used to apply additional functions or values which aren't otherwise captured here in this repository. This makes it easier to predict and reproduce what build outputs will look like without having significant dependance on a specific system (like `spinnaker`, etc.); it means that whatever system is used (like ... `jenkins`? etc.?) just has to orchestrate the different "functions", like "build", "configure", "apply", etc. That makes it much easier to swap out, and reproduce what's happening locally. We'll see to what extent that's possible, but that's the ideal state.
