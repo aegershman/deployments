@@ -71,7 +71,7 @@ a | apply | deploy)
     kapp deploy -a cert-manager -f <(
       ytt --ignore-unknown-comments \
         -f ./cluster/config/cert-manager \
-        -f ./cluster/config-optional/cert-manager-letsencrypt-staging.yml
+        -f ./cluster/config-optional/cert-manager/cert-manager-letsencrypt-staging.yml
     ) "$@"
     ;;
   ed | external-dns)
@@ -85,7 +85,7 @@ a | apply | deploy)
     kapp deploy -a harbor -f <(
       ytt \
         -f ./cluster/config/harbor/ \
-        -f ./cluster/config-optional/harbor-virtual-service.yml
+        -f ./cluster/config-optional/harbor/harbor-virtual-service.yml
     ) "$@"
     ;;
   cf | cf-for-k8s)
@@ -157,9 +157,9 @@ pi | cf-for-k8s-post-install)
 
 pip | cf-for-k8s-post-install-push)
   # push apps already built via docker
-  cf push -f ./cluster/config-optional/cf-manifests/hash-browns-docker-no-routes.yml --strategy=rolling
-  cf push -f ./cluster/config-optional/cf-manifests/hash-browns-docker-routes.yml --strategy=rolling
-  cf push -f ./cluster/config-optional/cf-manifests/todo-ui-docker-routes.yml --strategy=rolling
+  cf push -f ./cluster/config-optional/cf-for-k8s/cf-manifests/hash-browns-docker-no-routes.yml --strategy=rolling
+  cf push -f ./cluster/config-optional/cf-for-k8s/cf-manifests/hash-browns-docker-routes.yml --strategy=rolling
+  cf push -f ./cluster/config-optional/cf-for-k8s/cf-manifests/todo-ui-docker-routes.yml --strategy=rolling
   ;;
 pip-source | cf-for-k8s-post-install-push-source-code-apps)
   # push an app from source code
