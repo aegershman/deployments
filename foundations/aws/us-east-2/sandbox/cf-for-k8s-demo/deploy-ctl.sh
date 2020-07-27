@@ -70,8 +70,7 @@ a | apply | deploy)
     shift
     kapp deploy -a cert-manager -f <(
       ytt --ignore-unknown-comments \
-        -f ./cluster/config/cert-manager \
-        -f ./cluster/config-optional/cert-manager/cert-manager-letsencrypt-staging.yml
+        -f ./cluster/config/cert-manager/
     ) "$@"
     ;;
   ed | external-dns)
@@ -93,7 +92,7 @@ a | apply | deploy)
     shift
     kapp deploy -a cf -f <(
       ytt \
-        -f ./cluster/config/cf-for-k8s \
+        -f ./cluster/config/cf-for-k8s/ \
         -f ./cluster/config-optional/cf-for-k8s/cf-for-k8s-cert-manager-system-certificate-prod.yml
     ) "$@"
     ;;
