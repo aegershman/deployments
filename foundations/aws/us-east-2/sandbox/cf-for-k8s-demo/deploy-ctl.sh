@@ -71,7 +71,6 @@ a | apply | deploy)
     kapp deploy -a cert-manager -f <(
       ytt --ignore-unknown-comments \
         -f ./cluster/config/cert-manager \
-        -f ./cluster/config-optional/cert-manager-letsencrypt-prod.yml \
         -f ./cluster/config-optional/cert-manager-letsencrypt-staging.yml
     ) "$@"
     ;;
