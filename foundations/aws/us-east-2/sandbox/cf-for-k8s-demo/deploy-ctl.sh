@@ -77,7 +77,8 @@ a | apply | deploy)
   ed | external-dns)
     shift
     kapp deploy -a external-dns -f <(
-      ytt -f ./cluster/config/external-dns/
+      ytt \
+        -f ./cluster/config/external-dns/
     ) "$@"
     ;;
   h | harbor)
@@ -91,7 +92,9 @@ a | apply | deploy)
   cf | cf-for-k8s)
     shift
     kapp deploy -a cf -f <(
-      ytt -f ./cluster/config/cf-for-k8s/
+      ytt \
+        -f ./cluster/config/cf-for-k8s \
+        -f ./cluster/config-optional/cf-for-k8s/cf-for-k8s-cert-manager-system-certificate.yml
     ) "$@"
     ;;
   all)
