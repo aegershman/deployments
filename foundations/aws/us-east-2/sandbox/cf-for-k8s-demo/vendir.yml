@@ -58,7 +58,6 @@ directories:
         excludePaths:
           - stable/prometheus-operator/ci/**/*
           - stable/prometheus-operator/hack/**/*
-          - stable/prometheus-operator/requirements.*
 
   # the components in this section below are handled by their corresponding build scripts
   # the manual param tells vendir to not override/touch the contents of these directories
