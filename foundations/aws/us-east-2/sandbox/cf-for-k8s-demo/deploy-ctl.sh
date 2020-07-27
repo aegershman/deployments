@@ -107,6 +107,7 @@ a | apply | deploy)
     echo "usage: ./deploy.sh apply all [optional-args...]"
     echo "usage: ./deploy.sh apply {kapp-env} [optional-args...]"
     echo "example: ./deploy-ctl.sh apply cf --yes"
+    echo "example: ./deploy-ctl.sh apply cf --diff-changes --yes"
     exit 1
     ;;
   esac

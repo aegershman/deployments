@@ -2,7 +2,7 @@
 
 #@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"cf-system-cert"}})
 #@overlay/remove
-
+---
 ---
 apiVersion: cert-manager.io/v1beta1
 kind: ClusterIssuer
