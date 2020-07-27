@@ -92,8 +92,7 @@ a | apply | deploy)
     shift
     kapp deploy -a cf -f <(
       ytt \
-        -f ./cluster/config/cf-for-k8s/ \
-        -f ./cluster/config-optional/cf-for-k8s/cf-for-k8s-cert-manager-system-certificate-prod.yml
+        -f ./cluster/config/cf-for-k8s/
     ) "$@"
     ;;
   all)
