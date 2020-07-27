@@ -1,17 +1,9 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: letsencrypt-prod
-  labels:
-    istio-injection: disabled
-
----
 apiVersion: cert-manager.io/v1beta1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
-  namespace: letsencrypt-prod
+  namespace: cert-manager
 spec:
   acme:
     email: aegershman+letsencrypt@gmail.com
@@ -22,19 +14,3 @@ spec:
       - dns01:
           route53:
             region: us-east-2
-
----
-apiVersion: cert-manager.io/v1beta1
-kind: Certificate
-metadata:
-  name: cf-gershman-io-prod
-  namespace: letsencrypt-prod
-spec:
-  secretName: letsencrypt-cert-tls-cf-gershman-io-prod
-  dnsNames:
-    - "*.cf.gershman.io"
-  issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
-  privateKey:
-    rotationPolicy: Never

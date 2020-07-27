@@ -2,24 +2,7 @@
 
 #@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"cf-system-cert"}})
 #@overlay/remove
-
 ---
-apiVersion: cert-manager.io/v1beta1
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-staging
-  namespace: cert-manager
-spec:
-  acme:
-    email: aegershman+letsencrypt@gmail.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-staging
-    solvers:
-      - dns01:
-          route53:
-            region: us-east-2
-
 ---
 apiVersion: cert-manager.io/v1beta1
 kind: Certificate
