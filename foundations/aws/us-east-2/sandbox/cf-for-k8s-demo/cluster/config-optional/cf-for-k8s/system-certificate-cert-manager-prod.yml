@@ -9,6 +9,8 @@ kind: Certificate
 metadata:
   name: cf-gershman-io-prod
   namespace: istio-system
+  annotations:
+    kapp.k14s.io/change-rule.istio-ingressgateway: "upsert before upserting istio.io/ingressgateway"
 spec:
   secretName: cf-system-cert
   dnsNames:
