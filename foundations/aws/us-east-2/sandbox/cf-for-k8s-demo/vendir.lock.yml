@@ -7,8 +7,8 @@ directories:
   path: cluster/build/cert-manager/_vendir
 - contents:
   - git:
-      commitTitle: Bump metric-proxy to 717e715949f723f9022244ce019d555ca2ab63d5
-      sha: dfcca413380a0087c8ecf3c8436ec1a5dcda50d8
+      commitTitle: Run vendir sync to use the specified capi commit...
+      sha: 924eeab0031c127a1644e4f2a63f262f577bb927
     path: .
   path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
 - contents:
