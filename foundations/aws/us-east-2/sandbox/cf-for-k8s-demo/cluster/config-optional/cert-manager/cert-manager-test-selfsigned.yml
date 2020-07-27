@@ -1,28 +1,23 @@
+# https://cert-manager.io/docs/configuration/acme/dns01/route53/
 # https://cert-manager.io/docs/installation/kubernetes/#verifying-the-installation
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: cert-manager-test
-  labels:
-    istio-injection: disabled
+# https://cert-manager.io/docs/usage/certificate/
 ---
 apiVersion: cert-manager.io/v1beta1
 kind: Issuer
 metadata:
-  name: test-selfsigned
-  namespace: cert-manager-test
+  name: letsencrypt-selfsigned
+  namespace: cert-manager
 spec:
   selfSigned: {}
 ---
 apiVersion: cert-manager.io/v1beta1
 kind: Certificate
 metadata:
-  name: selfsigned-cert
-  namespace: cert-manager-test
+  name: selfsigned-cert-example-delete-me
+  namespace: cert-manager
 spec:
   dnsNames:
     - example.com
   secretName: selfsigned-cert-tls
   issuerRef:
-    name: test-selfsigned
+    name: letsencrypt-selfsigned
