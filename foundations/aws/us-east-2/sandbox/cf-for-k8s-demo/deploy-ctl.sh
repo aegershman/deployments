@@ -70,15 +70,14 @@ a | apply | deploy)
     shift
     kapp deploy -a cert-manager -f <(
       ytt --ignore-unknown-comments \
-        -f ./cluster/config/cert-manager \
-        -f ./cluster/config-optional/cert-manager-letsencrypt-prod.yml \
-        -f ./cluster/config-optional/cert-manager-letsencrypt-staging.yml
+        -f ./cluster/config/cert-manager/
     ) "$@"
     ;;
   ed | external-dns)
     shift
     kapp deploy -a external-dns -f <(
-      ytt -f ./cluster/config/external-dns/
+      ytt \
+        -f ./cluster/config/external-dns/
     ) "$@"
     ;;
   h | harbor)
@@ -86,26 +85,28 @@ a | apply | deploy)
     kapp deploy -a harbor -f <(
       ytt \
         -f ./cluster/config/harbor/ \
-        -f ./cluster/config-optional/harbor-virtual-service.yml
+        -f ./cluster/config-optional/harbor/harbor-virtual-service.yml
     ) "$@"
     ;;
   cf | cf-for-k8s)
     shift
     kapp deploy -a cf -f <(
-      ytt -f ./cluster/config/cf-for-k8s/
+      ytt \
+        -f ./cluster/config/cf-for-k8s/
     ) "$@"
     ;;
   all)
     shift
-    ./deploy-ctl.sh apply cf-for-k8s "$@"
-    ./deploy-ctl.sh apply cert-manager "$@"
     ./deploy-ctl.sh apply external-dns "$@"
+    ./deploy-ctl.sh apply cert-manager "$@"
+    ./deploy-ctl.sh apply cf-for-k8s "$@"
     ./deploy-ctl.sh apply harbor "$@"
     ;;
   *)
     echo "usage: ./deploy.sh apply all [optional-args...]"
     echo "usage: ./deploy.sh apply {kapp-env} [optional-args...]"
     echo "example: ./deploy-ctl.sh apply cf --yes"
+    echo "example: ./deploy-ctl.sh apply cf --diff-changes --yes"
     exit 1
     ;;
   esac
@@ -158,9 +159,9 @@ pi | cf-for-k8s-post-install)
 
 pip | cf-for-k8s-post-install-push)
   # push apps already built via docker
-  cf push -f ./cluster/config-optional/cf-manifests/hash-browns-docker-no-routes.yml --strategy=rolling
-  cf push -f ./cluster/config-optional/cf-manifests/hash-browns-docker-routes.yml --strategy=rolling
-  cf push -f ./cluster/config-optional/cf-manifests/todo-ui-docker-routes.yml --strategy=rolling
+  cf push -f ./cluster/config-optional/cf-for-k8s/cf-manifests/hash-browns-docker-no-routes.yml --strategy=rolling
+  cf push -f ./cluster/config-optional/cf-for-k8s/cf-manifests/hash-browns-docker-routes.yml --strategy=rolling
+  cf push -f ./cluster/config-optional/cf-for-k8s/cf-manifests/todo-ui-docker-routes.yml --strategy=rolling
   ;;
 pip-source | cf-for-k8s-post-install-push-source-code-apps)
   # push an app from source code

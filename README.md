@@ -1,17 +1,17 @@
 # deployments
 
-k8s deployments, focused on being `kind`/`minikube`-friendly. These are for experimentation and demonstrations of stitching together systems.
+NOTE: currently the most active workspace cluster is `aws/us-east-2/sandbox/cf-for-k8s-demo`
 
-Each folder is it's own grouping of one-or-more deployments. So for example, a folder for `cf-for-k8s` might have `cf-for-k8s` _and_ `prometheus` and `harbor` and `minibroker`, etc. Or the `concourse` folder will be `concourse` _and_ `jaeger` and `prometheus` and `so-on` and `so-on` and `etc.` The groupings are whatever fits thoughts and needs.
+`k8s` deployments. These are for experimentation and demonstrations of stitching together systems. Emphasis on being as declarative and `git`-driven as technically possible. Emphasis on being `kind`/`minikube`-friendly. Emphasis on accounting for multiple environments. Trying to work out ideas of promoting from environment to environment. Conceptually this focuses on clusters as a whole; deployments might be built, configured, and applied independently, but the end-result emphasizes the cumulative result of everything happening on the cluster.
 
-Sometimes I leave commented notes and links scattered in yaml documents, which is a little arbitrary. Sometimes I put down values in the `values.yml` which are the same value as what ships by default, but I'm putting it there because it serves as a reminder about what the default value is or what the configurable options are.
+Ideally, the discrete processes of building, configuring, and applying will be self-contained as much as possible and not require significant additional steps which wouldn't be possible to re-create on an individual's workspace. Ideally, a CI/CD system (like `concourse`, etc.) would really only be an orchestrator, rather than used to apply additional functions or values which aren't otherwise captured here in this repository. This makes it easier to predict and reproduce what build outputs will look like without having significant dependance on a specific system (like `spinnaker`, etc.); it means that whatever system is used (like ... `jenkins`? etc.?) just has to orchestrate the different "functions", like "build", "configure", "apply", etc. That makes it much easier to swap out, and reproduce what's happening locally. We'll see to what extent that's possible, but that's the ideal state.
 
-## structure
+## why we care about the aggregate cluster state
 
-Yeah this is about to get a little wild and unruly:
+Let's say we want to use `cert-manager` to generate `lets-encrypt` certificates for `cf-for-k8s` as part of it's use of `istio`. We need `cert-manager` on the cluster. There's a dependency. Let's say we want to use `harbor` for image storage for `cf-for-k8s`; there's a dependency. Let's say we want to use an `istio` `virtual-service` for `harbor`; there's a dependency. Let's say we want to use `external-dns` to have all the dns used by all these components; there's a dependency. Let's say we want to use the `crds` used by `prometheus-operator` to monitor other components via a `service-monitor` and such; there's a dependency. Let's say we want to use `minibroker` on the cluster for `cf-for-k8s` to provision services in the `cf marketplace`; there's a dependency.
 
-```sh
-./foundations/{iaas}/{region}/{environment}/{cluster_name}/deployments/{deployment_grouping}
-```
+And so on and so forth.
 
-If a folder starts with an underscore, such as `_rendered/` or `_common`, it implies the contents of the folder is not for humans to modify-- only for build scripts, vendoring, or the output of build scripts.
+We care about the aggregate state because it's impractical to think about everything as discretes. And that's okay. Individual systems _should_ be discrete to allow better cross-system usage, for individual systems to be configured and upgraded on their own, for more flexibility in use-cases, and just in general for better conceptual cognitive mapping. But to think that `harbor` can exist independently from `cf-for-k8s` can exist independently from a credential manager (e.g. `cert-manager`) is impractical.
+
+The configuration of, and ordering of, these discrete deployments working together is important when they're aggregate together to all live together on the cluster.

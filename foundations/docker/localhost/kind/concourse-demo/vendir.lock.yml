@@ -1,0 +1,53 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: bump chart version
+      sha: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78
+    path: .
+  path: cluster/build/concourse-web/_vendir
+- contents:
+  - git:
+      commitTitle: bump chart version
+      sha: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78
+    path: .
+  path: cluster/build/concourse-workers/_vendir
+- contents:
+  - git:
+      commitTitle: Release helm chart for v0.34.1
+      sha: 1d250bcbd99d2baa786df0c7a5537c852eab33b5
+    path: .
+  path: cluster/build/ingress-nginx/_vendir
+- contents:
+  - git:
+      commitTitle: '[prometheus-operator] Fixing scope issue (#23014) (#23022)...'
+      sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6
+    path: .
+  path: cluster/build/prometheus-operator/_vendir
+- contents:
+  - git:
+      commitTitle: 'fix: bump jaeger-operator chart version to 2.15.1...'
+      sha: c1df2ceb25a7ac283344242e84296b1968dd684d
+    path: .
+  path: cluster/build/jaeger-operator/_vendir
+- contents:
+  - manual: {}
+    path: concourse-web
+  path: cluster/config/concourse-web/_ytt_lib
+- contents:
+  - manual: {}
+    path: concourse-workers
+  path: cluster/config/concourse-workers/_ytt_lib
+- contents:
+  - manual: {}
+    path: ingress-nginx
+  path: cluster/config/ingress-nginx/_ytt_lib
+- contents:
+  - manual: {}
+    path: jaeger-operator
+  path: cluster/config/jaeger-operator/_ytt_lib
+- contents:
+  - manual: {}
+    path: prometheus-operator
+  path: cluster/config/prometheus-operator/_ytt_lib
+kind: LockConfig
