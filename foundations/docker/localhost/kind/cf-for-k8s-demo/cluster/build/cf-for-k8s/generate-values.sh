@@ -79,7 +79,8 @@ if [[ -n ${GCP_SERVICE_ACCOUNT_JSON_FILE:=} ]]; then
   fi
 fi
 
-VARS_FILE="../_rendered/cf/cf-vars.yaml"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+VARS_FILE="${SCRIPT_DIR}/cf-vars.yaml"
 
 # Make sure bosh binary exists
 bosh --version >/dev/null
@@ -95,11 +96,17 @@ variables:
   type: password
 - name: capi_db_password
   type: password
+- name: capi_db_encryption_key
+  type: password
 - name: uaa_db_password
   type: password
 - name: uaa_admin_client_secret
   type: password
 - name: uaa_encryption_key_passphrase
+  type: password
+- name: cc_username_lookup_client_secret
+  type: password
+- name: cf_api_controllers_client_secret
   type: password
 - name: default_ca
   type: certificate
@@ -216,8 +223,11 @@ cf_db:
   admin_password: $(bosh interpolate ${VARS_FILE} --path=/db_admin_password)
 
 capi:
+  cc_username_lookup_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cc_username_lookup_client_secret)
+  cf_api_controllers_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cf_api_controllers_client_secret)
   database:
     password: $(bosh interpolate ${VARS_FILE} --path=/capi_db_password)
+    encryption_key: $(bosh interpolate ${VARS_FILE} --path=/capi_db_encryption_key)
 
 system_certificate:
   #! This certificates and keys are base64 encoded and should be valid for *.system.cf.example.com
