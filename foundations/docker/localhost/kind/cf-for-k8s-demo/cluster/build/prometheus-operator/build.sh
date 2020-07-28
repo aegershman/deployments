@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 case "$1" in
-build)
-  helm template prometheus-operator --namespace=prometheus-operator \
-    "${SCRIPT_DIR}/_vendir/github.com/helm/charts/prometheus-operator/stable/prometheus-operator/" \
-    --values "${SCRIPT_DIR}/values.yml"
-  ;;
-
 *)
-  :
+  exit 0 # TODO
+  echo "generating prometheus-operator resource definitions..."
+  helm template prometheus-operator "${SCRIPT_DIR}/_vendir/" \
+    --values="${SCRIPT_DIR}/helm-values.yml" |
+    ytt --ignore-unknown-comments -f - \
+      >"${SCRIPT_DIR}/../../config/prometheus-operator/_ytt_lib/prometheus-operator/rendered.yml"
   ;;
 esac
