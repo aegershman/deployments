@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -e
 
 case "$1" in
 eksc | eksctl-create) eksctl create cluster --config-file=eks-cluster.yaml ;;
@@ -36,13 +36,15 @@ a | apply | deploy)
   ed | external-dns)
     shift
     kapp deploy -a external-dns -f <(
-      ytt -f ./cluster/config/external-dns/
+      ytt \
+        -f ./cluster/config/external-dns/
     ) "$@"
     ;;
   i | ingress-nginx)
     shift
     kapp deploy -a ingress-nginx -f <(
-      ytt -f ./cluster/config/ingress-nginx/
+      ytt \
+        -f ./cluster/config/ingress-nginx/
     ) "$@"
     ;;
 
@@ -79,9 +81,7 @@ d | delete)
     ;;
   i | ingress-nginx)
     shift
-    kapp deploy -a ingress-nginx -f <(
-      ytt -f ./cluster/config/ingress-nginx/
-    ) "$@"
+    kapp delete -a ingress-nginx "$@"
     ;;
   all)
     shift
