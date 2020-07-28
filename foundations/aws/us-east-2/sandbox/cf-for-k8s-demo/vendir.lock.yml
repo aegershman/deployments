@@ -7,8 +7,8 @@ directories:
   path: cluster/build/cert-manager/_vendir
 - contents:
   - git:
-      commitTitle: Run vendir sync to use the specified capi commit...
-      sha: 924eeab0031c127a1644e4f2a63f262f577bb927
+      commitTitle: Add unit test disallowing cluster-admin...
+      sha: 4b22d44381039263e7855ef4c9500c69f83ae542
     path: .
   path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
 - contents:
