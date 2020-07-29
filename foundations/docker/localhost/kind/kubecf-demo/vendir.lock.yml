@@ -17,12 +17,6 @@ directories:
     path: .
   path: cluster/build/kubecf/_vendir
 - contents:
-  - git:
-      commitTitle: '[prometheus-operator] Fixing scope issue (#23014) (#23022)...'
-      sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6
-    path: .
-  path: cluster/build/prometheus-operator/_vendir
-- contents:
   - manual: {}
     path: cf-operator
   path: cluster/config/cf-operator/_ytt_lib
@@ -34,8 +28,4 @@ directories:
   - manual: {}
     path: kubecf
   path: cluster/config/kubecf/_ytt_lib
-- contents:
-  - manual: {}
-    path: prometheus-operator
-  path: cluster/config/prometheus-operator/_ytt_lib
 kind: LockConfig
