@@ -31,18 +31,6 @@ directories:
           disableAutoChecksumValidation: true
           unpackArchive:
             path: kubecf-v2.3.0.tgz
-  - path: cluster/build/prometheus-operator/_vendir
-    contents:
-      - path: .
-        git:
-          url: https://github.com/helm/charts
-          ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
-        includePaths:
-          - stable/prometheus-operator/**/*
-        excludePaths:
-          - stable/prometheus-operator/ci/**/*
-          - stable/prometheus-operator/hack/**/*
-          - stable/prometheus-operator/requirements.*
 
   - path: cluster/config/cf-operator/_ytt_lib
     contents:
@@ -55,8 +43,4 @@ directories:
   - path: cluster/config/kubecf/_ytt_lib
     contents:
       - path: kubecf
-        manual: {}
-  - path: cluster/config/prometheus-operator/_ytt_lib
-    contents:
-      - path: prometheus-operator
         manual: {}
