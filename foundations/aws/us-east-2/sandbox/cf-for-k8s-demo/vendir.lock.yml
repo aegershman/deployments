@@ -7,8 +7,8 @@ directories:
   path: cluster/build/cert-manager/_vendir
 - contents:
   - git:
-      commitTitle: Add unit test disallowing cluster-admin...
-      sha: 4b22d44381039263e7855ef4c9500c69f83ae542
+      commitTitle: Refactor cluster admin test...
+      sha: a75b678440676ad08f1e5d2e576b3e3e02d245cd
     path: .
   path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
 - contents:
