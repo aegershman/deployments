@@ -17,7 +17,7 @@ vpc:
 managedNodeGroups:
   - name: ng-1
     instanceType: m5.large
-    desiredCapacity: 5
+    desiredCapacity: 3
     volumeSize: 80
     labels: {}
     tags: {}
@@ -26,3 +26,4 @@ managedNodeGroups:
         certManager: true
         ebs: true
         externalDNS: true
+        imageBuilder: true
