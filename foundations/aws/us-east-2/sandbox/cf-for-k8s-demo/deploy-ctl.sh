@@ -110,7 +110,8 @@ a | apply | deploy)
     shift
     kapp deploy -a quarks-secret -f <(
       ytt \
-        -f ./cluster/config/quarks-secret/
+        -f ./cluster/config/quarks-secret/ \
+        -f ./cluster/config-optional/quarks-secret/example-secret.yml
     ) "$@"
     ;;
   all)
