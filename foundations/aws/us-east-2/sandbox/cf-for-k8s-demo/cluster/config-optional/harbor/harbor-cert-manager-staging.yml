@@ -1,0 +1,28 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"kind":"Service","metadata":{"name":"harbor"}})
+---
+metadata:
+  #@overlay/match missing_ok=True
+  annotations:
+    #@overlay/match missing_ok=True
+    app.k14s.io/change-group: "harbor/harbor-svc"
+---
+
+---
+apiVersion: cert-manager.io/v1beta1
+kind: Certificate
+metadata:
+  name: harbor-core-cert
+  namespace: harbor
+  annotations:
+    kapp.k14s.io/change-rule.harbor-certificate: "upsert before upserting harbor/harbor-svc"
+spec:
+  secretName: harbor-core-cert
+  dnsNames:
+    - "harbor.cf.gershman.io"
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  privateKey:
+    rotationPolicy: Never
