@@ -40,6 +40,14 @@ directories:
           ref: tags/v1.3.4
         excludePaths:
           - .git/**/*
+  - path: cluster/build/quarks-secret/_vendir
+    contents:
+      - path: .
+        git:
+          url: https://github.com/cloudfoundry-incubator/quarks-secret
+          ref: 39bfc5eceedd8952f3dffe107c5e67d9cb12b6a6 # v1.0.699
+        includePaths:
+          - deploy/helm/quarks-secret/**/*
 
   # the components in this section below are handled by their corresponding build scripts
   # the manual param tells vendir to not override/touch the contents of these directories
@@ -58,4 +66,8 @@ directories:
   - path: cluster/config/harbor/_ytt_lib
     contents:
       - path: harbor
+        manual: {}
+  - path: cluster/config/quarks-secret/_ytt_lib
+    contents:
+      - path: quarks-secret
         manual: {}

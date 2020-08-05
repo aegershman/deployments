@@ -15,16 +15,6 @@ build)
     ./build.sh
     popd
     ;;
-  ed | external-dns)
-    pushd ./cluster/build/external-dns
-    ./build.sh
-    popd
-    ;;
-  h | harbor)
-    pushd ./cluster/build/harbor
-    ./build.sh
-    popd
-    ;;
   cf | cf-for-k8s)
     pushd ./cluster/build/cf-for-k8s
     ./build.sh
@@ -39,6 +29,21 @@ build)
     pushd ./cluster/build/cf-for-k8s
     ./build.sh clean
     ./build.sh generate
+    popd
+    ;;
+  ed | external-dns)
+    pushd ./cluster/build/external-dns
+    ./build.sh
+    popd
+    ;;
+  h | harbor)
+    pushd ./cluster/build/harbor
+    ./build.sh
+    popd
+    ;;
+  qs | quarks-secret)
+    pushd ./cluster/build/quarks-secret
+    ./build.sh
     popd
     ;;
   all)
@@ -75,6 +80,17 @@ a | apply | deploy)
         -f ./cluster/config-optional/cert-manager/cert-manager-letsencrypt-staging.yml
     ) "$@"
     ;;
+  cf | cf-for-k8s)
+    shift
+    kapp deploy -a cf -f <(
+      ytt \
+        -f ./cluster/config/cf-for-k8s/ \
+        -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml \
+        -f ./cluster/config-optional/cf-for-k8s/label-ns-quarks-secret-monitor.yml \
+        -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
+    ) "$@"
+    # TODO -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-prod.yml
+    ;;
   ed | external-dns)
     shift
     kapp deploy -a external-dns -f <(
@@ -84,29 +100,30 @@ a | apply | deploy)
     ;;
   h | harbor)
     shift
+    # -f ./cluster/config-optional/harbor/harbor-cert-manager-staging.yml \
     kapp deploy -a harbor -f <(
       ytt \
         -f ./cluster/config/harbor/ \
-        -f ./cluster/config-optional/harbor/harbor-cert-manager-prod.yml
+        -f ./cluster/config-optional/harbor/label-ns-quarks-secret-monitor.yml
     ) "$@"
-    # TODO -f ./cluster/config-optional/harbor/harbor-cert-manager-staging.yml
+    # -f ./cluster/config-optional/harbor/harbor-cert-manager-prod.yml \
     ;;
-  cf | cf-for-k8s)
+  qs | quarks-secret)
     shift
-    kapp deploy -a cf -f <(
+    kapp deploy -a quarks-secret -f <(
       ytt \
-        -f ./cluster/config/cf-for-k8s/ \
-        -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml \
-        -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
+        -f ./cluster/config/quarks-secret/ \
+        -f ./cluster/config-optional/quarks-secret/example-certificate-signed-from-cluster-ca.yml \
+        -f ./cluster/config-optional/quarks-secret/example-password.yml
     ) "$@"
-    # TODO -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-prod.yml
     ;;
   all)
     shift
     ./deploy-ctl.sh apply external-dns "$@"
+    ./deploy-ctl.sh apply quarks-secret "$@"
     ./deploy-ctl.sh apply cert-manager "$@"
-    ./deploy-ctl.sh apply cf-for-k8s "$@"
     ./deploy-ctl.sh apply harbor "$@"
+    ./deploy-ctl.sh apply cf-for-k8s "$@"
     ;;
   *)
     echo "usage: ./deploy.sh apply all [optional-args...]"
@@ -125,6 +142,10 @@ d | delete)
     shift
     kapp delete -a cert-manager "$@"
     ;;
+  cf | cf-for-k8s)
+    shift
+    kapp delete -a cf "$@"
+    ;;
   ed | external-dns)
     shift
     kapp delete -a external-dns "$@"
@@ -133,9 +154,9 @@ d | delete)
     shift
     kapp delete -a harbor "$@"
     ;;
-  cf | cf-for-k8s)
+  qs | quarks-secret)
     shift
-    kapp delete -a cf "$@"
+    kapp delete -a quarks-secret "$@"
     ;;
   all)
     shift
@@ -143,6 +164,7 @@ d | delete)
     kapp delete -a harbor "$@"
     kapp delete -a external-dns "$@"
     kapp delete -a cert-manager "$@"
+    kapp delete -a quarks-secret "$@"
     ;;
   *)
     echo "usage: ./deploy.sh delete {kapp-env} [optional-args...]"

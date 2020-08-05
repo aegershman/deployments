@@ -24,6 +24,12 @@ directories:
     path: .
   path: cluster/build/harbor/_vendir/harbor-helm
 - contents:
+  - git:
+      commitTitle: Add SecretAnnotations feature (#26)
+      sha: 39bfc5eceedd8952f3dffe107c5e67d9cb12b6a6
+    path: .
+  path: cluster/build/quarks-secret/_vendir
+- contents:
   - manual: {}
     path: cert-manager
   path: cluster/config/cert-manager/_ytt_lib
@@ -39,4 +45,8 @@ directories:
   - manual: {}
     path: harbor
   path: cluster/config/harbor/_ytt_lib
+- contents:
+  - manual: {}
+    path: quarks-secret
+  path: cluster/config/quarks-secret/_ytt_lib
 kind: LockConfig
