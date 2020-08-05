@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:fe904a2810a6330586a23d4e0e2c607aa95f17ed62d17cc29244ef7f6e9f33b5
+        image: cloudfoundry/cloud-controller-ng@sha256:099a06c3ddb358bb39054670c5693c853a2fb8c8a792809d49688b40df5f9b87
         imagePullPolicy: Always
         resources: {}
         volumeMounts:
@@ -73,7 +73,7 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:fe904a2810a6330586a23d4e0e2c607aa95f17ed62d17cc29244ef7f6e9f33b5
+        image: cloudfoundry/cloud-controller-ng@sha256:099a06c3ddb358bb39054670c5693c853a2fb8c8a792809d49688b40df5f9b87
         imagePullPolicy: Always
         resources: {}
         command:
@@ -151,7 +151,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:fe904a2810a6330586a23d4e0e2c607aa95f17ed62d17cc29244ef7f6e9f33b5
+        image: cloudfoundry/cloud-controller-ng@sha256:099a06c3ddb358bb39054670c5693c853a2fb8c8a792809d49688b40df5f9b87
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -489,13 +489,10 @@ data:
       use_privileged_containers_for_running: false
       use_privileged_containers_for_staging: false
     opi:
-      url: https://eirini.cf-system.svc.cluster.local:8085
+      url: http://eirini.cf-system.svc.cluster.local:8080
       opi_staging: true
       enabled: true
       cc_uploader_url: https://TODO.TODO
-      ca_file: /config/eirini/certs/tls.ca
-      client_cert_file: /config/eirini/certs/tls.crt
-      client_key_file: /config/eirini/certs/tls.key
     perm:
       enabled: false
     max_labels_per_resource: 50
@@ -579,7 +576,7 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:fe904a2810a6330586a23d4e0e2c607aa95f17ed62d17cc29244ef7f6e9f33b5
+        image: cloudfoundry/cloud-controller-ng@sha256:099a06c3ddb358bb39054670c5693c853a2fb8c8a792809d49688b40df5f9b87
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
@@ -629,7 +626,7 @@ spec:
       serviceAccountName: cf-api-controllers-service-account
       containers:
       - name: manager
-        image: cloudfoundry/capi-kpack-watcher@sha256:954144ec4062df8913db4d1b3c1cc0330753bafcfd57f11e564b8f34e48a7265
+        image: cloudfoundry/capi-kpack-watcher@sha256:6a552aa4375ba9177c55de7041cd92a7e58b9c642d6bbc4045da81dc6587f258
         env:
         - name: UAA_CLIENT_SECRET
           value: wautkslyim9ync77qqsr
@@ -641,6 +638,8 @@ spec:
           value: http://capi.cf-system.svc.cluster.local
         - name: STAGING_NAMESPACE
           value: cf-workloads-staging
+        - name: WORKLOADS_NAMESPACE
+          value: cf-workloads
         resources: {}
       terminationGracePeriodSeconds: 10
 ---
@@ -707,7 +706,7 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:fe904a2810a6330586a23d4e0e2c607aa95f17ed62d17cc29244ef7f6e9f33b5
+        image: cloudfoundry/cloud-controller-ng@sha256:099a06c3ddb358bb39054670c5693c853a2fb8c8a792809d49688b40df5f9b87
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
@@ -821,19 +820,6 @@ data:
     upload_cleanup 400-505;
 ---
 apiVersion: v1
-kind: Secret
-type: Opaque
-metadata:
-  name: opi-secrets
-  namespace: cf-system
-  annotations:
-    kapp.k14s.io/versioned: ""
-data:
-  opi.ca: TFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVVldSRU5EUVhKNVowRjNTVUpCWjBsU1FVNW9Rall2SzA5c1dqVk1la1ZHWTFwaFRIQlVWbWQzUkZGWlNrdHZXa2xvZG1OT1FWRkZURUpSUVhjS1RYcEZUVTFCYjBkQk1WVkZRbWhOUkZaV1RrSk5VbGwzUmtGWlJGWlJVVXRGZHpGRVlrYzVNVnBEUWtkaU0xWjFXa2hLTlUxUmMzZERVVmxFVmxGUlJBcEZkMHBxV1ZSQlpVWjNNSGxOUkVFelRXcFplRTlVVlRGTmFrSmhSbmN3ZVUxVVFUTk5hbGw0VDFSVk1VMXFRbUZOUkUxNFJFUkJTMEpuVGxaQ1FWbFVDa0V4VmxSUlZFVlhUVUpSUjBFeFZVVkRhRTFPVVRKNGRtUlhVV2RTYlRreFltMVNlV1ZVUlV4TlFXdEhRVEZWUlVGNFRVTlpNa1YzWjJkSGFVMUJNRWNLUTFOeFIxTkpZak5FVVVWQ1FWRlZRVUUwU1VKcWQwRjNaMmRIUzBGdlNVSm5VVVIyVHpnMlJrdEliakJJTUZoV2MycEJTMmhGVkROT1IyMWpOVk5WZVFveFprbHNibEF2VkRKSlozaEpTbUY0T0RVMmFqaHhkV1JHTnpadGRGZFpWbGw1ZGxGUWRFVlFkV2hPVG1aWGRHbEZRWFUzZDFWQlJrOVphalZ0Y21WckNqbGtPVXhXV0VOd1REQk1hRUpJUWxCa04yZG1aRmhWZDAwM2IzZFJlaTlOTUVneGJsVndhVkZQV1dWd1puTjJlRXhMTVZaYVJXWjBlVVJNV2pkUldXOEtabFJrUmtwSmVGZEhjR0ZqWVdaalVuWnBRVGxSWlVGd1RYQndRblpsVGsxaWJ5c3JielZUU0U5amNXVlhWVkZIYW1vNVZsTkRiV3c1WWpCNk1WaHFad3ByYkhKUmJHNDBVMWRZT0RKalpVUlpUVUphWnpGSk9HSTFlRE5CSzJGek9XWjBTMVZhYWtSQk5saFVSMXBsVVZCQmVscDFWMnBKY21KTE5rdGlTM0ZGQ25WQlJXNXlURGxaVTNwRlZHSTBNMjF4ZUZJd01UQXpVR2NyYVdreFpVWlJNV2haUm5CaWNGWkZXWEYwU25Wa1UyZFplRlZGT0doSFZHdEdaVUZEWVRFS1oyVkdlVzVsU1ZJMldGcFdSWHBVWVVsS1RGbDNiSFZyUldvdlZtOXlURkJqVmt4RVNtZDJkblZYVTB3elN6UjVaQzloU0VONVlVMUlMMUZYVVhWS2Vnb3pUMWN3Y1ZBMFlUaFNVMWhOUmxock4yUjZaSE5DVUdJellrWlZWRUZsWWxwbVVtOW1SVUZsVEZSSGFDdEpRbmhvUTJ0UlRsSXJhblIxZEd4UlRqQmlDaXRhZERoS1QzWjFSVGRWZW5Cd1VreFdRa3A1Y21SVk9XeDVPVEZsY3pGYUwwdHpRMEYzUlVGQllVNXFUVWRGZDBSbldVUldVakJRUVZGSUwwSkJVVVFLUVdkRlIwMUJPRWRCTVZWa1JYZEZRaTkzVVVaTlFVMUNRV1k0ZDBoUldVUldVakJQUWtKWlJVWkVZa3d3V1VOamMxQTRObnB0YlRKcVYwWkNRbmhZZWdwSlR5c3hUVUk0UjBFeFZXUkpkMUZaVFVKaFFVWkVZa3d3V1VOamMxQTRObnB0YlRKcVYwWkNRbmhZZWtsUEt6Rk5RVEJIUTFOeFIxTkpZak5FVVVWQ0NrTjNWVUZCTkVsQ1oxRkViMkY2V0RkMU16QlZaUzlrUlhKRFpsVkhXR3QzU1RWamFDdERhRU01VFRSQk9XcEpSMWRqWkVZNWFGRklkemxWVkZCaVkxa0tWREprU21RMVMwUnFZMmd3TWxoTWVucG5XVGx0TldoV1lUZEVlVWhLWTNwaGFYRnJNMjV3V0dKQlYwdzJRVlZ2VGtRMWVrRk5Xa1kxWXpRM2FuQjZOd3B6ZVVOU2RIRnpkMlI0VHpsUVprdEdOM0JqZGt4QlJFcHlZemd5U1V0blQzUkRUWGs1VmxwRlowOHdTMDFDYm5wdWExWXdVR05KTTIxQk9YTllTMkpTQ2xvdmMxTkpaREJoT1hwUU1FbEliSEk1UTI5dk1XTkJTMmRRUlhwbVpEWkVkV1JrWTJkU1pWSk9aSGhPV2xGSmJIZE1UWEUwVWtoSlFqZEViMWgwVTNRS1ZESjJVa0ZxVERKeVRqVmlXbWMzVFhWWFJqaEVVM2huTTJ0MWIwUllkRzVrUzNoU2RreDFiM0o0TUZkMWVHMTNSRWRqVTJaeGNUZFdZa3R2WVU4eFdncHJLMDVWVUdKMVVrVmlRVkZDWW5RM1NIWm1jMHhTVkhoRWVWTkxXVzFUYzI0M0x6WndjekJyYlRkWlJWTlBaekJ0U2pWU2NVcDJjbEZsYXpGQmVVVklDa1ZoV2pOTWVHMVZSRFJ5WTNWVFFUTXlWemg0WVZkaGJGRkJNV1V3TUZaeGVsTkZTMVo2Y0hodWJFcGFla2c0WTJ4V1ZreFBlbWw2WkdKd2VVSlpNMndLZG1GSlJUTk9OV0owT1VKcFdFMTRSVUoyTWpZd1dFTjVNbGRGVmxKV09GRjJSbGx5WlM4NWRVRktRVmd6S3prMVNFUnpjMHhpVjBkVk9IUTNkeXRwV0FwUlRtdDVZV1F3UW5GUVFUMEtMUzB0TFMxRlRrUWdRMFZTVkVsR1NVTkJWRVV0TFMwdExRb0s=
-  opi.crt: TFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVVnBha05EUVhaTFowRjNTVUpCWjBsUlRqRXJRWFU1THpZMGFXNTJTVXRqVm5wc1owdDBha0ZPUW1kcmNXaHJhVWM1ZHpCQ1FWRnpSa0ZFUVhvS1RWRjNkME5uV1VSV1VWRkhSWGRPVmxVd1JYaEdha0ZWUW1kT1ZrSkJiMVJFVlU1ellqTldhMGxGV25aa1Z6VnJZMjVyZUVONlFVcENaMDVXUWtGTlZBcEJiVTVvVFVJMFdFUlVTWGROUkdONVRtcEZOVTVVVlhsTk1XOVlSRlJKZUUxRVkzbE9ha1UxVGxSVmVVMHhiM2RVYWtWTlRVRnZSMEV4VlVWQ2FFMUVDbFpXVGtKTlVsbDNSa0ZaUkZaUlVVdEZkekZFWWtjNU1WcERRa2RpTTFaMVdraEtOVTFUV1hkS1FWbEVWbEZSUkVSQ01IRk1iVTV0VEZoT05XTXpVbXdLWWxNMWVtUnRUWFZaTW5neFl6TlNiR05wTlhOaU1rNW9Za1JEUTBGaFNYZEVVVmxLUzI5YVNXaDJZMDVCVVVWQ1FsRkJSR2RuUjFCQlJFTkRRVmx2UXdwblowZENRVTB2YWxad1QyZFdTakZaTlZGeVdrc3dPVlZ4TVhCS05UWkhNVlpZUlZSSlptbEZORUV2YURkYUwyNVJRWFJ4WTJVM09HazJOV2t4U21kU0NsUlVTalpVY0d4TFZUTXpSbWxyUzFocVkwMVZXbmxsZERKcWF6UnJkV2x0TDBNMlkwUnJXR1pCYVdKa1VtY3hlRmxYZW05dFJrb3ZkbEZKVld4dGRWb0tWbll2ZW5oTlJVbFFaa1V3TUZvNFZWSjRlRk0yVlU1TVZFZHFSbkJrTHpsSUszcGljVU5DUXk5d01tWmthMUUwVDBZclFYRnBiRmRpYURsbFZGUnpUQXBIVWtOMlpYbHBURXQxVG5SM2FXVldjRmh1VUM5V1UwMXhjbklyTms1aFkydG9UMlZwUTFwVE5VMW1OakZHYzB4b01VWmxWRVlyY1daaGRtdHdNRUYzQ2pacFMwYzNZemhDZVdOalJqZEhRWGd2UWtwdFQwbE5aMVkyUnk5bWEycFFUVUZpUzJkTmNFWXdTMjB6VGxaNGJTc3ZSMUZoWm0xRGJFSXhVall3UWs0S1owaDRhQzg0VkRkS1UwVlVjRkZxVGxsRFpYTk1SRE5qT1hGWU16QkdPRVZVU0U5V2JHMVJWVVYzWVhoRFNrWXlVRmRGWlVOak9UTllVR2RMVUV4WE1RcDNibU56V21OWWJIaHBiVE01YWxFeVNsSmlkblpRYlRCalR6RmlVVVYyV1hjMlZsbEtaVUYxVmtWTE5XUnBVRWR0YlhSMVRYZFRlRmt3Y21SSk1UVmtDbWMwWjI1Ulp6WjZVR2h2WnlzelYzUmpLMHBNU1dOMmNYQlBNbU5LTmpoS2JEVktUa3QxYlRsbkt6TXdSMDR5Tm1sUlJIRm1jbTFSVjBSVlNVeEphVGdLWVVFMFdVVjNTVVJCVVVGQ2J6TTRkMlpVUVU5Q1owNVdTRkU0UWtGbU9FVkNRVTFEUW1GQmQwaFJXVVJXVWpCc1FrSlpkMFpCV1VsTGQxbENRbEZWU0FwQmQwbEhRME56UjBGUlZVWkNkMDFDVFVGM1IwRXhWV1JGZDBWQ0wzZFJRMDFCUVhkSVVWbEVWbEl3VDBKQ1dVVkdUMlZHYmpKR2JIcENkRkZ4YjJONUNrY3JUREkzUVZGR2MyaG1hazFDT0VkQk1WVmtTWGRSV1UxQ1lVRkdSR0pNTUZsRFkzTlFPRFo2YlcweWFsZEdRa0o0V0hwSlR5c3hUVUV3UjBOVGNVY0tVMGxpTTBSUlJVSkRkMVZCUVRSSlFtZFJRM0JQUTJOS1NFbHhjVmh5ZVUxeVJIWkpjVXg2VHpGaVRsaElOMWsyVVVsb1pYUlhRa0ZSV2xOV2IxRm1kZ3BLZDFGMFltWnNPVXBOWkRoMlFVWjJZeXRrWW00M1FsbFZRbkJITlVncmN6WjZaelZIZGpONlVtTjVTRzg1YVVsV2NXMUNiMnhCVWxoMGJHVmxRMjU0Q2tVNVEwUXhSbVF5Y1RWTmF6VjJWREZuV1ZsNmEyNW9lVFV2VWl0c1VVSXlXaXN3YUZaNldFZHhSSFFyTldwQ0wxbEtUemxvWjJKVk9YQjFLMGhaYVZjS1F6aHlWRkpwVDJkVFQyZzVVazUzYjNaR1FXOURUME5xSzFSUU1HZFZhamhMTlhsS1ZuRTRUVzFDWld4NlJTOVFiVU5HTlhGTGMwTTFlVU5MTVZaRmR3cGllSGRpUkRObGFIUjFRbk5EV1VaRlNHdEpaM2N4YzAxYVkxaDZMMWxTVEdoT2JHcHVaWEJzY0ZoUVIwaHVhRlpoVERFemJWQnNTVEZZZW05QmQybE1DbW92TWxaNVdXaG1OR2MwV2psd1QxcHZOSGQ0UXpsTE9IUXpTRWg2WkdGS2VUbEtaa1ZEVWs1Q2FYY3piV3B1TlVkSlVFSXdkelpUSzBGTFVVaHRlRElLTkVKeVkwaEtVbWgwZUdNeU9XNHhiVlJhZUhJMFNWVnRaMmN4UlZWdFJqSXJVbTVEY25rM1NXOU1TRmx0VTBnMGJWSktZa1ZhWmxvd2R6Y3JOMUZVUWdwQlVETnVTRlZJVjNWNlUwTldkV1p5TXpOV1owSXdTM1ZKWlhRNWVUZGpkbXRhYTBaVU5VUnVUVXBTVldKekwyOUZlRkJvTkVKT04wRXhWbGN5ZFVSR0NtWmpNM0oxVlZsdFduRXlheTh2U1dWUGFWVTlDaTB0TFMwdFJVNUVJRU5GVWxSSlJrbERRVlJGTFMwdExTMEtDZz09
-  opi.key: TFMwdExTMUNSVWRKVGlCU1UwRWdVRkpKVmtGVVJTQkxSVmt0TFMwdExRcE5TVWxITkhkSlFrRkJTME5CV1VWQmVpdE9WMnMyUWxWdVZtcHNRM1JyY2xReFUzSlhhMjV1YjJKV1ZtTlNUV2dyU1ZSblJDdElkRzRyWkVGRE1uQjRDamQyZVV4eWJVeFZiVUpHVGsxdWNFOXRWWEJVWm1OWFMxRndaVTUzZUZKdVNqWXpZVTlVYVZNMlMySTRUSEIzVDFKa09FTktkREZIUkZoR2FHSlBhVmtLVlc0ck9VRm9VMWRoTld4WEx5OVFSWGRSWnprNFZGUlNibmhTU0VoR1RIQlJNSFJOWVUxWGJETXZNR1kzVG5WdlNVVk1LMjVhT1RKU1JHYzBXRFJEY1FwTFZscDFTREUxVGs5M2MxcEZTemszUzBsemNUUXlNME5LTlZkc1pXTXZPVlpKZVhGMWRqZHZNWEI1VTBVMU5rbEtiRXhyZUM5eVZWZDNkVWhWVmpWTkNsZzJjRGx4SzFOdVVVUkVjVWx2WW5SNmQwaEtlSGRZYzFsRVNEaEZiVmswWjNsQ1dHOWlPU3RUVFRoM1FuTnhRWGxyV0ZGeFltTXhXRWRpTnpoYVFuQUtLMWxMVlVoV1NISlJSVEpCWmtkSUwzaFFjMnhKVWs5c1EwMHhaMG8yZDNOUVpIb3ljR1ptVVZoM1VrMWpOVmRYV2tKUlZFSnlSVWxyV0ZrNVdWSTBTZ3A2TTJSakswRnZPSFJpV0VOa2VYaHNlR1ZZUjB0aVpqSk9SRmxzUm5Vck9DdGlVbmMzVm5SQlV6bHFSSEJXWjJ3MFF6VlZVWEpzTWtrNFlXRmhNalI2Q2tKTVJtcFRkREJxV0d3eVJHbERaRU5FY2swclIybEVOMlJoTVhvMGEzTm9lU3R4YXpkYWQyNXlkMjFZYTJzd2NUWmlNa1EzWmxGWk0ySnhTa0ZQY0NzS2RWcENXVTVSWjNOcFRIaHZSR2huVkVGblRVSkJRVVZEWjJkSFFVOVhjbkl2WVdjMU1YQXJNeko2UVhsTmVEUkxiV040ZUhsdmMyZENlbEZ0Yms1S2RRcGFSbE5rV1dnemJqVllPVWcyY0RoalNWWlZkM0pNVDFOdk9Ea3JTaTgyVFZsMEswNXRWMnB6WjJGWUx5czRhV0o2YkZGbE1URXhVSEEzZGpSblZHNW5Da05WV0hsV1JVbDBhVE4zVDI1cVMycDZTa0pPU0ROcWFIVTFNMnBwVVVWNWQyOHdOVWhJZG05VVFqRnRVMlY2YUU1TmNuRlVjSGhIUm1oQ2VFNXFMM0VLZGxSU1R6UlFZVFpOZWpaQ1VWSjFZa2hPVkZvNVpWaFNlbGhpTmxORE9YWTRRa3htYm1wc1NqRkJVWEpVZHk5MlJTdHFWaTlJYVZGTVFsVk5UemRIU0FwbFQybENaMGxuUm01MVlYaHdNMkZoWTFWRFpFcFVRMlJoYkROcWFuaFpSbU14V2t0a09YZDNZWGMxYzB4V1ZEUlNjM1ZEVkVNdlN6UXdTa053ZW5Kc0NuWk5SMWhHZG1wdVJIUlpiVFoxTlZOeU5FWlVTV2RQZVRkSmNXaE9NM1JuYzJSVlVHSlRPVXBHZDFWbmJHaEpNVFZ6Yms4eWQxQjFWMWt4YXpGSE1EUUtaVE53VjJ4dVVDdEdaMVpYUlZWaVRIVm9WMHhGZGl0VlRXdHVUVFkzTWtwNksxUkhXRkJIV0dveVJYRmlVVzQwVEZnek0wNVZWRUowU1N0dFRETmtOZ3BCZUVkeU9WSkNaV0pUZEVabU5VTmlkSFZJVmpacFdrVlpURlZOYkZGWVdrZFBNM1F3UjFkcGRURXhiVEYwU2xsbWVtOVNkMnR6Y1N0SFUwSTRkVGxFQ25Sd1ZISXJVSHB4VkZWcWMyaFJNMWwwTkdsVVNqSXlielpvZW5oQmIwaENRVkJtTVcxQ2IzcHZNMEpVVGxKWk9HeENNbk16TUdjNVJuSXpWMWMxU1RJS09Vc3ZURXBhZG5VNFVEUnlUMGhYTHpScFJtSmpiVmRaVUV3ckwxZ3ZNa1JHT1VsdldUSktNMGhKUVRKcWJFSjNlSEV5WkRkNU5XbERkR0ozWW1WYVFncEZMMjV0VTFsTFJYcGlVRmhCVVhnelFqY3daelJvWVZGUGNYcG5TR2RGUm14YWVqUllkMDFOVERkUFdHVTROazVHT0hKcVVIbFhSV0UwUnpkTE0wSk1DakYwU3k5MVVEVkhNbUpXU2taVFRXczFZVE4xUlRWTVRWWXpVakJ2TlVsYVdHVm1OVVV6TkdGMmVURkdUblowVFZsYWJtaFpkSFI1TkdwT1ZEQldXWG9LVFVaQmIySXlOR000WWtWVVNXbG9jekJSVWpOblZGTnFWMVJNU1ZWWVJuSnhkMHRDZDFGRVYyOVNha0ZGZEVwU2EzWkNNbUZ1VTJweFpHUkJZVXR1UkFwdFZXVllaWEJaWTBWamVXVnhSSGhVZEdoWE1uaG1SSE4wY0V3eVVqTkVVMEZhTlZOUVpqTjNZVkowY2paRk5taEZlRTB3WVhCSFdpOXNZMUZNVkVOMUNreHVaVWhWY2tkYVJEZzBOalpyT0dseFRWcEZSRzkyTkZaTU1rcHlTVXRJV2pKclFuWmxTbVZTU1hObU1rbHBkMGhNVjJoUU4wNTZVRUpxY0UxNk5ub0tkbVp0WVhsWE5VaFFVakJzTUZwblltcFZkMUpJYjI1ME5VWXJZakJKVld0dVZHVmhNVEJTZVRnekx6WnVTV3RNYzNoMlFWaHVjMlZYVFVGd1NIZG5PUXBWUWtjNFZVWTBWM1I1VVdSbmNVTmxNa1pHWTBoWmJrSnlaRXg2YVV0elFVVlJWVkZZVkd0RFoyTkNiSHBKVTBoeVZTdGhWeXMzWkd4RU1WTXJXbWR3Q25ScWNsSTRWMFpwTlVGRlRUaDVRV0p3Y25ReEwyaFRUamg0ZEVwcGNIVnhjbWhsZVhWVlZWWmtWelpuVERCcGRVMXBlVmhVY3paaGJ6bEtUbXRTZFZRS1RsWnJlRFpVSzFaWGJqVjZRMGRMUW01VVp5dGllbFJXUVRCR1FVZHVTRE40V0hKNFdXOXRkVGRpV1VFell6bFZSblp4TW1oeGFXcHZhbFl3WWtaMVR3cGpXa1ZhYWpsb1JHOUVPSGRCZEhCWFQyOTRRelo1UVhOaU5HVkZTWE4zVTFweFdUUXZNMGgzUmpBMFFWbE1abkFyT1RCc1NIUmtNVEJIVURWdmVHcE5DamcxZEN0aGVHb3dhRTEwS3k5VWNsTlJSSFpTT0ZGTlJFTmliU3RXWW01TUwwbDNkMVo1Um05eFZWVkRaMk5GUVhJeGN6RndjRUkyU2pnelprTXhSRlVLT1ZoaWNHVkRWa3hPY0ZaQllXVklkRlJSWlRVek5VeHBibmcxZDNoVlJXRkpOM3BVWlRoYVNYaHFkM1ZTTVVkQk4xaENhWGxDYjI5VEwwRlRlVGgxWVFwS1NFRnhXQzkzWWk5MVVGZEpjMnROWXpGeU0ybDVhM1VyVFd4bFJ5OUxjWEF6TVUwd2JsRlJkbGRLWlRVNU5XeFhaRWN3ZGxwTmFuTnZabmxYWTJ3MkNqWXhZVnB1T0dGUWJucHNReXQ0VmtOT1drRlpRbGhOYlZSTVVqUkNja05zZW5GcE9DdE5aelJVTHpkdWJFZHVNamhrYUVOdmRGcE5TR3BRTjBrMFVFOEtTV0pCZG1GRGJVUnBUbmx1WTA4eFZYZHJhR3hwU0hKWGEzQkdOR1k0VG1WaWRFSXZVSGg0Vmxsb2RVWjNTMWcxUVc5SVFWSlpjVmxYZW1SNVZVbFZiQXB6WTBST2JWRlFNVEZzYTJKQ1FraEhlVFZGVTJkak1FbHBabXhLTW5GeU9GTXhTV0ZQZFVzME1UbFRUbVp1ZW10emNsZG1SVUpzWkdkNWFsZDRiMUpRQ21WaE1EZFlhREpHWlc1eFQycFhjVUV2VVVveFNsVmlTMG9yV1ZaTk9GQlhjRWRQTDNwdlpHcEVhVTVhZDJGM1NtMXpPWGRrV25WWVIzRnBiMjBySzFZS1VYRjFiMmczYUdoUUwyTktNSEJWVGxaMWVUUnBPRGt5TDNwTloyOXBOa0pKUkRkbVZrMTFhRTVVVkUxWE5UTnlOWEJxZEdaMVZGRnhSMGQzYWpkcVF3cFdjVlZOZG10VVp6ZEdjRlZtZDJwRk5rUTJWVkZaUkVkTlVuUnZaRzR4VlhwdUx6TnhkRU5rZG1SSlRDOWtabk5vVEVOQkNpMHRMUzB0UlU1RUlGSlRRU0JRVWtsV1FWUkZJRXRGV1MwdExTMHRDZ289
----
-apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: cf-api-server-service-account
@@ -872,7 +858,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: cf:kpack-custombuilder-fetcher
+  name: cf:kpack-custombuilder-admin
 rules:
 - apiGroups:
   - experimental.kpack.pivotal.io
@@ -881,6 +867,9 @@ rules:
   - custombuilders/status
   verbs:
   - get
+  - create
+  - update
+  - delete
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -913,7 +902,7 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: cf-api-server-service-account-kpack-custombuilder-fetcher
+  name: cf-api-server-service-account-kpack-custombuilder-admin
   namespace: cf-workloads-staging
 subjects:
 - kind: ServiceAccount
@@ -921,7 +910,7 @@ subjects:
   namespace: cf-system
 roleRef:
   kind: ClusterRole
-  name: cf:kpack-custombuilder-fetcher
+  name: cf:kpack-custombuilder-admin
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
@@ -991,6 +980,20 @@ rules:
   - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cf:statefulsets-updater
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - list
+  - update
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: cf-api-controllers-service-account-kpack-builds-reader
@@ -1016,6 +1019,20 @@ subjects:
 roleRef:
   kind: ClusterRole
   name: cf:service-accounts-secrets-fetcher
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cf-api-controllers-service-account-statefulsets-updater
+  namespace: cf-workloads
+subjects:
+- kind: ServiceAccount
+  name: cf-api-controllers-service-account
+  namespace: cf-system
+roleRef:
+  kind: ClusterRole
+  name: cf:statefulsets-updater
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
@@ -1084,7 +1101,7 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:fe904a2810a6330586a23d4e0e2c607aa95f17ed62d17cc29244ef7f6e9f33b5
+        image: cloudfoundry/cloud-controller-ng@sha256:099a06c3ddb358bb39054670c5693c853a2fb8c8a792809d49688b40df5f9b87
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
@@ -1470,38 +1487,34 @@ data:
   opi.yml: |
     opi:
       app_namespace: cf-workloads
-      registry_address: "registry.not-used:443"
+      registry_address: registry.not-used:443
       registry_secret_name: app-registry-credentials
-      eirini_address: "https://eirini-opi.cf-system.svc.cluster.local:8085"
+      eirini_address: https://eirini-opi.cf-system.svc.cluster.local:8085
       downloader_image: eirini/recipe-downloader@sha256:96eea8a7c7cb53b54678d7f26ab0c1897b1b699297c4b75d64a93b4833048554
       executor_image: eirini/recipe-executor@sha256:c073e375d891259d91dd63148ac8e880098d9f298304954318818a197d1163b3
       uploader_image: eirini/recipe-uploader@sha256:af3d57790d3e6fbcc719e64dd553a2b410b2f7036bc1903aac339ce96144d8dc
-
       cc_uploader_secret_name: secrets-2.16.4-2
       cc_uploader_cert_path: cc-server-crt
       cc_uploader_key_path: cc-server-crt-key
-
       client_certs_secret_name: secrets-2.16.4-2
       client_cert_path: eirini-client-crt
       client_key_path: eirini-client-crt-key
-
       ca_cert_secret_name: secrets-2.16.4-2
       ca_cert_path: internal-ca-cert
-
-      cc_cert_path: "/workspace/jobs/opi/secrets/cc.crt"
-      cc_key_path: "/workspace/jobs/opi/secrets/cc.key"
-      cc_ca_path: "/workspace/jobs/opi/secrets/cc.ca"
+      cc_cert_path: /workspace/jobs/opi/secrets/cc.crt
+      cc_key_path: /workspace/jobs/opi/secrets/cc.key
+      cc_ca_path: /workspace/jobs/opi/secrets/cc.ca
       rootfs_version: v75.0.0
-      client_ca_path: "/workspace/jobs/opi/secrets/eirini.ca"
-      server_cert_path: "/workspace/jobs/opi/secrets/eirini-server.crt"
-      server_key_path: "/workspace/jobs/opi/secrets/eirini-server.key"
-      tls_port: 8085
+      client_ca_path: /workspace/jobs/opi/secrets/eirini.ca
+      server_cert_path: /workspace/jobs/opi/secrets/eirini-server.crt
+      server_key_path: /workspace/jobs/opi/secrets/eirini-server.key
       disk_limit_mb: 2048
       application_service_account: eirini
       staging_service_account: eirini-staging
       allow_run_image_as_root: false
       unsafe_allow_automount_service_account_token: false
-      serve_plaintext: false
+      serve_plaintext: true
+      plaintext_port: 8080
   routing.yml: |
     app_namespace: cf-workloads
     nats_ip: "nats-nats.cf-system.svc.cluster.local"
@@ -2047,8 +2060,8 @@ metadata:
   namespace: cf-system
 spec:
   ports:
-  - name: https
-    port: 8085
+  - name: http
+    port: 8080
     protocol: TCP
   selector:
     name: eirini
@@ -2083,8 +2096,8 @@ spec:
         imagePullPolicy: Always
         name: opi
         ports:
-        - containerPort: 8085
-          name: https
+        - name: http
+          containerPort: 8080
         resources: {}
         volumeMounts:
         - mountPath: /workspace/jobs/opi/config
@@ -2497,6 +2510,8 @@ apiVersion: experimental.kpack.pivotal.io/v1alpha1
 kind: Store
 metadata:
   name: cf-buildpack-store
+  annotations:
+    kapp.k14s.io/change-group.kpack-resources: cf-for-k8s.cloudfoundry.org/kpack-resources
 spec:
   sources:
   - image: gcr.io/paketo-community/ruby@sha256:5d95274fc0468f34d29ff2fd115634206fa6beaa3d8ecb2e0d8f06b42f37a777
@@ -2512,6 +2527,8 @@ apiVersion: experimental.kpack.pivotal.io/v1alpha1
 kind: Stack
 metadata:
   name: cflinuxfs3-stack
+  annotations:
+    kapp.k14s.io/change-group.kpack-resources: cf-for-k8s.cloudfoundry.org/kpack-resources
 spec:
   id: org.cloudfoundry.stacks.cflinuxfs3
   buildImage:
@@ -2524,6 +2541,8 @@ kind: CustomBuilder
 metadata:
   name: cf-default-builder
   namespace: cf-workloads-staging
+  annotations:
+    kapp.k14s.io/change-rule.kpack-resources: upsert after upserting cf-for-k8s.cloudfoundry.org/kpack-resources
 spec:
   tag: harbor.cf.gershman.io/library/cf-default-builder
   serviceAccount: cc-kpack-registry-service-account
@@ -2550,6 +2569,36 @@ spec:
     - id: paketo-buildpacks/nginx
   - group:
     - id: paketo-buildpacks/procfile
+---
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+metadata:
+  name: kapp-wait-rule-config
+waitRules:
+- supportsObservedGeneration: true
+  conditionMatchers:
+  - type: Ready
+    status: "True"
+    success: true
+  resourceMatchers:
+  - apiVersionKindMatcher:
+      apiVersion: experimental.kpack.pivotal.io/v1alpha1
+      kind: Stack
+  - apiVersionKindMatcher:
+      apiVersion: experimental.kpack.pivotal.io/v1alpha1
+      kind: Store
+- supportsObservedGeneration: true
+  conditionMatchers:
+  - type: Ready
+    status: "True"
+    success: true
+  - type: Ready
+    status: "False"
+    failure: true
+  resourceMatchers:
+  - apiVersionKindMatcher:
+      apiVersion: experimental.kpack.pivotal.io/v1alpha1
+      kind: CustomBuilder
 ---
 apiVersion: v1
 kind: Namespace
@@ -3051,8 +3100,6 @@ kind: Secret
 metadata:
   name: webhook-certs
   namespace: kpack
-  annotations:
-    kapp.k14s.io/versioned: ""
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -3742,7 +3789,7 @@ spec:
       serviceAccountName: metric-proxy
       containers:
       - name: metric-proxy
-        image: oratos/metric-proxy@sha256:20c1af2d40457f343ff8b00d487aca24099b5d67921b57dead910f05084c9536
+        image: oratos/metric-proxy@sha256:938ac36f0f1ede38b1ed7b2451b918345709848fc807a11500fd9b1b05fd239d
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
