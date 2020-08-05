@@ -46,6 +46,11 @@ build)
     ./build.sh
     popd
     ;;
+  sc | secretgen-controller)
+    pushd ./cluster/build/secretgen-controller
+    ./build.sh
+    popd
+    ;;
   all)
     for b in ./cluster/build/*; do
       pushd "${b}"
@@ -117,9 +122,17 @@ a | apply | deploy)
         -f ./cluster/config-optional/quarks-secret/example-password.yml
     ) "$@"
     ;;
+  sc | secretgen-controller)
+    shift
+    kapp deploy -a secretgen-controller -f <(
+      ytt \
+        -f ./cluster/config/secretgen-controller/
+    ) "$@"
+    ;;
   all)
     shift
     ./deploy-ctl.sh apply external-dns "$@"
+    ./deploy-ctl.sh apply secretgen-controller "$@"
     ./deploy-ctl.sh apply quarks-secret "$@"
     ./deploy-ctl.sh apply cert-manager "$@"
     ./deploy-ctl.sh apply harbor "$@"
@@ -158,6 +171,10 @@ d | delete)
     shift
     kapp delete -a quarks-secret "$@"
     ;;
+  sc | secretgen-controller)
+    shift
+    kapp delete -a secretgen-controller "$@"
+    ;;
   all)
     shift
     kapp delete -a cf "$@"
@@ -165,6 +182,7 @@ d | delete)
     kapp delete -a external-dns "$@"
     kapp delete -a cert-manager "$@"
     kapp delete -a quarks-secret "$@"
+    kapp delete -a secretgen-controller "$@"
     ;;
   *)
     echo "usage: ./deploy.sh delete {kapp-env} [optional-args...]"
