@@ -95,6 +95,7 @@ a | apply | deploy)
     kapp deploy -a cf -f <(
       ytt \
         -f ./cluster/config/cf-for-k8s/ \
+        -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml \
         -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
     ) "$@"
     # TODO -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-prod.yml

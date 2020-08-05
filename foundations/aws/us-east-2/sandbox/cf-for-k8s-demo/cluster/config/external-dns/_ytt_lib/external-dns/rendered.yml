@@ -4,7 +4,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.2.5
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 ---
@@ -14,7 +14,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.2.5
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -42,6 +42,7 @@ rules:
   - networking.istio.io
   resources:
   - gateways
+  - virtualservices
   verbs:
   - get
   - list
@@ -68,7 +69,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.2.5
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 roleRef:
@@ -86,7 +87,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.2.5
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -106,7 +107,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.2.5
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -119,7 +120,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: external-dns
-        helm.sh/chart: external-dns-3.2.4
+        helm.sh/chart: external-dns-3.2.5
         app.kubernetes.io/instance: external-dns
         app.kubernetes.io/managed-by: Helm
       annotations:

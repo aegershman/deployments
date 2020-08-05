@@ -18,7 +18,7 @@ directories:
       - path: .
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: a75b678440676ad08f1e5d2e576b3e3e02d245cd # beyond v0.4.0
+          ref: 04bd77141064733fc71d837bfb89220db0184be7 # beyond v0.5.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -29,7 +29,7 @@ directories:
       - path: .
         git:
           url: https://github.com/bitnami/charts
-          ref: a0d9242d3aa21296ffe0584e5eda478bcc961ea7 # 3.2.4
+          ref: 98c115cad63c7405f2ad1241dbd668e34e3a3f98 # 3.2.5
         includePaths:
           - bitnami/external-dns/**/*
   - path: cluster/build/harbor/_vendir/harbor-helm
@@ -38,15 +38,8 @@ directories:
         git:
           url: https://github.com/goharbor/harbor-helm
           ref: tags/v1.3.4
-        includePaths:
-          - cert/**/*
-          - conf/**/*
-          - templates/**/*
-          - .helmignore
-          - Chart.yaml
-          - LICENSE
-          - README.md
-          - values.yaml
+        excludePaths:
+          - .git/**/*
 
   # the components in this section below are handled by their corresponding build scripts
   # the manual param tells vendir to not override/touch the contents of these directories

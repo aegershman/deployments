@@ -7,14 +7,14 @@ directories:
   path: cluster/build/cert-manager/_vendir
 - contents:
   - git:
-      commitTitle: Refactor cluster admin test...
-      sha: a75b678440676ad08f1e5d2e576b3e3e02d245cd
+      commitTitle: Bump capi-k8s-release to 76aa46099c639140a492019df3f18130d60dd571
+      sha: 04bd77141064733fc71d837bfb89220db0184be7
     path: .
   path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
 - contents:
   - git:
-      commitTitle: '[bitnami/external-dns] Release 3.2.4 updating components versions...'
-      sha: a0d9242d3aa21296ffe0584e5eda478bcc961ea7
+      commitTitle: Add VirtualService support for istio (#3216)
+      sha: 98c115cad63c7405f2ad1241dbd668e34e3a3f98
     path: .
   path: cluster/build/external-dns/_vendir
 - contents:
