@@ -100,10 +100,10 @@ a | apply | deploy)
     ;;
   h | harbor)
     shift
+    # -f ./cluster/config-optional/harbor/harbor-cert-manager-staging.yml \
     kapp deploy -a harbor -f <(
       ytt \
         -f ./cluster/config/harbor/ \
-        -f ./cluster/config-optional/harbor/harbor-cert-manager-staging.yml \
         -f ./cluster/config-optional/harbor/label-ns-quarks-secret-monitor.yml
     ) "$@"
     # -f ./cluster/config-optional/harbor/harbor-cert-manager-prod.yml \
