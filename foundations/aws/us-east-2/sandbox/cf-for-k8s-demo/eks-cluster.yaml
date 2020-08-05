@@ -8,7 +8,7 @@ metadata:
   name: cf-for-k8s-demo
   region: us-east-2
   version: "1.17"
-  tags: {}
+  tags: { cost-center: aegershman }
 
 vpc:
   autoAllocateIPv6: false
@@ -18,7 +18,7 @@ vpc:
     publicAccess: true
     privateAccess: false
 
-managedNodeGroups:
+nodeGroups:
   - name: ng-0
     instanceType: m5.large
     desiredCapacity: 3
@@ -26,7 +26,7 @@ managedNodeGroups:
     maxSize: 5
     volumeSize: 80
     labels: {}
-    tags: {}
+    tags: { cost-center: aegershman }
     iam:
       withAddonPolicies:
         albIngress: false
@@ -40,8 +40,12 @@ managedNodeGroups:
         externalDNS: true
         fsx: false
         imageBuilder: true
-        xRay: false
+    volumeType: gp2
+    volumeEncrypted: true
 
 cloudWatch:
   clusterLogging:
     enableTypes: []
+
+secretsEncryption:
+  keyARN: "arn:aws:kms:us-east-2:450544694753:key/bbd7c971-c83d-4534-a9d9-f173f070cba6"
