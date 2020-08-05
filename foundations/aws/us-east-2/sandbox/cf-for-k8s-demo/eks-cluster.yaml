@@ -1,5 +1,5 @@
-# https://github.com/weaveworks/eksctl/tree/master/examples
 # https://eksctl.io/usage/schema/
+# https://github.com/weaveworks/eksctl/tree/master/examples
 ---
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
@@ -11,19 +11,37 @@ metadata:
   tags: {}
 
 vpc:
+  autoAllocateIPv6: false
   nat:
-    gateway: Single # Disable, Single (default), HighlyAvailable
+    gateway: Single
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: false
 
 managedNodeGroups:
-  - name: ng-1
+  - name: ng-0
     instanceType: m5.large
     desiredCapacity: 3
+    minSize: 1
+    maxSize: 5
     volumeSize: 80
     labels: {}
     tags: {}
     iam:
       withAddonPolicies:
+        albIngress: false
+        appMesh: false
+        appMeshPreview: false
+        autoScaler: false
         certManager: true
+        cloudWatch: false
         ebs: true
+        efs: false
         externalDNS: true
+        fsx: false
         imageBuilder: true
+        xRay: false
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: []
