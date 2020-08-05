@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: quarks-secret
+  name: cf-quarks-secret
   namespace: cf-system
 ---
 apiVersion: apiextensions.k8s.io/v1
@@ -74,7 +74,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   creationTimestamp: null
-  name: quarks-secret
+  name: cf-quarks-secret
 rules:
 - apiGroups:
   - certificates.k8s.io
@@ -158,14 +158,14 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: quarks-secret
+  name: cf-quarks-secret
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: quarks-secret
+  name: cf-quarks-secret
 subjects:
 - kind: ServiceAccount
-  name: quarks-secret
+  name: cf-quarks-secret
   namespace: cf-system
 ---
 apiVersion: apps/v1
@@ -176,9 +176,9 @@ metadata:
       - Metas:
         - Tag: v1.0.699
           Type: resolved
-          URL: cfcontainerization/quarks-secret:v1.0.699
-        URL: index.docker.io/cfcontainerization/quarks-secret@sha256:295b2ace172740e877b056e289aac7c12583b22d1381aa3c5e557c6171186a0d
-  name: quarks-secret
+          URL: cloudfoundry/quarks-secret:v1.0.699
+        URL: index.docker.io/cloudfoundry/quarks-secret@sha256:3bf8337c69c276424c5da54d6aa7c218a1be2dbd7d4115d50f75fe805e4cfb8d
+  name: cf-quarks-secret
   namespace: cf-system
 spec:
   replicas: 1
@@ -207,17 +207,17 @@ spec:
         - name: MELTDOWN_REQUEUE_AFTER
           value: "30"
         - name: MONITORED_ID
-          value: quarks-secret
+          value: cf-quarks-secret
         - name: POD_NAME
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
         - name: OPERATOR_NAME
           value: quarks-secret
-        image: index.docker.io/cfcontainerization/quarks-secret@sha256:295b2ace172740e877b056e289aac7c12583b22d1381aa3c5e557c6171186a0d
+        image: index.docker.io/cloudfoundry/quarks-secret@sha256:3bf8337c69c276424c5da54d6aa7c218a1be2dbd7d4115d50f75fe805e4cfb8d
         imagePullPolicy: IfNotPresent
         name: quarks-secret
         ports:
         - containerPort: 60000
           name: metrics
-      serviceAccountName: quarks-secret
+      serviceAccountName: cf-quarks-secret

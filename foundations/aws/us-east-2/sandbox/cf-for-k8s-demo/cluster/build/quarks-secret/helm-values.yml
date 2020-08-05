@@ -7,17 +7,17 @@
 # when this is true, the operator will install the CRDs
 # an rbac rule will be set for the operator to control CRDs
 # when this is false, helm will install the CRDs
-applyCRD: false # set to false to have this value be templatized
+applyCRD: false # TODO set to false to have this value be templatized
 
 # fullnameOverride overrides the release name
-fullnameOverride: ""
+fullnameOverride: "cf-quarks-secret"
 
 # image is the docker image of quarks secret.
 image:
   # repository that provides the operator docker image.
   repository: quarks-secret
   # organization that provides the operator docker image.
-  org: cfcontainerization
+  org: cloudfoundry
   # tag of the operator docker image
   tag: v1.0.699
 
@@ -52,4 +52,4 @@ global:
     pullPolicy: IfNotPresent
   # monitoredID is a string that has to match the content of the 'monitored' label in each monitored namespace.
   # The monitoredID helper uses the release fullname, unless this is set.
-  monitoredID: quarks-secret
+  monitoredID: cf-quarks-secret
