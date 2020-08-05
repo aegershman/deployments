@@ -87,7 +87,7 @@ a | apply | deploy)
     kapp deploy -a harbor -f <(
       ytt \
         -f ./cluster/config/harbor/ \
-        -f ./cluster/config-optional/harbor/harbor-virtual-service.yml
+        -f ./cluster/config-optional/harbor/harbor-cert-manager-staging.yml
     ) "$@"
     ;;
   cf | cf-for-k8s)
