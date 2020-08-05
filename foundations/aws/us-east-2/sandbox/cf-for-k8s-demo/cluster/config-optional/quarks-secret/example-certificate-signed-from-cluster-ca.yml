@@ -1,0 +1,17 @@
+---
+apiVersion: quarks.cloudfoundry.org/v1alpha1
+kind: QuarksSecret
+metadata:
+  name: example-certificate-signed-from-cluster-ca
+  namespace: quarks-secret
+spec:
+  type: certificate
+  secretName: example-certificate-signed-from-cluster-ca
+  request:
+    certificate:
+      alternativeNames:
+        - foo.com
+        - "*.foo.com"
+      commonName: gershman
+      isCA: false
+      signerType: cluster
