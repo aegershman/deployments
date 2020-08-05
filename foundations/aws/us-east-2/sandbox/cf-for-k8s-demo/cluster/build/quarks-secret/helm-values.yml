@@ -19,7 +19,7 @@ image:
   # organization that provides the operator docker image.
   org: cfcontainerization
   # tag of the operator docker image
-  tag: foobar
+  tag: 1.0.699
 
 # logLevel defines from which level the logs should be printed.
 logLevel: debug
@@ -52,4 +52,4 @@ global:
     pullPolicy: IfNotPresent
   # monitoredID is a string that has to match the content of the 'monitored' label in each monitored namespace.
   # The monitoredID helper uses the release fullname, unless this is set.
-  monitoredID:
+  monitoredID: quarks-secret
