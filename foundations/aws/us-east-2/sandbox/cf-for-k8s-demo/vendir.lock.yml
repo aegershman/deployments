@@ -30,6 +30,11 @@ directories:
     path: .
   path: cluster/build/quarks-secret/_vendir
 - contents:
+  - githubRelease:
+      url: https://api.github.com/repos/k14s/secretgen-controller/releases/25061781
+    path: .
+  path: cluster/build/secretgen-controller/_vendir
+- contents:
   - manual: {}
     path: cert-manager
   path: cluster/config/cert-manager/_ytt_lib
@@ -49,4 +54,8 @@ directories:
   - manual: {}
     path: quarks-secret
   path: cluster/config/quarks-secret/_ytt_lib
+- contents:
+  - manual: {}
+    path: secretgen-controller
+  path: cluster/config/secretgen-controller/_ytt_lib
 kind: LockConfig
