@@ -126,7 +126,8 @@ a | apply | deploy)
     shift
     kapp deploy -a secretgen-controller -f <(
       ytt \
-        -f ./cluster/config/secretgen-controller/
+        -f ./cluster/config/secretgen-controller/ \
+        -f ./cluster/config-optional/secretgen-controller/example-password.yml
     ) "$@"
     ;;
   all)
