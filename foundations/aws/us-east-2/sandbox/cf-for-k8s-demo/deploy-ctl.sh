@@ -86,6 +86,7 @@ a | apply | deploy)
       ytt \
         -f ./cluster/config/cf-for-k8s/ \
         -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml \
+        -f ./cluster/config-optional/cf-for-k8s/label-ns-quarks-secret-monitor.yml \
         -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
     ) "$@"
     # TODO -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-prod.yml
@@ -102,7 +103,8 @@ a | apply | deploy)
     kapp deploy -a harbor -f <(
       ytt \
         -f ./cluster/config/harbor/ \
-        -f ./cluster/config-optional/harbor/harbor-cert-manager-prod.yml
+        -f ./cluster/config-optional/harbor/harbor-cert-manager-prod.yml \
+        -f ./cluster/config-optional/harbor/label-ns-quarks-secret-monitor.yml
     ) "$@"
     # TODO -f ./cluster/config-optional/harbor/harbor-cert-manager-staging.yml
     ;;
