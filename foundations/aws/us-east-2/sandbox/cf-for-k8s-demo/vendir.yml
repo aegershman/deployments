@@ -67,7 +67,7 @@ directories:
     contents:
       - path: harbor
         manual: {}
-  - path: config/quarks-secret/_ytt_lib
+  - path: cluster/config/quarks-secret/_ytt_lib
     contents:
       - path: quarks-secret
         manual: {}

@@ -1,7 +1,7 @@
----
 ## Default values for Quarks Secret Helm Chart.
 ## This is a YAML-formatted file.
 ## Declare variables to be passed into your templates.
+
 
 # applyCRD is a boolean to control the installation of CRDs
 # when this is true, the operator will install the CRDs
