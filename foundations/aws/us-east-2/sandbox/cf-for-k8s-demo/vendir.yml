@@ -13,9 +13,11 @@ directories:
         includePaths:
           - cert-manager.yaml
           - kubectl-cert_manager-darwin-amd64.tar.gz
-  - path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
+  - path: cluster/build/cf-for-k8s/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
           ref: 144f31aef40dfbcd662e305c82c63bab32dd34a5 # beyond v0.5.0
