@@ -3,9 +3,11 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 minimumRequiredVersion: 0.8.0
 directories:
-  - path: deployments/cluster-api/build/_vendir
+  - path: cluster/build/cluster-api/_vendir
     contents:
-      - path: github.com/kubernetes-sigs/cluster-api
+      - path: manual
+        manual: {}
+      - path: upstream/cluster-api
         githubRelease:
           slug: kubernetes-sigs/cluster-api
           tag: v0.3.7

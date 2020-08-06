@@ -5,7 +5,9 @@ minimumRequiredVersion: 0.8.0
 directories:
   - path: cluster/build/cf-for-k8s/_vendir
     contents:
-      - path: github.com/cloudfoundry/cf-for-k8s
+      - path: manual
+        manual: {}
+      - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
           ref: 5016da8f1ab0b90d1e626109897801301f01b4d1 # beyond v0.4.0
@@ -14,77 +16,38 @@ directories:
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
-      - path: github.com/cloudfoundry/cf-k8s-networking
-        git:
-          url: https://github.com/cloudfoundry/cf-k8s-networking
-          ref: 6d26155fb8187363d7638dd2340137e640cc3fad
-        includePaths:
-          - config/*
-          - config/crd/**/*
-          - config/istio-config/**/*
-          - config/istio/generated/**/*
-          - config/routecontroller/**/*
-  - path: cluster/build/harbor/_vendir/harbor-helm
+  - path: cluster/build/harbor/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream/harbor-helm
         git:
           url: https://github.com/goharbor/harbor-helm
           ref: tags/v1.3.4
-        includePaths:
-          - cert/**/*
-          - conf/**/*
-          - templates/**/*
-          - .helmignore
-          - Chart.yaml
-          - LICENSE
-          - README.md
-          - values.yaml
-  - path: cluster/build/jaeger-operator/_vendir
-    contents:
-      - path: .
-        git:
-          url: https://github.com/jaegertracing/helm-charts
-          ref: c1df2ceb25a7ac283344242e84296b1968dd684d # 2.15.1
-        includePaths:
-          - charts/jaeger-operator/**/*
+        excludePaths:
+          - .git/**/*
+          - docs/**/*
+          - test/**/*
   - path: cluster/build/minibroker/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream
         git:
           url: https://github.com/kubernetes-sigs/minibroker
           ref: 95ea5724ff5ff46079d103e610c3921d4280ee22
         includePaths:
           - charts/minibroker/**/*
-  - path: cluster/build/prometheus-operator/_vendir
-    contents:
-      - path: .
-        git:
-          url: https://github.com/helm/charts
-          ref: ebd39089304d87b9da52f7bf44d96ca0acb425e6 # 9.2.1
-        includePaths:
-          - stable/prometheus-operator/**/*
-        excludePaths:
-          - stable/prometheus-operator/ci/**/*
-          - stable/prometheus-operator/hack/**/*
-          - stable/prometheus-operator/requirements.*
   - path: cluster/build/service-catalog/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream
         git:
           url: https://github.com/kubernetes-sigs/service-catalog
           ref: 8e85904ae5ec4d228ebd0c463b7718f1a7891f69
         includePaths:
           - charts/catalog/**/*
-          - charts/healthcheck/**/*
-          - charts/ups-broker/**/*
-  - path: cluster/build/stratos/_vendir
-    contents:
-      - path: .
-        git:
-          url: https://github.com/cloudfoundry/stratos
-          ref: tags/3.2.1
-        includePaths:
-          - deploy/kubernetes/console/**/*
 
   - path: cluster/config/cf-for-k8s/_ytt_lib
     contents:
@@ -94,23 +57,11 @@ directories:
     contents:
       - path: harbor
         manual: {}
-  - path: cluster/config/jaeger-operator/_ytt_lib
-    contents:
-      - path: jaeger-operator
-        manual: {}
   - path: cluster/config/minibroker/_ytt_lib
     contents:
       - path: minibroker
         manual: {}
-  - path: cluster/config/prometheus-operator/_ytt_lib
-    contents:
-      - path: prometheus-operator
-        manual: {}
   - path: cluster/config/service-catalog/_ytt_lib
     contents:
       - path: service-catalog
-        manual: {}
-  - path: cluster/config/stratos/_ytt_lib
-    contents:
-      - path: stratos
         manual: {}

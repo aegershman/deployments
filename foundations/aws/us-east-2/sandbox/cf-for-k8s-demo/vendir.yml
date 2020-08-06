@@ -5,7 +5,9 @@ minimumRequiredVersion: 0.8.0
 directories:
   - path: cluster/build/cert-manager/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream
         githubRelease:
           slug: jetstack/cert-manager
           tag: v0.16.0
@@ -13,9 +15,11 @@ directories:
         includePaths:
           - cert-manager.yaml
           - kubectl-cert_manager-darwin-amd64.tar.gz
-  - path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
+  - path: cluster/build/cf-for-k8s/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
           ref: 144f31aef40dfbcd662e305c82c63bab32dd34a5 # beyond v0.5.0
@@ -26,23 +30,31 @@ directories:
           - tests/smoke/assets/test-node-app/**/*
   - path: cluster/build/external-dns/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream
         git:
           url: https://github.com/bitnami/charts
           ref: 80f79de9982afabc471e97f89c2f0852471b34e7 # 3.2.6
         includePaths:
           - bitnami/external-dns/**/*
-  - path: cluster/build/harbor/_vendir/harbor-helm
+  - path: cluster/build/harbor/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream/harbor-helm
         git:
           url: https://github.com/goharbor/harbor-helm
           ref: tags/v1.3.4
         excludePaths:
           - .git/**/*
+          - docs/**/*
+          - test/**/*
   - path: cluster/build/quarks-secret/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream
         git:
           url: https://github.com/cloudfoundry-incubator/quarks-secret
           ref: 39bfc5eceedd8952f3dffe107c5e67d9cb12b6a6 # v1.0.699
@@ -50,7 +62,9 @@ directories:
           - deploy/helm/quarks-secret/**/*
   - path: cluster/build/secretgen-controller/_vendir
     contents:
-      - path: .
+      - path: manual
+        manual: {}
+      - path: upstream
         githubRelease:
           slug: k14s/secretgen-controller
           tag: v0.2.0

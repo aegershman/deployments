@@ -8,7 +8,7 @@ case "$1" in
 *)
   echo "generating secretgen-controller resource definitions..."
   ytt \
-    -f ${SCRIPT_DIR}/_vendir/release.yml \
+    -f ${SCRIPT_DIR}/_vendir/upstream/release.yml \
     >"${SCRIPT_DIR}/../../config/secretgen-controller/_ytt_lib/secretgen-controller/rendered.yml"
   ;;
 esac
