@@ -48,6 +48,8 @@ directories:
           ref: tags/v1.3.4
         excludePaths:
           - .git/**/*
+          - docs/**/*
+          - test/**/*
   - path: cluster/build/quarks-secret/_vendir
     contents:
       - path: manual

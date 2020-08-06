@@ -1,50 +1,64 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: Bump capi-k8s-release to bb40b9d67db1c3d150791d773752d1d788cdef91
       sha: 5016da8f1ab0b90d1e626109897801301f01b4d1
-    path: github.com/cloudfoundry/cf-for-k8s
+    path: upstream/github.com/cloudfoundry/cf-for-k8s
   - git:
       commitTitle: move update job into top level config
       sha: 6d26155fb8187363d7638dd2340137e640cc3fad
-    path: github.com/cloudfoundry/cf-k8s-networking
+    path: upstream/github.com/cloudfoundry/cf-k8s-networking
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: 'Merge pull request #668 from ywk253100/200716_1.3.4...'
       sha: 768a3b2c03bcb708fc7c2bfc6b9552437efff067
-    path: .
-  path: cluster/build/harbor/_vendir/harbor-helm
+    path: upstream/harbor-helm
+  path: cluster/build/harbor/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: 'fix: bump jaeger-operator chart version to 2.15.1...'
       sha: c1df2ceb25a7ac283344242e84296b1968dd684d
-    path: .
+    path: upstream
   path: cluster/build/jaeger-operator/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: 'feat: Add support for deploying rabbitmq (#82)...'
       sha: 95ea5724ff5ff46079d103e610c3921d4280ee22
-    path: .
+    path: upstream
   path: cluster/build/minibroker/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: '[prometheus-operator] Fixing scope issue (#23014) (#23022)...'
       sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6
-    path: .
+    path: upstream
   path: cluster/build/prometheus-operator/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: Remove Secret listener from controller (#2830)...
       sha: 8e85904ae5ec4d228ebd0c463b7718f1a7891f69
-    path: .
+    path: upstream
   path: cluster/build/service-catalog/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: 'Merge pull request #4329 from cloudfoundry/v3.2.1-release-notes...'
       sha: ca4f7be47eeb6a7fad2fbaafb98452019857c802
-    path: .
+    path: upstream
   path: cluster/build/stratos/_vendir
 - contents:
   - manual: {}

@@ -5,7 +5,9 @@ minimumRequiredVersion: 0.8.0
 directories:
   - path: deployments/cluster-api/build/_vendir
     contents:
-      - path: github.com/kubernetes-sigs/cluster-api
+      - path: manual
+        manual: {}
+      - path: upstream/cluster-api
         githubRelease:
           slug: kubernetes-sigs/cluster-api
           tag: v0.3.7

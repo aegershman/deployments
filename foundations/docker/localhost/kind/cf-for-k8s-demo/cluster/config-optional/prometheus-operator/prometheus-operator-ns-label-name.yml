@@ -1,8 +1,0 @@
-#@ load("@ytt:overlay", "overlay")
-
-#@overlay/match by=overlay.and_op(overlay.subset({"metadata":{"name":"prometheus-operator"}}), overlay.subset({"kind": "Namespace"}))
----
-metadata:
-  labels:
-    #@overlay/match missing_ok=True
-    aegershman.com/name: prometheus-operator
