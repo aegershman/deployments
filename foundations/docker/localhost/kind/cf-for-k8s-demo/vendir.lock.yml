@@ -6,11 +6,7 @@ directories:
   - git:
       commitTitle: Bump capi-k8s-release to bb40b9d67db1c3d150791d773752d1d788cdef91
       sha: 5016da8f1ab0b90d1e626109897801301f01b4d1
-    path: upstream/github.com/cloudfoundry/cf-for-k8s
-  - git:
-      commitTitle: move update job into top level config
-      sha: 6d26155fb8187363d7638dd2340137e640cc3fad
-    path: upstream/github.com/cloudfoundry/cf-k8s-networking
+    path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
   - manual: {}
@@ -24,26 +20,10 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'fix: bump jaeger-operator chart version to 2.15.1...'
-      sha: c1df2ceb25a7ac283344242e84296b1968dd684d
-    path: upstream
-  path: cluster/build/jaeger-operator/_vendir
-- contents:
-  - manual: {}
-    path: manual
-  - git:
       commitTitle: 'feat: Add support for deploying rabbitmq (#82)...'
       sha: 95ea5724ff5ff46079d103e610c3921d4280ee22
     path: upstream
   path: cluster/build/minibroker/_vendir
-- contents:
-  - manual: {}
-    path: manual
-  - git:
-      commitTitle: '[prometheus-operator] Fixing scope issue (#23014) (#23022)...'
-      sha: ebd39089304d87b9da52f7bf44d96ca0acb425e6
-    path: upstream
-  path: cluster/build/prometheus-operator/_vendir
 - contents:
   - manual: {}
     path: manual
@@ -54,14 +34,6 @@ directories:
   path: cluster/build/service-catalog/_vendir
 - contents:
   - manual: {}
-    path: manual
-  - git:
-      commitTitle: 'Merge pull request #4329 from cloudfoundry/v3.2.1-release-notes...'
-      sha: ca4f7be47eeb6a7fad2fbaafb98452019857c802
-    path: upstream
-  path: cluster/build/stratos/_vendir
-- contents:
-  - manual: {}
     path: cf-for-k8s
   path: cluster/config/cf-for-k8s/_ytt_lib
 - contents:
@@ -70,22 +42,10 @@ directories:
   path: cluster/config/harbor/_ytt_lib
 - contents:
   - manual: {}
-    path: jaeger-operator
-  path: cluster/config/jaeger-operator/_ytt_lib
-- contents:
-  - manual: {}
     path: minibroker
   path: cluster/config/minibroker/_ytt_lib
 - contents:
   - manual: {}
-    path: prometheus-operator
-  path: cluster/config/prometheus-operator/_ytt_lib
-- contents:
-  - manual: {}
     path: service-catalog
   path: cluster/config/service-catalog/_ytt_lib
-- contents:
-  - manual: {}
-    path: stratos
-  path: cluster/config/stratos/_ytt_lib
 kind: LockConfig
