@@ -92,8 +92,6 @@ variables:
   type: password
 - name: blobstore_secret_key
   type: password
-- name: db_admin_password
-  type: password
 - name: capi_db_password
   type: password
 - name: capi_db_encryption_key
@@ -228,7 +226,7 @@ cf_blobstore:
   secret_key: $(bosh interpolate ${VARS_FILE} --path=/blobstore_secret_key)
 
 cf_db:
-  admin_password: $(bosh interpolate ${VARS_FILE} --path=/db_admin_password)
+  admin_password: xreplacedx
 
 capi:
   cc_username_lookup_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cc_username_lookup_client_secret)
