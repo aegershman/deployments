@@ -91,9 +91,9 @@ a | apply | deploy)
       ytt \
         -f ./cluster/config/cf-for-k8s/ \
         -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml \
-        -f ./cluster/config-optional/cf-for-k8s/label-ns-quarks-secret-monitor.yml \
-        -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
+        -f ./cluster/config-optional/cf-for-k8s/label-ns-quarks-secret-monitor.yml
     ) "$@"
+    # -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
     # TODO -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-prod.yml
     ;;
   ed | external-dns)
