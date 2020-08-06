@@ -18,7 +18,7 @@ directories:
       - path: .
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: 04bd77141064733fc71d837bfb89220db0184be7 # beyond v0.5.0
+          ref: 144f31aef40dfbcd662e305c82c63bab32dd34a5 # beyond v0.5.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -29,7 +29,7 @@ directories:
       - path: .
         git:
           url: https://github.com/bitnami/charts
-          ref: 98c115cad63c7405f2ad1241dbd668e34e3a3f98 # 3.2.5
+          ref: 80f79de9982afabc471e97f89c2f0852471b34e7 # 3.2.6
         includePaths:
           - bitnami/external-dns/**/*
   - path: cluster/build/harbor/_vendir/harbor-helm
