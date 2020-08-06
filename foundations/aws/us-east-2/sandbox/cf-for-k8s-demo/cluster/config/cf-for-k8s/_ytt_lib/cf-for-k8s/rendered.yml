@@ -509,7 +509,7 @@ data:
       kpack:
         builder_namespace: cf-workloads-staging
         registry_service_account_name: cc-kpack-registry-service-account
-        registry_tag_base: harbor.cf.gershman.io/library
+        registry_tag_base: harbor.harbor.svc.cluster.local/library
     perform_blob_cleanup: true
     app_usage_events:
       cutoff_age_in_days: 31
@@ -1044,7 +1044,7 @@ metadata:
     kapp.k14s.io/versioned: ""
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2hhcmJvci5jZi5nZXJzaG1hbi5pbyI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2hhcmJvci5oYXJib3Iuc3ZjLmNsdXN0ZXIubG9jYWwiOnsiYXV0aCI6IllXUnRhVzQ2WVdSdGFXND0iLCJwYXNzd29yZCI6ImFkbWluIiwidXNlcm5hbWUiOiJhZG1pbiJ9fX0=
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -2353,7 +2353,7 @@ metadata:
   namespace: cf-workloads
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2hhcmJvci5jZi5nZXJzaG1hbi5pbyI6eyJhdXRoIjoiWVdSdGFXNDZZV1J0YVc0PSIsInBhc3N3b3JkIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn19fQ==
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2hhcmJvci5oYXJib3Iuc3ZjLmNsdXN0ZXIubG9jYWwiOnsiYXV0aCI6IllXUnRhVzQ2WVdSdGFXND0iLCJwYXNzd29yZCI6ImFkbWluIiwidXNlcm5hbWUiOiJhZG1pbiJ9fX0=
 ---
 apiVersion: kapp.k14s.io/v1alpha1
 kind: Config
@@ -2544,7 +2544,7 @@ metadata:
   annotations:
     kapp.k14s.io/change-rule.kpack-resources: upsert after upserting cf-for-k8s.cloudfoundry.org/kpack-resources
 spec:
-  tag: harbor.cf.gershman.io/library/cf-default-builder
+  tag: harbor.harbor.svc.cluster.local/library/cf-default-builder
   serviceAccount: cc-kpack-registry-service-account
   stack: cflinuxfs3-stack
   store: cf-buildpack-store
