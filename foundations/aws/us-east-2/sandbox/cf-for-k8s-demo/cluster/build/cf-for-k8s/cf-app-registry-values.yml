@@ -1,7 +1,7 @@
 #@data/values
 ---
 app_registry:
-  hostname: "https://harbor.cf.gershman.io"
-  repository_prefix: "harbor.cf.gershman.io/library"
+  hostname: "https://harbor.harbor.svc.cluster.local"
+  repository_prefix: "harbor.harbor.svc.cluster.local/library"
   username: "admin"
   password: "admin"

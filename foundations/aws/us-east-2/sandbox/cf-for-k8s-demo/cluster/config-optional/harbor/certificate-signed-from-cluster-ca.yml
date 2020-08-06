@@ -1,0 +1,15 @@
+---
+apiVersion: quarks.cloudfoundry.org/v1alpha1
+kind: QuarksSecret
+metadata:
+  name: harbor-core-cert
+  namespace: harbor
+spec:
+  type: certificate
+  secretName: harbor-core-cert
+  request:
+    certificate:
+      alternativeNames: []
+      commonName: harbor.harbor.svc.cluster.local
+      isCA: false
+      signerType: cluster

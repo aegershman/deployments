@@ -1,6 +1,6 @@
 ---
 expose:
-  type: loadBalancer
+  type: clusterIP
   tls:
     enabled: true
     # Fill the name of secret if you want to use your own TLS certificate.
@@ -14,18 +14,15 @@ expose:
     # The common name used to generate the certificate, it's necessary
     # when the type isn't "ingress" and "secretName" is null
     commonName: ""
-  loadBalancer:
+  clusterIP:
     name: harbor
     ports:
       httpPort: 80
       httpsPort: 443
       notaryPort: 4443
-    annotations:
-      external-dns.alpha.kubernetes.io/hostname: "harbor.cf.gershman.io"
-      external-dns.alpha.kubernetes.io/ttl: "10"
-      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    annotations: {}
 
-externalURL: https://harbor.cf.gershman.io
+externalURL: https://harbor.harbor.svc.cluster.local
 
 internalTLS:
   enabled: false
