@@ -90,11 +90,8 @@ a | apply | deploy)
     kapp deploy -a cf -f <(
       ytt \
         -f ./cluster/config/cf-for-k8s/ \
-        -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml \
-        -f ./cluster/config-optional/cf-for-k8s/label-ns-quarks-secret-monitor.yml \
-        -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
+        -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml
     ) "$@"
-    # TODO -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-prod.yml
     ;;
   ed | external-dns)
     shift
@@ -109,7 +106,8 @@ a | apply | deploy)
       ytt \
         -f ./cluster/config/harbor/ \
         -f ./cluster/config-optional/harbor/certificate-signed-from-cluster-ca.yml \
-        -f ./cluster/config-optional/harbor/label-ns-quarks-secret-monitor.yml
+        -f ./cluster/config-optional/harbor/label-ns-quarks-secret-monitor.yml \
+        -f ./cluster/config-optional/harbor/reshaped-secret.yml
     ) "$@"
     ;;
   qs | quarks-secret)

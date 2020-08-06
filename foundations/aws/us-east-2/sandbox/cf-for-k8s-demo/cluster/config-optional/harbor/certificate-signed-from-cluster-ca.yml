@@ -6,11 +6,11 @@ metadata:
   namespace: harbor
 spec:
   type: certificate
-  secretName: harbor-core-cert
+  secretName: harbor-core-cert-must-be-reshaped
   request:
     certificate:
       alternativeNames:
         - harbor.harbor.svc.cluster.local
-      commonName: harbor
+      commonName: harbor.harbor.svc.cluster.local
       isCA: false
       signerType: cluster
