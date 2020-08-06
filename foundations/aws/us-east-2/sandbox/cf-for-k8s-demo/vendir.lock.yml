@@ -6,11 +6,13 @@ directories:
     path: .
   path: cluster/build/cert-manager/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: Bump capi-k8s-release to 42de4c1dcfaeaa568d20654520eb431b2b3399e9
       sha: 144f31aef40dfbcd662e305c82c63bab32dd34a5
-    path: .
-  path: cluster/build/cf-for-k8s/_vendir/cf-for-k8s
+    path: upstream/cf-for-k8s
+  path: cluster/build/cf-for-k8s/_vendir
 - contents:
   - git:
       commitTitle: '[bitnami/external-dns] Release 3.2.6 updating components versions...'
