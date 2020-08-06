@@ -9,7 +9,8 @@ spec:
   secretName: harbor-core-cert
   request:
     certificate:
-      alternativeNames: []
-      commonName: harbor.harbor.svc.cluster.local
+      alternativeNames:
+        - harbor.harbor.svc.cluster.local
+      commonName: harbor
       isCA: false
       signerType: cluster
