@@ -14271,14 +14271,6 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: cf-db-admin-secret
-  namespace: cf-db
-data:
-  postgresql-password: aDFlYTRtbWZ5ZnhqODN3anczam8=
----
-apiVersion: v1
-kind: Secret
-metadata:
   name: cf-db-credentials
   namespace: cf-db
 data:
@@ -15400,3 +15392,15 @@ subjects:
 - kind: ServiceAccount
   name: metrics-server
   namespace: kube-system
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Password
+metadata:
+  name: cf-db-admin-secret
+  namespace: cf-db
+spec:
+  length: 20
+  secretTemplate:
+    type: Opaque
+    data:
+      postgresql-password: value
