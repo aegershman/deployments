@@ -7,7 +7,7 @@ directories:
     contents:
       - path: manual
         manual: {}
-      - path: upstream/github.com/cloudfoundry/cf-for-k8s
+      - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
           ref: 5016da8f1ab0b90d1e626109897801301f01b4d1 # beyond v0.4.0
@@ -16,16 +16,6 @@ directories:
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
-      - path: upstream/github.com/cloudfoundry/cf-k8s-networking
-        git:
-          url: https://github.com/cloudfoundry/cf-k8s-networking
-          ref: 6d26155fb8187363d7638dd2340137e640cc3fad
-        includePaths:
-          - config/*
-          - config/crd/**/*
-          - config/istio-config/**/*
-          - config/istio/generated/**/*
-          - config/routecontroller/**/*
   - path: cluster/build/harbor/_vendir
     contents:
       - path: manual

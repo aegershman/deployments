@@ -15,16 +15,16 @@ generate-values)
   ;;
 
 diff)
-  diff "${SCRIPT_DIR}"/generate-values.sh "${SCRIPT_DIR}"/_vendir/upstream/github.com/cloudfoundry/cf-for-k8s/hack/generate-values.sh
+  diff "${SCRIPT_DIR}"/generate-values.sh "${SCRIPT_DIR}"/_vendir/upstream/cf-for-k8s/hack/generate-values.sh
   ;;
 
 *)
   echo "generating cf-for-k8s resource definitions..."
   ytt \
-    -f ${SCRIPT_DIR}/_vendir/upstream/github.com/cloudfoundry/cf-for-k8s/config \
-    -f ${SCRIPT_DIR}/_vendir/upstream/github.com/cloudfoundry/cf-for-k8s/config-optional/remove-resource-requirements.yml \
-    -f ${SCRIPT_DIR}/_vendir/upstream/github.com/cloudfoundry/cf-for-k8s/config-optional/add-metrics-server-components.yml \
-    -f ${SCRIPT_DIR}/_vendir/upstream/github.com/cloudfoundry/cf-for-k8s/config-optional/patch-metrics-server.yml \
+    -f ${SCRIPT_DIR}/_vendir/upstream/cf-for-k8s/config \
+    -f ${SCRIPT_DIR}/_vendir/upstream/cf-for-k8s/config-optional/remove-resource-requirements.yml \
+    -f ${SCRIPT_DIR}/_vendir/upstream/cf-for-k8s/config-optional/add-metrics-server-components.yml \
+    -f ${SCRIPT_DIR}/_vendir/upstream/cf-for-k8s/config-optional/patch-metrics-server.yml \
     -f ${SCRIPT_DIR}/cf-values-generated.yml \
     -f ${SCRIPT_DIR}/cf-registry-values.yml \
     >"${SCRIPT_DIR}/../../config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml"
