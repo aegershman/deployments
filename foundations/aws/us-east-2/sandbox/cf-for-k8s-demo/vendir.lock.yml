@@ -1,9 +1,11 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
+  - manual: {}
+    path: manual
   - githubRelease:
       url: https://api.github.com/repos/jetstack/cert-manager/releases/28877573
-    path: .
+    path: upstream
   path: cluster/build/cert-manager/_vendir
 - contents:
   - manual: {}
@@ -14,27 +16,35 @@ directories:
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: '[bitnami/external-dns] Release 3.2.6 updating components versions...'
       sha: 80f79de9982afabc471e97f89c2f0852471b34e7
-    path: .
+    path: upstream
   path: cluster/build/external-dns/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: 'Merge pull request #668 from ywk253100/200716_1.3.4...'
       sha: 768a3b2c03bcb708fc7c2bfc6b9552437efff067
-    path: .
-  path: cluster/build/harbor/_vendir/harbor-helm
+    path: upstream/harbor-helm
+  path: cluster/build/harbor/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - git:
       commitTitle: Add SecretAnnotations feature (#26)
       sha: 39bfc5eceedd8952f3dffe107c5e67d9cb12b6a6
-    path: .
+    path: upstream
   path: cluster/build/quarks-secret/_vendir
 - contents:
+  - manual: {}
+    path: manual
   - githubRelease:
       url: https://api.github.com/repos/k14s/secretgen-controller/releases/25061781
-    path: .
+    path: upstream
   path: cluster/build/secretgen-controller/_vendir
 - contents:
   - manual: {}
