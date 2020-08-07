@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:f2e5f0c6a07571722e1b426cc85d1382d490677aa8917d16dafb895948d61c2c
+        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
         imagePullPolicy: Always
         resources: {}
         volumeMounts:
@@ -73,7 +73,7 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:f2e5f0c6a07571722e1b426cc85d1382d490677aa8917d16dafb895948d61c2c
+        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
         imagePullPolicy: Always
         resources: {}
         command:
@@ -151,7 +151,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:f2e5f0c6a07571722e1b426cc85d1382d490677aa8917d16dafb895948d61c2c
+        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -576,7 +576,7 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:f2e5f0c6a07571722e1b426cc85d1382d490677aa8917d16dafb895948d61c2c
+        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
@@ -706,7 +706,7 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:f2e5f0c6a07571722e1b426cc85d1382d490677aa8917d16dafb895948d61c2c
+        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
@@ -1115,7 +1115,7 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:f2e5f0c6a07571722e1b426cc85d1382d490677aa8917d16dafb895948d61c2c
+        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
         imagePullPolicy: Always
         resources: {}
         readinessProbe:
