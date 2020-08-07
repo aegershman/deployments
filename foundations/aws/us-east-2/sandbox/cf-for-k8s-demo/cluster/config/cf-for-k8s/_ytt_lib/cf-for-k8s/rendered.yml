@@ -1197,17 +1197,6 @@ type: Opaque
 stringData:
   password: xkg469brmrlabdmyqmqu
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: capi-database-encryption-key-secret
-  namespace: cf-system
-  annotations:
-    kapp.k14s.io/versioned: ""
-type: Opaque
-stringData:
-  password: 6egd3ksalqexjmsh1qym
----
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -12918,6 +12907,18 @@ subjects:
 - kind: ServiceAccount
   name: metrics-server
   namespace: kube-system
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Password
+metadata:
+  name: capi-database-encryption-key-secret
+  namespace: cf-system
+spec:
+  length: 20
+  secretTemplate:
+    type: Opaque
+    data:
+      password: value
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Password
