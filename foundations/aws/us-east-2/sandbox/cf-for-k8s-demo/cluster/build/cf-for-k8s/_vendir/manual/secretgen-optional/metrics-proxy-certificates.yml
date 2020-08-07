@@ -25,10 +25,10 @@ spec:
   duration: 365
   secretTemplate:
     data:
-      # used by leafs certs; must be present (default format) for leaf certs to find these keys
+      #! used by leafs certs; must be present (default format) for leaf certs to find these keys
       crt.pem: certificate
       key.pem: privateKey
-      # used by deployments looking for the CA in a tls.crt/key combo
+      #! used by deployments looking for the CA in a tls.crt/key combo
       tls.crt: certificate
       tls.key: privateKey
 ---

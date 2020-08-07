@@ -12910,10 +12910,10 @@ spec:
   duration: 365
   secretTemplate:
     data:
-      tls.crt: certificate
       crt.pem: certificate
-      tls.key: privateKey
       key.pem: privateKey
+      tls.crt: certificate
+      tls.key: privateKey
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Certificate
@@ -12935,19 +12935,6 @@ spec:
     data:
       tls.crt: certificate
       tls.key: privateKey
----
-apiVersion: secretgen.k14s.io/v1alpha1
-kind: Certificate
-metadata:
-  name: gershtestref
-  namespace: cf-system
-spec:
-  isCA: true
-  commonName: ag
-  organization: ""
-  alternativeNames: []
-  extendedKeyUsage: []
-  duration: 365
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Password
