@@ -2,11 +2,7 @@
 #@ load("@ytt:overlay", "overlay")
 #@ load("@ytt:template", "template")
 
-#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"metric-proxy-ca","namespace":"cf-system"}})
-#@overlay/remove
----
-{}
-#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"metric-proxy-cert","namespace":"cf-system"}})
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache-ca","namespace":"cf-system"}})
 #@overlay/remove
 ---
 {}
@@ -31,6 +27,11 @@ spec:
       #! used by deployments looking for the CA in a tls.crt/key combo
       tls.crt: certificate
       tls.key: privateKey
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Certificate
@@ -52,6 +53,11 @@ spec:
     data:
       tls.crt: certificate
       tls.key: privateKey
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache-syslog","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Certificate
@@ -73,6 +79,11 @@ spec:
     data:
       tls.crt: certificate
       tls.key: privateKey
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache-metrics","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Certificate
@@ -94,6 +105,11 @@ spec:
     data:
       tls.crt: certificate
       tls.key: privateKey
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache-gateway","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Certificate
