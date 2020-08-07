@@ -5,6 +5,7 @@
 #@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"cf-db-admin-secret","namespace":"cf-db"}})
 #@overlay/remove
 ---
+{}
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Password

@@ -12900,6 +12900,7 @@ apiVersion: secretgen.k14s.io/v1alpha1
 kind: Certificate
 metadata:
   name: metric-proxy-ca
+  namespace: cf-system
 spec:
   isCA: true
   commonName: metric-proxy-ca
@@ -12912,6 +12913,7 @@ apiVersion: secretgen.k14s.io/v1alpha1
 kind: Certificate
 metadata:
   name: metric-proxy-cert
+  namespace: cf-system
 spec:
   caRef:
     name: metric-proxy-ca
