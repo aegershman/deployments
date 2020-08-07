@@ -4,15 +4,15 @@ directories:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/jetstack/cert-manager/releases/28877573
+      url: https://api.github.com/repos/jetstack/cert-manager/releases/29442438
     path: upstream
   path: cluster/build/cert-manager/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #332 from markstokan/patch-2...'
-      sha: 5147b27e5065384666a5e33277fbbc7b86718166
+      commitTitle: Bump capi-k8s-release to 763af35778dce80e3ddcf430f52024b05b3fcfe6
+      sha: 73ddad4d773b01368bbaad7f20172e63c0f574db
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
