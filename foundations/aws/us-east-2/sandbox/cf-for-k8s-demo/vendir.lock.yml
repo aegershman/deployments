@@ -11,8 +11,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #358 from cloudfoundry/feat/log-cache-kapp-ordering...'
-      sha: 257b59908395cda936cbe0d67ac64108c1aedfef
+      commitTitle: 'Merge pull request #332 from markstokan/patch-2...'
+      sha: 5147b27e5065384666a5e33277fbbc7b86718166
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
