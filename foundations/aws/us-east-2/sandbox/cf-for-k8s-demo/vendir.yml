@@ -10,7 +10,7 @@ directories:
       - path: upstream
         githubRelease:
           slug: jetstack/cert-manager
-          tag: v0.16.0
+          tag: v0.16.1
           disableAutoChecksumValidation: true
         includePaths:
           - cert-manager.yaml
@@ -22,7 +22,7 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: 5147b27e5065384666a5e33277fbbc7b86718166 # beyond v0.5.0
+          ref: 73ddad4d773b01368bbaad7f20172e63c0f574db # beyond v0.5.0
         includePaths:
           - config-optional/**/*
           - config/**/*
