@@ -1,0 +1,133 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:template", "template")
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache-ca","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: log-cache-ca
+  namespace: cf-system
+spec:
+  isCA: true
+  commonName: log-cache-ca
+  organization: ""
+  alternativeNames: []
+  extendedKeyUsage: []
+  duration: 365
+  secretTemplate:
+    data:
+      #! used by leafs certs; must be present (default format) for leaf certs to find these keys
+      crt.pem: certificate
+      key.pem: privateKey
+      #! used by deployments looking for the CA in a tls.crt/key combo
+      tls.crt: certificate
+      tls.key: privateKey
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: log-cache
+  namespace: cf-system
+spec:
+  caRef:
+    name: log-cache-ca
+  isCA: false
+  commonName: metric-proxy
+  organization: ""
+  alternativeNames: []
+  extendedKeyUsage:
+    - client_auth
+    - server_auth
+  duration: 365
+  secretTemplate:
+    data:
+      tls.crt: certificate
+      tls.key: privateKey
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache-syslog","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: log-cache-syslog
+  namespace: cf-system
+spec:
+  caRef:
+    name: log-cache-ca
+  isCA: false
+  commonName: log-cache-syslog
+  organization: ""
+  alternativeNames: []
+  extendedKeyUsage:
+    - client_auth
+    - server_auth
+  duration: 365
+  secretTemplate:
+    data:
+      tls.crt: certificate
+      tls.key: privateKey
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache-metrics","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: log-cache-metrics
+  namespace: cf-system
+spec:
+  caRef:
+    name: log-cache-ca
+  isCA: false
+  commonName: log-cache-metrics
+  organization: ""
+  alternativeNames: []
+  extendedKeyUsage:
+    - client_auth
+    - server_auth
+  duration: 365
+  secretTemplate:
+    data:
+      tls.crt: certificate
+      tls.key: privateKey
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"log-cache-gateway","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: log-cache-gateway
+  namespace: cf-system
+spec:
+  caRef:
+    name: log-cache-ca
+  isCA: false
+  commonName: log-cache-gateway
+  organization: ""
+  alternativeNames: []
+  extendedKeyUsage:
+    - client_auth
+    - server_auth
+  duration: 365
+  secretTemplate:
+    data:
+      tls.crt: certificate
+      tls.key: privateKey

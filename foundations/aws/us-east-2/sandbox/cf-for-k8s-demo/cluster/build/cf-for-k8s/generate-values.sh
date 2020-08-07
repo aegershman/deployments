@@ -254,32 +254,32 @@ internal_certificate:
   ca: $(bosh interpolate ${VARS_FILE} --path=/internal_certificate/ca | base64 | tr -d '\n')
 
 log_cache_ca:
-  crt: $(bosh interpolate ${VARS_FILE} --path=/log_cache_ca/certificate | base64 | tr -d '\n')
-  key: $(bosh interpolate ${VARS_FILE} --path=/log_cache_ca/private_key | base64 | tr -d '\n')
+  crt: xreplacedx
+  key: xreplacedx
 
 log_cache:
-  crt: $(bosh interpolate ${VARS_FILE} --path=/log_cache/certificate | base64 | tr -d '\n')
-  key: $(bosh interpolate ${VARS_FILE} --path=/log_cache/private_key | base64 | tr -d '\n')
+  crt: xreplacedx
+  key: xreplacedx
 
 log_cache_metrics:
-  crt: $(bosh interpolate ${VARS_FILE} --path=/log_cache_metrics/certificate | base64 | tr -d '\n')
-  key: $(bosh interpolate ${VARS_FILE} --path=/log_cache_metrics/private_key | base64 | tr -d '\n')
+  crt: xreplacedx
+  key: xreplacedx
 
 log_cache_gateway:
-  crt: $(bosh interpolate ${VARS_FILE} --path=/log_cache_gateway/certificate | base64 | tr -d '\n')
-  key: $(bosh interpolate ${VARS_FILE} --path=/log_cache_gateway/private_key | base64 | tr -d '\n')
+  crt: xreplacedx
+  key: xreplacedx
 
 log_cache_syslog:
-  crt: $(bosh interpolate ${VARS_FILE} --path=/log_cache_syslog/certificate | base64 | tr -d '\n')
-  key: $(bosh interpolate ${VARS_FILE} --path=/log_cache_syslog/private_key | base64 | tr -d '\n')
+  crt: xreplacedx
+  key: xreplacedx
 
 metric_proxy:
   ca:
-    crt: $(bosh interpolate ${VARS_FILE} --path=/metric_proxy_ca/certificate | base64 | tr -d '\n')
-    key: $(bosh interpolate ${VARS_FILE} --path=/metric_proxy_ca/private_key | base64 | tr -d '\n')
+    crt: xreplacedx
+    key: xreplacedx
   cert:
-    crt: $(bosh interpolate ${VARS_FILE} --path=/metric_proxy/certificate | base64 | tr -d '\n')
-    key: $(bosh interpolate ${VARS_FILE} --path=/metric_proxy/private_key | base64 | tr -d '\n')
+    crt: xreplacedx
+    key: xreplacedx
 
 uaa:
   database:
