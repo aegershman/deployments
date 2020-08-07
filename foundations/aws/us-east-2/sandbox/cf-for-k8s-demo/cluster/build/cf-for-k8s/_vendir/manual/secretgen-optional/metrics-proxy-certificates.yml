@@ -1,0 +1,41 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:template", "template")
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"metric-proxy-ca","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"metric-proxy-cert","namespace":"cf-system"}})
+#@overlay/remove
+---
+{}
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: metric-proxy-ca
+spec:
+  isCA: true
+  commonName: metric-proxy-ca
+  organization: ""
+  alternativeNames: []
+  extendedKeyUsage: []
+  duration: 365
+
+---
+apiVersion: secretgen.k14s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: metric-proxy-cert
+spec:
+  caRef:
+    name: metric-proxy-ca
+  isCA: false
+  commonName: metric-proxy
+  organization: ""
+  alternativeNames: []
+  extendedKeyUsage:
+    - client_auth
+    - server_auth
+  duration: 365

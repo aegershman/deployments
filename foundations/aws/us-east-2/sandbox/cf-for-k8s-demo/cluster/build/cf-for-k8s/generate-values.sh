@@ -275,11 +275,11 @@ log_cache_syslog:
 
 metric_proxy:
   ca:
-    crt: $(bosh interpolate ${VARS_FILE} --path=/metric_proxy_ca/certificate | base64 | tr -d '\n')
-    key: $(bosh interpolate ${VARS_FILE} --path=/metric_proxy_ca/private_key | base64 | tr -d '\n')
+    crt: xreplacedx
+    key: xreplacedx
   cert:
-    crt: $(bosh interpolate ${VARS_FILE} --path=/metric_proxy/certificate | base64 | tr -d '\n')
-    key: $(bosh interpolate ${VARS_FILE} --path=/metric_proxy/private_key | base64 | tr -d '\n')
+    crt: xreplacedx
+    key: xreplacedx
 
 uaa:
   database:
