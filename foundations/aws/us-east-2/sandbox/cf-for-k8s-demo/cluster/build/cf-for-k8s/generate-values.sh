@@ -233,7 +233,7 @@ capi:
   cf_api_controllers_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cf_api_controllers_client_secret)
   database:
     password: $(bosh interpolate ${VARS_FILE} --path=/capi_db_password)
-    encryption_key: $(bosh interpolate ${VARS_FILE} --path=/capi_db_encryption_key)
+    encryption_key: xreplacedx
 
 system_certificate:
   #! This certificates and keys are base64 encoded and should be valid for *.system.cf.example.com

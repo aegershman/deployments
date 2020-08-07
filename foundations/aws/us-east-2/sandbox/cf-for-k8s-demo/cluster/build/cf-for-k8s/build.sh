@@ -27,6 +27,7 @@ diff)
     -f ${SCRIPT_DIR}/_vendir/upstream/cf-for-k8s/config-optional/use-external-dns-for-wildcard.yml \
     -f ${SCRIPT_DIR}/cf-values-generated.yml \
     -f ${SCRIPT_DIR}/cf-app-registry-values.yml \
+    -f ${SCRIPT_DIR}/_vendir/manual/secretgen-optional/capi-database-encryption-key-secret.yml \
     -f ${SCRIPT_DIR}/_vendir/manual/secretgen-optional/postgres-cf-db-admin.yml \
     >"${SCRIPT_DIR}/../../config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml"
   ;;
