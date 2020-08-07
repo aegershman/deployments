@@ -23,7 +23,10 @@ spec:
   alternativeNames: []
   extendedKeyUsage: []
   duration: 365
-
+  secretTemplate:
+    data:
+      tls.crt: certificate
+      tls.key: privateKey
 ---
 apiVersion: secretgen.k14s.io/v1alpha1
 kind: Certificate
@@ -41,3 +44,7 @@ spec:
     - client_auth
     - server_auth
   duration: 365
+  secretTemplate:
+    data:
+      tls.crt: certificate
+      tls.key: privateKey
