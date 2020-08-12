@@ -56,14 +56,30 @@ spec:
     spec:
       containers:
       - name: cf-api-server
-        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
+        image: cloudfoundry/cloud-controller-ng@sha256:ed8c3fb25b43fcdd6ebd7b7d895e6b2f761785d9f5091edad1edae1b7d8cd52c
+        command:
+        - /cloud_controller_ng/bin/cloud_controller
+        - -c
+        - /config/cloud_controller_ng.yml
+        - -s
+        - /config/secrets.yml
         imagePullPolicy: Always
         resources: {}
         volumeMounts:
+        - name: cloud-controller-ng-yaml
+          mountPath: /config/cloud_controller_ng.yml
+          subPath: cloud_controller_ng.yml
+        - name: cloud-controller-ng-secrets-yaml
+          mountPath: /config/secrets.yml
+          subPath: secrets.yml
+        - name: cf-api-db-password
+          mountPath: /etc/cf-api/ccdb
+        - name: cf-api-username-lookup-client-secret
+          mountPath: /etc/cf-api/username-lookup-client-secret
+        - name: cf-api-blobstore-secret-access-key
+          mountPath: /etc/cf-api/blobstore/secret-access-key
         - name: server-sock
           mountPath: /data/cloud_controller_ng
-        - name: cloud-controller-ng-yaml
-          mountPath: /config/
         - name: uaa-certs
           mountPath: /config/uaa/certs
         - name: eirini-certs
@@ -73,18 +89,33 @@ spec:
         - name: metric-proxy-ca
           mountPath: /config/metric_proxy/ca
       - name: cf-api-local-worker
-        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
+        image: cloudfoundry/cloud-controller-ng@sha256:ed8c3fb25b43fcdd6ebd7b7d895e6b2f761785d9f5091edad1edae1b7d8cd52c
         imagePullPolicy: Always
-        resources: {}
         command:
         - /usr/local/bin/bundle
         args:
         - exec
         - rake
         - jobs:local
+        env:
+        - name: CLOUD_CONTROLLER_NG_CONFIG
+          value: /config/cloud_controller_ng.yml
+        - name: CLOUD_CONTROLLER_NG_SECRETS
+          value: /config/secrets.yml
+        resources: {}
         volumeMounts:
         - name: cloud-controller-ng-yaml
-          mountPath: /config/
+          mountPath: /config/cloud_controller_ng.yml
+          subPath: cloud_controller_ng.yml
+        - name: cloud-controller-ng-secrets-yaml
+          mountPath: /config/secrets.yml
+          subPath: secrets.yml
+        - name: cf-api-db-password
+          mountPath: /etc/cf-api/ccdb
+        - name: cf-api-username-lookup-client-secret
+          mountPath: /etc/cf-api/username-lookup-client-secret
+        - name: cf-api-blobstore-secret-access-key
+          mountPath: /etc/cf-api/blobstore/secret-access-key
         - name: nginx-uploads
           mountPath: /tmp/uploads
       - name: nginx
@@ -111,11 +142,23 @@ spec:
         imagePullPolicy: Always
       serviceAccountName: cf-api-server-service-account
       volumes:
-      - name: server-sock
-        emptyDir: {}
       - name: cloud-controller-ng-yaml
         configMap:
           name: cloud-controller-ng-yaml
+      - name: cloud-controller-ng-secrets-yaml
+        configMap:
+          name: cloud-controller-ng-secrets-yaml
+      - name: cf-api-db-password
+        secret:
+          secretName: capi-database-password
+      - name: cf-api-username-lookup-client-secret
+        secret:
+          secretName: cloud-controller-username-lookup-client-secret
+      - name: cf-api-blobstore-secret-access-key
+        secret:
+          secretName: capi-blobstore-secret-key
+      - name: server-sock
+        emptyDir: {}
       - name: nginx
         configMap:
           name: nginx
@@ -151,7 +194,7 @@ spec:
     spec:
       containers:
       - name: run-migrations
-        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
+        image: cloudfoundry/cloud-controller-ng@sha256:ed8c3fb25b43fcdd6ebd7b7d895e6b2f761785d9f5091edad1edae1b7d8cd52c
         imagePullPolicy: Always
         command:
         - /bin/bash
@@ -161,14 +204,41 @@ spec:
           bundle exec rake db:wait_for_istio && \
           bundle exec rake db:setup_database && \
           bundle exec rake db:terminate_istio
+        env:
+        - name: CLOUD_CONTROLLER_NG_CONFIG
+          value: /config/cloud_controller_ng.yml
+        - name: CLOUD_CONTROLLER_NG_SECRETS
+          value: /config/secrets.yml
         volumeMounts:
         - name: cloud-controller-ng-yaml
-          mountPath: /config
+          mountPath: /config/cloud_controller_ng.yml
+          subPath: cloud_controller_ng.yml
+        - name: cloud-controller-ng-secrets-yaml
+          mountPath: /config/secrets.yml
+          subPath: secrets.yml
+        - name: cf-api-db-password
+          mountPath: /etc/cf-api/ccdb
+        - name: cf-api-username-lookup-client-secret
+          mountPath: /etc/cf-api/username-lookup-client-secret
+        - name: cf-api-blobstore-secret-access-key
+          mountPath: /etc/cf-api/blobstore/secret-access-key
       restartPolicy: OnFailure
       volumes:
       - name: cloud-controller-ng-yaml
         configMap:
           name: cloud-controller-ng-yaml
+      - name: cloud-controller-ng-secrets-yaml
+        configMap:
+          name: cloud-controller-ng-secrets-yaml
+      - name: cf-api-db-password
+        secret:
+          secretName: capi-database-password
+      - name: cf-api-username-lookup-client-secret
+        secret:
+          secretName: cloud-controller-username-lookup-client-secret
+      - name: cf-api-blobstore-secret-access-key
+        secret:
+          secretName: capi-blobstore-secret-key
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -262,7 +332,6 @@ data:
         host: cf-db-postgresql.cf-db.svc.cluster.local
         port: 5432
         user: cloud_controller
-        password: zfahfu0eqx9a0xvhqeaf
         database: cloud_controller
       max_connections: 25
       pool_timeout: 10
@@ -318,7 +387,6 @@ data:
         provider: AWS
         endpoint: http://cf-blobstore-minio.cf-blobstore.svc.cluster.local:9000
         aws_access_key_id: admin
-        aws_secret_access_key: 3yzxw1csae1n3tcrutn3
         aws_signature_version: "2"
         region: ''''''
         path_style: true
@@ -336,7 +404,6 @@ data:
         provider: AWS
         endpoint: http://cf-blobstore-minio.cf-blobstore.svc.cluster.local:9000
         aws_access_key_id: admin
-        aws_secret_access_key: 3yzxw1csae1n3tcrutn3
         aws_signature_version: "2"
         region: ''''''
         path_style: true
@@ -354,7 +421,6 @@ data:
         provider: AWS
         endpoint: http://cf-blobstore-minio.cf-blobstore.svc.cluster.local:9000
         aws_access_key_id: admin
-        aws_secret_access_key: 3yzxw1csae1n3tcrutn3
         aws_signature_version: "2"
         region: ''''''
         path_style: true
@@ -371,7 +437,6 @@ data:
         provider: AWS
         endpoint: http://cf-blobstore-minio.cf-blobstore.svc.cluster.local:9000
         aws_access_key_id: admin
-        aws_secret_access_key: 3yzxw1csae1n3tcrutn3
         aws_signature_version: "2"
         region: ''''''
         path_style: true
@@ -398,7 +463,6 @@ data:
     uaa_client_secret: TODO
     uaa_client_scope: openid,cloud_controller_service_permissions.read
     cloud_controller_username_lookup_client_name: cloud_controller_username_lookup
-    cloud_controller_username_lookup_client_secret: 65jixiu1cr9jhszunx41
     cc_service_key_client_name: cc_service_key_client
     cc_service_key_client_secret: TODO
     allow_app_ssh_access: true
@@ -569,6 +633,8 @@ spec:
     spec:
       containers:
       - name: cf-api-clock
+        image: cloudfoundry/cloud-controller-ng@sha256:ed8c3fb25b43fcdd6ebd7b7d895e6b2f761785d9f5091edad1edae1b7d8cd52c
+        imagePullPolicy: Always
         workingDir: /cloud_controller_ng
         command:
         - /usr/local/bin/bundle
@@ -576,8 +642,11 @@ spec:
         - exec
         - rake
         - clock:start
-        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
-        imagePullPolicy: Always
+        env:
+        - name: CLOUD_CONTROLLER_NG_CONFIG
+          value: /config/cloud_controller_ng.yml
+        - name: CLOUD_CONTROLLER_NG_SECRETS
+          value: /config/secrets.yml
         resources: {}
         readinessProbe:
           tcpSocket:
@@ -585,13 +654,35 @@ spec:
           periodSeconds: 3
         volumeMounts:
         - name: cloud-controller-ng-yaml
-          mountPath: /config
+          mountPath: /config/cloud_controller_ng.yml
+          subPath: cloud_controller_ng.yml
+        - name: cloud-controller-ng-secrets-yaml
+          mountPath: /config/secrets.yml
+          subPath: secrets.yml
+        - name: cf-api-db-password
+          mountPath: /etc/cf-api/ccdb
+        - name: cf-api-username-lookup-client-secret
+          mountPath: /etc/cf-api/username-lookup-client-secret
+        - name: cf-api-blobstore-secret-access-key
+          mountPath: /etc/cf-api/blobstore/secret-access-key
         - name: eirini-certs
           mountPath: /config/eirini/certs
       volumes:
       - name: cloud-controller-ng-yaml
         configMap:
           name: cloud-controller-ng-yaml
+      - name: cloud-controller-ng-secrets-yaml
+        configMap:
+          name: cloud-controller-ng-secrets-yaml
+      - name: cf-api-db-password
+        secret:
+          secretName: capi-database-password
+      - name: cf-api-username-lookup-client-secret
+        secret:
+          secretName: cloud-controller-username-lookup-client-secret
+      - name: cf-api-blobstore-secret-access-key
+        secret:
+          secretName: capi-blobstore-secret-key
       - name: eirini-certs
         secret:
           secretName: eirini-internal-tls-certs
@@ -626,7 +717,7 @@ spec:
       serviceAccountName: cf-api-controllers-service-account
       containers:
       - name: manager
-        image: cloudfoundry/capi-kpack-watcher@sha256:6e4940b613616570832ac0801eb0919f49eac9c8f795f38de3f972c8aea7eda9
+        image: cloudfoundry/capi-kpack-watcher@sha256:a3e7e356e8c6395f8c79de36624c72844dff1b5d71e8da8d89a9c4bff4fe6ed2
         env:
         - name: UAA_CLIENT_SECRET
           value: 3p47nj82tsh2oa6hf3l5
@@ -699,6 +790,8 @@ spec:
     spec:
       containers:
       - name: cf-api-deployment-updater
+        image: cloudfoundry/cloud-controller-ng@sha256:ed8c3fb25b43fcdd6ebd7b7d895e6b2f761785d9f5091edad1edae1b7d8cd52c
+        imagePullPolicy: Always
         workingDir: /cloud_controller_ng
         command:
         - /usr/local/bin/bundle
@@ -706,8 +799,11 @@ spec:
         - exec
         - rake
         - deployment_updater:start
-        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
-        imagePullPolicy: Always
+        env:
+        - name: CLOUD_CONTROLLER_NG_CONFIG
+          value: /config/cloud_controller_ng.yml
+        - name: CLOUD_CONTROLLER_NG_SECRETS
+          value: /config/secrets.yml
         resources: {}
         readinessProbe:
           tcpSocket:
@@ -715,13 +811,35 @@ spec:
           periodSeconds: 3
         volumeMounts:
         - name: cloud-controller-ng-yaml
-          mountPath: /config
+          mountPath: /config/cloud_controller_ng.yml
+          subPath: cloud_controller_ng.yml
+        - name: cloud-controller-ng-secrets-yaml
+          mountPath: /config/secrets.yml
+          subPath: secrets.yml
+        - name: cf-api-db-password
+          mountPath: /etc/cf-api/ccdb
+        - name: cf-api-username-lookup-client-secret
+          mountPath: /etc/cf-api/username-lookup-client-secret
+        - name: cf-api-blobstore-secret-access-key
+          mountPath: /etc/cf-api/blobstore/secret-access-key
         - name: eirini-certs
           mountPath: /config/eirini/certs
       volumes:
       - name: cloud-controller-ng-yaml
         configMap:
           name: cloud-controller-ng-yaml
+      - name: cloud-controller-ng-secrets-yaml
+        configMap:
+          name: cloud-controller-ng-secrets-yaml
+      - name: cf-api-db-password
+        secret:
+          secretName: capi-database-password
+      - name: cf-api-username-lookup-client-secret
+        secret:
+          secretName: cloud-controller-username-lookup-client-secret
+      - name: cf-api-blobstore-secret-access-key
+        secret:
+          secretName: capi-blobstore-secret-key
       - name: eirini-certs
         secret:
           secretName: eirini-internal-tls-certs
@@ -818,6 +936,32 @@ data:
 
     #on any error, delete uploaded files.
     upload_cleanup 400-505;
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-controller-ng-secrets-yaml
+  namespace: cf-system
+  annotations:
+    kapp.k14s.io/versioned: ""
+data:
+  secrets.yml: |
+    cloud_controller_username_lookup_client_secret: /etc/cf-api/username-lookup-client-secret/password
+    db:
+      database:
+        password: /etc/cf-api/ccdb/password
+    resource_pool:
+      fog_connection:
+        aws_secret_access_key: /etc/cf-api/blobstore/secret-access-key/password
+    packages:
+      fog_connection:
+        aws_secret_access_key: /etc/cf-api/blobstore/secret-access-key/password
+    droplets:
+      fog_connection:
+        aws_secret_access_key: /etc/cf-api/blobstore/secret-access-key/password
+    buildpacks:
+      fog_connection:
+        aws_secret_access_key: /etc/cf-api/blobstore/secret-access-key/password
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -1108,6 +1252,8 @@ spec:
     spec:
       containers:
       - name: cf-api-worker
+        image: cloudfoundry/cloud-controller-ng@sha256:ed8c3fb25b43fcdd6ebd7b7d895e6b2f761785d9f5091edad1edae1b7d8cd52c
+        imagePullPolicy: Always
         workingDir: /cloud_controller_ng
         command:
         - /usr/local/bin/bundle
@@ -1115,8 +1261,11 @@ spec:
         - exec
         - rake
         - jobs:generic
-        image: cloudfoundry/cloud-controller-ng@sha256:794dec754efb3595e7a3274d17fff842197b2171cd3694a738c0ccab300c97f3
-        imagePullPolicy: Always
+        env:
+        - name: CLOUD_CONTROLLER_NG_CONFIG
+          value: /config/cloud_controller_ng.yml
+        - name: CLOUD_CONTROLLER_NG_SECRETS
+          value: /config/secrets.yml
         resources: {}
         readinessProbe:
           tcpSocket:
@@ -1124,7 +1273,17 @@ spec:
           periodSeconds: 3
         volumeMounts:
         - name: cloud-controller-ng-yaml
-          mountPath: /config
+          mountPath: /config/cloud_controller_ng.yml
+          subPath: cloud_controller_ng.yml
+        - name: cloud-controller-ng-secrets-yaml
+          mountPath: /config/secrets.yml
+          subPath: secrets.yml
+        - name: cf-api-db-password
+          mountPath: /etc/cf-api/ccdb
+        - name: cf-api-username-lookup-client-secret
+          mountPath: /etc/cf-api/username-lookup-client-secret
+        - name: cf-api-blobstore-secret-access-key
+          mountPath: /etc/cf-api/blobstore/secret-access-key
         - name: eirini-certs
           mountPath: /config/eirini/certs
       serviceAccountName: cf-api-worker-service-account
@@ -1132,6 +1291,18 @@ spec:
       - name: cloud-controller-ng-yaml
         configMap:
           name: cloud-controller-ng-yaml
+      - name: cloud-controller-ng-secrets-yaml
+        configMap:
+          name: cloud-controller-ng-secrets-yaml
+      - name: cf-api-db-password
+        secret:
+          secretName: capi-database-password
+      - name: cf-api-username-lookup-client-secret
+        secret:
+          secretName: cloud-controller-username-lookup-client-secret
+      - name: cf-api-blobstore-secret-access-key
+        secret:
+          secretName: capi-blobstore-secret-key
       - name: eirini-certs
         secret:
           secretName: eirini-internal-tls-certs

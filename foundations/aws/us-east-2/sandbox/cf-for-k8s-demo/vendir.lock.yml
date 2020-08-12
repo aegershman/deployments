@@ -11,8 +11,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Bump capi-k8s-release to 763af35778dce80e3ddcf430f52024b05b3fcfe6
-      sha: 73ddad4d773b01368bbaad7f20172e63c0f574db
+      commitTitle: Bump capi-k8s-release to 86f49fc65affed446e943915bea0f385e316dcbc
+      sha: d8245bd07135c8d21d771e09571b7f93247b64b8
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
@@ -35,8 +35,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Add SecretAnnotations feature (#26)
-      sha: 39bfc5eceedd8952f3dffe107c5e67d9cb12b6a6
+      commitTitle: Bump quarks-utils
+      sha: 152543146ab7764dddcb68043550db0ea3651f07
     path: upstream
   path: cluster/build/quarks-secret/_vendir
 - contents:

@@ -19,7 +19,7 @@ image:
   # organization that provides the operator docker image.
   org: cloudfoundry
   # tag of the operator docker image
-  tag: v1.0.699
+  tag: v1.0.705
 
 # logLevel defines from which level the logs should be printed.
 logLevel: debug
