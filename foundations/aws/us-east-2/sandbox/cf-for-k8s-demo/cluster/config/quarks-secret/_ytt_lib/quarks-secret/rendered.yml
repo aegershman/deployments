@@ -174,10 +174,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.0.699
+        - Tag: v1.0.705
           Type: resolved
-          URL: cloudfoundry/quarks-secret:v1.0.699
-        URL: index.docker.io/cloudfoundry/quarks-secret@sha256:3bf8337c69c276424c5da54d6aa7c218a1be2dbd7d4115d50f75fe805e4cfb8d
+          URL: cloudfoundry/quarks-secret:v1.0.705
+        URL: index.docker.io/cloudfoundry/quarks-secret@sha256:73693fe4b24eecccee585b9698d73d091045f6d4bf70986120d6312f7b8c077c
   name: cf-quarks-secret
   namespace: quarks-secret
 spec:
@@ -214,7 +214,7 @@ spec:
               fieldPath: metadata.name
         - name: OPERATOR_NAME
           value: quarks-secret
-        image: index.docker.io/cloudfoundry/quarks-secret@sha256:3bf8337c69c276424c5da54d6aa7c218a1be2dbd7d4115d50f75fe805e4cfb8d
+        image: index.docker.io/cloudfoundry/quarks-secret@sha256:73693fe4b24eecccee585b9698d73d091045f6d4bf70986120d6312f7b8c077c
         imagePullPolicy: IfNotPresent
         name: quarks-secret
         ports:
