@@ -11,11 +11,6 @@ build)
     ./build.sh
     popd
     ;;
-  h | harbor)
-    pushd ./cluster/build/harbor
-    ./build.sh
-    popd
-    ;;
   cfd | cf-diff-generated-values)
     pushd ./cluster/build/cf-for-k8s
     ./build.sh diff
@@ -25,6 +20,21 @@ build)
     pushd ./cluster/build/cf-for-k8s
     ./build.sh clean
     ./build.sh generate
+    popd
+    ;;
+  h | harbor)
+    pushd ./cluster/build/harbor
+    ./build.sh
+    popd
+    ;;
+  m | minibroker)
+    pushd ./cluster/build/minibroker
+    ./build.sh
+    popd
+    ;;
+  sc | service-catalog)
+    pushd ./cluster/build/service-catalog
+    ./build.sh
     popd
     ;;
   all)
