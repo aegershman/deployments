@@ -4,8 +4,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Update the version to 2.2.0.0
-      sha: d1590f42fb16e138c7c1c8afc906f833c10bc75c
+      commitTitle: 'Merge pull request #14 from bhavin192/servicemonitor...'
+      sha: 88cd63e8f9468d98db2aae9662570aeb11e377ac
     path: upstream
   path: cluster/build/yugabyte/_vendir
 - contents:

@@ -1,7 +1,7 @@
 ---
 Image:
   repository: "yugabytedb/yugabyte"
-  tag: 2.1.8.2-b1
+  tag: 2.2.0.0-b80
   pullPolicy: IfNotPresent
 
 storage:
@@ -61,3 +61,6 @@ serviceEndpoints:
       yql-port: "9042"
       yedis-port: "6379"
       ysql-port: "5433"
+
+serviceMonitor:
+  enabled: false
