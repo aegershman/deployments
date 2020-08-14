@@ -10,6 +10,7 @@ case "$1" in
   helm template quarks-secret --namespace=quarks-secret "${SCRIPT_DIR}/_vendir/upstream/deploy/helm/quarks-secret" \
     --values="${SCRIPT_DIR}/helm-values.yml" |
     ytt --ignore-unknown-comments -f - |
-    kbld -f - >"${SCRIPT_DIR}/../../config/quarks-secret/_ytt_lib/quarks-secret/rendered.yml"
+    kbld -f - --lock-output="${SCRIPT_DIR}/_vendir/manual/kbld-lock.yml" \
+      >"${SCRIPT_DIR}/../../config/quarks-secret/_ytt_lib/quarks-secret/rendered.yml"
   ;;
 esac
