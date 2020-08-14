@@ -3932,9 +3932,10 @@ spec:
       - args:
         - --metrics-addr=127.0.0.1:8080
         - --enable-leader-election
+        - --feature-gates=MachinePool=${EXP_MACHINE_POOL:=false}
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.7
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.8
         imagePullPolicy: IfNotPresent
         name: manager
       terminationGracePeriodSeconds: 10
@@ -3976,9 +3977,10 @@ spec:
       - args:
         - --metrics-addr=127.0.0.1:8080
         - --webhook-port=9443
+        - --feature-gates=MachinePool=${EXP_MACHINE_POOL:=false}
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.7
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.8
         imagePullPolicy: IfNotPresent
         name: manager
         ports:

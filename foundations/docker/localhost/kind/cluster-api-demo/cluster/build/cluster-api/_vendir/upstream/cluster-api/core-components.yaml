@@ -4669,7 +4669,7 @@ spec:
         - --feature-gates=MachinePool=${EXP_MACHINE_POOL:=false},ClusterResourceSet=${EXP_CLUSTER_RESOURCE_SET:=false}
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.3.7
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.3.8
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -4726,7 +4726,7 @@ spec:
         - --feature-gates=MachinePool=${EXP_MACHINE_POOL:=false},ClusterResourceSet=${EXP_CLUSTER_RESOURCE_SET:=false}
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.3.7
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:v0.3.8
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:

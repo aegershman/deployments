@@ -3,7 +3,7 @@
 set -e
 
 case "$1" in
-*)
+do)
   # https://cluster-api.sigs.k8s.io/clusterctl/commands/config-cluster.html
   # https://cluster-api.sigs.k8s.io/clusterctl/developers.html#additional-steps-in-order-to-use-the-docker-provider
   exit 1

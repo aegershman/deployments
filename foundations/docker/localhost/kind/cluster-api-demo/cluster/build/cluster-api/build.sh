@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 case "$1" in
-init)
+do)
   # purely for testing at the moment
   exit 1
   chmod +x ./build/_vendir/upstream/github.com/kubernetes-sigs/cluster-api/clusterctl-darwin-amd64
