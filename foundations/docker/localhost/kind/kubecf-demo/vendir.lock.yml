@@ -4,15 +4,15 @@ directories:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/cloudfoundry-incubator/quarks-operator/releases/28442259
+      url: https://api.github.com/repos/cloudfoundry-incubator/quarks-operator/releases/29091160
     path: upstream
   path: cluster/build/cf-operator/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Release helm chart for v0.34.1
-      sha: 1d250bcbd99d2baa786df0c7a5537c852eab33b5
+      commitTitle: Bump chart patch version
+      sha: e5e963bcdb9a5fb2d0d9408734cefaec859d2c31
     path: upstream
   path: cluster/build/ingress-nginx/_vendir
 - contents:

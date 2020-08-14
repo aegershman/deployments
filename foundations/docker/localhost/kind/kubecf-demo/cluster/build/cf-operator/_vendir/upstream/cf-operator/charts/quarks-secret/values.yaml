@@ -12,7 +12,7 @@ global:
 image:
   org: cfcontainerization
   repository: quarks-secret
-  tag: v1.0.687
+  tag: v1.0.692
 logLevel: debug
 maxWorkers: 1
 nameOverride: ""
