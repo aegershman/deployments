@@ -1,3 +1,4 @@
+---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
@@ -171,13 +172,7 @@ kind: Deployment
 metadata:
   annotations:
     kbld.k14s.io/images: |
-      - Metas:
-        - Path: /Users/pivotal/workspace/ytt-go/src/github.com/k14s/secretgen-controller
-          Type: local
-        - Dirty: false
-          RemoteURL: git@github.com:k14s/secretgen-controller.git
-          SHA: c7bf65c5f955e4e0a57e5d4078c2a972f066d931
-          Type: git
+      - Metas: null
         URL: index.docker.io/k14s/secretgen-controller@sha256:bb61310527f760ace5f2d0eddf49893f92ca48376f3c6e162c2067b6af7bb2d7
   name: secretgen-controller
   namespace: secretgen-controller
