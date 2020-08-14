@@ -78,11 +78,29 @@ a | apply | deploy)
         -f ./cluster/config-optional/harbor/harbor-virtual-service.yml
     ) "$@"
     ;;
+  m | minibroker)
+    shift
+    kapp deploy -a minibroker -f <(
+      ytt \
+        -f ./cluster/config/minibroker/ \
+        -f ./cluster/config-optional/minibroker/minibroker-namespace.yml
+    ) "$@"
+    ;;
+  sc | service-catalog)
+    shift
+    kapp deploy -a service-catalog -f <(
+      ytt \
+        -f ./cluster/config/service-catalog/ \
+        -f ./cluster/config-optional/service-catalog/catalog-namespace.yml
+    ) "$@"
+    ;;
   all)
     shift
     ./deploy-ctl.sh apply cert-manager "$@"
-    ./deploy-ctl.sh apply cf-for-k8s "$@"
     ./deploy-ctl.sh apply harbor "$@"
+    ./deploy-ctl.sh apply cf-for-k8s "$@"
+    ./deploy-ctl.sh apply minibroker "$@"
+    ./deploy-ctl.sh apply service-catalog "$@"
     ;;
   *)
     echo "usage: ./deploy.sh apply all [optional-args...]"
@@ -105,10 +123,20 @@ d | delete)
     shift
     kapp delete -a harbor "$@"
     ;;
+  m | minibroker)
+    shift
+    kapp delete -a minibroker "$@"
+    ;;
+  sc | service-catalog)
+    shift
+    kapp delete -a service-catalog "$@"
+    ;;
   all)
     shift
     kapp delete -a cf "$@"
     kapp delete -a harbor "$@"
+    kapp delete -a minibroker "$@"
+    kapp delete -a service-catalog "$@"
     ;;
   *)
     echo "usage: ./deploy.sh delete {kapp-env} [optional-args...]"
