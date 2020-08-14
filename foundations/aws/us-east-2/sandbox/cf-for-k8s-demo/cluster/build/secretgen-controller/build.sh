@@ -8,7 +8,8 @@ case "$1" in
 *)
   echo "generating secretgen-controller resource definitions..."
   ytt \
-    -f ${SCRIPT_DIR}/_vendir/upstream/release.yml \
-    >"${SCRIPT_DIR}/../../config/secretgen-controller/_ytt_lib/secretgen-controller/rendered.yml"
+    -f ${SCRIPT_DIR}/_vendir/upstream/release.yml |
+    kbld -f - --lock-output="${SCRIPT_DIR}/_vendir/manual/kbld-lock.yml" \
+      >"${SCRIPT_DIR}/../../config/secretgen-controller/_ytt_lib/secretgen-controller/rendered.yml"
   ;;
 esac

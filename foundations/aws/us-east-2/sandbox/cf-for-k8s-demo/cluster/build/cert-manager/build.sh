@@ -8,7 +8,8 @@ case "$1" in
 *)
   echo "generating cert-manager resource definitions..."
   ytt --ignore-unknown-comments \
-    -f ${SCRIPT_DIR}/_vendir/upstream \
-    >"${SCRIPT_DIR}/../../config/cert-manager/_ytt_lib/cert-manager/rendered.yml"
+    -f ${SCRIPT_DIR}/_vendir/upstream |
+    kbld -f - --lock-output="${SCRIPT_DIR}/_vendir/manual/kbld-lock.yml" \
+      >"${SCRIPT_DIR}/../../config/cert-manager/_ytt_lib/cert-manager/rendered.yml"
   ;;
 esac

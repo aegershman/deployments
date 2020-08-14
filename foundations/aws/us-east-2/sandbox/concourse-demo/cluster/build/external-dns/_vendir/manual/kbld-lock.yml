@@ -1,0 +1,7 @@
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.24.0
+overrides:
+- image: docker.io/bitnami/external-dns:0.7.3-debian-10-r0
+  newImage: index.docker.io/bitnami/external-dns@sha256:a38e2ee1f64c5bcef25e70801a515f6e855416b89261ddd8d46d34cfbaca9bf4
+  preresolved: true

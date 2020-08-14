@@ -1,0 +1,31 @@
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.24.0
+overrides:
+- image: busybox:latest
+  newImage: index.docker.io/library/busybox@sha256:4f47c01fa91355af2865ac10fef5bf6ec9c7f42ad2321377c21e844427972977
+  preresolved: true
+- image: goharbor/harbor-core:v1.10.4
+  newImage: index.docker.io/goharbor/harbor-core@sha256:d326c23b93a98dfaef1f6ff981ea2eaa9530ca7d3bebd3b81fbaac864042e2c9
+  preresolved: true
+- image: goharbor/harbor-db:v1.10.4
+  newImage: index.docker.io/goharbor/harbor-db@sha256:41397c9fe5d8f46e11c92691344c842304a69e38b6268e623df768b866bed73d
+  preresolved: true
+- image: goharbor/harbor-jobservice:v1.10.4
+  newImage: index.docker.io/goharbor/harbor-jobservice@sha256:124c3a245f2f082c916dbb835bd7e1739e2cdb6b934959f8af69f5012367d4ee
+  preresolved: true
+- image: goharbor/harbor-portal:v1.10.4
+  newImage: index.docker.io/goharbor/harbor-portal@sha256:1b3677e66755a1891004ca8cce230e7398a2576ee1a4f09696e067c2ae464b26
+  preresolved: true
+- image: goharbor/harbor-registryctl:v1.10.4
+  newImage: index.docker.io/goharbor/harbor-registryctl@sha256:a5794c575bb83348f992bf961d64afff3db7c7e11129e26357d3d3314807a221
+  preresolved: true
+- image: goharbor/nginx-photon:v1.10.4
+  newImage: index.docker.io/goharbor/nginx-photon@sha256:f7424ef111f1feb3ae18cd5ed32fe531d9cdfa204c079f8091a3fa842481dad2
+  preresolved: true
+- image: goharbor/redis-photon:v1.10.4
+  newImage: index.docker.io/goharbor/redis-photon@sha256:0915d761e18d2134faa7e301c2113f329c45b9e01632ba833305772a84805b16
+  preresolved: true
+- image: goharbor/registry-photon:v1.10.4
+  newImage: index.docker.io/goharbor/registry-photon@sha256:e7e5c0f823418351059cc7cd0685fa0d578eb799be29ad48120ec07f438547f7
+  preresolved: true

@@ -9,7 +9,8 @@ case "$1" in
   echo "generating service-catalog resource definitions..."
   helm template service-catalog "${SCRIPT_DIR}/_vendir/upstream/charts/catalog" \
     --values="${SCRIPT_DIR}/helm-values.yml" |
-    ytt --ignore-unknown-comments -f - \
+    ytt --ignore-unknown-comments -f - |
+    kbld -f - --lock-output="${SCRIPT_DIR}/_vendir/manual/kbld-lock.yml" \
       >"${SCRIPT_DIR}/../../config/service-catalog/_ytt_lib/service-catalog/rendered.yml"
   ;;
 esac

@@ -1,10 +1,11 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: kubecf
   labels:
     quarks.cloudfoundry.org/monitored: cfo
     quarks.cloudfoundry.org/qjob-service-account: qjob-persist-output
+  name: kubecf
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -169,10 +170,10 @@ rules:
   - watch
 - apiGroups:
   - certificates.k8s.io
-  resources:
-  - signers
   resourceNames:
   - kubernetes.io/legacy-unknown
+  resources:
+  - signers
   verbs:
   - approve
 - apiGroups:
@@ -262,10 +263,10 @@ rules:
   - watch
 - apiGroups:
   - certificates.k8s.io
-  resources:
-  - signers
   resourceNames:
   - kubernetes.io/legacy-unknown
+  resources:
+  - signers
   verbs:
   - approve
 - apiGroups:
@@ -413,9 +414,9 @@ kind: ClusterRoleBinding
 metadata:
   name: cf-operator-quarks-job
 roleRef:
+  apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cf-operator-quarks-job
-  apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
   name: cf-operator-quarks-job
@@ -426,9 +427,9 @@ kind: ClusterRoleBinding
 metadata:
   name: cf-operator-quarks-secret
 roleRef:
+  apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cf-operator-quarks-secret
-  apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
   name: cf-operator-quarks-secret
@@ -455,13 +456,13 @@ kind: RoleBinding
 metadata:
   name: qjob-persist-output
   namespace: kubecf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: qjob-persist-output
 subjects:
 - kind: ServiceAccount
   name: qjob-persist-output
-roleRef:
-  kind: ClusterRole
-  name: qjob-persist-output
-  apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
 kind: Service
@@ -469,15 +470,22 @@ metadata:
   name: cf-operator-webhook
   namespace: default
 spec:
-  selector:
-    name: cf-operator
   ports:
   - port: 443
     targetPort: 2999
+  selector:
+    name: cf-operator
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: v1.0.179
+          Type: resolved
+          URL: cfcontainerization/quarks-job:v1.0.179
+        URL: index.docker.io/cfcontainerization/quarks-job@sha256:80591bca65178da9f47744736c7945c3946783b76a4c3c0b91a61077e13a35bd
   name: cf-operator-quarks-job
   namespace: default
 spec:
@@ -490,16 +498,9 @@ spec:
       labels:
         name: quarks-job
     spec:
-      serviceAccountName: cf-operator-quarks-job
       containers:
-      - name: quarks-job
-        image: cfcontainerization/quarks-job:v1.0.179
-        ports:
-        - containerPort: 60000
-          name: metrics
-        command:
+      - command:
         - quarks-job
-        imagePullPolicy: IfNotPresent
         env:
         - name: APPLY_CRD
           value: "true"
@@ -529,10 +530,24 @@ spec:
           value: v1.0.179
         - name: DOCKER_IMAGE_PULL_POLICY
           value: IfNotPresent
+        image: index.docker.io/cfcontainerization/quarks-job@sha256:80591bca65178da9f47744736c7945c3946783b76a4c3c0b91a61077e13a35bd
+        imagePullPolicy: IfNotPresent
+        name: quarks-job
+        ports:
+        - containerPort: 60000
+          name: metrics
+      serviceAccountName: cf-operator-quarks-job
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: v1.0.692
+          Type: resolved
+          URL: cfcontainerization/quarks-secret:v1.0.692
+        URL: index.docker.io/cfcontainerization/quarks-secret@sha256:870da3e007c6c1bb13cdd0d2db4d15c42c8b7291ad37c5ca1e6a0359dae30e40
   name: cf-operator-quarks-secret
   namespace: default
 spec:
@@ -545,16 +560,9 @@ spec:
       labels:
         name: quarks-secret
     spec:
-      serviceAccountName: cf-operator-quarks-secret
       containers:
-      - name: quarks-secret
-        image: cfcontainerization/quarks-secret:v1.0.692
-        ports:
-        - containerPort: 60000
-          name: metrics
-        command:
+      - command:
         - quarks-secret
-        imagePullPolicy: IfNotPresent
         env:
         - name: APPLY_CRD
           value: "true"
@@ -576,10 +584,24 @@ spec:
               fieldPath: metadata.name
         - name: OPERATOR_NAME
           value: quarks-secret
+        image: index.docker.io/cfcontainerization/quarks-secret@sha256:870da3e007c6c1bb13cdd0d2db4d15c42c8b7291ad37c5ca1e6a0359dae30e40
+        imagePullPolicy: IfNotPresent
+        name: quarks-secret
+        ports:
+        - containerPort: 60000
+          name: metrics
+      serviceAccountName: cf-operator-quarks-secret
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: v5.2.0-0.g22cafc90
+          Type: resolved
+          URL: cfcontainerization/cf-operator:v5.2.0-0.g22cafc90
+        URL: index.docker.io/cfcontainerization/cf-operator@sha256:b5a110d2391fe0d6826eb45b75222bc8bc76addf67534f7a73cb11ec177a29fb
   name: cf-operator
   namespace: default
 spec:
@@ -592,18 +614,9 @@ spec:
       labels:
         name: cf-operator
     spec:
-      serviceAccountName: cf-operator
       containers:
-      - name: cf-operator
-        image: cfcontainerization/cf-operator:v5.2.0-0.g22cafc90
-        ports:
-        - containerPort: 60000
-          name: metrics
-        - containerPort: 2999
-          name: webhook
-        command:
+      - command:
         - cf-operator
-        imagePullPolicy: IfNotPresent
         env:
         - name: APPLY_CRD
           value: "true"
@@ -643,38 +656,45 @@ spec:
           value: "2999"
         - name: CF_OPERATOR_WEBHOOK_USE_SERVICE_REFERENCE
           value: "true"
+        image: index.docker.io/cfcontainerization/cf-operator@sha256:b5a110d2391fe0d6826eb45b75222bc8bc76addf67534f7a73cb11ec177a29fb
+        imagePullPolicy: IfNotPresent
+        name: cf-operator
+        ports:
+        - containerPort: 60000
+          name: metrics
+        - containerPort: 2999
+          name: webhook
         readinessProbe:
           httpGet:
             path: /readyz
             port: 2999
             scheme: HTTPS
           initialDelaySeconds: 2
+      serviceAccountName: cf-operator
 ---
-apiVersion: v1
-kind: List
-items:
-- apiVersion: rbac.authorization.k8s.io/v1
-  kind: ClusterRoleBinding
-  metadata:
-    name: cf-operator-cluster
-  subjects:
-  - kind: ServiceAccount
-    name: cf-operator
-    namespace: default
-  roleRef:
-    kind: ClusterRole
-    name: cf-operator-cluster
-    apiGroup: rbac.authorization.k8s.io
-- apiVersion: rbac.authorization.k8s.io/v1
-  kind: RoleBinding
-  metadata:
-    name: cf-operator-webhook
-    namespace: default
-  subjects:
-  - kind: ServiceAccount
-    name: cf-operator
-    namespace: default
-  roleRef:
-    kind: Role
-    name: cf-operator-webhook
-    apiGroup: rbac.authorization.k8s.io
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cf-operator-cluster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cf-operator-cluster
+subjects:
+- kind: ServiceAccount
+  name: cf-operator
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cf-operator-webhook
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cf-operator-webhook
+subjects:
+- kind: ServiceAccount
+  name: cf-operator
+  namespace: default

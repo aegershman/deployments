@@ -1,19 +1,16 @@
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: minibroker
+  annotations: null
   labels:
     app: minibroker-minibroker
     chart: minibroker-0.0.0
-    release: minibroker
     heritage: Helm
-  annotations: null
+    release: minibroker
+  name: minibroker
 ---
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: minibroker-provisioning-settings
-  namespace: default
 data:
   provisioning-settings.yaml: |
     mariadb: {}
@@ -22,16 +19,20 @@ data:
     postgresql: {}
     rabbitmq: {}
     redis: {}
+kind: ConfigMap
+metadata:
+  name: minibroker-provisioning-settings
+  namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: minibroker-minibroker
   labels:
     app: minibroker-minibroker
     chart: minibroker-0.0.0
-    release: minibroker
     heritage: Helm
+    release: minibroker
+  name: minibroker-minibroker
 rules:
 - apiGroups:
   - ""
@@ -82,12 +83,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: minibroker
   labels:
     app: minibroker-minibroker
     chart: minibroker-0.0.0
-    release: minibroker
     heritage: Helm
+    release: minibroker
+  name: minibroker
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -97,56 +98,56 @@ subjects:
   name: minibroker
   namespace: default
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: minibroker-minibroker
   labels:
     app: minibroker-minibroker
     chart: minibroker-0.0.0
-    release: minibroker
     heritage: Helm
+    release: minibroker
+  name: minibroker-minibroker
 spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: broker
   selector:
     app: minibroker-minibroker
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: broker
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: minibroker-minibroker
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: canary
+          Type: resolved
+          URL: quay.io/kubernetes-service-catalog/minibroker:canary
+        URL: quay.io/kubernetes-service-catalog/minibroker@sha256:1e5869edd429cd3b017b01ccd010cfd65ba80aefd0cec0d92e275a671b683fa6
   labels:
     app: minibroker-minibroker
     chart: minibroker-0.0.0
-    release: minibroker
     heritage: Helm
+    release: minibroker
+  name: minibroker-minibroker
 spec:
   replicas: 1
-  strategy:
-    type: null
   selector:
     matchLabels:
       app: minibroker-minibroker
+  strategy:
+    type: null
   template:
     metadata:
       labels:
         app: minibroker-minibroker
         chart: minibroker-0.0.0
-        release: minibroker
         heritage: Helm
+        release: minibroker
     spec:
-      serviceAccountName: minibroker
       containers:
-      - name: minibroker
-        image: quay.io/kubernetes-service-catalog/minibroker:canary
-        imagePullPolicy: IfNotPresent
-        securityContext:
-          runAsNonRoot: true
-          readOnlyRootFilesystem: true
-        args:
+      - args:
         - minibroker
         - --service-catalog-enabled-only
         - -defaultNamespace
@@ -158,32 +159,39 @@ spec:
         - -logtostderr
         - --provisioningSettings
         - /minibroker/provisioning-settings.yaml
-        ports:
-        - name: broker
-          containerPort: 8080
         env:
         - name: CONFIG_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        image: quay.io/kubernetes-service-catalog/minibroker@sha256:1e5869edd429cd3b017b01ccd010cfd65ba80aefd0cec0d92e275a671b683fa6
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        name: minibroker
+        ports:
+        - containerPort: 8080
+          name: broker
         readinessProbe:
           httpGet:
             path: /healthz
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 3
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 15
-          failureThreshold: 2
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
         volumeMounts:
-        - name: provisioning-settings
-          mountPath: /minibroker
+        - mountPath: /minibroker
+          name: provisioning-settings
           readOnly: true
+      serviceAccountName: minibroker
       volumes:
-      - name: provisioning-settings
-        configMap:
+      - configMap:
           name: minibroker-provisioning-settings
+        name: provisioning-settings
