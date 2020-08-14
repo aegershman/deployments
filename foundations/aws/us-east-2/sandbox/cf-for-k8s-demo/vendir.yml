@@ -22,7 +22,7 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: d8245bd07135c8d21d771e09571b7f93247b64b8 # beyond v0.5.0
+          ref: 2948deb2ed24cb841a4e5d06585ee7a9b1bd44d4 # beyond v0.5.0
         includePaths:
           - config-optional/**/*
           - config/**/*
@@ -57,7 +57,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/cloudfoundry-incubator/quarks-secret
-          ref: tags/v1.0.705
+          ref: tags/v1.0.708
         includePaths:
           - deploy/helm/quarks-secret/**/*
   - path: cluster/build/secretgen-controller/_vendir

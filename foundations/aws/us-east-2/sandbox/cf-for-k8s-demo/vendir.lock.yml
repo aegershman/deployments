@@ -11,8 +11,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Bump capi-k8s-release to 86f49fc65affed446e943915bea0f385e316dcbc
-      sha: d8245bd07135c8d21d771e09571b7f93247b64b8
+      commitTitle: 'CI: Downgrade newest supported k8s version...'
+      sha: 2948deb2ed24cb841a4e5d06585ee7a9b1bd44d4
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
@@ -35,8 +35,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Bump quarks-utils
-      sha: 152543146ab7764dddcb68043550db0ea3651f07
+      commitTitle: Update golangci-lint config
+      sha: 81bcfbc9ed04ec19c76738e34b63eec9bb1031af
     path: upstream
   path: cluster/build/quarks-secret/_vendir
 - contents:
