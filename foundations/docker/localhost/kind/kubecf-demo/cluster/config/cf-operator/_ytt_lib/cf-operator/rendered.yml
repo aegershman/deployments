@@ -1,202 +1,316 @@
 apiVersion: v1
-kind: ServiceAccount
+kind: Namespace
 metadata:
+  name: kubecf
   labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: controller
-  name: ingress-nginx
+    quarks.cloudfoundry.org/monitored: cfo
+    quarks.cloudfoundry.org/qjob-service-account: qjob-persist-output
 ---
 apiVersion: v1
-kind: ConfigMap
+kind: ServiceAccount
 metadata:
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: controller
-  name: ingress-nginx-controller
-data:
-  proxy-body-size: 64m
-  proxy-buffer-size: 16k
+  name: cf-operator-quarks-job
+  namespace: default
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: qjob-persist-output
+  namespace: kubecf
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cf-operator-quarks-secret
+  namespace: default
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cf-operator
+  namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-  name: ingress-nginx
+  creationTimestamp: null
+  name: cf-operator-quarks-job
 rules:
 - apiGroups:
-  - ""
+  - apiextensions.k8s.io
   resources:
-  - configmaps
-  - endpoints
-  - nodes
-  - pods
-  - secrets
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  verbs:
-  - get
-- apiGroups:
-  - ""
-  resources:
-  - services
-  verbs:
-  - get
-  - list
-  - update
-  - watch
-- apiGroups:
-  - extensions
-  - networking.k8s.io
-  resources:
-  - ingresses
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - events
+  - customresourcedefinitions
   verbs:
   - create
-  - patch
-- apiGroups:
-  - extensions
-  - networking.k8s.io
-  resources:
-  - ingresses/status
-  verbs:
-  - update
-- apiGroups:
-  - networking.k8s.io
-  resources:
-  - ingressclasses
-  verbs:
   - get
-  - list
-  - watch
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-  name: ingress-nginx
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: ingress-nginx
-subjects:
-- kind: ServiceAccount
-  name: ingress-nginx
-  namespace: ingress-nginx
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: controller
-  name: ingress-nginx
-rules:
+  - update
 - apiGroups:
   - ""
   resources:
   - namespaces
   verbs:
   - get
+  - list
+  - watch
 - apiGroups:
   - ""
   resources:
-  - configmaps
   - pods
+  verbs:
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
   - secrets
-  - endpoints
   verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - services
-  verbs:
+  - create
   - get
   - list
   - update
   - watch
 - apiGroups:
-  - extensions
-  - networking.k8s.io
+  - ""
   resources:
-  - ingresses
+  - events
   verbs:
+  - create
+  - patch
+  - update
+- apiGroups:
+  - quarks.cloudfoundry.org
+  resources:
+  - quarksjobs
+  verbs:
+  - delete
   - get
   - list
+  - update
   - watch
 - apiGroups:
-  - extensions
-  - networking.k8s.io
+  - quarks.cloudfoundry.org
   resources:
-  - ingresses/status
+  - quarksjobs/status
   verbs:
   - update
 - apiGroups:
-  - networking.k8s.io
+  - batch
   resources:
-  - ingressclasses
+  - jobs
   verbs:
+  - create
+  - delete
   - get
   - list
+  - update
   - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: qjob-persist-output
+rules:
 - apiGroups:
   - ""
   resources:
-  - configmaps
+  - pods
+  verbs:
+  - list
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - '*'
+- apiGroups:
+  - quarks.cloudfoundry.org
+  resources:
+  - quarksjobs
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: cf-operator-quarks-secret
+rules:
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  verbs:
+  - approve
+  - create
+  - delete
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - signers
   resourceNames:
-  - ingress-controller-leader-nginx-public
+  - kubernetes.io/legacy-unknown
   verbs:
+  - approve
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests/approval
+  verbs:
+  - create
+  - update
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - create
   - get
   - update
 - apiGroups:
   - ""
   resources:
-  - configmaps
+  - namespaces
   verbs:
-  - create
+  - get
+  - list
+  - watch
 - apiGroups:
   - ""
   resources:
-  - endpoints
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+  - update
+- apiGroups:
+  - quarks.cloudfoundry.org
+  resources:
+  - quarkssecrets
+  verbs:
+  - delete
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - quarks.cloudfoundry.org
+  resources:
+  - quarkssecrets/status
+  verbs:
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: cf-operator-cluster
+rules:
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  verbs:
+  - approve
+  - create
+  - delete
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - signers
+  resourceNames:
+  - kubernetes.io/legacy-unknown
+  verbs:
+  - approve
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - create
+  - delete
+  - list
+  - update
+  - watch
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests/approval
+  verbs:
+  - create
+  - update
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
   verbs:
   - create
   - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - validatingwebhookconfigurations
+  - mutatingwebhookconfigurations
+  verbs:
+  - create
+  - delete
   - update
 - apiGroups:
   - ""
@@ -205,304 +319,127 @@ rules:
   verbs:
   - create
   - patch
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: controller
-  name: ingress-nginx
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: ingress-nginx
-subjects:
-- kind: ServiceAccount
-  name: ingress-nginx
-  namespace: ingress-nginx
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: controller
-  name: ingress-nginx-controller-admission
-spec:
-  type: ClusterIP
-  ports:
-  - name: https-webhook
-    port: 443
-    targetPort: webhook
-  selector:
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/component: controller
----
-apiVersion: v1
-kind: Service
-metadata:
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: '*.gershman.io'
-    external-dns.alpha.kubernetes.io/ttl: "60"
-    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
-    service.beta.kubernetes.io/aws-load-balancer-internal: "false"
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: controller
-  name: ingress-nginx-controller
-spec:
-  type: LoadBalancer
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: http
-  - name: https
-    port: 443
-    protocol: TCP
-    targetPort: https
-  selector:
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/component: controller
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: controller
-  name: ingress-nginx-controller
-spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: ingress-nginx
-      app.kubernetes.io/instance: ingress-nginx
-      app.kubernetes.io/component: controller
-  replicas: 1
-  revisionHistoryLimit: 10
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 0
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/instance: ingress-nginx
-        app.kubernetes.io/component: controller
-    spec:
-      dnsPolicy: ClusterFirst
-      containers:
-      - name: controller
-        image: us.gcr.io/k8s-artifacts-prod/ingress-nginx/controller:v0.34.1@sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
-        imagePullPolicy: IfNotPresent
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /wait-shutdown
-        args:
-        - /nginx-ingress-controller
-        - --publish-service=ingress-nginx/ingress-nginx-controller
-        - --election-id=ingress-controller-leader
-        - --ingress-class=nginx-public
-        - --configmap=ingress-nginx/ingress-nginx-controller
-        - --validating-webhook=:8443
-        - --validating-webhook-certificate=/usr/local/certificates/cert
-        - --validating-webhook-key=/usr/local/certificates/key
-        securityContext:
-          capabilities:
-            drop:
-            - ALL
-            add:
-            - NET_BIND_SERVICE
-          runAsUser: 101
-          allowPrivilegeEscalation: true
-        env:
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 10254
-            scheme: HTTP
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 1
-          successThreshold: 1
-          failureThreshold: 5
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 10254
-            scheme: HTTP
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 1
-          successThreshold: 1
-          failureThreshold: 3
-        ports:
-        - name: http
-          containerPort: 80
-          protocol: TCP
-        - name: https
-          containerPort: 443
-          protocol: TCP
-        - name: webhook
-          containerPort: 8443
-          protocol: TCP
-        volumeMounts:
-        - name: webhook-cert
-          mountPath: /usr/local/certificates/
-          readOnly: true
-        resources:
-          requests:
-            cpu: 100m
-            memory: 90Mi
-      serviceAccountName: ingress-nginx
-      terminationGracePeriodSeconds: 300
-      volumes:
-      - name: webhook-cert
-        secret:
-          secretName: ingress-nginx-admission
----
-apiVersion: admissionregistration.k8s.io/v1beta1
-kind: ValidatingWebhookConfiguration
-metadata:
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: admission-webhook
-  name: ingress-nginx-admission
-webhooks:
-- name: validate.nginx.ingress.kubernetes.io
-  rules:
-  - apiGroups:
-    - extensions
-    - networking.k8s.io
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    resources:
-    - ingresses
-  failurePolicy: Fail
-  sideEffects: None
-  admissionReviewVersions:
-  - v1
-  - v1beta1
-  clientConfig:
-    service:
-      namespace: ingress-nginx
-      name: ingress-nginx-controller-admission
-      path: /extensions/v1beta1/ingresses
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: ingress-nginx-admission
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade,post-install,post-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: admission-webhook
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: ingress-nginx-admission
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade,post-install,post-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: admission-webhook
-rules:
+  - update
 - apiGroups:
-  - admissionregistration.k8s.io
+  - ""
   resources:
-  - validatingwebhookconfigurations
+  - pods
+  verbs:
+  - delete
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - configmaps
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
   verbs:
   - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - replicasets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - quarks.cloudfoundry.org
+  resources:
+  - quarksjobs
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - quarks.cloudfoundry.org
+  resources:
+  - boshdeployments
+  - quarksstatefulsets
+  - quarkssecrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - quarks.cloudfoundry.org
+  resources:
+  - boshdeployments/status
+  - quarkssecrets/status
+  - quarksstatefulsets/status
+  verbs:
+  - create
+  - patch
   - update
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ingress-nginx-admission
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade,post-install,post-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: admission-webhook
+  name: cf-operator-quarks-job
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ingress-nginx-admission
+  name: cf-operator-quarks-job
+  apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
-  name: ingress-nginx-admission
-  namespace: ingress-nginx
+  name: cf-operator-quarks-job
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cf-operator-quarks-secret
+roleRef:
+  kind: ClusterRole
+  name: cf-operator-quarks-secret
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: cf-operator-quarks-secret
+  namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: ingress-nginx-admission
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade,post-install,post-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: admission-webhook
+  creationTimestamp: null
+  name: cf-operator-webhook
+  namespace: default
 rules:
 - apiGroups:
   - ""
@@ -511,110 +448,233 @@ rules:
   verbs:
   - get
   - create
+  - update
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ingress-nginx-admission
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade,post-install,post-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: admission-webhook
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: ingress-nginx-admission
+  name: qjob-persist-output
+  namespace: kubecf
 subjects:
 - kind: ServiceAccount
-  name: ingress-nginx-admission
-  namespace: ingress-nginx
+  name: qjob-persist-output
+roleRef:
+  kind: ClusterRole
+  name: qjob-persist-output
+  apiGroup: rbac.authorization.k8s.io
 ---
-apiVersion: batch/v1
-kind: Job
+apiVersion: v1
+kind: Service
 metadata:
-  name: ingress-nginx-admission-create
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: admission-webhook
+  name: cf-operator-webhook
+  namespace: default
 spec:
+  selector:
+    name: cf-operator
+  ports:
+  - port: 443
+    targetPort: 2999
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cf-operator-quarks-job
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: quarks-job
   template:
     metadata:
-      name: ingress-nginx-admission-create
       labels:
-        helm.sh/chart: ingress-nginx-2.11.1
-        app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/instance: ingress-nginx
-        app.kubernetes.io/version: 0.34.1
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/component: admission-webhook
+        name: quarks-job
     spec:
+      serviceAccountName: cf-operator-quarks-job
       containers:
-      - name: create
-        image: docker.io/jettech/kube-webhook-certgen:v1.2.2
+      - name: quarks-job
+        image: cfcontainerization/quarks-job:v1.0.179
+        ports:
+        - containerPort: 60000
+          name: metrics
+        command:
+        - quarks-job
         imagePullPolicy: IfNotPresent
-        args:
-        - create
-        - --host=ingress-nginx-controller-admission,ingress-nginx-controller-admission.ingress-nginx.svc
-        - --namespace=ingress-nginx
-        - --secret-name=ingress-nginx-admission
-      restartPolicy: OnFailure
-      serviceAccountName: ingress-nginx-admission
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 2000
+        env:
+        - name: APPLY_CRD
+          value: "true"
+        - name: LOG_LEVEL
+          value: debug
+        - name: MAX_WORKERS
+          value: "1"
+        - name: CTX_TIMEOUT
+          value: "300"
+        - name: MELTDOWN_DURATION
+          value: "60"
+        - name: MELTDOWN_REQUEUE_AFTER
+          value: "30"
+        - name: MONITORED_ID
+          value: cfo
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: OPERATOR_NAME
+          value: quarks-job
+        - name: DOCKER_IMAGE_ORG
+          value: cfcontainerization
+        - name: DOCKER_IMAGE_REPOSITORY
+          value: quarks-job
+        - name: DOCKER_IMAGE_TAG
+          value: v1.0.179
+        - name: DOCKER_IMAGE_PULL_POLICY
+          value: IfNotPresent
 ---
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: ingress-nginx-admission-patch
-  annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-  labels:
-    helm.sh/chart: ingress-nginx-2.11.1
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: admission-webhook
+  name: cf-operator-quarks-secret
+  namespace: default
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: quarks-secret
   template:
     metadata:
-      name: ingress-nginx-admission-patch
       labels:
-        helm.sh/chart: ingress-nginx-2.11.1
-        app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/instance: ingress-nginx
-        app.kubernetes.io/version: 0.34.1
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/component: admission-webhook
+        name: quarks-secret
     spec:
+      serviceAccountName: cf-operator-quarks-secret
       containers:
-      - name: patch
-        image: docker.io/jettech/kube-webhook-certgen:v1.2.2
+      - name: quarks-secret
+        image: cfcontainerization/quarks-secret:v1.0.692
+        ports:
+        - containerPort: 60000
+          name: metrics
+        command:
+        - quarks-secret
         imagePullPolicy: IfNotPresent
-        args:
-        - patch
-        - --webhook-name=ingress-nginx-admission
-        - --namespace=ingress-nginx
-        - --patch-mutating=false
-        - --secret-name=ingress-nginx-admission
-        - --patch-failure-policy=Fail
-      restartPolicy: OnFailure
-      serviceAccountName: ingress-nginx-admission
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 2000
+        env:
+        - name: APPLY_CRD
+          value: "true"
+        - name: LOG_LEVEL
+          value: debug
+        - name: MAX_WORKERS
+          value: "1"
+        - name: CTX_TIMEOUT
+          value: "300"
+        - name: MELTDOWN_DURATION
+          value: "60"
+        - name: MELTDOWN_REQUEUE_AFTER
+          value: "30"
+        - name: MONITORED_ID
+          value: cfo
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: OPERATOR_NAME
+          value: quarks-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cf-operator
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: cf-operator
+  template:
+    metadata:
+      labels:
+        name: cf-operator
+    spec:
+      serviceAccountName: cf-operator
+      containers:
+      - name: cf-operator
+        image: cfcontainerization/cf-operator:v5.2.0-0.g22cafc90
+        ports:
+        - containerPort: 60000
+          name: metrics
+        - containerPort: 2999
+          name: webhook
+        command:
+        - cf-operator
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: APPLY_CRD
+          value: "true"
+        - name: BOSH_DNS_DOCKER_IMAGE
+          value: cfcontainerization/coredns:0.1.0-1.6.7-bp152.1.8
+        - name: CLUSTER_DOMAIN
+          value: cluster.local
+        - name: LOG_LEVEL
+          value: debug
+        - name: MONITORED_ID
+          value: cfo
+        - name: CF_OPERATOR_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CTX_TIMEOUT
+          value: "300"
+        - name: MELTDOWN_DURATION
+          value: "60"
+        - name: MELTDOWN_REQUEUE_AFTER
+          value: "30"
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: OPERATOR_NAME
+          value: cf-operator
+        - name: DOCKER_IMAGE_ORG
+          value: cfcontainerization
+        - name: DOCKER_IMAGE_REPOSITORY
+          value: cf-operator
+        - name: DOCKER_IMAGE_TAG
+          value: v5.2.0-0.g22cafc90
+        - name: DOCKER_IMAGE_PULL_POLICY
+          value: IfNotPresent
+        - name: CF_OPERATOR_WEBHOOK_SERVICE_PORT
+          value: "2999"
+        - name: CF_OPERATOR_WEBHOOK_USE_SERVICE_REFERENCE
+          value: "true"
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 2999
+            scheme: HTTPS
+          initialDelaySeconds: 2
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    name: cf-operator-cluster
+  subjects:
+  - kind: ServiceAccount
+    name: cf-operator
+    namespace: default
+  roleRef:
+    kind: ClusterRole
+    name: cf-operator-cluster
+    apiGroup: rbac.authorization.k8s.io
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: cf-operator-webhook
+    namespace: default
+  subjects:
+  - kind: ServiceAccount
+    name: cf-operator
+    namespace: default
+  roleRef:
+    kind: Role
+    name: cf-operator-webhook
+    apiGroup: rbac.authorization.k8s.io

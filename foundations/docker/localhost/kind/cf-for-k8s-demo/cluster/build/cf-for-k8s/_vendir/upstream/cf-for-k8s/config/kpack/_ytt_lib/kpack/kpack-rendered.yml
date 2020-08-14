@@ -87,6 +87,38 @@ spec:
     type: string
     JSONPath: .status.conditions[?(@.type=="Ready")].status
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: build-init-image
+  namespace: kpack
+data:
+  image: "gcr.io/cf-build-service-public/kpack/build-init@sha256:090bf83938b3a6e8559d566a816825035c3226a5b2b89710db3f2b9b8a0a218b"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rebase-image
+  namespace: kpack
+data:
+  image: "gcr.io/cf-build-service-public/kpack/rebase@sha256:68f116436c555fc655fb6cdf58a58b229dca6c64c46df730c01b0b2c995d24e3"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lifecycle-image
+  namespace: kpack
+data:
+  image: "gcr.io/cf-build-service-public/kpack/lifecycle@sha256:830f6026479a0b43bdc6ba3e942a80c7c5e49839e911ad5592c1e54933419d05"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: completion-image
+  namespace: kpack
+data:
+  image: "gcr.io/cf-build-service-public/kpack/completion@sha256:dd21b848f5ac7d1c844c780bb2b51596f5eadc300bee9bdc34cc912fa7d2ce9f"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -101,12 +133,12 @@ spec:
     metadata:
       labels:
         app: kpack-controller
-        version: 0.0.9-rc.41
+        version: dev
     spec:
       serviceAccountName: controller
       containers:
       - name: controller
-        image: gcr.io/cf-build-service-public/kpack/controller@sha256:6677501fb8073ddc6c61c9fb4bfd1427eb43ce3a06f9fb522ca2aff348ae6c90
+        image: "gcr.io/cf-build-service-public/kpack/controller@sha256:350e74b06c196070d4b256a9ab358aeb981cb55369d6933b89072d7625ec240a"
         env:
         - name: CONFIG_LOGGING_NAME
           value: config-logging
@@ -119,13 +151,25 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: BUILD_INIT_IMAGE
-          value: gcr.io/cf-build-service-public/kpack/build-init@sha256:386452ea690ed497b092977209079c3f310e6fdf94523387e517df97f7f64cb3
+          valueFrom:
+            configMapKeyRef:
+              name: build-init-image
+              key: image
         - name: REBASE_IMAGE
-          value: gcr.io/cf-build-service-public/kpack/rebase@sha256:61f91010e8b77eb6b0d28d69a417a7f597a3fb0d9b2d4e63980be3e64d76721e
+          valueFrom:
+            configMapKeyRef:
+              name: rebase-image
+              key: image
         - name: COMPLETION_IMAGE
-          value: gcr.io/cf-build-service-public/kpack/completion@sha256:de0f72cae50a8db095c6b97a17e7acc79004a5468b1d554b7cd2a9019e9cc807
+          valueFrom:
+            configMapKeyRef:
+              name: completion-image
+              key: image
         - name: LIFECYCLE_IMAGE
-          value: gcr.io/cf-build-service-public/kpack/lifecycle@sha256:8b0dea6d3ac03a2d4a2e6728e64ae0d6bf15bf619d4bfbe9ddd70e0fcd7909bc
+          valueFrom:
+            configMapKeyRef:
+              name: lifecycle-image
+              key: image
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -455,12 +499,12 @@ spec:
       labels:
         app: kpack-webhook
         role: webhook
-        version: 0.0.9-rc.41
+        version: dev
     spec:
       serviceAccountName: webhook
       containers:
       - name: webhook
-        image: gcr.io/cf-build-service-public/kpack/webhook@sha256:b57ef8d30ad548de39ee7105fe9f783c02ab181c2b80ef68cbd9b7a0bc66ac44
+        image: "gcr.io/cf-build-service-public/kpack/webhook@sha256:8abb7c72856ee1276a9586dd687a31e0d2ae12d54c98432ee749cd1e33c0d331"
         ports:
         - name: https-webhook
           containerPort: 8443

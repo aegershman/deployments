@@ -35,7 +35,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/bitnami/charts
-          ref: 80f79de9982afabc471e97f89c2f0852471b34e7 # 3.2.6
+          ref: be5b30d4b65794d63d36449fc6e8a912bdccbdda # 3.3.0
         includePaths:
           - bitnami/external-dns/**/*
   - path: cluster/build/harbor/_vendir

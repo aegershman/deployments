@@ -1,1 +1,366 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: yb-master-pdb
+spec:
+  maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: yb-master
 ---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: yb-tserver-pdb
+spec:
+  maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: yb-tserver
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yb-masters
+  labels:
+    app: yb-master
+    heritage: Helm
+    release: yugabyte
+    chart: yugabyte
+    component: yugabytedb
+    service-type: headless
+spec:
+  clusterIP: None
+  ports:
+  - name: rpc-port
+    port: 7100
+  - name: ui
+    port: 7000
+  selector:
+    app: yb-master
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yb-tservers
+  labels:
+    app: yb-tserver
+    heritage: Helm
+    release: yugabyte
+    chart: yugabyte
+    component: yugabytedb
+    service-type: headless
+spec:
+  clusterIP: None
+  ports:
+  - name: rpc-port
+    port: 7100
+  - name: ui
+    port: 9000
+  - name: ycql-metrics
+    port: 12000
+  - name: yedis-metrics
+    port: 11000
+  - name: yedis-port
+    port: 6379
+  - name: yql-port
+    port: 9042
+  - name: ysql-metrics
+    port: 13000
+  - name: ysql-port
+    port: 5433
+  selector:
+    app: yb-tserver
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: yb-master
+  namespace: default
+  labels:
+    app: yb-master
+    heritage: Helm
+    release: yugabyte
+    chart: yugabyte
+    component: yugabytedb
+spec:
+  serviceName: yb-masters
+  podManagementPolicy: Parallel
+  replicas: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir0
+      annotations:
+        volume.beta.kubernetes.io/storage-class: standard
+      labels:
+        heritage: Helm
+        release: yugabyte
+        chart: yugabyte
+        component: yugabytedb
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 2G
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  selector:
+    matchLabels:
+      app: yb-master
+  template:
+    metadata:
+      labels:
+        app: yb-master
+        heritage: Helm
+        release: yugabyte
+        chart: yugabyte
+        component: yugabytedb
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - yb-master
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: yb-master
+        image: yugabytedb/yugabyte:2.2.0.0-b80
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - sh
+              - -c
+              - |
+                mkdir -p /mnt/disk0/cores; mkdir -p /mnt/disk0/yb-data/scripts; if [ ! -f /mnt/disk0/yb-data/scripts/log_cleanup.sh ]; then
+                  if [ -f /home/yugabyte/bin/log_cleanup.sh ]; then
+                    cp /home/yugabyte/bin/log_cleanup.sh /mnt/disk0/yb-data/scripts;
+                  fi;
+                fi
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        resources:
+          limits:
+            cpu: 2
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        workingDir: /mnt/disk0
+        command:
+        - /home/yugabyte/bin/yb-master
+        - --fs_data_dirs=/mnt/disk0
+        - --rpc_bind_addresses=$(HOSTNAME).yb-masters.$(NAMESPACE).svc.cluster.local
+        - --server_broadcast_addresses=$(HOSTNAME).yb-masters.$(NAMESPACE).svc.cluster.local:7100
+        - --master_addresses= yb-master-0.yb-masters.$(NAMESPACE).svc.cluster.local:7100
+        - --replication_factor=1
+        - --enable_ysql=true
+        - --metric_node_name=$(HOSTNAME)
+        - --memory_limit_hard_bytes=1824522240
+        - --stderrthreshold=0
+        - --num_cpus=0
+        - --undefok=num_cpus,enable_ysql
+        - --default_memory_limit_to_ram_ratio=0.85
+        ports:
+        - containerPort: 7100
+          name: rpc-port
+        - containerPort: 7000
+          name: ui
+        volumeMounts:
+        - name: datadir0
+          mountPath: /mnt/disk0
+      - name: yb-cleanup
+        image: busybox:1.31
+        env:
+        - name: USER
+          value: yugabyte
+        command:
+        - /bin/sh
+        - -c
+        - |
+          mkdir /var/spool/cron; mkdir /var/spool/cron/crontabs; echo "0 * * * * /home/yugabyte/scripts/log_cleanup.sh" | tee -a /var/spool/cron/crontabs/root; crond; while true; do
+            sleep 86400;
+          done
+        volumeMounts:
+        - name: datadir0
+          mountPath: /home/yugabyte/
+          subPath: yb-data
+      volumes:
+      - name: datadir0
+        hostPath:
+          path: /mnt/disks/ssd0
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: yb-tserver
+  namespace: default
+  labels:
+    app: yb-tserver
+    heritage: Helm
+    release: yugabyte
+    chart: yugabyte
+    component: yugabytedb
+spec:
+  serviceName: yb-tservers
+  podManagementPolicy: Parallel
+  replicas: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir0
+      annotations:
+        volume.beta.kubernetes.io/storage-class: standard
+      labels:
+        heritage: Helm
+        release: yugabyte
+        chart: yugabyte
+        component: yugabytedb
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 2G
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  selector:
+    matchLabels:
+      app: yb-tserver
+  template:
+    metadata:
+      labels:
+        app: yb-tserver
+        heritage: Helm
+        release: yugabyte
+        chart: yugabyte
+        component: yugabytedb
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - yb-tserver
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: yb-tserver
+        image: yugabytedb/yugabyte:2.2.0.0-b80
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - sh
+              - -c
+              - |
+                mkdir -p /mnt/disk0/cores; mkdir -p /mnt/disk0/yb-data/scripts; if [ ! -f /mnt/disk0/yb-data/scripts/log_cleanup.sh ]; then
+                  if [ -f /home/yugabyte/bin/log_cleanup.sh ]; then
+                    cp /home/yugabyte/bin/log_cleanup.sh /mnt/disk0/yb-data/scripts;
+                  fi;
+                fi
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        resources:
+          limits:
+            cpu: 2
+            memory: 4Gi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        workingDir: /mnt/disk0
+        command:
+        - /home/yugabyte/bin/yb-tserver
+        - --fs_data_dirs=/mnt/disk0
+        - --server_broadcast_addresses=$(HOSTNAME).yb-tservers.$(NAMESPACE).svc.cluster.local:9100
+        - --rpc_bind_addresses=$(HOSTNAME).yb-tservers.$(NAMESPACE).svc.cluster.local
+        - --cql_proxy_bind_address=$(HOSTNAME).yb-tservers.$(NAMESPACE).svc.cluster.local
+        - --enable_ysql=true
+        - --pgsql_proxy_bind_address=$(POD_IP):5433
+        - --tserver_master_addrs= yb-master-0.yb-masters.$(NAMESPACE).svc.cluster.local:7100
+        - --metric_node_name=$(HOSTNAME)
+        - --memory_limit_hard_bytes=3649044480
+        - --stderrthreshold=0
+        - --num_cpus=0
+        - --undefok=num_cpus,enable_ysql
+        - --use_cassandra_authentication=false
+        ports:
+        - containerPort: 7100
+          name: rpc-port
+        - containerPort: 9000
+          name: ui
+        - containerPort: 12000
+          name: ycql-metrics
+        - containerPort: 11000
+          name: yedis-metrics
+        - containerPort: 6379
+          name: yedis-port
+        - containerPort: 9042
+          name: yql-port
+        - containerPort: 13000
+          name: ysql-metrics
+        - containerPort: 5433
+          name: ysql-port
+        volumeMounts:
+        - name: datadir0
+          mountPath: /mnt/disk0
+      - name: yb-cleanup
+        image: busybox:1.31
+        env:
+        - name: USER
+          value: yugabyte
+        command:
+        - /bin/sh
+        - -c
+        - |
+          mkdir /var/spool/cron; mkdir /var/spool/cron/crontabs; echo "0 * * * * /home/yugabyte/scripts/log_cleanup.sh" | tee -a /var/spool/cron/crontabs/root; crond; while true; do
+            sleep 86400;
+          done
+        volumeMounts:
+        - name: datadir0
+          mountPath: /home/yugabyte/
+          subPath: yb-data
+      volumes:
+      - name: datadir0
+        hostPath:
+          path: /mnt/disks/ssd0

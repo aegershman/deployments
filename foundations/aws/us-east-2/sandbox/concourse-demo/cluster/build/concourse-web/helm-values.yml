@@ -12,12 +12,12 @@ web:
     annotations:
       kubernetes.io/ingress.class: nginx-public
     hosts:
-      - concourse.gershman.io
+      - concourse.ci.gershman.io
 
 concourse:
   web:
-    clusterName: aegershman-example-1
-    externalUrl: http://concourse.gershman.io
+    clusterName: concourse-ci-gershman-io
+    externalUrl: http://concourse.ci.gershman.io
     kubernetes:
       enabled: false
 

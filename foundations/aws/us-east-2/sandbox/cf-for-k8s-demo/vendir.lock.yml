@@ -19,8 +19,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: '[bitnami/external-dns] Release 3.2.6 updating components versions...'
-      sha: 80f79de9982afabc471e97f89c2f0852471b34e7
+      commitTitle: external-dns infoblox provider additional parameter (#3397)...
+      sha: be5b30d4b65794d63d36449fc6e8a912bdccbdda
     path: upstream
   path: cluster/build/external-dns/_vendir
 - contents:

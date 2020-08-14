@@ -5,7 +5,7 @@ directories:
     path: manual
   - git:
       commitTitle: bump chart version
-      sha: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78
+      sha: 31ff9fa5f2b456e203c322696c2e6ad1ded88dd1
     path: upstream
   path: cluster/build/concourse-web/_vendir
 - contents:
@@ -13,23 +13,23 @@ directories:
     path: manual
   - git:
       commitTitle: bump chart version
-      sha: c8c5d75c59abf91e3650579c8fe3ccc48dfc2b78
+      sha: 31ff9fa5f2b456e203c322696c2e6ad1ded88dd1
     path: upstream
   path: cluster/build/concourse-workers/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: '[bitnami/external-dns] Release 3.2.4 updating components versions...'
-      sha: a0d9242d3aa21296ffe0584e5eda478bcc961ea7
+      commitTitle: external-dns infoblox provider additional parameter (#3397)...
+      sha: be5b30d4b65794d63d36449fc6e8a912bdccbdda
     path: upstream
   path: cluster/build/external-dns/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Release helm chart for v0.34.1
-      sha: 1d250bcbd99d2baa786df0c7a5537c852eab33b5
+      commitTitle: Bump chart patch version
+      sha: e5e963bcdb9a5fb2d0d9408734cefaec859d2c31
     path: upstream
   path: cluster/build/ingress-nginx/_vendir
 - contents:

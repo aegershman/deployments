@@ -4,8 +4,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Bump capi-k8s-release to bb40b9d67db1c3d150791d773752d1d788cdef91
-      sha: 5016da8f1ab0b90d1e626109897801301f01b4d1
+      commitTitle: Bump capi-k8s-release to 86f49fc65affed446e943915bea0f385e316dcbc
+      sha: d8245bd07135c8d21d771e09571b7f93247b64b8
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
@@ -20,8 +20,9 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'feat: Add support for deploying rabbitmq (#82)...'
-      sha: 95ea5724ff5ff46079d103e610c3921d4280ee22
+      commitTitle: 'feat: Allow for overriding user-specified provisioning params
+        with default values (#93)...'
+      sha: 6b728e3e6790c2a2bc3ea941b8a02285ef7a53ea
     path: upstream
   path: cluster/build/minibroker/_vendir
 - contents:

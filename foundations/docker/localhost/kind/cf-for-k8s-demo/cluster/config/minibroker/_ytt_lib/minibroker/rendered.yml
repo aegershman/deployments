@@ -1,1 +1,189 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: minibroker
+  labels:
+    app: minibroker-minibroker
+    chart: minibroker-0.0.0
+    release: minibroker
+    heritage: Helm
+  annotations: null
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minibroker-provisioning-settings
+  namespace: default
+data:
+  provisioning-settings.yaml: |
+    mariadb: {}
+    mongodb: {}
+    mysql: {}
+    postgresql: {}
+    rabbitmq: {}
+    redis: {}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: minibroker-minibroker
+  labels:
+    app: minibroker-minibroker
+    chart: minibroker-0.0.0
+    release: minibroker
+    heritage: Helm
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - limitranges
+  - persistentvolumeclaims
+  - pods
+  - podtemplates
+  - replicationcontrollers
+  - resourcequotas
+  - secrets
+  - serviceaccounts
+  - services
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - apps
+  - autoscaling
+  - batch
+  - networking.k8s.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - rolebindings
+  - roles
+  verbs:
+  - '*'
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: minibroker
+  labels:
+    app: minibroker-minibroker
+    chart: minibroker-0.0.0
+    release: minibroker
+    heritage: Helm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: minibroker-minibroker
+subjects:
+- kind: ServiceAccount
+  name: minibroker
+  namespace: default
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: minibroker-minibroker
+  labels:
+    app: minibroker-minibroker
+    chart: minibroker-0.0.0
+    release: minibroker
+    heritage: Helm
+spec:
+  selector:
+    app: minibroker-minibroker
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: broker
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minibroker-minibroker
+  labels:
+    app: minibroker-minibroker
+    chart: minibroker-0.0.0
+    release: minibroker
+    heritage: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: null
+  selector:
+    matchLabels:
+      app: minibroker-minibroker
+  template:
+    metadata:
+      labels:
+        app: minibroker-minibroker
+        chart: minibroker-0.0.0
+        release: minibroker
+        heritage: Helm
+    spec:
+      serviceAccountName: minibroker
+      containers:
+      - name: minibroker
+        image: quay.io/kubernetes-service-catalog/minibroker:canary
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+        args:
+        - minibroker
+        - --service-catalog-enabled-only
+        - -defaultNamespace
+        - minibroker
+        - --port
+        - "8080"
+        - -v
+        - "3"
+        - -logtostderr
+        - --provisioningSettings
+        - /minibroker/provisioning-settings.yaml
+        ports:
+        - name: broker
+          containerPort: 8080
+        env:
+        - name: CONFIG_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 15
+          failureThreshold: 2
+        volumeMounts:
+        - name: provisioning-settings
+          mountPath: /minibroker
+          readOnly: true
+      volumes:
+      - name: provisioning-settings
+        configMap:
+          name: minibroker-provisioning-settings

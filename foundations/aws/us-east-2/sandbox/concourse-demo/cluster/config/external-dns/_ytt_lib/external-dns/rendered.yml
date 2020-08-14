@@ -4,7 +4,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.3.0
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 ---
@@ -14,7 +14,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.3.0
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -42,6 +42,7 @@ rules:
   - networking.istio.io
   resources:
   - gateways
+  - virtualservices
   verbs:
   - get
   - list
@@ -68,7 +69,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.3.0
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 roleRef:
@@ -86,7 +87,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.3.0
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -106,7 +107,7 @@ metadata:
   name: external-dns
   labels:
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.2.4
+    helm.sh/chart: external-dns-3.3.0
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -119,10 +120,11 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: external-dns
-        helm.sh/chart: external-dns-3.2.4
+        helm.sh/chart: external-dns-3.3.0
         app.kubernetes.io/instance: external-dns
         app.kubernetes.io/managed-by: Helm
-      annotations: null
+      annotations:
+        gershman.io/purpose: none
     spec:
       securityContext:
         fsGroup: 1001
@@ -130,12 +132,11 @@ spec:
       serviceAccountName: external-dns
       containers:
       - name: external-dns
-        image: docker.io/bitnami/external-dns:0.7.2-debian-10-r46
+        image: docker.io/bitnami/external-dns:0.7.3-debian-10-r0
         imagePullPolicy: IfNotPresent
         args:
         - --log-level=info
         - --log-format=text
-        - --dry-run
         - --policy=sync
         - --provider=aws
         - --registry=txt

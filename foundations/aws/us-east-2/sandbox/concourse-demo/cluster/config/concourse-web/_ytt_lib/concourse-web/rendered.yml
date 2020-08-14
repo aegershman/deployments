@@ -4,7 +4,7 @@ metadata:
   name: concourse-web-web
   labels:
     app: concourse-web-web
-    chart: concourse-11.4.0
+    chart: concourse-11.4.1
     heritage: Helm
     release: concourse-web
 ---
@@ -14,7 +14,7 @@ metadata:
   name: concourse-web-web
   labels:
     app: concourse-web-web
-    chart: concourse-11.4.0
+    chart: concourse-11.4.1
     release: concourse-web
     heritage: Helm
 type: Opaque
@@ -30,7 +30,7 @@ metadata:
   name: concourse-web-worker
   labels:
     app: concourse-web-worker
-    chart: concourse-11.4.0
+    chart: concourse-11.4.1
     release: concourse-web
     heritage: Helm
 data:
@@ -45,7 +45,7 @@ metadata:
   name: concourse-web-web
   labels:
     app: concourse-web-web
-    chart: concourse-11.4.0
+    chart: concourse-11.4.1
     release: concourse-web
     heritage: Helm
 spec:
@@ -63,7 +63,7 @@ metadata:
   name: concourse-web-web-worker-gateway
   labels:
     app: concourse-web-web
-    chart: concourse-11.4.0
+    chart: concourse-11.4.1
     release: concourse-web
     heritage: Helm
 spec:
@@ -81,7 +81,7 @@ metadata:
   name: concourse-web-web
   labels:
     app: concourse-web-web
-    chart: concourse-11.4.0
+    chart: concourse-11.4.1
     release: concourse-web
     heritage: Helm
 spec:
@@ -96,19 +96,19 @@ spec:
         app: concourse-web-web
         release: concourse-web
       annotations:
-        checksum/secrets: 29f482887c5f028c9df2d59537365734b54f12ad348e49eae0ac2f714ab8727e
+        checksum/secrets: 8537d0c370c93f44b477c29fbc7d5cb15c4d830978c0e55c45a96110d55ce1fc
         checksum/config: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     spec:
       serviceAccountName: concourse-web-web
       containers:
       - name: concourse-web-web
-        image: concourse/concourse:6.4.0
+        image: concourse/concourse:6.4.1
         imagePullPolicy: IfNotPresent
         args:
         - web
         env:
         - name: CONCOURSE_CLUSTER_NAME
-          value: aegershman-example-1
+          value: concourse-ci-gershman-io
         - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
           value: "true"
         - name: CONCOURSE_SECRET_RETRY_ATTEMPTS
@@ -127,7 +127,7 @@ spec:
               name: concourse-web-web
               key: local-users
         - name: CONCOURSE_EXTERNAL_URL
-          value: http://concourse.gershman.io
+          value: http://concourse.ci.gershman.io
         - name: CONCOURSE_DEBUG_BIND_IP
           value: 127.0.0.1
         - name: CONCOURSE_DEBUG_BIND_PORT
@@ -245,14 +245,14 @@ metadata:
   name: concourse-web-web
   labels:
     app: concourse-web-web
-    chart: concourse-11.4.0
+    chart: concourse-11.4.1
     release: concourse-web
     heritage: Helm
   annotations:
     kubernetes.io/ingress.class: nginx-public
 spec:
   rules:
-  - host: concourse.gershman.io
+  - host: concourse.ci.gershman.io
     http:
       paths:
       - backend:
