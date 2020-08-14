@@ -1,12 +1,13 @@
+---
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: concourse-workers-worker
   labels:
     app: concourse-workers-worker
     chart: concourse-11.4.1
-    release: concourse-workers
     heritage: Helm
+    release: concourse-workers
+  name: concourse-workers-worker
 spec:
   minAvailable: 1
   selector:
@@ -16,122 +17,108 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: concourse-workers-worker
   labels:
     app: concourse-workers-worker
     chart: concourse-11.4.1
     heritage: Helm
     release: concourse-workers
+  name: concourse-workers-worker
 ---
 apiVersion: v1
-kind: Secret
-metadata:
-  name: concourse-workers-worker
-  labels:
-    app: concourse-workers-worker
-    chart: concourse-11.4.1
-    release: concourse-workers
-    heritage: Helm
-type: Opaque
 data:
   host-key-pub: c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFEWUJROWZHNklNTCtxc0ZhTWgxUGwrODF3eVV3UmlsSGRmaEl0QWlBc0xWUXNPd0k1K1Y0cG41YUxoSFBCdVJRcUlxWW1ia1o3STFWVUlOMSs5MFBWSjNYN2w5cXFhbmI4NUFITXRMdWp3MWo5dTB6RHlIMlhIZ3BVbG9rblVRelVTTElaampVM0huM1VvL1hpa0YrdlQ4MTA0aXNPN1ltOFhwN3NJY1J1dk9RM251UnNGVkNSb2d4cExUVkhEL2s1N3J3WVZxV1dMYUtMd3Z4MDFaVlhPcTRHSGsvQlZhS2E5T0RDL2ROZ2JaTWZ3dlZWWHVmNy9ORkdtU015WGI0OVNpNGFvUDRHbjdqQVg2R25nQmJtL2JnS3FPMHNrUXkvZ2dRbS9ZVkYrczVxNEVobGVNQkxWSktEMVZwTTVMZUxERnBpdS95NGJWZDh3VWNnSytRUTkgQ29uY291cnNl
   worker-key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBdVBlaFVtQlhBUUNvQTdUTEFRQ1loZit2emNaVnlqK1ZHWG5NaExIbldMazdkUmpvCkNVOEdnTmFtZFM1aDdHM3l3eE92S0EzWWpPTHI4WHlPTUxTNGMrZThON3RJemxNV2RpWGhlMGxjQkg5WjFhaTUKK0JvZjMvQmxEVUJrc2lLZGMxQStRY2ZYNnREd01rT081cmUxSDR2T0szSC9DeXBlNTh3Q0IwM0hZTmdiMDVFRApmVzFCajJxdnoyOVZ0bXlqd0VNdURzMTAwaU1xd0NmUFV4OW94WG1tWDhzVUJSbXcvWTFSeC84cGRLSWpLdzNtCmtXSUhIQk9TQ1BpbU8xcUM0N0FhOHYvVUg5aEVSQ3lreXVGSGlCaUtsbkl2WldtOWJZdmhzUlR6NGd0NUt6UlkKNk9JMG9WZUhsTE9IRFNLNDhEYThWV2lqMTVsT3FPMk54Nldzc1FJREFRQUJBb0lCQURFVDIyVU5GT2k2TU5wUwo1UzVONXlwZXpsbk9EME5MblpjVjN6TXlOUTB3a05zZ0Vha3VvNjRaeGk3L2NKSVlGanEyaFZvZVdsLy9jZFV3ClZGWU9EWWNMYk1CbzNBZUt1a0g5Q1JmNlBnVWZlVW1jckVOdFF4bmJJaVRpK2hUZDVHTU5Yb2Q3ckFtdENKNTkKbUhRVk9HUzNacXZXWW5LbSttbU1rdGszUlBpbnluWC9BNHkzV0hQYWN1QVM1OEhNMDlDazQzV2NITXhiR3BzTAovZ1pwSUN5RllaMkR2aU0rQUh5V0djbXc3TEpycEMwUUhvNitCQUZNczR4bFVlY05nVklGVXBmT29BY2ZzZHRHCks5ajRBYnVaNDdpRmlzYmF5KzFweWcvN081ZVJUZEdWUVJ0YzdQQk1PamVhNWpHc2ZtbERtZG4xWlM1MHlrdW4KQU5mb1E1VUNnWUVBOUFrNzNQUnk5bkxsUmt0NE9CQ0YvNGZ3VGhVQ01lZHNuV2FWalFCTUpZaW00RkIyaXZGNQpjS2RXdDN5L1JaSTg1S0tZdTBFWGhMRW9TSUVBZnowNTdSOHQzUWRWSzR0Wng2QjQ3VUZqQmpDWWVWTXR3SERRCnByeFFpT1BISUhDcGxCTkZ1R3pBNVZYTDlnUUxSRCtlazB1T3kyR0pKMFd1MXh5ZW91SStTVzhDZ1lFQXdna08KVE90T29ncW1jQUFMaldnZWVRaVpldGZsU0tiSmxwUU5obUNQQU1tMFNGSThlRjRTcFJYTHpkNDFWQzJtTEl3VApMM3RqYzcvOG9jWG9FbEZNNEwwZm85THgvU0hGSDRKRW41RlQwUFhQbXZzRjJKUmhzWEpGTEpTaWh4Ri85MVhzCjJhQmNRSUxQRnpMY3JJNk9GVWFrTndHVFUvQ0l4cGt6UnZRckc5OENnWUVBek5WblV1bzRDTmFkemFnUkszWHIKRTNZbDVWUksrRnBZMTdGQWZBNncyNXhjL2RGci91bjYxZTBQbzRuby9sdG1FejdMVmZtbjVPL1NjVEVlbXE1bwpqYmpyQlNoZmUrSkdwSUgwbnFpUWxxUjVodlNqWlhFTUliZlZIV0diUllaclFHZ0EwSEV3WkE3azJRWEI4ekkzClIwbFhmU3pNTTVPUTB1d3AxMnh4ZmE4Q2dZQkhJTHExUjZ6VGljUHBXcHJoZzBGb2JOYVdTWDRyVzdpYUVqdkMKL3JKdFA0TnUzM1o3U1VEY2MxajZabkoySVNYQlByZnB0L21FL09QSENaMUEyYnlzeGFkTGpwQldrb0tJUW1DVgpmZGlUeVFnSmIrdDhzU2YrdkR6UFVzMGhaakRhb2d6bzJmZjNUZnhNTE1Eb0lIbkZJdGdmc2R3bjhReXlnSVpqCmhDNHBVUUtCZ1FEcXN4bmtJNnlYRkU1Z3Noblc3SDh6cUtObHpLZC9kWkVMNmUrbFJ6NFIzVVkvS2NFa1JBZnEKWWkzY3dvOWZFM1Uza1NtcGw1TVF3VWpXbS9CWjdKeXVlb1kvNG5kd2FGUGdjMzRJS3NnSjB3YXU5cFppUUFCMQpEeHBPU0YrQlI3MUp4M3N4dklkQ09ETlR0bTY0NWo1eXJaVm5KQXVNUG9mbzVYRm11bkRvSkE9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQ==
----
-apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
-  name: concourse-workers-worker
   labels:
     app: concourse-workers-worker
     chart: concourse-11.4.1
-    release: concourse-workers
     heritage: Helm
+    release: concourse-workers
+  name: concourse-workers-worker
+type: Opaque
+---
+apiVersion: v1
 data:
   pre-stop-hook.sh: |
     #!/bin/bash
     kill -s SIGUSR2 1
     while [ -e /proc/1 ]; do sleep 1; done
+kind: ConfigMap
+metadata:
+  labels:
+    app: concourse-workers-worker
+    chart: concourse-11.4.1
+    heritage: Helm
+    release: concourse-workers
+  name: concourse-workers-worker
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: concourse-workers-worker
   labels:
     app: concourse-workers-worker
     chart: concourse-11.4.1
-    release: concourse-workers
     heritage: Helm
+    release: concourse-workers
+  name: concourse-workers-worker
 spec:
-  type: ClusterIP
   clusterIP: None
   ports: []
   selector:
     app: concourse-workers-worker
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: concourse-workers-worker
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: 6.4.1
+          Type: resolved
+          URL: concourse/concourse:6.4.1
+        URL: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
+      - Metas:
+        - Tag: 6.4.1
+          Type: resolved
+          URL: concourse/concourse:6.4.1
+        URL: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
   labels:
     app: concourse-workers-worker
     chart: concourse-11.4.1
-    release: concourse-workers
     heritage: Helm
+    release: concourse-workers
+  name: concourse-workers-worker
 spec:
-  serviceName: concourse-workers-worker
+  podManagementPolicy: Parallel
   replicas: 1
   selector:
     matchLabels:
       app: concourse-workers-worker
       release: concourse-workers
+  serviceName: concourse-workers-worker
   template:
     metadata:
+      annotations:
+        checksum/secrets: d87da4ecda033b3b754713643b27cc12b2a5c38e4e116325f55746fa4deade1f
       labels:
         app: concourse-workers-worker
         release: concourse-workers
-      annotations:
-        checksum/secrets: d87da4ecda033b3b754713643b27cc12b2a5c38e4e116325f55746fa4deade1f
     spec:
-      serviceAccountName: concourse-workers-worker
-      terminationGracePeriodSeconds: 60
-      initContainers:
-      - name: concourse-workers-worker-init-rm
-        image: concourse/concourse:6.4.1
-        imagePullPolicy: IfNotPresent
-        securityContext:
-          privileged: true
-        command:
-        - /bin/bash
-        args:
-        - -ce
-        - |-
-          for v in $((btrfs subvolume list --sort=-ogen "/concourse-work-dir" || true) | awk '{print $9}'); do
-            (btrfs subvolume show "/concourse-work-dir/$v" && btrfs subvolume delete "/concourse-work-dir/$v") || true
-          done
-          rm -rf "/concourse-work-dir/*"
-        volumeMounts:
-        - name: concourse-work-dir
-          mountPath: /concourse-work-dir
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: concourse-workers-worker
+                  release: concourse-workers
+              topologyKey: kubernetes.io/hostname
+            weight: 100
       containers:
-      - name: concourse-workers-worker
-        image: concourse/concourse:6.4.1
-        imagePullPolicy: IfNotPresent
-        args:
+      - args:
         - worker
-        livenessProbe:
-          failureThreshold: 5
-          httpGet:
-            path: /
-            port: worker-hc
-          initialDelaySeconds: 10
-          periodSeconds: 15
-          timeoutSeconds: 3
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/bash
-              - /pre-stop-hook.sh
         env:
         - name: CONCOURSE_SWEEP_INTERVAL
           value: 30s
@@ -183,9 +170,26 @@ spec:
           value: "5"
         - name: CONCOURSE_CONTAINER_SWEEPER_MAX_IN_FLIGHT
           value: "5"
+        image: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/bash
+              - /pre-stop-hook.sh
+        livenessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /
+            port: worker-hc
+          initialDelaySeconds: 10
+          periodSeconds: 15
+          timeoutSeconds: 3
+        name: concourse-workers-worker
         ports:
-        - name: worker-hc
-          containerPort: 8888
+        - containerPort: 8888
+          name: worker-hc
         resources:
           requests:
             cpu: 100m
@@ -193,37 +197,49 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - name: concourse-keys
-          mountPath: /concourse-keys
+        - mountPath: /concourse-keys
+          name: concourse-keys
           readOnly: true
-        - name: concourse-work-dir
-          mountPath: /concourse-work-dir
-        - name: pre-stop-hook
-          mountPath: /pre-stop-hook.sh
+        - mountPath: /concourse-work-dir
+          name: concourse-work-dir
+        - mountPath: /pre-stop-hook.sh
+          name: pre-stop-hook
           subPath: pre-stop-hook.sh
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchLabels:
-                  app: concourse-workers-worker
-                  release: concourse-workers
+      initContainers:
+      - args:
+        - -ce
+        - |-
+          for v in $((btrfs subvolume list --sort=-ogen "/concourse-work-dir" || true) | awk '{print $9}'); do
+            (btrfs subvolume show "/concourse-work-dir/$v" && btrfs subvolume delete "/concourse-work-dir/$v") || true
+          done
+          rm -rf "/concourse-work-dir/*"
+        command:
+        - /bin/bash
+        image: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
+        imagePullPolicy: IfNotPresent
+        name: concourse-workers-worker-init-rm
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /concourse-work-dir
+          name: concourse-work-dir
+      serviceAccountName: concourse-workers-worker
+      terminationGracePeriodSeconds: 60
       volumes:
-      - name: pre-stop-hook
-        configMap:
+      - configMap:
           name: concourse-workers-worker
+        name: pre-stop-hook
       - name: concourse-keys
         secret:
-          secretName: concourse-workers-worker
           defaultMode: 256
           items:
           - key: host-key-pub
             path: host_key.pub
           - key: worker-key
             path: worker_key
+          secretName: concourse-workers-worker
+  updateStrategy:
+    type: RollingUpdate
   volumeClaimTemplates:
   - metadata:
       name: concourse-work-dir
@@ -234,6 +250,3 @@ spec:
         requests:
           storage: 2Gi
       storageClassName: gp2
-  updateStrategy:
-    type: RollingUpdate
-  podManagementPolicy: Parallel

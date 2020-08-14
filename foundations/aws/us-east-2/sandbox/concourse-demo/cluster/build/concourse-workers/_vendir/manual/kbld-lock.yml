@@ -1,0 +1,7 @@
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.24.0
+overrides:
+- image: concourse/concourse:6.4.1
+  newImage: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
+  preresolved: true
