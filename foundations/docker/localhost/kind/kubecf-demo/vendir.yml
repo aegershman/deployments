@@ -10,10 +10,10 @@ directories:
       - path: upstream
         githubRelease:
           slug: cloudfoundry-incubator/quarks-operator
-          tag: v5.1.0
+          tag: v5.2.0
           disableAutoChecksumValidation: true
           unpackArchive:
-            path: cf-operator-5.1.0+0.ga696f719.tgz
+            path: cf-operator-5.2.0+0.g22cafc90.tgz
   - path: cluster/build/ingress-nginx/_vendir
     contents:
       - path: manual
@@ -21,7 +21,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/kubernetes/ingress-nginx
-          ref: 1d250bcbd99d2baa786df0c7a5537c852eab33b5 # 2.11.1
+          ref: e5e963bcdb9a5fb2d0d9408734cefaec859d2c31 # 2.11.2
         includePaths:
           - charts/ingress-nginx/**/*
         excludePaths:

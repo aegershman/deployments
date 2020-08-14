@@ -4,7 +4,12 @@ set -e
 
 case "$1" in
 build)
-  exit 1
+  for b in ./cluster/build/*; do
+    pushd "${b}"
+    echo "in ${b}..."
+    ./build.sh
+    popd
+  done
   ;;
 
 a | apply)
