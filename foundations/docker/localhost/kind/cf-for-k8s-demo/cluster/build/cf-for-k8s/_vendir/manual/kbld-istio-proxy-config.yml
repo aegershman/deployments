@@ -1,0 +1,28 @@
+---
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.24.0
+searchRules:
+  - keyMatcher:
+      path: [data, values]
+    updateStrategy:
+      json:
+        searchRules:
+          - keyMatcher:
+              path: [global, proxy, image]
+            imageMatcher:
+              image: {}
+          - keyMatcher:
+              path: [global, proxy_init, image]
+            imageMatcher:
+              image: {}
+
+overrides:
+  # used to ensure the images hidden within istio are locked down to a specific tag
+  # but it does require knowing the image tag in advance; luckily we can pull that information
+  # from what gets resolved automatically by kbld in kbld-lock.yml during the first pass, but
+  # it does make things a littttle less seamless
+  - image: proxyv2
+    # manually basing this off of the proxyv2 image in kbld-lock.yml
+    newImage: gcr.io/cf-routing/proxyv2@sha256:0671300037c5d706f20f01ebc4e403f44fff648245b5e121851c81a389b9ea0f
+    preresolved: true

@@ -26,7 +26,10 @@ diff)
     -f ${SCRIPT_DIR}/_vendir/upstream/cf-for-k8s/config-optional/add-metrics-server-components.yml \
     -f ${SCRIPT_DIR}/_vendir/upstream/cf-for-k8s/config-optional/patch-metrics-server.yml \
     -f ${SCRIPT_DIR}/cf-values-generated.yml \
-    -f ${SCRIPT_DIR}/cf-registry-values.yml \
-    >"${SCRIPT_DIR}/../../config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml"
+    -f ${SCRIPT_DIR}/cf-registry-values.yml |
+    kbld \
+      -f "${SCRIPT_DIR}/_vendir/manual/kbld-istio-proxy-config.yml" \
+      -f - --lock-output="${SCRIPT_DIR}/_vendir/manual/kbld-lock.yml" \
+      >"${SCRIPT_DIR}/../../config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml"
   ;;
 esac
