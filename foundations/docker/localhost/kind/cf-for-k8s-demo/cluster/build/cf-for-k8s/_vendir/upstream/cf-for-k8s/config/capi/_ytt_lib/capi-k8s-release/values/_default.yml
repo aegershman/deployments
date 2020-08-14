@@ -74,11 +74,13 @@ blobstore:
   region: ""
   resource_directory_key: cc-resources
   secret_access_key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  secret_access_key_secret_name:
 ccdb:
   adapter: postgres
   database: cloud_controller
   host: capi-database-postgresql
   password: cloud_controller
+  password_secret_name:
   port: 5432
   user: cloud_controller
   ca_cert: null
@@ -103,15 +105,16 @@ system_domain: cf-system.svc.cluster.local
 system_namespace: cf-system
 uaa:
   clients:
-    capi_kpack_watcher:
+    cf_api_controllers:
       secret: supers3cret
     cloud_controller_username_lookup:
       secret: supers3cret
+      secret_name:
   serverCerts:
     secretName: null
 workloads_namespace: cf-workloads
 images:
-  capi_kpack_watcher:
+  cf_api_controllers:
   ccng:
   cf_autodetect_builder:
   nginx:
