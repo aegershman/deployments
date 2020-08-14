@@ -9,7 +9,8 @@ case "$1" in
   echo "generating kubecf resource definitions..."
   helm template kubecf "${SCRIPT_DIR}/_vendir/upstream/kubecf" \
     --values="${SCRIPT_DIR}/helm-values.yml" |
-    ytt --ignore-unknown-comments -f - \
+    ytt --ignore-unknown-comments -f - |
+    kbld -f - --lock-output="${SCRIPT_DIR}/_vendir/manual/kbld-lock.yml" \
       >"${SCRIPT_DIR}/../../config/kubecf/_ytt_lib/kubecf/rendered.yml"
   ;;
 esac
