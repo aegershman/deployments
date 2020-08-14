@@ -412,7 +412,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 type: Opaque
 stringData:
-  password: BGQkojGOFg9NbTqcb7aJHPJnsjHwTPc1
+  password: DJuLfIVjggCvjAvubJfSU0OxMIV7D4Q2
 ---
 apiVersion: v1
 kind: Secret
