@@ -1,0 +1,7 @@
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.24.0
+overrides:
+- image: docker.io/cfcontainerization/pxc:0.9.11
+  newImage: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
+  preresolved: true

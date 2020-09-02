@@ -1,22 +1,28 @@
 ---
 system_domain: kubecf.vcap.me
+
+# List of stacks to install; the first one will be used as the default.
+# A stack is a prebuilt root file system that supports a specific
+# operating system with a corresponding set of buildpacks.
+install_stacks: [sle15, cflinuxfs3]
+
 features:
   eirini:
-    enabled: true
+    enabled: false
   ingress:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
-  suse_default_stack:
-    enabled: true
-  suse_buildpacks:
-    enabled: true
   credhub:
     # Enable credhub; this is only used as a service broker for applications, and is not used for
     # authentication with the Cloud Foundry deployment.
     enabled: false
   # Disabling routing_api will also disable the tcp_router instance_group
   routing_api:
+    enabled: false
+
+testing:
+  smoke_tests:
     enabled: false
 
 eirini:
