@@ -89,18 +89,6 @@ logcache:
   port: 8080
   temporary_ignore_server_unavailable_errors: true
 
-logcache_tls:
-  #@ if data.values.metric_proxy.cert.secret_name:
-  ca_file: "/config/metric_proxy/ca/tls.crt"
-  cert_file: "/config/metric_proxy/certs/tls.crt"
-  key_file: "/config/metric_proxy/certs/tls.key"
-  #@ else:
-  ca_file: "/dev/null"
-  cert_file: "/dev/null"
-  key_file: "/dev/null"
-  #@ end
-  subject_name: metric-proxy
-
 log_stream:
   url: #@ "https://log-stream.{}".format(data.values.system_domain)
 
@@ -179,7 +167,7 @@ resource_pool:
     provider: AWS
     endpoint: #@ data.values.blobstore.endpoint
     aws_access_key_id: #@ data.values.blobstore.access_key_id
-    aws_signature_version: '2'
+    aws_signature_version: #@ data.values.blobstore.aws_signature_version
     region: #@ data.values.blobstore.region
     path_style: true
   minimum_size: 65536
@@ -199,7 +187,7 @@ packages:
     provider: AWS
     endpoint: #@ data.values.blobstore.endpoint
     aws_access_key_id: #@ data.values.blobstore.access_key_id
-    aws_signature_version: '2'
+    aws_signature_version: #@ data.values.blobstore.aws_signature_version
     region: #@ data.values.blobstore.region
     path_style: true
   max_valid_packages_stored: 5
@@ -219,7 +207,7 @@ droplets:
     provider: AWS
     endpoint: #@ data.values.blobstore.endpoint
     aws_access_key_id: #@ data.values.blobstore.access_key_id
-    aws_signature_version: '2'
+    aws_signature_version: #@ data.values.blobstore.aws_signature_version
     region: #@ data.values.blobstore.region
     path_style: true
 
@@ -238,7 +226,7 @@ buildpacks:
     provider: AWS
     endpoint: #@ data.values.blobstore.endpoint
     aws_access_key_id: #@ data.values.blobstore.access_key_id
-    aws_signature_version: '2'
+    aws_signature_version: #@ data.values.blobstore.aws_signature_version
     region: #@ data.values.blobstore.region
     path_style: true
 

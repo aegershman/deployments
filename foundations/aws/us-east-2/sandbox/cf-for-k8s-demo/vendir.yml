@@ -22,9 +22,8 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: 2948deb2ed24cb841a4e5d06585ee7a9b1bd44d4 # beyond v0.5.0
+          ref: da9b032c258057e94176af468318ff1e2a1127dd # beyond v0.6.0
         includePaths:
-          - config-optional/**/*
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*

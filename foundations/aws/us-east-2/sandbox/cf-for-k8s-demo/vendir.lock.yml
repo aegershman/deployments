@@ -4,15 +4,15 @@ directories:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/jetstack/cert-manager/releases/29442438
+      url: https://api.github.com/repos/jetstack/cert-manager/releases/30572580
     path: upstream
   path: cluster/build/cert-manager/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'CI: Downgrade newest supported k8s version...'
-      sha: 2948deb2ed24cb841a4e5d06585ee7a9b1bd44d4
+      commitTitle: Merge branch 'remove-metric-proxy-ref' into develop...
+      sha: da9b032c258057e94176af468318ff1e2a1127dd
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
@@ -35,8 +35,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Update golangci-lint config
-      sha: 81bcfbc9ed04ec19c76738e34b63eec9bb1031af
+      commitTitle: Update links to documentation
+      sha: 1b9aff307ea35918caed9c4ee20bb76f514e3914
     path: upstream
   path: cluster/build/quarks-secret/_vendir
 - contents:
