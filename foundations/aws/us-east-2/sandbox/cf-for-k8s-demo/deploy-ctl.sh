@@ -20,11 +20,6 @@ build)
     ./build.sh
     popd
     ;;
-  cfd | cf-diff-generated-values)
-    pushd ./cluster/build/cf-for-k8s
-    ./build.sh diff
-    popd
-    ;;
   cfr | cf-regenerate-values)
     pushd ./cluster/build/cf-for-k8s
     ./build.sh clean
@@ -64,8 +59,6 @@ build)
     echo "example: ./deploy-ctl.sh build all"
     echo "usage: ./deploy.sh build {kapp-env}"
     echo "example: ./deploy-ctl.sh build harbor"
-    echo "usage: ./deploy-ctl.sh build {cfd, cf-diff-generated-values}"
-    echo "example: ./deploy-ctl.sh build cfd"
     echo "usage: ./deploy-ctl.sh build {cfr, cf-regenerate-values}"
     echo "example: ./deploy.sh build cf-regenerate-values"
     exit 1

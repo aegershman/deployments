@@ -14,10 +14,6 @@ generate-values)
   "${SCRIPT_DIR}"/generate-values.sh --silence-hack-warning --cf-domain vcap.me >"${SCRIPT_DIR}/cf-values-generated.yml"
   ;;
 
-diff)
-  diff "${SCRIPT_DIR}"/generate-values.sh "${SCRIPT_DIR}"/_vendir/upstream/cf-for-k8s/hack/generate-values.sh
-  ;;
-
 *)
   echo "generating cf-for-k8s resource definitions..."
   ytt \
