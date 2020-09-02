@@ -4,7 +4,7 @@ kind: PodDisruptionBudget
 metadata:
   labels:
     app: concourse-workers-worker
-    chart: concourse-11.4.1
+    chart: concourse-13.0.0
     heritage: Helm
     release: concourse-workers
   name: concourse-workers-worker
@@ -19,7 +19,7 @@ kind: ServiceAccount
 metadata:
   labels:
     app: concourse-workers-worker
-    chart: concourse-11.4.1
+    chart: concourse-13.0.0
     heritage: Helm
     release: concourse-workers
   name: concourse-workers-worker
@@ -32,7 +32,7 @@ kind: Secret
 metadata:
   labels:
     app: concourse-workers-worker
-    chart: concourse-11.4.1
+    chart: concourse-13.0.0
     heritage: Helm
     release: concourse-workers
   name: concourse-workers-worker
@@ -48,7 +48,7 @@ kind: ConfigMap
 metadata:
   labels:
     app: concourse-workers-worker
-    chart: concourse-11.4.1
+    chart: concourse-13.0.0
     heritage: Helm
     release: concourse-workers
   name: concourse-workers-worker
@@ -58,7 +58,7 @@ kind: Service
 metadata:
   labels:
     app: concourse-workers-worker
-    chart: concourse-11.4.1
+    chart: concourse-13.0.0
     heritage: Helm
     release: concourse-workers
   name: concourse-workers-worker
@@ -75,18 +75,18 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: 6.4.1
+        - Tag: 6.5.1
           Type: resolved
-          URL: concourse/concourse:6.4.1
-        URL: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
+          URL: concourse/concourse:6.5.1
+        URL: index.docker.io/concourse/concourse@sha256:11018d81dd2650e4bbf97cfcdb6448bf0b1fec7374c43cf23aaa1d31dac6cec6
       - Metas:
-        - Tag: 6.4.1
+        - Tag: 6.5.1
           Type: resolved
-          URL: concourse/concourse:6.4.1
-        URL: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
+          URL: concourse/concourse:6.5.1
+        URL: index.docker.io/concourse/concourse@sha256:11018d81dd2650e4bbf97cfcdb6448bf0b1fec7374c43cf23aaa1d31dac6cec6
   labels:
     app: concourse-workers-worker
-    chart: concourse-11.4.1
+    chart: concourse-13.0.0
     heritage: Helm
     release: concourse-workers
   name: concourse-workers-worker
@@ -101,7 +101,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/secrets: d87da4ecda033b3b754713643b27cc12b2a5c38e4e116325f55746fa4deade1f
+        checksum/secrets: 33748d324f6d5f4229a9eb58b9351bb57fdd54d7d18f3a706d6d85cb05becf70
       labels:
         app: concourse-workers-worker
         release: concourse-workers
@@ -170,7 +170,7 @@ spec:
           value: "5"
         - name: CONCOURSE_CONTAINER_SWEEPER_MAX_IN_FLIGHT
           value: "5"
-        image: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
+        image: index.docker.io/concourse/concourse@sha256:11018d81dd2650e4bbf97cfcdb6448bf0b1fec7374c43cf23aaa1d31dac6cec6
         imagePullPolicy: IfNotPresent
         lifecycle:
           preStop:
@@ -215,7 +215,7 @@ spec:
           rm -rf "/concourse-work-dir/*"
         command:
         - /bin/bash
-        image: index.docker.io/concourse/concourse@sha256:516a0c6cd690223a16b61b9e8c1f43d06aaa4e97e4ae108f5cd71a7cd820f8ef
+        image: index.docker.io/concourse/concourse@sha256:11018d81dd2650e4bbf97cfcdb6448bf0b1fec7374c43cf23aaa1d31dac6cec6
         imagePullPolicy: IfNotPresent
         name: concourse-workers-worker-init-rm
         securityContext:
