@@ -14,7 +14,7 @@ build)
   cfr | cf-regenerate-values)
     pushd ./cluster/build/cf-for-k8s
     ./build.sh clean
-    ./build.sh generate
+    ./build.sh generate-values
     popd
     ;;
   h | harbor)

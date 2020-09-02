@@ -10,9 +10,8 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: d8245bd07135c8d21d771e09571b7f93247b64b8 # beyond v0.5.0
+          ref: da9b032c258057e94176af468318ff1e2a1127dd # beyond v0.6.0
         includePaths:
-          - config-optional/**/*
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
@@ -45,7 +44,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/kubernetes-sigs/service-catalog
-          ref: 8e85904ae5ec4d228ebd0c463b7718f1a7891f69
+          ref: 61ad94153909c177bf74cebe4e915b1b2aa5e764
         includePaths:
           - charts/catalog/**/*
 

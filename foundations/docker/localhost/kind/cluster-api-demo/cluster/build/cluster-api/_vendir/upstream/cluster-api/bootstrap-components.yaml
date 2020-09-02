@@ -3935,7 +3935,7 @@ spec:
         - --feature-gates=MachinePool=${EXP_MACHINE_POOL:=false}
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.8
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.9
         imagePullPolicy: IfNotPresent
         name: manager
       terminationGracePeriodSeconds: 10
@@ -3980,7 +3980,7 @@ spec:
         - --feature-gates=MachinePool=${EXP_MACHINE_POOL:=false}
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.8
+        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.9
         imagePullPolicy: IfNotPresent
         name: manager
         ports:

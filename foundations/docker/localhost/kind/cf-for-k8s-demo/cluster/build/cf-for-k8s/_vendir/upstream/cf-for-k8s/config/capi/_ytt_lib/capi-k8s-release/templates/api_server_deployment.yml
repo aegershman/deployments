@@ -21,7 +21,7 @@ spec:
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '9102'
-        prometheus.io/path: 'metrics'
+        traffic.sidecar.istio.io/excludeInboundPorts: "9102"
       labels:
         app.kubernetes.io/name: cf-api-server
     spec:
@@ -55,12 +55,6 @@ spec:
           #@ if/end data.values.ccdb.ca_cert:
           - name: database-ca-cert
             mountPath: /config/database/certs
-          #@ if/end data.values.metric_proxy.cert.secret_name:
-          - name: metric-proxy-certs
-            mountPath: /config/metric_proxy/certs
-          #@ if/end data.values.metric_proxy.ca.secret_name:
-          - name: metric-proxy-ca
-            mountPath: /config/metric_proxy/ca
         - name: cf-api-local-worker
           image: #@ data.values.images.ccng
           imagePullPolicy: Always
@@ -103,6 +97,8 @@ spec:
           - name: nginx-uploads
             mountPath: /tmp/uploads
         - name: statsd-exporter
+          ports:
+          - containerPort: 9102
           image: #@ data.values.images.statsd_exporter
           imagePullPolicy: Always
       serviceAccountName: cf-api-server-service-account
@@ -127,14 +123,6 @@ spec:
       - name: database-ca-cert
         secret:
           secretName: database-ca-cert
-      #@ if/end data.values.metric_proxy.cert.secret_name:
-      - name: metric-proxy-certs
-        secret:
-          secretName: #@ data.values.metric_proxy.cert.secret_name
-      #@ if/end data.values.metric_proxy.ca.secret_name:
-      - name: metric-proxy-ca
-        secret:
-          secretName: #@ data.values.metric_proxy.ca.secret_name
       - name: nginx-uploads
         emptyDir: {}
 
