@@ -11,15 +11,16 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Bump chart patch version
-      sha: e5e963bcdb9a5fb2d0d9408734cefaec859d2c31
+      commitTitle: Adding parameter for externalTrafficPolicy in internal controller
+        service spec
+      sha: 442f7bb71b5111206d8ed20d28746c35c7bd4b62
     path: upstream
   path: cluster/build/ingress-nginx/_vendir
 - contents:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/cloudfoundry-incubator/kubecf/releases/27827596
+      url: https://api.github.com/repos/cloudfoundry-incubator/kubecf/releases/29692165
     path: upstream
   path: cluster/build/kubecf/_vendir
 - contents:

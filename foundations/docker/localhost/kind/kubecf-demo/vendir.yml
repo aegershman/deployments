@@ -21,7 +21,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/kubernetes/ingress-nginx
-          ref: e5e963bcdb9a5fb2d0d9408734cefaec859d2c31 # 2.11.2
+          ref: 442f7bb71b5111206d8ed20d28746c35c7bd4b62 # 2.15.0
         includePaths:
           - charts/ingress-nginx/**/*
         excludePaths:
@@ -33,10 +33,10 @@ directories:
       - path: upstream
         githubRelease:
           slug: cloudfoundry-incubator/kubecf
-          tag: v2.3.0
+          tag: v2.4.0
           disableAutoChecksumValidation: true
           unpackArchive:
-            path: kubecf-v2.3.0.tgz
+            path: kubecf-2.4.0-1598256596335.tgz
 
   - path: cluster/config/cf-operator/_ytt_lib
     contents:
