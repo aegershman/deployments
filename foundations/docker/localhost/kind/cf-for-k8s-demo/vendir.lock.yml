@@ -4,8 +4,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Bump capi-k8s-release to 86f49fc65affed446e943915bea0f385e316dcbc
-      sha: d8245bd07135c8d21d771e09571b7f93247b64b8
+      commitTitle: Merge branch 'remove-metric-proxy-ref' into develop...
+      sha: da9b032c258057e94176af468318ff1e2a1127dd
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
@@ -29,8 +29,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Remove Secret listener from controller (#2830)...
-      sha: 8e85904ae5ec4d228ebd0c463b7718f1a7891f69
+      commitTitle: Add Priority Class support for catalog Helm Chart (#2832)...
+      sha: 61ad94153909c177bf74cebe4e915b1b2aa5e764
     path: upstream
   path: cluster/build/service-catalog/_vendir
 - contents:

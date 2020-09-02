@@ -7,8 +7,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx
 ---
 apiVersion: v1
@@ -22,8 +22,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-controller
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -33,8 +33,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx
 rules:
 - apiGroups:
@@ -102,8 +102,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -122,8 +122,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx
 rules:
 - apiGroups:
@@ -215,8 +215,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -235,8 +235,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-controller-admission
 spec:
   ports:
@@ -263,8 +263,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-controller
 spec:
   ports:
@@ -288,14 +288,14 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas: null
-        URL: us.gcr.io/k8s-artifacts-prod/ingress-nginx/controller@sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
+        URL: k8s.gcr.io/ingress-nginx/controller@sha256:fc4979d8b8443a831c9789b5155cded454cb7de737a8b727bc2ba0106d2eae8b
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-controller
 spec:
   minReadySeconds: 0
@@ -336,7 +336,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: us.gcr.io/k8s-artifacts-prod/ingress-nginx/controller@sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
+        image: k8s.gcr.io/ingress-nginx/controller@sha256:fc4979d8b8443a831c9789b5155cded454cb7de737a8b727bc2ba0106d2eae8b
         imagePullPolicy: IfNotPresent
         lifecycle:
           preStop:
@@ -406,8 +406,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-admission
 webhooks:
 - admissionReviewVersions:
@@ -444,8 +444,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-admission
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -459,8 +459,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-admission
 rules:
 - apiGroups:
@@ -482,8 +482,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-admission
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -505,8 +505,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-admission
 rules:
 - apiGroups:
@@ -528,8 +528,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-admission
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -557,8 +557,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-admission-create
 spec:
   template:
@@ -568,8 +568,8 @@ spec:
         app.kubernetes.io/instance: ingress-nginx
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/version: 0.34.1
-        helm.sh/chart: ingress-nginx-2.11.2
+        app.kubernetes.io/version: 0.35.0
+        helm.sh/chart: ingress-nginx-2.15.0
       name: ingress-nginx-admission-create
     spec:
       containers:
@@ -609,8 +609,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.34.1
-    helm.sh/chart: ingress-nginx-2.11.2
+    app.kubernetes.io/version: 0.35.0
+    helm.sh/chart: ingress-nginx-2.15.0
   name: ingress-nginx-admission-patch
 spec:
   template:
@@ -620,8 +620,8 @@ spec:
         app.kubernetes.io/instance: ingress-nginx
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/version: 0.34.1
-        helm.sh/chart: ingress-nginx-2.11.2
+        app.kubernetes.io/version: 0.35.0
+        helm.sh/chart: ingress-nginx-2.15.0
       name: ingress-nginx-admission-patch
     spec:
       containers:

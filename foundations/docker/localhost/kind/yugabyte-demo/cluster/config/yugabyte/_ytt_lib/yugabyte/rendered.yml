@@ -84,10 +84,10 @@ metadata:
           URL: busybox:1.31
         URL: index.docker.io/library/busybox@sha256:95cf004f559831017cdf4628aaf1bb30133677be8702a8c5f2994629f637a209
       - Metas:
-        - Tag: 2.2.0.0-b80
+        - Tag: 2.2.2.0-b15
           Type: resolved
-          URL: yugabytedb/yugabyte:2.2.0.0-b80
-        URL: index.docker.io/yugabytedb/yugabyte@sha256:921d59ab055bd3b765f7d83686dcafd688e22c71c846b5631f03bac810e434ae
+          URL: yugabytedb/yugabyte:2.2.2.0-b15
+        URL: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
   labels:
     app: yb-master
     chart: yugabyte
@@ -152,7 +152,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: index.docker.io/yugabytedb/yugabyte@sha256:921d59ab055bd3b765f7d83686dcafd688e22c71c846b5631f03bac810e434ae
+        image: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -236,10 +236,10 @@ metadata:
           URL: busybox:1.31
         URL: index.docker.io/library/busybox@sha256:95cf004f559831017cdf4628aaf1bb30133677be8702a8c5f2994629f637a209
       - Metas:
-        - Tag: 2.2.0.0-b80
+        - Tag: 2.2.2.0-b15
           Type: resolved
-          URL: yugabytedb/yugabyte:2.2.0.0-b80
-        URL: index.docker.io/yugabytedb/yugabyte@sha256:921d59ab055bd3b765f7d83686dcafd688e22c71c846b5631f03bac810e434ae
+          URL: yugabytedb/yugabyte:2.2.2.0-b15
+        URL: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
   labels:
     app: yb-tserver
     chart: yugabyte
@@ -305,7 +305,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: index.docker.io/yugabytedb/yugabyte@sha256:921d59ab055bd3b765f7d83686dcafd688e22c71c846b5631f03bac810e434ae
+        image: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:

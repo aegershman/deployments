@@ -10,7 +10,7 @@ directories:
       - path: upstream
         githubRelease:
           slug: jetstack/cert-manager
-          tag: v0.16.1
+          tag: v1.0.0
           disableAutoChecksumValidation: true
         includePaths:
           - cert-manager.yaml
@@ -22,9 +22,8 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: 2948deb2ed24cb841a4e5d06585ee7a9b1bd44d4 # beyond v0.5.0
+          ref: da9b032c258057e94176af468318ff1e2a1127dd # beyond v0.6.0
         includePaths:
-          - config-optional/**/*
           - config/**/*
           - hack/generate-values.sh
           - tests/smoke/assets/test-node-app/**/*
@@ -57,7 +56,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/cloudfoundry-incubator/quarks-secret
-          ref: tags/v1.0.708
+          ref: tags/v1.0.712
         includePaths:
           - deploy/helm/quarks-secret/**/*
   - path: cluster/build/secretgen-controller/_vendir

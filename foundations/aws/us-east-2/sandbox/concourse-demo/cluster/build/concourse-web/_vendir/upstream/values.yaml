@@ -21,7 +21,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "6.4.1"
+imageTag: "6.5.1"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -87,15 +87,13 @@ concourse:
     ##
     enableGlobalResources: true
 
-    ## Enable pipeline archiving functionality in the API
-    ##
-    enableArchivePipeline: false
-    #
-
     ## Enable automatic rerunning of builds when worker disappears
     ##
     enableBuildRerunWhenWorkerDisappears: false
-    #
+
+    ## Enable the experimental across step to be used in jobs. The API is subject to change.
+    ##
+    enableAcrossStep: false
 
     ## Maximum number of jobs to be scheduling at the same time.
     ##
@@ -507,10 +505,6 @@ concourse:
       ## Enable insecure SSL verification.
       ##
       insecureSkipVerify: false
-
-      ## Client token for accessing secrets within the Vault server.
-      ##
-      clientToken:
 
       ## Time after which to force a reLogin. If not set, the token will just be continuously renewed.
       ##
@@ -1257,6 +1251,10 @@ concourse:
       ##
       heartbeatInterval: 30s
 
+      ## How long to wait for requests to Garden to complete. 0 means no timeout.
+      ##
+      gardenRequestTimeout:
+
     letsEncrypt:
       ## Automatically configure TLS certificates via Let's Encrypt/ACME.
       ##
@@ -1376,9 +1374,9 @@ concourse:
     ##
     volumeSweeperMaxInFlight: 5
 
-    ## Network pool to use for garden containers
-    ##
-    containerNetworkPool:
+    ## Runtime to use with the worker. Possible values: guardian, containerd, houdini.
+    ## Please note that Houdini is insecure and doesn't run 'tasks' in containers.
+    runtime:
 
     tsa:
 
@@ -1399,17 +1397,12 @@ concourse:
       ##
       workerPrivateKey:
 
-    ## API endpoint of an externally managed Garden server to use instead of
-    ## running the embedded Garden server.
-    ##
-    externalGardenUrl:
-
+    # The following refers to configuration for the Guardian runtime. For historical reasons
+    # it is referred to as "garden" which is the server wrapping Guardian and the interface
+    # that Guardian implements.
     garden:
-      ## Path to the executable to run the garden backend ('gdn' or
-      ## 'containerd').
-      ##
-      ## If not specified, the right binary will be search in $PATH.
-      ##
+      ## Path to a guardian executable (non-absolute names get resolved from $PATH).
+      ## This defaults to the gdn binary bundled with Concourse.
       bin:
 
       ## Path to a config file to use for Garden in INI format.
@@ -1428,21 +1421,50 @@ concourse:
       ##
       dnsProxyEnable:
 
-      ## Custom DNS server to use for garden containers
-      ##
-      dnsServer:
-
-      ## Use the insecure Houdini Garden backend.
-      ##
-      useHoudini:
-
-      ## Use the experimental containerd garden backend.
-      ##
-      useContainerd:
-
       ## How long to wait for requests to Garden to complete. 0 means no timeout.
       ##
       requestTimeout:
+
+    containerd:
+
+      ## Path to a containerd executable (non-absolute names get resolved from $PATH)."`
+      bin:
+
+      ## Path to a config file to use for the Containerd daemon.
+      config:
+
+      ## Enable a proxy DNS server for Garden
+      dnsProxyEnable:
+
+      ## List of DNS server IP addresses to use instead of automatically determined servers.
+      ## Example:
+      ## dnsServers:
+      ##   - 1.1.1.1
+      ##   - 2.2.2.2
+      dnsServers: []
+
+      ## List of network ranges to which traffic from containers will be restricted.
+      ## Example:
+      ## restrictedNetworks:
+      ##   - 1.1.1.1
+      ##   - 2.2.2.2
+      restrictedNetworks: []
+
+      ## Max container capacity. 0 means no limit.
+      maxContainers:
+
+      ## Network range to use for dynamically allocated container subnets, defaults to "10.80.0.0/16"
+      ##
+      networkPool:
+
+      ## Time to wait for requests to Containerd to complete. 0 means no timeout.
+      requestTimeout:
+
+
+    ## API endpoint of an externally managed Garden server to use instead of
+    ## running the embedded Garden server.
+    ##
+    externalGardenUrl:
 
     baggageclaim:
       ## Minimum level of logs to see. Possible values: debug, info, error

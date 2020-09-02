@@ -92,6 +92,8 @@ variables:
   type: password
 - name: blobstore_secret_key
   type: password
+- name: db_admin_password
+  type: password
 - name: capi_db_password
   type: password
 - name: capi_db_encryption_key
@@ -151,65 +153,6 @@ variables:
   options:
     ca: default_ca
     common_name: uaa_login_service_provider
-
-- name: log_cache_ca
-  type: certificate
-  options:
-    is_ca: true
-    common_name: log-cache-ca
-
-- name: log_cache
-  type: certificate
-  options:
-    ca: log_cache_ca
-    common_name: log-cache
-    extended_key_usage:
-    - client_auth
-    - server_auth
-
-- name: log_cache_syslog
-  type: certificate
-  options:
-    ca: log_cache_ca
-    common_name: log-cache-syslog
-    extended_key_usage:
-    - client_auth
-    - server_auth
-
-- name: log_cache_metrics
-  type: certificate
-  options:
-    ca: log_cache_ca
-    common_name: log-cache-metrics
-    extended_key_usage:
-    - client_auth
-    - server_auth
-
-- name: log_cache_gateway
-  type: certificate
-  options:
-    ca: log_cache_ca
-    common_name: log-cache-gateway
-    alternative_names:
-    - localhost
-    extended_key_usage:
-    - client_auth
-    - server_auth
-
-- name: metric_proxy_ca
-  type: certificate
-  options:
-    is_ca: true
-    common_name: metric-proxy-ca
-
-- name: metric_proxy
-  type: certificate
-  options:
-    ca: metric_proxy_ca
-    common_name: metric-proxy
-    extended_key_usage:
-    - client_auth
-    - server_auth
 EOF
 ) >/dev/null
 
@@ -222,8 +165,8 @@ app_domains:
 - "apps.${DOMAIN}"
 cf_admin_password: $(bosh interpolate ${VARS_FILE} --path=/cf_admin_password)
 
-cf_blobstore:
-  secret_key: $(bosh interpolate ${VARS_FILE} --path=/blobstore_secret_key)
+blobstore:
+  secret_access_key: $(bosh interpolate ${VARS_FILE} --path=/blobstore_secret_key)
 
 cf_db:
   admin_password: xreplacedx
@@ -252,34 +195,6 @@ internal_certificate:
   crt: $(bosh interpolate ${VARS_FILE} --path=/internal_certificate/certificate | base64 | tr -d '\n')
   key: $(bosh interpolate ${VARS_FILE} --path=/internal_certificate/private_key | base64 | tr -d '\n')
   ca: $(bosh interpolate ${VARS_FILE} --path=/internal_certificate/ca | base64 | tr -d '\n')
-
-log_cache_ca:
-  crt: xreplacedx
-  key: xreplacedx
-
-log_cache:
-  crt: xreplacedx
-  key: xreplacedx
-
-log_cache_metrics:
-  crt: xreplacedx
-  key: xreplacedx
-
-log_cache_gateway:
-  crt: xreplacedx
-  key: xreplacedx
-
-log_cache_syslog:
-  crt: xreplacedx
-  key: xreplacedx
-
-metric_proxy:
-  ca:
-    crt: xreplacedx
-    key: xreplacedx
-  cert:
-    crt: xreplacedx
-    key: xreplacedx
 
 uaa:
   database:

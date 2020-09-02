@@ -71,15 +71,14 @@ blobstore:
   droplet_directory_key: cc-droplets
   endpoint: http://capi-blobstore-minio.default:9000
   package_directory_key: cc-packages
+  aws_signature_version: '2'
   region: ""
   resource_directory_key: cc-resources
-  secret_access_key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
   secret_access_key_secret_name:
 ccdb:
   adapter: postgres
   database: cloud_controller
   host: capi-database-postgresql
-  password: cloud_controller
   password_secret_name:
   port: 5432
   user: cloud_controller
@@ -94,6 +93,7 @@ kpack:
     password: ""
     repository_prefix: ""
     username: ""
+#! TODO: remove metric_proxy certs after PR to cf-for-k8s
 metric_proxy:
   ca:
     secret_name: null
@@ -106,9 +106,8 @@ system_namespace: cf-system
 uaa:
   clients:
     cf_api_controllers:
-      secret: supers3cret
+      secret_name:
     cloud_controller_username_lookup:
-      secret: supers3cret
       secret_name:
   serverCerts:
     secretName: null
@@ -119,5 +118,6 @@ images:
   cf_autodetect_builder:
   nginx:
   statsd_exporter:
+  package_image_uploader:
 kbld:
   destination:

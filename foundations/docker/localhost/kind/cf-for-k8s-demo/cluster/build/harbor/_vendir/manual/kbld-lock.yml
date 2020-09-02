@@ -3,7 +3,7 @@ kind: Config
 minimumRequiredVersion: 0.24.0
 overrides:
 - image: busybox:latest
-  newImage: index.docker.io/library/busybox@sha256:4f47c01fa91355af2865ac10fef5bf6ec9c7f42ad2321377c21e844427972977
+  newImage: index.docker.io/library/busybox@sha256:c3dbcbbf6261c620d133312aee9e858b45e1b686efbcead7b34d9aae58a37378
   preresolved: true
 - image: goharbor/harbor-core:v1.10.4
   newImage: index.docker.io/goharbor/harbor-core@sha256:d326c23b93a98dfaef1f6ff981ea2eaa9530ca7d3bebd3b81fbaac864042e2c9

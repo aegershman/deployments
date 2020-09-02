@@ -4,7 +4,7 @@ directories:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/kubernetes-sigs/cluster-api/releases/29181407
+      url: https://api.github.com/repos/kubernetes-sigs/cluster-api/releases/30475512
     path: upstream/cluster-api
   path: cluster/build/cluster-api/_vendir
 kind: LockConfig

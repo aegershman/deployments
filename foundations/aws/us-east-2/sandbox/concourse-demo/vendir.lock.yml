@@ -5,7 +5,7 @@ directories:
     path: manual
   - git:
       commitTitle: bump chart version
-      sha: 31ff9fa5f2b456e203c322696c2e6ad1ded88dd1
+      sha: 5d9c6e46e5bf81e67a02a8e7ac1e4b63dadcd485
     path: upstream
   path: cluster/build/concourse-web/_vendir
 - contents:
@@ -13,7 +13,7 @@ directories:
     path: manual
   - git:
       commitTitle: bump chart version
-      sha: 31ff9fa5f2b456e203c322696c2e6ad1ded88dd1
+      sha: 5d9c6e46e5bf81e67a02a8e7ac1e4b63dadcd485
     path: upstream
   path: cluster/build/concourse-workers/_vendir
 - contents:
@@ -28,8 +28,9 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Bump chart patch version
-      sha: e5e963bcdb9a5fb2d0d9408734cefaec859d2c31
+      commitTitle: Adding parameter for externalTrafficPolicy in internal controller
+        service spec
+      sha: 442f7bb71b5111206d8ed20d28746c35c7bd4b62
     path: upstream
   path: cluster/build/ingress-nginx/_vendir
 - contents:

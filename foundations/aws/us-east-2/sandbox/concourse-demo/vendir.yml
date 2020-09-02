@@ -10,7 +10,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/concourse/concourse-chart
-          ref: 31ff9fa5f2b456e203c322696c2e6ad1ded88dd1 # 11.4.1
+          ref: 5d9c6e46e5bf81e67a02a8e7ac1e4b63dadcd485 # 13.0.0
         includePaths:
           - templates/**/*
           - .gitignore
@@ -24,7 +24,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/concourse/concourse-chart
-          ref: 31ff9fa5f2b456e203c322696c2e6ad1ded88dd1 # 11.4.1
+          ref: 5d9c6e46e5bf81e67a02a8e7ac1e4b63dadcd485 # 13.0.0
         includePaths:
           - templates/**/*
           - .gitignore
@@ -48,7 +48,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/kubernetes/ingress-nginx
-          ref: e5e963bcdb9a5fb2d0d9408734cefaec859d2c31 # 2.11.2
+          ref: 442f7bb71b5111206d8ed20d28746c35c7bd4b62 # 2.15.0
         includePaths:
           - charts/ingress-nginx/**/*
         excludePaths:
