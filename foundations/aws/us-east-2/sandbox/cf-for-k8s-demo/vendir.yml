@@ -22,7 +22,7 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: da9b032c258057e94176af468318ff1e2a1127dd # beyond v0.6.0
+          ref: f37476c0087bae6613c81e1224af2aa92f5de77b # beyond v0.6.0
         includePaths:
           - config/**/*
           - hack/generate-values.sh

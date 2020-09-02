@@ -11,8 +11,8 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Merge branch 'remove-metric-proxy-ref' into develop...
-      sha: da9b032c258057e94176af468318ff1e2a1127dd
+      commitTitle: 'Merge pull request #415 from cloudfoundry/maint/rm-metric-proxy-certs...'
+      sha: f37476c0087bae6613c81e1224af2aa92f5de77b
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
