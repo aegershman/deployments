@@ -16,11 +16,11 @@ metadata:
   name: harbor-core-cert
   namespace: harbor
   annotations:
-    kapp.k14s.io/change-rule.harbor-certificate: "upsert before upserting harbor/harbor-svc"
+    kapp.k14s.io/change-rule.harbor-certificate: upsert before upserting harbor/harbor-svc
 spec:
   secretName: harbor-core-cert
   dnsNames:
-    - "harbor.cf.gershman.io"
+    - "*.cf.gershman.io"
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer

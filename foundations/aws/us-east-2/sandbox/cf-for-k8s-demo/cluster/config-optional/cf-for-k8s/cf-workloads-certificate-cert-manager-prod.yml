@@ -1,0 +1,22 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"kind":"Secret","metadata":{"name":"cf-workloads-cert"}})
+#@overlay/remove
+---
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cf-workloads-cert-gershman-io-prod
+  namespace: istio-system
+  annotations:
+    kapp.k14s.io/change-rule.istio-ingressgateway: upsert before upserting istio.io/ingressgateway
+spec:
+  secretName: cf-workloads-cert
+  dnsNames:
+    - "*.apps.cf.gershman.io"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  privateKey:
+    rotationPolicy: Never

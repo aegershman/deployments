@@ -83,11 +83,12 @@ a | apply | deploy)
     kapp deploy -a cf -f <(
       ytt \
         -f ./cluster/config/cf-for-k8s/ \
-        -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml \
-        -f ./cluster/config-optional/cf-for-k8s/label-ns-quarks-secret-monitor.yml
+        -f ./cluster/config-optional/cf-for-k8s/cf-system-certificate-cert-manager-prod.yml \
+        -f ./cluster/config-optional/cf-for-k8s/cf-workloads-certificate-cert-manager-prod.yml \
+        -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml
     ) "$@"
+    # -f ./cluster/config-optional/cf-for-k8s/label-ns-quarks-secret-monitor.yml
     # -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
-    # TODO -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-prod.yml
     ;;
   ed | external-dns)
     shift
@@ -101,9 +102,9 @@ a | apply | deploy)
     kapp deploy -a harbor -f <(
       ytt \
         -f ./cluster/config/harbor/ \
-        -f ./cluster/config-optional/harbor/harbor-cert-manager-prod.yml \
-        -f ./cluster/config-optional/harbor/label-ns-quarks-secret-monitor.yml
+        -f ./cluster/config-optional/harbor/harbor-cert-manager-prod.yml
     ) "$@"
+    # -f ./cluster/config-optional/harbor/label-ns-quarks-secret-monitor.yml
     ;;
   qs | quarks-secret)
     shift
@@ -204,7 +205,7 @@ pip | cf-for-k8s-post-install-push)
   ;;
 pip-source | cf-for-k8s-post-install-push-source-code-apps)
   # push an app from source code
-  cf push test-node-app -p ./cluster/build/cf-for-k8s/_vendir/cf-for-k8s/tests/smoke/assets/test-node-app
+  cf push test-node-app -p ./cluster/build/cf-for-k8s/_vendir/upstream/cf-for-k8s/tests/smoke/assets/test-node-app
   curl http://test-node-app.apps.cf.gershman.io/env
   ;;
 
