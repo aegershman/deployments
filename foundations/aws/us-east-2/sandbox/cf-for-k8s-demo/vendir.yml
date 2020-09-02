@@ -10,7 +10,7 @@ directories:
       - path: upstream
         githubRelease:
           slug: jetstack/cert-manager
-          tag: v0.16.1
+          tag: v1.0.0
           disableAutoChecksumValidation: true
         includePaths:
           - cert-manager.yaml
@@ -57,7 +57,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/cloudfoundry-incubator/quarks-secret
-          ref: tags/v1.0.708
+          ref: tags/v1.0.712
         includePaths:
           - deploy/helm/quarks-secret/**/*
   - path: cluster/build/secretgen-controller/_vendir
