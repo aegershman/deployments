@@ -8,7 +8,9 @@ metadata:
 spec:
   allowPrivilegeEscalation: true
   allowedCapabilities:
+  - NET_ADMIN
   - NET_BIND_SERVICE
+  - NET_RAW
   - SYS_ADMIN
   - SYS_RESOURCE
   defaultAllowPrivilegeEscalation: true
@@ -51,8 +53,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: var-system-domain
   namespace: default
 stringData:
@@ -61,10 +63,45 @@ type: Opaque
 ---
 apiVersion: v1
 data:
+  Corefile: |-
+    . {
+      errors
+      health
+
+      svcdiscovery {
+        tls_ca_path /tls/ca.pem
+        tls_client_cert_path /tls/cert.pem
+        tls_client_key_path /tls/key.pem
+        sdc_host service-discovery-controller.default.svc
+        sdc_port 8054
+        ttl 300
+      }
+
+      forward . /config/forward.conf
+
+      cache 120
+      loop
+      reload
+      loadbalance
+    }
+kind: ConfigMap
+metadata:
+  labels:
+    app: apps-dns
+    app.kubernetes.io/instance: kubecf
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubecf
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
+  name: apps-dns
+  namespace: default
+---
+apiVersion: v1
+data:
   manifest: |-
     ---
     name: cf
-    manifest_version: v13.9.0
+    manifest_version: v13.17.0
     update:
       canaries: 1
       canary_watch_time: 30000-1200000
@@ -422,7 +459,7 @@ data:
             space: cf_smoke_tests_space
             cf_dial_timeout_in_seconds: 300
             skip_ssl_validation: true
-      - name: cf-cli-6-linux
+      - name: cf-cli-7-linux
         release: cf-cli
     - name: nats
       azs:
@@ -764,7 +801,7 @@ data:
                 scope: network.admin,network.write,cloud_controller.read,cloud_controller.write,openid,password.write,cloud_controller.admin,scim.read,scim.write,doppler.firehose,uaa.user,routing.router_groups.read,routing.router_groups.write,cloud_controller.admin_read_only,cloud_controller.global_auditor,perm.admin,clients.read
                 secret: ''
               cf_smoke_tests:
-                authorities: cloud_controller.admin
+                authorities: cloud_controller.admin,clients.read
                 authorized-grant-types: client_credentials
                 secret: "((uaa_clients_cf_smoke_tests_secret))"
               cloud_controller_username_lookup:
@@ -1296,16 +1333,7 @@ data:
               ca_cert: "((cc_tls.ca))"
               private_key: "((cc_tls.private_key))"
               public_cert: "((cc_tls.certificate))"
-          ccdb:
-            databases:
-            - name: cloud_controller
-              tag: cc
-            db_scheme: mysql
-            port: 3306
-            roles:
-            - name: cloud_controller
-              password: ((cc_database_password))
-              tag: admin
+          ccdb: *ccdb
       - name: service-discovery-controller
         properties:
           dnshttps:
@@ -2602,49 +2630,49 @@ data:
       version: 1.0.36
       sha1: 0269a613be68f988682bbf56504b78477965b1c4
     - name: bpm
-      url: https://bosh.io/d/github.com/cloudfoundry/bpm-release?v=1.1.8
-      version: 1.1.8
-      sha1: c956394fce7e74f741e4ae8c256b480904ad5942
+      url: https://bosh.io/d/github.com/cloudfoundry/bpm-release?v=1.1.9
+      version: 1.1.9
+      sha1: dcf0582d838a73de29da273552ae79ac3098ee8b
     - name: capi
-      url: https://bosh.io/d/github.com/cloudfoundry/capi-release?v=1.96.0
-      version: 1.96.0
-      sha1: 879b50c2ba103826dd32c7e65d9eefc7797f67e7
+      url: https://bosh.io/d/github.com/cloudfoundry/capi-release?v=1.98.0
+      version: 1.98.0
+      sha1: e4b0b8a1ef10b71da5b09248150c3295197ee0b6
     - name: cf-networking
-      url: https://bosh.io/d/github.com/cloudfoundry/cf-networking-release?v=2.31.0
-      version: 2.31.0
-      sha1: f27406853aee40c38615d61cf648936c0ef63d2f
+      url: https://bosh.io/d/github.com/cloudfoundry/cf-networking-release?v=2.33.0
+      version: 2.33.0
+      sha1: 0497597194cf22fcd474e949a9299336cca78e9e
     - name: cf-smoke-tests
-      url: https://bosh.io/d/github.com/cloudfoundry/cf-smoke-tests-release?v=40.0.134
-      version: 40.0.134
-      sha1: 0dd5720a87878cac9bb7c1f903f8cbf7ef0124ce
+      url: https://bosh.io/d/github.com/cloudfoundry/cf-smoke-tests-release?v=41.0.1
+      version: 41.0.1
+      sha1: 0bbdb6970b594e7e4dde08937c39b80d8414f2ba
     - name: cflinuxfs3
-      url: https://bosh.io/d/github.com/cloudfoundry/cflinuxfs3-release?v=0.200.0
-      version: 0.200.0
-      sha1: 532e6a42ce290bdd5c0c1ef3a2366f26cf827c65
+      url: https://bosh.io/d/github.com/cloudfoundry/cflinuxfs3-release?v=0.203.0
+      version: 0.203.0
+      sha1: 447a855912fa735685d9fe18bc33682b90e061c7
     - name: credhub
       url: https://bosh.io/d/github.com/pivotal-cf/credhub-release?v=2.8.0
       version: 2.8.0
       sha1: 3a9732bab2fa80bb9431941193b6569ef29af491
     - name: diego
-      url: https://bosh.io/d/github.com/cloudfoundry/diego-release?v=2.47.0
-      version: 2.47.0
-      sha1: 836fd16bc282ea445e4d9cb79e14e3bc1b10d240
+      url: https://bosh.io/d/github.com/cloudfoundry/diego-release?v=2.48.0
+      version: 2.48.0
+      sha1: fbf8ebfeda1f326f5d6834b9a621b88a548e06e3
     - name: dotnet-core-buildpack
-      url: https://bosh.io/d/github.com/cloudfoundry/dotnet-core-buildpack-release?v=2.3.12
-      version: 2.3.12
-      sha1: 8b19b70b8391b85bc796e7954fd8fe746bffa62f
+      url: https://bosh.io/d/github.com/cloudfoundry/dotnet-core-buildpack-release?v=2.3.13
+      version: 2.3.13
+      sha1: 5c1f388a340c9c226d7c4feccf0a34a20e8d6de8
     - name: garden-runc
-      url: https://bosh.io/d/github.com/cloudfoundry/garden-runc-release?v=1.19.14
-      version: 1.19.14
-      sha1: b3a949f55d8e8514267cf48a242b8321183ace6c
+      url: https://bosh.io/d/github.com/cloudfoundry/garden-runc-release?v=1.19.16
+      version: 1.19.16
+      sha1: c5bb4211adb7e94750b56e81eda9bb8e09eab3a0
     - name: go-buildpack
-      url: https://bosh.io/d/github.com/cloudfoundry/go-buildpack-release?v=1.9.14
-      version: 1.9.14
-      sha1: ebe497c9fe0a07bb86597fa500a3d3865ece18d6
+      url: https://bosh.io/d/github.com/cloudfoundry/go-buildpack-release?v=1.9.16
+      version: 1.9.16
+      sha1: 2badebead2977b1f220abd0158677c3a55afcdbc
     - name: java-buildpack
-      url: https://bosh.io/d/github.com/cloudfoundry/java-buildpack-release?v=4.32
-      version: "4.32"
-      sha1: 411b208b14f39c843da62c804e0850f860957b74
+      url: https://bosh.io/d/github.com/cloudfoundry/java-buildpack-release?v=4.32.1
+      version: 4.32.1
+      sha1: 80433833d696c5219be4eadcf6af6abb6a4862a3
     - name: loggregator
       url: https://bosh.io/d/github.com/cloudfoundry/loggregator-release?v=106.3.10
       version: 106.3.10
@@ -2658,41 +2686,41 @@ data:
       version: "34"
       sha1: 0d7f4c3203c926e79d85d07b1ac215d73c9268c3
     - name: nginx-buildpack
-      url: https://bosh.io/d/github.com/cloudfoundry/nginx-buildpack-release?v=1.1.11
-      version: 1.1.11
-      sha1: d2cd1d7cafe44477474accaf2c8aafc7c79380ab
+      url: https://bosh.io/d/github.com/cloudfoundry/nginx-buildpack-release?v=1.1.12
+      version: 1.1.12
+      sha1: dfb0be8e2c0f14e2f43b10cb437b433ab88a53fb
     - name: r-buildpack
       url: https://bosh.io/d/github.com/cloudfoundry/r-buildpack-release?v=1.1.7
       version: 1.1.7
       sha1: c7ee8762d9ce8da4882c924cb46e77bef3b2fafc
     - name: nodejs-buildpack
-      url: https://bosh.io/d/github.com/cloudfoundry/nodejs-buildpack-release?v=1.7.24
-      version: 1.7.24
-      sha1: ea8f668e442d1a6c1a1be49f8bc52c9d98516871
+      url: https://bosh.io/d/github.com/cloudfoundry/nodejs-buildpack-release?v=1.7.25
+      version: 1.7.25
+      sha1: 8dc75e1c310d8cd1c6321c3ea43943e6714e84bd
     - name: php-buildpack
-      url: https://bosh.io/d/github.com/cloudfoundry/php-buildpack-release?v=4.4.18
-      version: 4.4.18
-      sha1: d14454c7c21be06236c5ca15cbfb6643c62b7f91
+      url: https://bosh.io/d/github.com/cloudfoundry/php-buildpack-release?v=4.4.19
+      version: 4.4.19
+      sha1: e9f0ef1a1ad27a0d34fe55385ce6b3ef2e947d54
     - name: pxc
       url: https://bosh.io/d/github.com/cloudfoundry-incubator/pxc-release?v=0.28.0
       version: 0.28.0
       sha1: b09790e0d9df109e84416ef28393438846af9f9f
     - name: python-buildpack
-      url: https://bosh.io/d/github.com/cloudfoundry/python-buildpack-release?v=1.7.16
-      version: 1.7.16
-      sha1: 9259aa43ad6b43699d886380d03a7ffd80509f97
+      url: https://bosh.io/d/github.com/cloudfoundry/python-buildpack-release?v=1.7.18
+      version: 1.7.18
+      sha1: 72d8cdd7d8c5bee832de0133568a673dc2641349
     - name: routing
-      url: https://bosh.io/d/github.com/cloudfoundry/routing-release?v=0.203.0
-      version: 0.203.0
-      sha1: f4c081c39f64c368fab7a2553b074e8850d1f5f5
+      url: https://bosh.io/d/github.com/cloudfoundry/routing-release?v=0.206.0
+      version: 0.206.0
+      sha1: 8188941dcaa06082900acbceae80f9188d96ce0d
     - name: ruby-buildpack
-      url: https://bosh.io/d/github.com/cloudfoundry/ruby-buildpack-release?v=1.8.21
-      version: 1.8.21
-      sha1: 8e7c63348ec52c70e5dadc8de4b42e2289f99e81
+      url: https://bosh.io/d/github.com/cloudfoundry/ruby-buildpack-release?v=1.8.23
+      version: 1.8.23
+      sha1: e32eac05ad44279b6c5b3de50998f967e31e7f1b
     - name: silk
-      url: https://bosh.io/d/github.com/cloudfoundry/silk-release?v=2.31.0
-      version: 2.31.0
-      sha1: 8935189b632a8c805e46b8079f5c459d6b70784f
+      url: https://bosh.io/d/github.com/cloudfoundry/silk-release?v=2.33.0
+      version: 2.33.0
+      sha1: 9a2ed4dec4eff614614d6a66b77cd04182e25122
     - name: staticfile-buildpack
       url: https://bosh.io/d/github.com/cloudfoundry/staticfile-buildpack-release?v=1.5.9
       version: 1.5.9
@@ -2702,37 +2730,37 @@ data:
       version: 1.11.15
       sha1: a0a2d33c6ab7d8fec8c017ea6f2c5a344af1407c
     - name: uaa
-      url: https://bosh.io/d/github.com/cloudfoundry/uaa-release?v=74.23.0
-      version: 74.23.0
-      sha1: 7137d5b137b48c0f56bd76b49169595a9f4a9467
+      url: https://bosh.io/d/github.com/cloudfoundry/uaa-release?v=74.24.0
+      version: 74.24.0
+      sha1: 0de84931c008aa55664a5fc47ace4f694f95d688
     - name: loggregator-agent
       url: https://bosh.io/d/github.com/cloudfoundry/loggregator-agent-release?v=6.1.1
       version: 6.1.1
       sha1: c8f15cb137a5106cd83834721ee2709f37715930
     - name: log-cache
-      url: https://bosh.io/d/github.com/cloudfoundry/log-cache-release?v=2.7.2
-      version: 2.7.2
-      sha1: 023aa7f9464f5175c144aa0a62014f8c360ce247
+      url: https://bosh.io/d/github.com/cloudfoundry/log-cache-release?v=2.8.0
+      version: 2.8.0
+      sha1: 3b158b60a25bb9e48039012ba124cb419a28d397
     - name: bosh-dns-aliases
       url: https://bosh.io/d/github.com/cloudfoundry/bosh-dns-aliases-release?v=0.0.3
       version: 0.0.3
       sha1: b0d0a0350ed87f1ded58b2ebb469acea0e026ccc
     - name: cf-cli
-      url: https://bosh.io/d/github.com/bosh-packages/cf-cli-release?v=1.27.0
-      version: 1.27.0
-      sha1: 24da44758b6a0c9211cf3fed4afbfb3380a8d7be
+      url: https://bosh.io/d/github.com/bosh-packages/cf-cli-release?v=1.29.0
+      version: 1.29.0
+      sha1: 0dd79b169473a95f1ff39e79f2695edf4c97f38d
     stemcells:
     - alias: default
       os: ubuntu-xenial
-      version: "621.77"
+      version: "621.82"
 kind: ConfigMap
 metadata:
   labels:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: cf-deployment
   namespace: default
 ---
@@ -2764,10 +2792,7 @@ data:
     innodb_file_per_table           = 1
     innodb_autoinc_lock_mode=2
     bind_address = 0.0.0.0
-    wsrep_slave_threads=2
-    wsrep_cluster_address=gcomm://
-    wsrep_provider=/usr/lib/galera3/libgalera_smm.so
-    wsrep_sst_method=xtrabackup-v2
+    wsrep_on = off
   ssl.cnf: |
     [mysqld]
     ssl-ca=/etc/mysql/tls/certs/ca
@@ -2776,11 +2801,12 @@ data:
 kind: ConfigMap
 metadata:
   labels:
+    app.kubernetes.io/component: database
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: database-config-files
   namespace: default
 ---
@@ -2815,35 +2841,14 @@ data:
     # shellcheck disable=SC1091
     . /startup-scripts/functions.sh
 
-    ipaddr=$(hostname -i | awk ' { print $1 } ')
-    hostname=$(hostname)
-    echo "I AM $hostname - $ipaddr"
-
     # if command starts with an option, prepend mysqld
     if [ "${1:0:1}" = '-' ]; then
         CMDARG=( "$@" )
     fi
 
-    cluster_join=$(resolveip -s "${K8S_SERVICE_NAME}" || echo "")
-    if [[ -z "${cluster_join}" ]]; then
-        echo "I am the Primary Node"
-        init_mysql
-        write_password_file
-        exec mysqld --user=mysql --wsrep_cluster_name="$SHORT_CLUSTER_NAME" --wsrep_node_name="$hostname" \
-        --wsrep_cluster_address=gcomm:// --wsrep_sst_method=xtrabackup-v2 \
-        --wsrep_sst_auth="xtrabackup:$XTRABACKUP_PASSWORD" \
-        --wsrep_node_address="$ipaddr" --pxc_strict_mode="$PXC_STRICT_MODE" "${CMDARG[@]}"
-    else
-        echo "I am not the Primary Node"
-        chown -R mysql:mysql /var/lib/mysql || true # default is root:root 777
-        touch /var/log/mysqld.log
-        chown mysql:mysql /var/log/mysqld.log
-        write_password_file
-        exec mysqld --user=mysql --wsrep_cluster_name="$SHORT_CLUSTER_NAME" --wsrep_node_name="$hostname" \
-        --wsrep_cluster_address="gcomm://$cluster_join" --wsrep_sst_method=xtrabackup-v2 \
-        --wsrep_sst_auth="xtrabackup:$XTRABACKUP_PASSWORD" \
-        --wsrep_node_address="$ipaddr" --pxc_strict_mode="$PXC_STRICT_MODE" "${CMDARG[@]}"
-    fi
+    init_mysql
+    write_password_file
+    exec mysqld --user=mysql --pxc_strict_mode="$PXC_STRICT_MODE" "${CMDARG[@]}"
   functions.sh: |
     #!/bin/bash
 
@@ -2986,11 +2991,12 @@ data:
 kind: ConfigMap
 metadata:
   labels:
+    app.kubernetes.io/component: database
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: database-startup-scripts
   namespace: default
 ---
@@ -3045,8 +3051,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-move-auctioneer
   namespace: default
 ---
@@ -3097,8 +3103,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-move-log-cache
   namespace: default
 ---
@@ -3112,8 +3118,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-move-routing-api
   namespace: default
 ---
@@ -3127,8 +3133,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-acceptance-tests
   namespace: default
 ---
@@ -3183,16 +3189,16 @@ data:
     http:/healthz\n          # We don't want a liveness probe here as we do migration
     here, and we\n          # do not want to interrupt that.  We may want to consider
     using a\n          # startupProbe in the future (once that feature stabilizes).\n
-    \         liveness: ~\n        local_worker_1:\n          readiness: &cc_local_worker_readiness\n
-    \           exec:\n              command: [/usr/bin/pgrep, --full, cc_api_worker]\n
-    \       local_worker_2:\n          readiness: *cc_local_worker_readiness\n        nginx:\n
-    \         readiness:\n            httpGet:\n              httpHeaders:\n              -
-    name: Host\n                value: api\n              path: /healthz\n              port:
-    9024\n              scheme: HTTPS\n          liveness:\n            exec:\n              command:
-    [/usr/bin/pgrep, --full, \"nginx: master process\"]\n    post_start:\n      condition:\n
-    \       exec:\n          command: [\"curl\", \"--fail\", \"--head\", \"--silent\",
-    \"http://127.0.0.1:9022/healthz\"]\n\n# Add quarks properties for cc_uploader.\n-
-    type: replace\n  path: /instance_groups/name=api/jobs/name=cc_uploader/properties/quarks?\n
+    \         liveness: ~\n        local_worker_1:\n          readiness:\n            exec:\n
+    \             command: [/usr/bin/pgrep, --full, cc_api_worker]\n        local_worker_2:\n
+    \         readiness:\n            exec:\n              command: [/usr/bin/pgrep,
+    --full, cc_api_worker]\n        nginx:\n          readiness:\n            httpGet:\n
+    \             httpHeaders:\n              - name: Host\n                value:
+    api\n              path: /healthz\n              port: 9024\n              scheme:
+    HTTPS\n          liveness:\n            exec:\n              command: [/usr/bin/pgrep,
+    --full, \"nginx: master process\"]\n    post_start:\n      condition:\n        exec:\n
+    \         command: [\"curl\", \"--fail\", \"--head\", \"--silent\", \"http://127.0.0.1:9022/healthz\"]\n\n#
+    Add quarks properties for cc_uploader.\n- type: replace\n  path: /instance_groups/name=api/jobs/name=cc_uploader/properties/quarks?\n
     \ value:\n    ports:\n    - name: http\n      protocol: TCP\n      internal: 9090\n
     \   - name: https\n      protocol: TCP\n      internal: 9091\n    run:\n      healthcheck:\n
     \       cc_uploader:\n          readiness:\n            # cc-uploader does not
@@ -3219,21 +3225,13 @@ data:
     doesn't support HTTP HEAD requests\n          command: [\"curl\", \"--fail\",
     \"--silent\", \"http://localhost:31946/\"]\n\n- type: replace\n  path: /instance_groups/name=api/jobs/name=route_registrar/properties/quarks?/run/healthcheck/route_registrar\n
     \ value:\n    readiness: ~\n      # The route registrar doesn't expose anything
-    to indicate if the\n      # routes are healthy\n\n- type: replace\n  path: /instance_groups/name=api/jobs/name=loggr-udp-forwarder/properties/quarks?/run/healthcheck/loggr-udp-forwarder/readiness/exec/command\n
-    \ value: [\"sh\", \"-c\", \"ss -nlu sport = 3457 | grep :3457\"]\n- type: replace\n
-    \ path: /instance_groups/name=api/jobs/name=cc_uploader/properties/quarks?/pre_render_scripts/jobs/-\n
-    \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
-    \   target=\"/var/vcap/all-releases/jobs-src/capi/cc_uploader/templates/pre-start.erb\"\n
-    \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
-    \     if sha256sum --check \"${sentinel}\" ; then\n        echo \"Patch already
-    applied. Skipping\"\n        exit 0\n      fi\n      echo \"Sentinel mismatch,
-    re-patching\"\n    fi\n    \n    # Remove sysctl calls as we are running in containers.\n
-    \   # cc_uploader_ctl in https://github.com/cloudfoundry/capi-release/blob/master/jobs/cc_uploader/templates/cc_uploader_ctl.erb#L26\n
-    \   # also skips setting those parameters.\n    patch --verbose \"${target}\"
-    <<'EOT'\n    @@ -6,6 +6,3 @@\n         /var/vcap/jobs/bosh-dns/bin/wait\n       fi\n
-    \    fi\n    -\n    -sysctl -e -w net.ipv4.tcp_fin_timeout=10\n    -sysctl -e
-    -w net.ipv4.tcp_tw_reuse=1\n    EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n-
-    type: replace\n  path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/quarks?/pre_render_scripts/bpm/-\n
+    to indicate if the\n      # routes are healthy\n\n- type: replace\n  path: /instance_groups/name=api/jobs/name=loggr-udp-forwarder/properties/quarks?\n
+    \ value:\n    run:\n      healthcheck:\n        loggr-udp-forwarder:\n          readiness:\n
+    \           exec:\n              command: [\"sh\", \"-c\", \"ss -nlu sport = 3457
+    | grep :3457\"]\n    envs:\n    - name: INDEX\n      valueFrom:\n        fieldRef:\n
+    \         fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']\n    -
+    name: IP\n      valueFrom:\n        fieldRef:\n          fieldPath: status.podIP\n-
+    type: replace\n  path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/pre_render_scripts/bpm/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/capi/cloud_controller_ng/templates/bpm.yml.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -3258,8 +3256,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-api
   namespace: default
 ---
@@ -3273,8 +3271,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-app-autoscaler
   namespace: default
 ---
@@ -3307,8 +3305,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-auctioneer
   namespace: default
 ---
@@ -3322,8 +3320,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-brain-tests
   namespace: default
 ---
@@ -3334,7 +3332,7 @@ data:
     - type: replace
       path: /instance_groups/name=cc-worker/jobs/name=cloud_controller_worker/properties/quarks?/run/healthcheck/worker_1
       value:
-        readiness: &cloud_controller_worker_readiness
+        readiness:
           exec:
             command: [/usr/bin/pgrep, --full, cc-worker-cloud_controller_worker]
 kind: ConfigMap
@@ -3344,8 +3342,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-cc-worker
   namespace: default
 ---
@@ -3393,8 +3391,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-credhub
   namespace: default
 ---
@@ -3506,8 +3504,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-database
   namespace: default
 ---
@@ -3528,20 +3526,18 @@ data:
     \   ports:\n    - name: locket\n      protocol: TCP\n      internal: 8891\n    run:\n
     \     healthcheck:\n        locket:\n          readiness:\n            exec:\n
     \             command:\n              - /var/vcap/packages/cfdot/bin/cfdot\n              -
-    locks\n              - --locketAPILocation=localhost:8891\n              # We
-    need to both give --skipCertVerify and provide a CA cert;\n              # skipping
-    the former ends up with context deadline exceeded, and\n              # skipping
-    the latter errors out failing to read file \"\"\n              - --skipCertVerify\n
-    \             - --caCertFile=/var/vcap/jobs/locket/config/certs/ca.crt\n              -
-    --clientCertFile=/var/vcap/jobs/locket/config/certs/server.crt\n              -
-    --clientKeyFile=/var/vcap/jobs/locket/config/certs/server.key\n\n# Add quarks
-    properties for bbs.\n- type: replace\n  path: /instance_groups/name=diego-api/jobs/name=bbs/properties/quarks?\n
+    locks\n              - --locketAPILocation=127.0.0.1:8891\n              - --caCertFile=/var/vcap/jobs/cfdot/config/certs/cfdot/ca.crt\n
+    \             - --clientCertFile=/var/vcap/jobs/cfdot/config/certs/cfdot/client.crt\n
+    \             - --clientKeyFile=/var/vcap/jobs/cfdot/config/certs/cfdot/client.key\n\n#
+    Add quarks properties for bbs.\n- type: replace\n  path: /instance_groups/name=diego-api/jobs/name=bbs/properties/quarks?\n
     \ value:\n    ports:\n    - name: cell-bbs-api\n      protocol: TCP\n      internal:
     8889 # If you change this values, change the probe below too\n    activePassiveProbes:\n
     \     bbs-bbs:\n        exec:\n          command:\n          - bash\n          -
-    -ce\n          - \"head -c0 </dev/tcp/${HOSTNAME}/8889\"\n- type: replace\n  path:
-    /instance_groups/name=diego-api/jobs/name=cfdot/properties/quarks?/bpm/processes\n
-    \ value: []\n- type: replace\n  path: /instance_groups/name=diego-api/jobs/name=bbs/properties/quarks?/pre_render_scripts/jobs/-\n
+    -ce\n          - \"head -c0 </dev/tcp/${HOSTNAME}/8889\"\n\n- type: replace\n
+    \ path: /instance_groups/name=diego-api/jobs/name=loggr-udp-forwarder/properties?/quarks/envs\n
+    \ value:\n  - name: INDEX\n    valueFrom:\n      fieldRef:\n        fieldPath:
+    metadata.labels['statefulset.kubernetes.io/pod-name']\n  - name: IP\n    valueFrom:\n
+    \     fieldRef:\n        fieldPath: status.podIP\n- type: replace\n  path: /instance_groups/name=diego-api/jobs/name=bbs/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/diego/bbs/templates/bbs.json.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -3550,7 +3546,7 @@ data:
     re-patching\"\n    fi\n    \n    # Advertise our spec address.\n    patch --verbose
     \"${target}\" <<'EOT'\n    62c62\n    <     \"#{scheme}://#{name.gsub('_', '-')}-#{spec.index}.#{base}:#{port}\"\n
     \   ---\n    >     \"#{scheme}://#{spec.address}:#{port}\"\n    EOT\n    \n    sha256sum
-    \"${target}\" > \"${sentinel}\"\n\n- type: replace\n  path: /instance_groups/name=diego-api/jobs/name=cfdot/properties/quarks?/pre_render_scripts/jobs/-\n
+    \"${target}\" > \"${sentinel}\"\n\n- type: replace\n  path: /instance_groups/name=diego-api/jobs/name=cfdot/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    ##\n    # ATTENTION: This is part of
     a set of six interconnected patches.\n    #            Two files spread over three
     instance groups.\n    # See\n    # - bosh/releases/pre_render_scripts/diego-cell/cfdot/jobs\n
@@ -3567,7 +3563,7 @@ data:
     -p \"${DEST}\"\n    \n    cp /var/vcap/jobs/cfdot/bin/setup     \"${DEST}/cfdot.sh\"\n
     \   cp /var/vcap/packages/cfdot/bin/cfdot \"${DEST}/cfdot\"\n    chown root:vcap
     \"${DEST}/cfdot.sh\"\n    EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n-
-    type: replace\n  path: /instance_groups/name=diego-api/jobs/name=cfdot/properties/quarks?/pre_render_scripts/jobs/-\n
+    type: replace\n  path: /instance_groups/name=diego-api/jobs/name=cfdot/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    ##\n    # ATTENTION: This is part of
     a set of six interconnected patches.\n    #            Two files spread over three
     instance groups.\n    # See\n    # - bosh/releases/pre_render_scripts/diego-cell/cfdot/jobs\n
@@ -3586,20 +3582,33 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-diego-api
   namespace: default
 ---
 apiVersion: v1
 data:
   ops: "\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=vxlan-policy-agent/properties/disable?\n
-    \ value: true\n\n# Enable BPM on garden.\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties/bpm?/enabled\n
-    \ value: true\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=rep/properties/set_kernel_parameters?\n
-    \ value: false\n\n# Use a PVC for garden data\n# https://github.com/cloudfoundry-incubator/kubecf/issues/441\n-
-    type: replace\n  path: /instance_groups/name=diego-cell/env?/bosh?/agent?/settings?/ephemeralAsPVC?\n
-    \ value: true\n- type: replace\n  path: /instance_groups/name=diego-cell/vm_resources?/ephemeral_disk_size?\n
-    \ value: 40960\n- type: remove\n  path: /instance_groups/name=diego-cell/persistent_disk_type?\n\n#
+    \ value: true\n\n# Don't inject replica count for the diego cells\n# The instance
+    count is not needed for diego cells, and removing it optimizes scaling up/down
+    diego cells\n- type: replace\n  path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/injectReplicasEnv?\n
+    \ value: false\n# Also remove link instances for vpa, they are not required and
+    they make the cells restart when scaling\n- type: replace\n  path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/preRenderOps/instanceGroup?\n
+    \ value:\n  - type: replace\n    path: /instance_groups/name=diego-cell/jobs/name=silk-daemon/properties/quarks/consumes/vpa/instances?\n
+    \   value:\n    - address: diego-cell-0\n  - type: replace\n    path: /instance_groups/name=diego-cell/jobs/name=silk-cni/properties/quarks/consumes/vpa/instances?\n
+    \   value:\n    - address: diego-cell-0\n\n# Enable BPM on garden.\n- type: replace\n
+    \ path: /instance_groups/name=diego-cell/jobs/name=garden/properties/bpm?/enabled\n
+    \ value: true\n\n# Configure the size of the diego cell grootfs store\n\n# We
+    are repurposing reserved_space_for_other_jobs_in_mb as the size of the grootfs
+    store\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties/grootfs?/reserved_space_for_other_jobs_in_mb\n
+    \ value: 40960\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=rep/properties/diego?/executor/disk_capacity_mb\n
+    \ value: 40960\n\n# The loggr UDP forwarder needs some env vars specific to the
+    container they're running in\n# The INDEX env var cannot be rendered properly
+    as part of BPM rendering, it can only be set\n# correctly through pod reflection.
+    Without this, the index would be 0 for any replica\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=loggr-udp-forwarder/properties?/quarks/envs?\n
+    \ value:\n  - name: IP\n    valueFrom:\n      fieldRef:\n        fieldPath: status.podIP\n
+    \ - name: INDEX\n    valueFrom:\n      fieldRef:\n        fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']\n\n#
     Rep data should not be a PVC - since that could end up as a PVC\n# and if it's
     NFS, garden won't work\n- type: replace\n  path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/disks\n
     \ value:\n  - volume:\n      name: rep-data\n      emptyDir: {}\n    volumeMount:\n
@@ -3610,7 +3619,11 @@ data:
     stack-rootfs-setup job\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties/garden/network_plugin?\n
     \ value: /var/vcap/data/runc-cni/bin/garden-external-networker\n\n- type: replace\n
     \ path: /instance_groups/name=diego-cell/jobs/name=garden-cni/properties/cni_plugin_dir?\n
-    \ value: /var/vcap/data/silk-cni/bin\n\n- type: remove\n  path: /instance_groups/name=diego-cell/jobs/name=silk-cni/properties/dns_servers?\n\n#
+    \ value: /var/vcap/data/silk-cni/bin\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=silk-cni/properties/dns_servers?\n
+    \ value:\n  # The bosh-dns.<namespace>.svc gets resolved to the service ClusterIP
+    it points to and then\n  # replaced with its value when rendering the silk-cni
+    configuration file. This functionality is\n  # provided by a patch on a pre-render
+    script.\n  - \"apps-dns.default.svc\"\n\n- type: remove\n  path: /instance_groups/name=diego-cell/jobs/name=bosh-dns-adapter?\n\n#
     Add quarks properties for garden.\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties/quarks?\n
     \ value:\n    run:\n      healthcheck:\n        garden:\n          readiness:\n
     \           exec:\n              command: [\"curl\", \"--head\", \"--fail\", \"--silent\",
@@ -3624,28 +3637,24 @@ data:
     type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=rep/properties/quarks?\n
     \ value:\n    # Disable the ephemeral rep disk\n    bpm:\n      processes:\n      -
     name: rep\n        ephemeral_disk: false\n    ports:\n    - name: rep-tls\n      protocol:
-    TCP\n      internal: 1801\n    run:\n      security_context:\n        capabilities:\n
-    \         add:\n          - SYS_ADMIN\n      healthcheck:\n        rep:\n          readiness:\n
-    \           exec:\n              command:\n              - curl\n              -
-    --head\n              - --fail\n              - --insecure\n              - --cert\n
-    \             - /var/vcap/jobs/rep/config/certs/tls.crt\n              - --key\n
-    \             - /var/vcap/jobs/rep/config/certs/tls.key\n              - https://127.0.0.1:1800/ping\n
-    \   post_start:\n      condition:\n        exec:\n          command: [sh, -c,
-    'ss -nlt sport = 1800 | grep \"LISTEN.*:1800\"']\n\n# Set the unconfined AppArmor
-    profile for bpm-pre-start-rep in order to perform mounts.\n# This works in combination
-    with CAP_SYS_ADMIN Linux capability.\n- type: replace\n  path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/annotations/container.apparmor.security.beta.kubernetes.io~1bpm-pre-start-rep\n
+    TCP\n      internal: 1801\n    run:\n      security_context:\n        privileged:
+    true\n      healthcheck:\n        rep:\n          readiness:\n            exec:\n
+    \             command:\n              - curl\n              - --head\n              -
+    --fail\n              - --insecure\n              - --cert\n              - /var/vcap/jobs/rep/config/certs/tls.crt\n
+    \             - --key\n              - /var/vcap/jobs/rep/config/certs/tls.key\n
+    \             - https://127.0.0.1:1800/ping\n    post_start:\n      condition:\n
+    \       exec:\n          command: [sh, -c, 'ss -nlt sport = 1800 | grep \"LISTEN.*:1800\"']\n\n#
+    Set the unconfined AppArmor profile for bpm-pre-start-rep in order to perform
+    mounts.\n# This works in combination with CAP_SYS_ADMIN Linux capability.\n- type:
+    replace\n  path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/annotations/container.apparmor.security.beta.kubernetes.io~1bpm-pre-start-rep\n
     \ value: unconfined\n\n# Set the unconfined AppArmor profile for rep-rep in order
     to perform mounts.\n# This works in combination with CAP_SYS_ADMIN Linux capability.\n-
     type: replace\n  path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/annotations/container.apparmor.security.beta.kubernetes.io~1rep-rep\n
-    \ value: unconfined\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=cfdot/properties/quarks?/bpm/processes\n
-    \ value: []\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden-cni/properties/quarks?/bpm/processes\n
-    \ value: []\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=silk-cni/properties/quarks?/bpm/processes\n
-    \ value: []\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties/garden/network_pool?\n
+    \ value: unconfined\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties/garden/network_pool?\n
     \ value: 10.38.0.0/16\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties/garden/apparmor_profile?\n
     \ value: \"\"\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties/garden/cleanup_process_dirs_on_wait\n
     \ value: false\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties?/garden?/disable_swap_limit?\n
-    \ value: true\n\n# To support multi-clusters and deploy a cell\n- type: replace\n
-    \ path: /instance_groups/name=diego-cell/jobs/name=cfdot/properties/quarks?/pre_render_scripts/jobs/-\n
+    \ value: true\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=cfdot/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    ##\n    # ATTENTION: This is part of
     a set of six interconnected patches.\n    #            Two files spread over three
     instance groups.\n    # See\n    # - bosh/releases/pre_render_scripts/diego-cell/cfdot/jobs\n
@@ -3662,7 +3671,7 @@ data:
     -p \"${DEST}\"\n    \n    cp /var/vcap/jobs/cfdot/bin/setup     \"${DEST}/cfdot.sh\"\n
     \   cp /var/vcap/packages/cfdot/bin/cfdot \"${DEST}/cfdot\"\n    chown root:vcap
     \"${DEST}/cfdot.sh\"\n    EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n-
-    type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=cfdot/properties/quarks?/pre_render_scripts/jobs/-\n
+    type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=cfdot/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    ##\n    # ATTENTION: This is part of
     a set of six interconnected patches.\n    #            Two files spread over three
     instance groups.\n    # See\n    # - bosh/releases/pre_render_scripts/diego-cell/cfdot/jobs\n
@@ -3674,7 +3683,7 @@ data:
     re-patching\"\n    fi\n    \n    # Look for cfdot in the new, shared location.\n
     \   sed -i \"s|PATH=/var/vcap/packages|PATH=/var/vcap/data|g\" \"${target}\"\n
     \   \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n- type: replace\n  path:
-    /instance_groups/name=diego-cell/jobs/name=garden-cni/properties/quarks?/pre_render_scripts/jobs/-\n
+    /instance_groups/name=diego-cell/jobs/name=garden-cni/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/cf-networking/garden-cni/templates/pre-start.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -3686,7 +3695,7 @@ data:
     || true\n    +\n    +DEST=/var/vcap/data/runc-cni/bin/\n    +\n    +mkdir -p \"${DEST}\"\n
     \   +cp /var/vcap/packages/runc-cni/bin/garden-external-networker \"${DEST}/garden-external-networker\"\n
     \   EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n- type: replace\n
-    \ path: /instance_groups/name=diego-cell/jobs/name=garden/properties/quarks?/pre_render_scripts/jobs/-\n
+    \ path: /instance_groups/name=diego-cell/jobs/name=garden/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/garden-runc/garden/templates/bin/bpm-pre-start.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -3697,7 +3706,42 @@ data:
     -iname '*' -delete\n    > \n    20a23,25\n    > \n    > # Ensure that runc and
     container processes can stat everything\n    > chmod ugo+rx /var/vcap/data/grootfs\n
     \   EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n- type: replace\n
-    \ path: /instance_groups/name=diego-cell/jobs/name=rep/properties/quarks?/pre_render_scripts/bpm/-\n
+    \ path: /instance_groups/name=diego-cell/jobs/name=garden/properties?/quarks/pre_render_scripts/jobs/-\n
+    \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
+    \   target=\"/var/vcap/all-releases/jobs-src/garden-runc/garden/templates/bin/grootfs-utils.erb\"\n
+    \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
+    \     if sha256sum --check \"${sentinel}\" ; then\n        echo \"Patch already
+    applied. Skipping\"\n        exit 0\n      fi\n      echo \"Sentinel mismatch,
+    re-patching\"\n    fi\n    \n    # Patch grootfs-utils to restrict the size of
+    the sparse stores\n    patch --verbose \"${target}\" <<'EOT'\n    7,8c7,17\n    <
+    \  /var/vcap/packages/thresholder/bin/thresholder \"<%= p(\"grootfs.reserved_space_for_other_jobs_in_mb\")
+    %>\" \"$DATA_DIR\" \"$GARDEN_CONFIG_DIR/grootfs_config.yml\" \"<%= p(\"garden.graph_cleanup_threshold_in_mb\")
+    %>\" \"<%= p(\"grootfs.graph_cleanup_threshold_in_mb\") %>\"\n    <   /var/vcap/packages/thresholder/bin/thresholder
+    \"<%= p(\"grootfs.reserved_space_for_other_jobs_in_mb\") %>\" \"$DATA_DIR\" \"$GARDEN_CONFIG_DIR/privileged_grootfs_config.yml\"
+    \"<%= p(\"garden.graph_cleanup_threshold_in_mb\") %>\" \"<%= p(\"grootfs.graph_cleanup_threshold_in_mb\")
+    %>\"\n    ---\n    >   let grootfs_size=\"<%= p(\"grootfs.reserved_space_for_other_jobs_in_mb\")
+    %>\"\n    >   let disk_size=`df -BM /var/vcap/data/grootfs/store/ | tail -n 1
+    | awk '{gsub(\"M\", \"\", $2); print $2}'`\n    >   let reserved_disk=\"$disk_size
+    - $grootfs_size\"\n    > \n    >   if [ \"$grootfs_size\" -gt \"$disk_size\" ];
+    then\n    >     echo \"The node running this cell doesn't have enough disk space.
+    You requested ${grootfs_size}M but the disk is ${disk_size}M in size.\"\n    >
+    \    exit 1\n    >   fi\n    > \n    >   /var/vcap/packages/thresholder/bin/thresholder
+    \"$reserved_disk\" \"$DATA_DIR\" \"$GARDEN_CONFIG_DIR/grootfs_config.yml\" \"<%=
+    p(\"garden.graph_cleanup_threshold_in_mb\") %>\" \"<%= p(\"grootfs.graph_cleanup_threshold_in_mb\")
+    %>\"\n    >   /var/vcap/packages/thresholder/bin/thresholder \"$reserved_disk\"
+    \"$DATA_DIR\" \"$GARDEN_CONFIG_DIR/privileged_grootfs_config.yml\" \"<%= p(\"garden.graph_cleanup_threshold_in_mb\")
+    %>\" \"<%= p(\"grootfs.graph_cleanup_threshold_in_mb\") %>\"\n    EOT\n    \n
+    \   sha256sum \"${target}\" > \"${sentinel}\"\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=garden/properties?/quarks/pre_render_scripts/jobs/-\n
+    \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
+    \   target=\"/var/vcap/all-releases/jobs-src/garden-runc/garden/templates/bin/pre-start\"\n
+    \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
+    \     if sha256sum --check \"${sentinel}\" ; then\n        echo \"Patch already
+    applied. Skipping\"\n        exit 0\n      fi\n      echo \"Sentinel mismatch,
+    re-patching\"\n    fi\n    \n    patch --verbose \"${target}\" <<'EOT'\n    ---
+    jobs/garden/templates/bin/pre-start\n    +++ jobs/garden/templates/bin/pre-start\n
+    \   @@ -1,7 +1,3 @@\n     #!/bin/bash\n    \n     set -e\n    -\n    -source /var/vcap/packages/greenskeeper/bin/system-preparation\n
+    \   -\n    -permit_device_control\n    EOT\n    \n    sha256sum \"${target}\"
+    > \"${sentinel}\"\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=rep/properties?/quarks/pre_render_scripts/bpm/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/diego/rep/templates/bpm.yml.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -3709,7 +3753,7 @@ data:
     \   -  ephemeral_disk: true\n    +  ephemeral_disk: false\n       additional_volumes:\n
     \        - path: <%= p(\"diego.executor.volman.driver_paths\") %>\n         -
     path : /var/vcap/data/garden\n    EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n-
-    type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=rep/properties/quarks?/pre_render_scripts/jobs/-\n
+    type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=rep/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/diego/rep/templates/bpm-pre-start.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -3720,7 +3764,7 @@ data:
     \   \n     $bin_dir/setup_mounted_data_dirs\n    +\n    +mkdir -p /var/vcap/data/shared-packages/\n
     \   +cp -r /var/vcap/packages/healthcheck /var/vcap/data/shared-packages/\n    +cp
     -r /var/vcap/packages/proxy /var/vcap/data/shared-packages/\n    EOT\n    \n    sha256sum
-    \"${target}\" > \"${sentinel}\"\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=rep/properties/quarks?/pre_render_scripts/jobs/-\n
+    \"${target}\" > \"${sentinel}\"\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=rep/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/diego/rep/templates/rep.json.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -3743,7 +3787,42 @@ data:
     \        evacuation_polling_interval: \"#{p(\"diego.rep.evacuation_polling_interval_in_seconds\")}s\",\n
     \        evacuation_timeout: \"#{p(\"diego.rep.evacuation_timeout_in_seconds\")}s\",\n
     \   EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n- type: replace\n
-    \ path: /instance_groups/name=diego-cell/jobs/name=silk-cni/properties/quarks?/pre_render_scripts/jobs/-\n
+    \ path: /instance_groups/name=diego-cell/jobs/name=rep/properties?/quarks/pre_render_scripts/jobs/-\n
+    \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
+    \   target=\"/var/vcap/all-releases/jobs-src/diego/rep/templates/set-rep-kernel-params.erb\"\n
+    \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
+    \     if sha256sum --check \"${sentinel}\" ; then\n        echo \"Patch already
+    applied. Skipping\"\n        exit 0\n      fi\n      echo \"Sentinel mismatch,
+    re-patching\"\n    fi\n    \n    # Disable ubuntu-specific uncontainerized connection
+    limit.\n    patch --verbose \"${target}\" <<'EOT'\n    @@ -18,8 +18,8 @@\n     \n
+    \    # NF_CONNTRACK_MAX\n     # Default value is 65536. We set it to a larger
+    number to avoid running out of connections.\n    -modprobe nf_conntrack\n    -echo
+    262144 > /proc/sys/net/netfilter/nf_conntrack_max\n    +#modprobe nf_conntrack\n
+    \   +#echo 262144 > /proc/sys/net/netfilter/nf_conntrack_max\n     \n     echo
+    2147483647 > /proc/sys/fs/inotify/max_user_watches\n     echo 2147483647 > /proc/sys/fs/inotify/max_user_instances\n
+    \   EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n- type: replace\n
+    \ path: /instance_groups/name=diego-cell/jobs/name=silk-cni/properties?/quarks/pre_render_scripts/jobs/-\n
+    \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset -o pipefail\n
+    \   \n    target=\"/var/vcap/all-releases/jobs-src/silk/silk-cni/templates/cni-wrapper-plugin.conflist.erb\"\n
+    \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
+    \     if sha256sum --check \"${sentinel}\" ; then\n        echo \"Patch already
+    applied. Skipping\"\n        exit 0\n      fi\n      echo \"Sentinel mismatch,
+    re-patching\"\n    fi\n    \n    # Resolve DNS Servers passed via the `dns_servers`
+    property if any is a hostname\n    # instead of an IP address.\n    patch --verbose
+    \"${target}\" <<'EOT'\n    @@ -2,6 +2,7 @@\n     <%=\n       require 'ipaddr'\n
+    \      require 'json'\n    +  require 'resolv'\n     \n       def compute_mtu\n
+    \        vxlan_overhead = 50\n    @@ -41,6 +42,14 @@\n         end\n       end\n
+    \    \n    +  dns_servers = p('dns_servers').map do |dns_server|\n    +    if
+    !(dns_server =~ Regexp.union([Resolv::IPv4::Regex, Resolv::IPv6::Regex]))\n    +
+    \     Resolv.getaddress dns_server\n    +    else\n    +      dns_server\n    +
+    \   end\n    +  end\n    +\n       toRender = {\n         'name' => 'cni-wrapper',\n
+    \        'cniVersion' => '0.3.1',\n    @@ -61,7 +70,7 @@\n           'ingress_tag'
+    => 'ffff0000',\n           'vtep_name' => 'silk-vtep',\n           'policy_agent_force_poll_address'
+    => '127.0.0.1:' + link('vpa').p('force_policy_poll_cycle_port').to_s,\n    -      'dns_servers'
+    => p('dns_servers'),\n    +      'dns_servers' => dns_servers,\n           'host_tcp_services'
+    => p('host_tcp_services'),\n           'host_udp_services' => p('host_udp_services'),\n
+    \          'deny_networks' => {\n    EOT\n    \n    sha256sum \"${target}\" >
+    \"${sentinel}\"\n\n- type: replace\n  path: /instance_groups/name=diego-cell/jobs/name=silk-cni/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/silk/silk-cni/templates/pre-start.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -3762,8 +3841,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-diego-cell
   namespace: default
 ---
@@ -3791,8 +3870,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-doppler
   namespace: default
 ---
@@ -3806,8 +3885,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-eirini-helm
   namespace: default
 ---
@@ -3873,8 +3952,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-log-api
   namespace: default
 ---
@@ -3916,7 +3995,7 @@ data:
                   - /var/vcap/jobs/log-cache/config/certs/metrics.crt
                   - --key
                   - /var/vcap/jobs/log-cache/config/certs/metrics.key
-                  - https://localhost:6060/debug/pprof/cmdline
+                  - https://localhost:6060/metrics
 
     # Add quarks properties for log-cache-gateway.
     - type: replace
@@ -3943,7 +4022,7 @@ data:
                   - /var/vcap/jobs/log-cache/config/certs/metrics.crt
                   - --key
                   - /var/vcap/jobs/log-cache/config/certs/metrics.key
-                  - https://localhost:6063/debug/pprof/cmdline
+                  - https://localhost:6063/metrics
 
     # Add quarks properties for log-cache-nozzle.
     - type: replace
@@ -3986,7 +4065,7 @@ data:
                   - /var/vcap/jobs/log-cache/config/certs/metrics.crt
                   - --key
                   - /var/vcap/jobs/log-cache/config/certs/metrics.key
-                  - https://localhost:6065/debug/pprof/cmdline
+                  - https://localhost:6065/metrics
 
     # Add quarks properties for route_registrar.
     - type: replace
@@ -4021,26 +4100,14 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-log-cache
   namespace: default
 ---
 apiVersion: v1
 data:
   ops: |-
-    # Add the nats BOSH DNS alias.
-    - type: replace
-      path: /addons/name=bosh-dns-aliases/jobs/name=bosh-dns-aliases/properties/aliases/-
-      value:
-        domain: nats.service.cf.internal
-        targets:
-        - deployment: cf
-          domain: bosh
-          instance_group: nats
-          network: default
-          query: '*'
-
     # Add quarks properties.
     - type: replace
       path: /instance_groups/name=nats/jobs/name=nats/properties/quarks?
@@ -4074,9 +4141,27 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-nats
+  namespace: default
+---
+apiVersion: v1
+data:
+  ops: |-
+    - path: /instance_groups/name=rotate-cc-database-key/env?/bosh/agent/settings/disable_log_sidecar
+      type: replace
+      value: true
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: operations
+    app.kubernetes.io/instance: kubecf
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubecf
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
+  name: ops-rotate-cc-database-key
   namespace: default
 ---
 apiVersion: v1
@@ -4111,11 +4196,23 @@ data:
       value: false
 
     - type: replace
-      path: /instance_groups/name=router/jobs/name=loggr-udp-forwarder/properties/quarks?/run/healthcheck/loggr-udp-forwarder
+      path: /instance_groups/name=router/jobs/name=loggr-udp-forwarder/properties/quarks?
       value:
-        readiness:
-          exec:
-            command: ["sh", "-c", "ss -nlu sport = 3457 | grep :3457"]
+        run:
+          healthcheck:
+            loggr-udp-forwarder:
+              readiness:
+                exec:
+                  command: ["sh", "-c", "ss -nlu sport = 3457 | grep :3457"]
+        envs:
+        - name: INDEX
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
+        - name: IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
 
     # Add necessary labels to the router instance group so that the service can select it to create the
     # endpoint.
@@ -4127,7 +4224,7 @@ data:
       value: "kubecf"
     - type: replace
       path: /instance_groups/name=router/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
-      value: "2.4.0"
+      value: "2.5.8"
 
     # Update cipher suites based on https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations
     - type: replace
@@ -4162,8 +4259,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-router
   namespace: default
 ---
@@ -4197,8 +4294,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-routing-api
   namespace: default
 ---
@@ -4216,7 +4313,12 @@ data:
     [\"pgrep\", \"--full\", \"deployment_updater:start\"]\n\n- type: replace\n  path:
     /instance_groups/name=scheduler/jobs/name=statsd_injector/properties/quarks?/run/healthcheck/statsd_injector/readiness/exec/command\n
     \ value: [\"/bin/sh\", \"-c\", \"ss -nlu src localhost:8125 | grep :8125\"]\n\n-
-    type: replace\n  path: /instance_groups/name=scheduler/jobs/name=tps/properties/quarks?/run/healthcheck/watcher/readiness/exec/command\n
+    type: replace\n  path: /variables/name=cf_app_sd_ca/options/alternative_names?/-\n
+    \ value: \"service-discovery-controller.default.svc\"\n- type: replace\n  path:
+    /variables/name=cf_app_sd_client_tls/options/alternative_names?/-\n  value: \"service-discovery-controller.default.svc\"\n-
+    type: replace\n  path: /variables/name=cf_app_sd_server_tls/options/alternative_names?/-\n
+    \ value: \"service-discovery-controller.default.svc\"\n\n- type: replace\n  path:
+    /instance_groups/name=scheduler/jobs/name=tps/properties/quarks?/run/healthcheck/watcher/readiness/exec/command\n
     \ value: [\"curl\", \"--fail\", \"--silent\", \"http://127.0.0.1:17015/debug/pprof/cmdline\"]\n\n#
     Add quarks properties for the ssh_proxy job.\n- type: replace\n  path: /instance_groups/name=scheduler/jobs/name=ssh_proxy/properties/diego/ssh_proxy/disable_healthcheck_server\n
     \ value: false\n- type: replace\n  path: /instance_groups/name=scheduler/jobs/name=ssh_proxy/properties/quarks?\n
@@ -4229,8 +4331,12 @@ data:
     it to create\n# the endpoint.\n- type: replace\n  path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/app.kubernetes.io~1component\n
     \ value: \"ssh-proxy\"\n- type: replace\n  path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance\n
     \ value: \"kubecf\"\n- type: replace\n  path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/app.kubernetes.io~1version\n
-    \ value: \"2.4.0\"\n\n- type: replace\n  path: /instance_groups/name=scheduler/jobs/name=cfdot/properties/quarks?/bpm/processes\n
-    \ value: []\n- type: replace\n  path: /instance_groups/name=scheduler/jobs/name=cfdot/properties/quarks?/pre_render_scripts/jobs/-\n
+    \ value: \"2.5.8\"\n\n- type: replace\n  path: /instance_groups/name=scheduler/jobs/name=loggr-udp-forwarder/properties?/quarks/envs\n
+    \ value:\n  - name: INDEX\n    valueFrom:\n      fieldRef:\n        fieldPath:
+    metadata.labels['statefulset.kubernetes.io/pod-name']\n  - name: IP\n    valueFrom:\n
+    \     fieldRef:\n        fieldPath: status.podIP\n\n- type: replace\n  path: /instance_groups/name=scheduler/jobs/name=loggr-syslog-binding-cache/properties?/quarks\n
+    \ value:\n    ports:\n    - name: binding-cache\n      protocol: TCP\n      internal:
+    9000\n- type: replace\n  path: /instance_groups/name=scheduler/jobs/name=cfdot/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    ##\n    # ATTENTION: This is part of
     a set of six interconnected patches.\n    #            Two files spread over three
     instance groups.\n    # See\n    # - bosh/releases/pre_render_scripts/diego-cell/cfdot/jobs\n
@@ -4247,7 +4353,7 @@ data:
     -p \"${DEST}\"\n    \n    cp /var/vcap/jobs/cfdot/bin/setup     \"${DEST}/cfdot.sh\"\n
     \   cp /var/vcap/packages/cfdot/bin/cfdot \"${DEST}/cfdot\"\n    chown root:vcap
     \"${DEST}/cfdot.sh\"\n    EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\"\n\n-
-    type: replace\n  path: /instance_groups/name=scheduler/jobs/name=cfdot/properties/quarks?/pre_render_scripts/jobs/-\n
+    type: replace\n  path: /instance_groups/name=scheduler/jobs/name=cfdot/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    ##\n    # ATTENTION: This is part of
     a set of six interconnected patches.\n    #            Two files spread over three
     instance groups.\n    # See\n    # - bosh/releases/pre_render_scripts/diego-cell/cfdot/jobs\n
@@ -4266,8 +4372,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-scheduler
   namespace: default
 ---
@@ -4286,7 +4392,7 @@ data:
     \         readiness:\n            exec:\n              command: [test, -S, /var/vcap/data/blobstore/signer.sock]\n\n-
     type: replace\n  path: /instance_groups/name=singleton-blobstore/jobs/name=route_registrar/properties/quarks?/run/healthcheck/route_registrar\n
     \ value:\n    readiness: ~\n      # The route registrar doesn't expose anything
-    to indicate if the\n      # routes are healthy.\n- type: replace\n  path: /instance_groups/name=singleton-blobstore/jobs/name=blobstore/properties/quarks?/pre_render_scripts/jobs/-\n
+    to indicate if the\n      # routes are healthy.\n- type: replace\n  path: /instance_groups/name=singleton-blobstore/jobs/name=blobstore/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   # Remove /var/vcap/packages from chowing.\n    \n    target=\"/var/vcap/all-releases/jobs-src/capi/blobstore/templates/pre-start.sh.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -4309,8 +4415,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-singleton-blobstore
   namespace: default
 ---
@@ -4328,8 +4434,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-smoke-tests
   namespace: default
 ---
@@ -4345,8 +4451,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-sync-integration-tests
   namespace: default
 ---
@@ -4370,8 +4476,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-tcp-router
   namespace: default
 ---
@@ -4388,7 +4494,7 @@ data:
     \ value:\n    readiness: ~\n      # The route registrar doesn't expose anything
     to indicate if the\n      # routes are healthy.\n\n- type: replace\n  path: /instance_groups/name=uaa/jobs/name=statsd_injector/properties/quarks?/run/healthcheck/statsd_injector/readiness/exec/command\n
     \ value: [\"/bin/sh\", \"-c\", \"ss -nlu src localhost:8125 | grep :8125\"]\n-
-    type: replace\n  path: /instance_groups/name=uaa/jobs/name=uaa/properties/quarks?/pre_render_scripts/jobs/-\n
+    type: replace\n  path: /instance_groups/name=uaa/jobs/name=uaa/properties?/quarks/pre_render_scripts/jobs/-\n
     \ value: |\n    #!/usr/bin/env bash\n    \n    set -o errexit -o nounset\n    \n
     \   target=\"/var/vcap/all-releases/jobs-src/uaa/uaa/templates/bin/pre-start.erb\"\n
     \   sentinel=\"${target}.patch_sentinel\"\n    if [[ -f \"${sentinel}\" ]]; then\n
@@ -4397,7 +4503,7 @@ data:
     re-patching\"\n    fi\n    \n    # Patch bin/pre-start.erb for the certificates
     to work with SUSE.\n    patch --verbose \"${target}\" <<'EOT'\n    --- pre-start.erb
     \ 2019-12-04 08:37:51.046503943 +0100\n    +++ - 2019-12-04 08:41:36.055142488
-    +0100\n    @@ -32,9 +32,24 @@\n         <% end %>\n    \n         log \"Trying
+    +0100\n    @@ -32,9 +32,29 @@\n         <% end %>\n    \n         log \"Trying
     to run update-ca-certificates...\"\n    -    # --certbundle is an undocumented
     flag in the update-ca-certificates script\n    -    # https://salsa.debian.org/debian/ca-certificates/blob/master/sbin/update-ca-certificates#L53\n
     \   -    timeout --signal=KILL 180s /usr/sbin/update-ca-certificates -f -v --certbundle
@@ -4408,9 +4514,11 @@ data:
     --certbundle \"$(basename \"${OS_CERTS_FILE}\")\"\n    +      ;;\n    +\n    +
     \     *suse|sles*)\n    +        timeout --signal=KILL 180s /usr/sbin/update-ca-certificates
     -f -v\n    +        mv /var/lib/ca-certificates/ca-bundle.pem /etc/ssl/certs/\"$(basename
-    \"${OS_CERTS_FILE}\")\"\n    +      ;;\n    +\n    +      *)\n    +        echo
-    \"Unsupported operating system: ${PRETTY_NAME}\"\n    +        exit 42\n    +
-    \     ;;\n    +    esac\n     }\n    \n     function new_cache_files_are_identical
+    \"${OS_CERTS_FILE}\")\"\n    +      ;;\n    +\n    +      *rhel|centos|fedora*)\n
+    \   +        timeout --signal=KILL 180s /usr/bin/update-ca-trust\n    +        cp
+    /etc/ssl/certs/ca-bundle.crt ${OS_CERTS_FILE}\n    +      ;;\n    +\n    +      *)\n
+    \   +        echo \"Unsupported operating system: ${PRETTY_NAME}\"\n    +        exit
+    42\n    +      ;;\n    +    esac\n     }\n    \n     function new_cache_files_are_identical
     {\n    EOT\n    \n    sha256sum \"${target}\" > \"${sentinel}\""
 kind: ConfigMap
 metadata:
@@ -4419,9 +4527,424 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-uaa
+  namespace: default
+---
+apiVersion: v1
+data:
+  ops: |2-
+
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=binary-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cc_uploader/properties?/quarks/bpm/processes/name=cc_uploader/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cc_uploader/properties?/quarks/bpm/processes/name=cc_uploader/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=ccng_monit_http_healthcheck/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=ccng_monit_http_healthcheck/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=cloud_controller_ng/limits/memory
+      value: 2048Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=cloud_controller_ng/requests/memory
+      value: 1024Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=local_worker_1/limits/memory
+      value: 800Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=local_worker_1/requests/memory
+      value: 400Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=local_worker_2/limits/memory
+      value: 800Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=local_worker_2/requests/memory
+      value: 400Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=nginx/limits/memory
+      value: 192Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/quarks/bpm/processes/name=nginx/requests/memory
+      value: 48Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=dotnet-core-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=file_server/properties?/quarks/bpm/processes/name=file_server/limits/memory
+      value: 96Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=file_server/properties?/quarks/bpm/processes/name=file_server/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=go-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=java-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=nginx-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=nodejs-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=php-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=policy-server/properties?/quarks/bpm/processes/name=policy-server/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=policy-server/properties?/quarks/bpm/processes/name=policy-server/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=policy-server-internal/properties?/quarks/bpm/processes/name=policy-server-internal/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=policy-server-internal/properties?/quarks/bpm/processes/name=policy-server-internal/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=python-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=r-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=ruby-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=staticfile-buildpack?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=statsd_injector/properties?/quarks/bpm/processes/name=statsd_injector/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=statsd_injector/properties?/quarks/bpm/processes/name=statsd_injector/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=auctioneer/jobs/name=auctioneer/properties?/quarks/bpm/processes/name=auctioneer/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=auctioneer/jobs/name=auctioneer/properties?/quarks/bpm/processes/name=auctioneer/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=cc-worker/jobs/name=cloud_controller_worker/properties?/quarks/bpm/processes/name=worker_1/limits/memory
+      value: 512Mi
+    - type: replace
+      path: /instance_groups/name=cc-worker/jobs/name=cloud_controller_worker/properties?/quarks/bpm/processes/name=worker_1/requests/memory
+      value: 384Mi
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=bbs/properties?/quarks/bpm/processes/name=bbs/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=bbs/properties?/quarks/bpm/processes/name=bbs/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=cfdot?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=locket/properties?/quarks/bpm/processes/name=locket/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=locket/properties?/quarks/bpm/processes/name=locket/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=silk-controller/properties?/quarks/bpm/processes/name=silk-controller/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-api/jobs/name=silk-controller/properties?/quarks/bpm/processes/name=silk-controller/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=cfdot?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=cflinuxfs3-rootfs-setup?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=garden/properties?/quarks/bpm/processes/name=garden/limits/memory
+      value: 524288Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=garden/properties?/quarks/bpm/processes/name=garden/requests/memory
+      value: 16Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=garden-cni?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=netmon/properties?/quarks/bpm/processes/name=netmon/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=netmon/properties?/quarks/bpm/processes/name=netmon/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=rep/properties?/quarks/bpm/processes/name=rep/limits/memory
+      value: 3072Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=rep/properties?/quarks/bpm/processes/name=rep/requests/memory
+      value: 2048Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=route_emitter/properties?/quarks/bpm/processes/name=route_emitter/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=route_emitter/properties?/quarks/bpm/processes/name=route_emitter/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=silk-cni?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=silk-daemon/properties?/quarks/bpm/processes/name=silk-daemon/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=silk-daemon/properties?/quarks/bpm/processes/name=silk-daemon/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=vxlan-policy-agent/properties?/quarks/bpm/processes/name=vxlan-policy-agent/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=diego-cell/jobs/name=vxlan-policy-agent/properties?/quarks/bpm/processes/name=vxlan-policy-agent/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=doppler/jobs/name=doppler/properties?/quarks/bpm/processes/name=doppler/limits/memory
+      value: 256Mi
+    - type: replace
+      path: /instance_groups/name=doppler/jobs/name=doppler/properties?/quarks/bpm/processes/name=doppler/requests/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=log-api/jobs/name=loggregator_trafficcontroller/properties?/quarks/bpm/processes/name=loggregator_trafficcontroller/limits/memory
+      value: 128Mi
+    - type: replace
+      path: /instance_groups/name=log-api/jobs/name=loggregator_trafficcontroller/properties?/quarks/bpm/processes/name=loggregator_trafficcontroller/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=log-api/jobs/name=reverse_log_proxy/properties?/quarks/bpm/processes/name=reverse_log_proxy/limits/memory
+      value: 128Mi
+    - type: replace
+      path: /instance_groups/name=log-api/jobs/name=reverse_log_proxy/properties?/quarks/bpm/processes/name=reverse_log_proxy/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=log-api/jobs/name=reverse_log_proxy_gateway/properties?/quarks/bpm/processes/name=reverse_log_proxy_gateway/limits/memory
+      value: 128Mi
+    - type: replace
+      path: /instance_groups/name=log-api/jobs/name=reverse_log_proxy_gateway/properties?/quarks/bpm/processes/name=reverse_log_proxy_gateway/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=log-api/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/limits/memory
+      value: 128Mi
+    - type: replace
+      path: /instance_groups/name=log-api/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=log-cache/properties?/quarks/bpm/processes/name=log-cache/limits/memory
+      value: 2048Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=log-cache/properties?/quarks/bpm/processes/name=log-cache/requests/memory
+      value: 512Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=log-cache-cf-auth-proxy/properties?/quarks/bpm/processes/name=log-cache-cf-auth-proxy/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=log-cache-cf-auth-proxy/properties?/quarks/bpm/processes/name=log-cache-cf-auth-proxy/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=log-cache-gateway/properties?/quarks/bpm/processes/name=log-cache-gateway/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=log-cache-gateway/properties?/quarks/bpm/processes/name=log-cache-gateway/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=log-cache-nozzle/properties?/quarks/bpm/processes/name=log-cache-nozzle/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=log-cache-nozzle/properties?/quarks/bpm/processes/name=log-cache-nozzle/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=log-cache/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=nats/jobs/name=nats/properties?/quarks/bpm/processes/name=nats/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=nats/jobs/name=nats/properties?/quarks/bpm/processes/name=nats/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=nats/jobs/name=nats-tls/properties?/quarks/bpm/processes/name=nats-tls/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=nats/jobs/name=nats-tls/properties?/quarks/bpm/processes/name=nats-tls/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=rotate-cc-database-key/jobs/name=rotate_cc_database_key/properties?/quarks/bpm/processes/name=rotate/limits/memory
+      value: 512Mi
+    - type: replace
+      path: /instance_groups/name=rotate-cc-database-key/jobs/name=rotate_cc_database_key/properties?/quarks/bpm/processes/name=rotate/requests/memory
+      value: 192Mi
+    - type: replace
+      path: /instance_groups/name=router/jobs/name=gorouter/properties?/quarks/bpm/processes/name=gorouter/limits/memory
+      value: 200Mi
+    - type: replace
+      path: /instance_groups/name=router/jobs/name=gorouter/properties?/quarks/bpm/processes/name=gorouter/requests/memory
+      value: 50Mi
+    - type: replace
+      path: /instance_groups/name=router/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/limits/memory
+      value: 200Mi
+    - type: replace
+      path: /instance_groups/name=router/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/requests/memory
+      value: 50Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=cc_deployment_updater/properties?/quarks/bpm/processes/name=cc_deployment_updater/limits/memory
+      value: 320Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=cc_deployment_updater/properties?/quarks/bpm/processes/name=cc_deployment_updater/requests/memory
+      value: 80Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=cfdot?/properties/quarks/bpm/processes
+      value: []
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=cloud_controller_clock/properties?/quarks/bpm/processes/name=cloud_controller_clock/limits/memory
+      value: 512Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=cloud_controller_clock/properties?/quarks/bpm/processes/name=cloud_controller_clock/requests/memory
+      value: 128Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=loggr-syslog-binding-cache/properties?/quarks/bpm/processes/name=loggr-syslog-binding-cache/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=loggr-syslog-binding-cache/properties?/quarks/bpm/processes/name=loggr-syslog-binding-cache/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=loggr-udp-forwarder/properties?/quarks/bpm/processes/name=loggr-udp-forwarder/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=service-discovery-controller/properties?/quarks/bpm/processes/name=service-discovery-controller/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=service-discovery-controller/properties?/quarks/bpm/processes/name=service-discovery-controller/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=ssh_proxy/properties?/quarks/bpm/processes/name=ssh_proxy/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=ssh_proxy/properties?/quarks/bpm/processes/name=ssh_proxy/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=statsd_injector/properties?/quarks/bpm/processes/name=statsd_injector/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=statsd_injector/properties?/quarks/bpm/processes/name=statsd_injector/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=tps/properties?/quarks/bpm/processes/name=watcher/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=scheduler/jobs/name=tps/properties?/quarks/bpm/processes/name=watcher/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/jobs/name=blobstore/properties?/quarks/bpm/processes/name=nginx/limits/memory
+      value: 400Mi
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/jobs/name=blobstore/properties?/quarks/bpm/processes/name=nginx/requests/memory
+      value: 100Mi
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/jobs/name=blobstore/properties?/quarks/bpm/processes/name=url_signer/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/jobs/name=blobstore/properties?/quarks/bpm/processes/name=url_signer/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=uaa/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=uaa/jobs/name=route_registrar/properties?/quarks/bpm/processes/name=route_registrar/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=uaa/jobs/name=statsd_injector/properties?/quarks/bpm/processes/name=statsd_injector/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /instance_groups/name=uaa/jobs/name=statsd_injector/properties?/quarks/bpm/processes/name=statsd_injector/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /instance_groups/name=uaa/jobs/name=uaa/properties?/quarks/bpm/processes/name=uaa/limits/memory
+      value: 1400Mi
+    - type: replace
+      path: /instance_groups/name=uaa/jobs/name=uaa/properties?/quarks/bpm/processes/name=uaa/requests/memory
+      value: 350Mi
+    - type: replace
+      path: /addons/name=forwarder_agent/jobs/name=loggr-forwarder-agent/properties?/quarks/bpm/processes/name=loggr-forwarder-agent/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /addons/name=forwarder_agent/jobs/name=loggr-forwarder-agent/properties?/quarks/bpm/processes/name=loggr-forwarder-agent/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /addons/name=loggr-syslog-agent/jobs/name=loggr-syslog-agent/properties?/quarks/bpm/processes/name=loggr-syslog-agent/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /addons/name=loggr-syslog-agent/jobs/name=loggr-syslog-agent/properties?/quarks/bpm/processes/name=loggr-syslog-agent/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /addons/name=loggregator_agent/jobs/name=loggregator_agent/properties?/quarks/bpm/processes/name=loggregator_agent/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /addons/name=loggregator_agent/jobs/name=loggregator_agent/properties?/quarks/bpm/processes/name=loggregator_agent/requests/memory
+      value: 32Mi
+    - type: replace
+      path: /addons/name=prom_scraper/jobs/name=prom_scraper/properties?/quarks/bpm/processes/name=prom_scraper/limits/memory
+      value: 64Mi
+    - type: replace
+      path: /addons/name=prom_scraper/jobs/name=prom_scraper/properties?/quarks/bpm/processes/name=prom_scraper/requests/memory
+      value: 32Mi
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: operations
+    app.kubernetes.io/instance: kubecf
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubecf
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
+  name: ops-resource-limits
   namespace: default
 ---
 apiVersion: v1
@@ -4430,16 +4953,47 @@ data:
     - type: remove
       path: /addons/name=bpm
 
+    # The loggr forwarder agent needs a special env var with tags that identify the job
+    # The AGENT_INDEX env var cannot be rendered properly as part of BPM rendering, it can only be set
+    # correctly through pod reflection. Without this, the index would be 0 for any replica
     - type: replace
-      path: /addons/name=loggregator_agent/jobs/name=loggregator_agent/properties/quarks?/envs?
+      path: /addons/name=forwarder_agent/jobs/name=loggr-forwarder-agent/properties?/quarks/envs
       value:
       - name: AGENT_IP
         valueFrom:
           fieldRef:
-            apiVersion: v1
             fieldPath: status.podIP
       - name: AGENT_INDEX
-        value: "0"
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
+      - name: AGENT_DEPLOYMENT
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.labels['quarks.cloudfoundry.org/deployment-name']
+      - name: AGENT_IG_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.labels['quarks.cloudfoundry.org/instance-group-name']
+      - name: AGENT_TAGS
+        value: "deployment:$(AGENT_DEPLOYMENT),job:$(AGENT_IG_NAME)-loggr-forwarder-agent,index:$(AGENT_INDEX),ip:$(AGENT_IP)"
+
+    # The loggregator agent needs env vars to identify the job
+    # The AGENT_INDEX env var cannot be rendered properly as part of BPM rendering, it can only be set
+    # correctly through pod reflection. Without this, the index would be 0 for any replica
+    - type: replace
+      path: /addons/name=loggregator_agent/jobs/name=loggregator_agent/properties?/quarks/envs
+      value:
+      - name: AGENT_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+      - name: AGENT_INDEX
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
+      - name: AGENT_TAGS
+        value: "deployment:$(AGENT_DEPLOYMENT),job:$(AGENT_JOB),index:$(AGENT_INDEX),ip:$(AGENT_IP)"
 kind: ConfigMap
 metadata:
   labels:
@@ -4447,8 +5001,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-addons
   namespace: default
 ---
@@ -4486,8 +5040,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-azs
   namespace: default
 ---
@@ -4495,6 +5049,273 @@ apiVersion: v1
 data:
   ops: |2-
 
+    - type: replace
+      path: /instance_groups/name=api/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "api"
+    - type: replace
+      path: /instance_groups/name=api/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=api/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=api/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=api/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=api/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=auctioneer/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "auctioneer"
+    - type: replace
+      path: /instance_groups/name=auctioneer/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=auctioneer/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=auctioneer/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=auctioneer/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=auctioneer/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=cc-worker/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "cc-worker"
+    - type: replace
+      path: /instance_groups/name=cc-worker/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=cc-worker/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=cc-worker/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=cc-worker/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=cc-worker/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=diego-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "diego-api"
+    - type: replace
+      path: /instance_groups/name=diego-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=diego-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=diego-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=diego-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=diego-api/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "diego-cell"
+    - type: replace
+      path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=diego-cell/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=doppler/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "doppler"
+    - type: replace
+      path: /instance_groups/name=doppler/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=doppler/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=doppler/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=doppler/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=doppler/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=log-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "log-api"
+    - type: replace
+      path: /instance_groups/name=log-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=log-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=log-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=log-api/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=log-api/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=log-cache/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "log-cache"
+    - type: replace
+      path: /instance_groups/name=log-cache/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=log-cache/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=log-cache/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=log-cache/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=log-cache/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=nats/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "nats"
+    - type: replace
+      path: /instance_groups/name=nats/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=nats/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=nats/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=nats/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=nats/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=rotate-cc-database-key/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "rotate-cc-database-key"
+    - type: replace
+      path: /instance_groups/name=rotate-cc-database-key/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=rotate-cc-database-key/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=rotate-cc-database-key/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=rotate-cc-database-key/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=rotate-cc-database-key/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=router/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "router"
+    - type: replace
+      path: /instance_groups/name=router/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=router/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=router/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=router/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=router/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "scheduler"
+    - type: replace
+      path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=scheduler/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "singleton-blobstore"
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=singleton-blobstore/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+    - type: replace
+      path: /instance_groups/name=uaa/env?/bosh/agent/settings/labels/app.kubernetes.io~1component
+      value: "uaa"
+    - type: replace
+      path: /instance_groups/name=uaa/env?/bosh/agent/settings/labels/app.kubernetes.io~1instance
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=uaa/env?/bosh/agent/settings/labels/app.kubernetes.io~1managed-by
+      value: "Helm"
+    - type: replace
+      path: /instance_groups/name=uaa/env?/bosh/agent/settings/labels/app.kubernetes.io~1name
+      value: "kubecf"
+    - type: replace
+      path: /instance_groups/name=uaa/env?/bosh/agent/settings/labels/app.kubernetes.io~1version
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=uaa/env?/bosh/agent/settings/labels/helm.sh~1chart
+      value: "kubecf-2.5.8"
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: operations
+    app.kubernetes.io/instance: kubecf
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubecf
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
+  name: ops-instance-groups
+  namespace: default
+---
+apiVersion: v1
+data:
+  ops: |-
     # Remove all releases from cf-deployment; we'll only add back those we need
     - type: remove
       path: /releases
@@ -4503,7 +5324,7 @@ data:
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=binary-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=binary-buildpack/version?
       value: "1.0.36"
@@ -4512,37 +5333,37 @@ data:
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=capi/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=capi/version?
-      value: "1.96.0"
+      value: "1.98.0"
     - type: replace
       path: /releases?/name=cf-cli/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=cf-cli/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=cf-cli/version?
-      value: "1.27.0"
+      value: "1.29.0"
     - type: replace
       path: /releases?/name=cf-networking/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=cf-networking/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=cf-networking/version?
-      value: "2.31.0"
+      value: "2.33.0"
     - type: replace
       path: /releases?/name=cf-smoke-tests/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=cf-smoke-tests/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=cf-smoke-tests/version?
-      value: "40.0.134"
+      value: "41.0.1"
     - type: replace
       path: /releases?/name=cflinuxfs3/url
       value: docker.io/cfcontainerization
@@ -4557,61 +5378,61 @@ data:
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=diego/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=diego/version?
-      value: "2.47.0"
+      value: "2.48.0"
     - type: replace
       path: /releases?/name=dotnet-core-buildpack/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=dotnet-core-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=dotnet-core-buildpack/version?
-      value: "2.3.12"
+      value: "2.3.13"
     - type: replace
       path: /releases?/name=garden-runc/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=garden-runc/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=garden-runc/version?
-      value: "1.19.14"
+      value: "1.19.16"
     - type: replace
       path: /releases?/name=go-buildpack/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=go-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=go-buildpack/version?
-      value: "1.9.14"
+      value: "1.9.16"
     - type: replace
       path: /releases?/name=java-buildpack/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=java-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=java-buildpack/version?
-      value: "4.32"
+      value: "4.32.1"
     - type: replace
       path: /releases?/name=log-cache/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=log-cache/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=log-cache/version?
-      value: "2.7.2"
+      value: "2.8.0"
     - type: replace
       path: /releases?/name=loggregator/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=loggregator/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=loggregator/version?
       value: "106.3.10"
@@ -4620,25 +5441,16 @@ data:
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=loggregator-agent/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.2-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=loggregator-agent/version?
       value: "6.1.1"
-    - type: replace
-      path: /releases?/name=metrics-discovery/url
-      value: docker.io/cfcontainerization
-    - type: replace
-      path: /releases/name=metrics-discovery/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
-    - type: replace
-      path: /releases/name=metrics-discovery/version?
-      value: "3.0.1"
     - type: replace
       path: /releases?/name=nats/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=nats/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=nats/version?
       value: "34"
@@ -4650,34 +5462,34 @@ data:
       value: {"os":"SLE_15_SP1","version":"27.2-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=nginx-buildpack/version?
-      value: "1.1.11"
+      value: "1.1.12"
     - type: replace
       path: /releases?/name=nodejs-buildpack/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=nodejs-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=nodejs-buildpack/version?
-      value: "1.7.24"
+      value: "1.7.25"
     - type: replace
       path: /releases?/name=php-buildpack/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=php-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=php-buildpack/version?
-      value: "4.4.18"
+      value: "4.4.19"
     - type: replace
       path: /releases?/name=python-buildpack/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=python-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=python-buildpack/version?
-      value: "1.7.16"
+      value: "1.7.18"
     - type: replace
       path: /releases?/name=r-buildpack/url
       value: docker.io/cfcontainerization
@@ -4692,34 +5504,34 @@ data:
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=routing/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=routing/version?
-      value: "0.203.0"
+      value: "0.206.0"
     - type: replace
       path: /releases?/name=ruby-buildpack/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=ruby-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=ruby-buildpack/version?
-      value: "1.8.21"
+      value: "1.8.23"
     - type: replace
       path: /releases?/name=silk/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=silk/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.2-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=silk/version?
-      value: "2.31.0"
+      value: "2.33.0"
     - type: replace
       path: /releases?/name=sle15/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=sle15/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=sle15/version?
       value: "10.93"
@@ -4728,7 +5540,7 @@ data:
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=staticfile-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=staticfile-buildpack/version?
       value: "1.5.9"
@@ -4737,7 +5549,7 @@ data:
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=statsd-injector/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=statsd-injector/version?
       value: "1.11.15"
@@ -4746,7 +5558,7 @@ data:
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-binary-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-binary-buildpack/version?
       value: "1.0.36.1"
@@ -4755,25 +5567,25 @@ data:
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-dotnet-core-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-dotnet-core-buildpack/version?
-      value: "2.3.9.1"
+      value: "2.3.16.1"
     - type: replace
       path: /releases?/name=suse-go-buildpack/url
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-go-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-go-buildpack/version?
-      value: "1.9.15.1"
+      value: "1.9.19.1"
     - type: replace
       path: /releases?/name=suse-java-buildpack/url
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-java-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-java-buildpack/version?
       value: "4.32.1.1"
@@ -4782,64 +5594,64 @@ data:
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-nginx-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-nginx-buildpack/version?
-      value: "1.1.7.1"
+      value: "1.1.15.1"
     - type: replace
       path: /releases?/name=suse-nodejs-buildpack/url
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-nodejs-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-nodejs-buildpack/version?
-      value: "1.7.24.1"
+      value: "1.7.30.1"
     - type: replace
       path: /releases?/name=suse-php-buildpack/url
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-php-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-php-buildpack/version?
-      value: "4.4.18.1"
+      value: "4.4.22.1"
     - type: replace
       path: /releases?/name=suse-python-buildpack/url
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-python-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-python-buildpack/version?
-      value: "1.7.16.1"
+      value: "1.7.23.1"
     - type: replace
       path: /releases?/name=suse-ruby-buildpack/url
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-ruby-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-ruby-buildpack/version?
-      value: "1.8.21.1"
+      value: "1.8.25.1"
     - type: replace
       path: /releases?/name=suse-staticfile-buildpack/url
       value: registry.suse.com/cap-staging
     - type: replace
       path: /releases/name=suse-staticfile-buildpack/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.7-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=suse-staticfile-buildpack/version?
-      value: "1.5.9.1"
+      value: "1.5.12.1"
     - type: replace
       path: /releases?/name=uaa/url
       value: docker.io/cfcontainerization
     - type: replace
       path: /releases/name=uaa/stemcell?
-      value: {"os":"SLE_15_SP1","version":"27.1-7.0.0_374.gb8e8e6af"}
+      value: {"os":"SLE_15_SP1","version":"27.5-7.0.0_374.gb8e8e6af"}
     - type: replace
       path: /releases/name=uaa/version?
-      value: "74.23.0"
+      value: "74.24.0"
 kind: ConfigMap
 metadata:
   labels:
@@ -4847,8 +5659,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-releases
   namespace: default
 ---
@@ -4938,8 +5750,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-sequencing
   namespace: default
 ---
@@ -4956,8 +5768,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-set-deployment-name
   namespace: default
 ---
@@ -5083,14 +5895,6 @@ data:
                   operator: In
                   values:
                   - router
-              topologyKey: kubernetes.io/hostname
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: quarks.cloudfoundry.org/quarks-statefulset-name
-                  operator: In
-                  values:
                   - diego-cell
               topologyKey: kubernetes.io/hostname
     - type: replace
@@ -5160,14 +5964,6 @@ data:
                   operator: In
                   values:
                   - diego-cell
-              topologyKey: kubernetes.io/hostname
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: quarks.cloudfoundry.org/quarks-statefulset-name
-                  operator: In
-                  values:
                   - router
               topologyKey: kubernetes.io/hostname
 kind: ConfigMap
@@ -5177,8 +5973,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-sizing
   namespace: default
 ---
@@ -5473,45 +6269,45 @@ data:
       path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/cc/install_buildpacks
       value:
       - name: "staticfile_buildpack"
-        file: "/var/vcap/data/shared-packages/suse-staticfile-buildpack/staticfile-buildpack-sle15-v1.5.9.1.zip"
+        file: "/var/vcap/data/shared-packages/suse-staticfile-buildpack/staticfile-buildpack-sle15-v1.5.12.1.zip"
       - name: "java_buildpack"
         file: "/var/vcap/data/shared-packages/suse-java-buildpack/java-buildpack-sle15-v4.32.1.1.zip"
       - name: "ruby_buildpack"
-        file: "/var/vcap/data/shared-packages/suse-ruby-buildpack/ruby-buildpack-sle15-v1.8.21.1.zip"
+        file: "/var/vcap/data/shared-packages/suse-ruby-buildpack/ruby-buildpack-sle15-v1.8.25.1.zip"
       - name: "dotnet-core_buildpack"
-        file: "/var/vcap/data/shared-packages/suse-dotnet-core-buildpack/dotnet-core-buildpack-sle15-v2.3.9.1.zip"
+        file: "/var/vcap/data/shared-packages/suse-dotnet-core-buildpack/dotnet-core-buildpack-sle15-v2.3.16.1.zip"
       - name: "nodejs_buildpack"
-        file: "/var/vcap/data/shared-packages/suse-nodejs-buildpack/nodejs-buildpack-sle15-v1.7.24.1.zip"
+        file: "/var/vcap/data/shared-packages/suse-nodejs-buildpack/nodejs-buildpack-sle15-v1.7.30.1.zip"
       - name: "go_buildpack"
-        file: "/var/vcap/data/shared-packages/suse-go-buildpack/go-buildpack-sle15-v1.9.15.1.zip"
+        file: "/var/vcap/data/shared-packages/suse-go-buildpack/go-buildpack-sle15-v1.9.19.1.zip"
       - name: "python_buildpack"
-        file: "/var/vcap/data/shared-packages/suse-python-buildpack/python-buildpack-sle15-v1.7.16.1.zip"
+        file: "/var/vcap/data/shared-packages/suse-python-buildpack/python-buildpack-sle15-v1.7.23.1.zip"
       - name: "php_buildpack"
-        file: "/var/vcap/data/shared-packages/suse-php-buildpack/php-buildpack-sle15-v4.4.18.1.zip"
+        file: "/var/vcap/data/shared-packages/suse-php-buildpack/php-buildpack-sle15-v4.4.22.1.zip"
       - name: "nginx_buildpack"
-        file: "/var/vcap/data/shared-packages/suse-nginx-buildpack/nginx-buildpack-sle15-v1.1.7.1.zip"
+        file: "/var/vcap/data/shared-packages/suse-nginx-buildpack/nginx-buildpack-sle15-v1.1.15.1.zip"
       - name: "binary_buildpack"
         file: "/var/vcap/data/shared-packages/suse-binary-buildpack/binary-buildpack-sle15-v1.0.36.1.zip"
       - name: "binary_buildpack"
         file: "/var/vcap/data/shared-packages/binary-buildpack/binary-buildpack-cflinuxfs3-v1.0.36.zip"
       - name: "dotnet-core_buildpack"
-        file: "/var/vcap/data/shared-packages/dotnet-core-buildpack/dotnet-core-buildpack-cflinuxfs3-v2.3.12.zip"
+        file: "/var/vcap/data/shared-packages/dotnet-core-buildpack/dotnet-core-buildpack-cflinuxfs3-v2.3.13.zip"
       - name: "go_buildpack"
-        file: "/var/vcap/data/shared-packages/go-buildpack/go-buildpack-cflinuxfs3-v1.9.14.zip"
+        file: "/var/vcap/data/shared-packages/go-buildpack/go-buildpack-cflinuxfs3-v1.9.16.zip"
       - name: "java_buildpack"
-        file: "/var/vcap/data/shared-packages/java-buildpack/java-buildpack-cflinuxfs3-v4.32.zip"
+        file: "/var/vcap/data/shared-packages/java-buildpack/java-buildpack-cflinuxfs3-v4.32.1.zip"
       - name: "nodejs_buildpack"
-        file: "/var/vcap/data/shared-packages/nodejs-buildpack/nodejs-buildpack-cflinuxfs3-v1.7.24.zip"
+        file: "/var/vcap/data/shared-packages/nodejs-buildpack/nodejs-buildpack-cflinuxfs3-v1.7.25.zip"
       - name: "nginx_buildpack"
-        file: "/var/vcap/data/shared-packages/nginx-buildpack/nginx-buildpack-cflinuxfs3-v1.1.11.zip"
+        file: "/var/vcap/data/shared-packages/nginx-buildpack/nginx-buildpack-cflinuxfs3-v1.1.12.zip"
       - name: "r_buildpack"
         file: "/var/vcap/data/shared-packages/r-buildpack/r-buildpack-cflinuxfs3-v1.1.7.zip"
       - name: "php_buildpack"
-        file: "/var/vcap/data/shared-packages/php-buildpack/php-buildpack-cflinuxfs3-v4.4.18.zip"
+        file: "/var/vcap/data/shared-packages/php-buildpack/php-buildpack-cflinuxfs3-v4.4.19.zip"
       - name: "python_buildpack"
-        file: "/var/vcap/data/shared-packages/python-buildpack/python-buildpack-cflinuxfs3-v1.7.16.zip"
+        file: "/var/vcap/data/shared-packages/python-buildpack/python-buildpack-cflinuxfs3-v1.7.18.zip"
       - name: "ruby_buildpack"
-        file: "/var/vcap/data/shared-packages/ruby-buildpack/ruby-buildpack-cflinuxfs3-v1.8.21.zip"
+        file: "/var/vcap/data/shared-packages/ruby-buildpack/ruby-buildpack-cflinuxfs3-v1.8.23.zip"
       - name: "staticfile_buildpack"
         file: "/var/vcap/data/shared-packages/staticfile-buildpack/staticfile-buildpack-cflinuxfs3-v1.5.9.zip"
 
@@ -5547,7 +6343,7 @@ data:
         release="suse-staticfile-buildpack"
         buildpack="suse-staticfile-buildpack"
         package="staticfile-buildpack-sle15"
-        version="1.5.9.1"
+        version="1.5.12.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -5627,7 +6423,7 @@ data:
         release="suse-ruby-buildpack"
         buildpack="suse-ruby-buildpack"
         package="ruby-buildpack-sle15"
-        version="1.8.21.1"
+        version="1.8.25.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -5667,7 +6463,7 @@ data:
         release="suse-dotnet-core-buildpack"
         buildpack="suse-dotnet-core-buildpack"
         package="dotnet-core-buildpack-sle15"
-        version="2.3.9.1"
+        version="2.3.16.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -5707,7 +6503,7 @@ data:
         release="suse-nodejs-buildpack"
         buildpack="suse-nodejs-buildpack"
         package="nodejs-buildpack-sle15"
-        version="1.7.24.1"
+        version="1.7.30.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -5747,7 +6543,7 @@ data:
         release="suse-go-buildpack"
         buildpack="suse-go-buildpack"
         package="go-buildpack-sle15"
-        version="1.9.15.1"
+        version="1.9.19.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -5787,7 +6583,7 @@ data:
         release="suse-python-buildpack"
         buildpack="suse-python-buildpack"
         package="python-buildpack-sle15"
-        version="1.7.16.1"
+        version="1.7.23.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -5827,7 +6623,7 @@ data:
         release="suse-php-buildpack"
         buildpack="suse-php-buildpack"
         package="php-buildpack-sle15"
-        version="4.4.18.1"
+        version="4.4.22.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -5867,7 +6663,7 @@ data:
         release="suse-nginx-buildpack"
         buildpack="suse-nginx-buildpack"
         package="nginx-buildpack-sle15"
-        version="1.1.7.1"
+        version="1.1.15.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6007,7 +6803,7 @@ data:
         release="dotnet-core-buildpack"
         buildpack="dotnet-core-buildpack"
         package="dotnet-core-buildpack-cflinuxfs3"
-        version="2.3.12"
+        version="2.3.13"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6047,7 +6843,7 @@ data:
         release="go-buildpack"
         buildpack="go-buildpack"
         package="go-buildpack-cflinuxfs3"
-        version="1.9.14"
+        version="1.9.16"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6087,7 +6883,7 @@ data:
         release="java-buildpack"
         buildpack="java-buildpack"
         package="java-buildpack-cflinuxfs3"
-        version="4.32"
+        version="4.32.1"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6127,7 +6923,7 @@ data:
         release="nodejs-buildpack"
         buildpack="nodejs-buildpack"
         package="nodejs-buildpack-cflinuxfs3"
-        version="1.7.24"
+        version="1.7.25"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6167,7 +6963,7 @@ data:
         release="nginx-buildpack"
         buildpack="nginx-buildpack"
         package="nginx-buildpack-cflinuxfs3"
-        version="1.1.11"
+        version="1.1.12"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6247,7 +7043,7 @@ data:
         release="php-buildpack"
         buildpack="php-buildpack"
         package="php-buildpack-cflinuxfs3"
-        version="4.4.18"
+        version="4.4.19"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6287,7 +7083,7 @@ data:
         release="python-buildpack"
         buildpack="python-buildpack"
         package="python-buildpack-cflinuxfs3"
-        version="1.7.16"
+        version="1.7.18"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6327,7 +7123,7 @@ data:
         release="ruby-buildpack"
         buildpack="ruby-buildpack"
         package="ruby-buildpack-cflinuxfs3"
-        version="1.8.21"
+        version="1.8.23"
 
         pre_start="/var/vcap/all-releases/jobs-src/${release}/${buildpack}/templates/bin/pre-start"
         copy_dst="/var/vcap/data/shared-packages/${buildpack}"
@@ -6403,8 +7199,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-stacks
   namespace: default
 ---
@@ -6418,7 +7214,7 @@ data:
       value:
         alias: default
         os: "SLE_15_SP1"
-        version: "27.1-7.0.0_374.gb8e8e6af"
+        version: "27.5-7.0.0_374.gb8e8e6af"
     - type: replace
       path: /addons/name=forwarder_agent/include/stemcell/os=ubuntu-xenial/os
       value: "SLE_15_SP1"
@@ -6438,14 +7234,35 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: ops-stemcells
   namespace: default
 ---
 apiVersion: v1
 data:
-  ops: ""
+  ops: |-
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/build
+      value: "2.5.8"
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/cc/jobs/local/number_of_workers
+      value: 2
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/description
+      value: "CloudFoundry KubeCF"
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/name
+      value: "KubeCF"
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/support_address
+      value: "https://kubecf.io/"
+    - type: replace
+      path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties?/version
+      value: 2
+    - type: replace
+      path: /instance_groups/name=cc-worker/jobs/name=cloud_controller_worker/properties?/cc/jobs/generic/number_of_workers
+      value: 1
 kind: ConfigMap
 metadata:
   labels:
@@ -6453,9 +7270,72 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: user-provided-properties
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: eirini-cluster-role
+rules:
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - list
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - create
+  - update
+  - delete
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - list
+  - delete
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - create
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: eirini-cluster-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: eirini-cluster-role
+subjects:
+- kind: ServiceAccount
+  name: opi
   namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -6493,12 +7373,38 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: database
+    app: apps-dns
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
+  name: apps-dns
+  namespace: default
+spec:
+  ports:
+  - name: dns-udp
+    port: 53
+    protocol: UDP
+    targetPort: dns-udp
+  - name: dns-tcp
+    port: 53
+    protocol: TCP
+    targetPort: dns-tcp
+  selector:
+    app: apps-dns
+    app.kubernetes.io/name: kubecf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: database
+    app.kubernetes.io/instance: kubecf
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubecf
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: database
   namespace: default
 spec:
@@ -6507,36 +7413,155 @@ spec:
     port: 3306
     targetPort: mysql
   selector:
-    app: database
+    app.kubernetes.io/component: database
+    app.kubernetes.io/instance: kubecf
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    quarks.cloudfoundry.org/pod-active: active
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: database
+    app: service-discovery-controller
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
-  name: database-repl
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
+  name: service-discovery-controller
   namespace: default
 spec:
-  clusterIP: None
   ports:
-  - name: galera
-    port: 4567
-  - name: state-xfer
-    port: 4568
-  - name: state-snap
-    port: 4444
+  - name: service-discovery-controller
+    port: 8054
+    protocol: TCP
+    targetPort: 8054
   selector:
-    app: database
+    quarks.cloudfoundry.org/deployment-name: kubecf
+    quarks.cloudfoundry.org/instance-group-name: scheduler
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: 0.1.0
+          Type: resolved
+          URL: ghcr.io/cfcontainerizationbot/kubecf-apps-dns:0.1.0
+        URL: ghcr.io/cfcontainerizationbot/kubecf-apps-dns@sha256:82db593bd6320e48209e1f326ce561f0796df0f5c0ee0537069349363cdca5d3
+  labels:
+    app: apps-dns
+    app.kubernetes.io/instance: kubecf
+    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
+  name: cf-apps-dns
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apps-dns
+      app.kubernetes.io/instance: kubecf
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kubecf
+  template:
+    metadata:
+      labels:
+        app: apps-dns
+        app.kubernetes.io/instance: kubecf
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: kubecf
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - apps-dns
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      containers:
+      - args:
+        - -conf
+        - /config/Corefile
+        image: ghcr.io/cfcontainerizationbot/kubecf-apps-dns@sha256:82db593bd6320e48209e1f326ce561f0796df0f5c0ee0537069349363cdca5d3
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: apps-dns
+        ports:
+        - containerPort: 53
+          name: dns-udp
+          protocol: UDP
+        - containerPort: 53
+          name: dns-tcp
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        volumeMounts:
+        - mountPath: /config/Corefile
+          name: corefile-config
+          readOnly: true
+          subPath: Corefile
+        - mountPath: /config/forward.conf
+          name: forward-config
+          readOnly: true
+          subPath: forward.conf
+        - mountPath: /tls
+          name: client-tls
+          readOnly: true
+      initContainers:
+      - args:
+        - --upstream-dns-host
+        - bosh-dns.default.svc
+        - --out
+        - /config/forward.conf
+        command:
+        - /resolvwriter
+        image: ghcr.io/cfcontainerizationbot/kubecf-apps-dns@sha256:82db593bd6320e48209e1f326ce561f0796df0f5c0ee0537069349363cdca5d3
+        imagePullPolicy: IfNotPresent
+        name: resolv-writer
+        volumeMounts:
+        - mountPath: /config
+          name: forward-config
+      volumes:
+      - configMap:
+          name: apps-dns
+        name: corefile-config
+      - emptyDir: {}
+        name: forward-config
+      - name: client-tls
+        secret:
+          items:
+          - key: ca
+            path: ca.pem
+          - key: certificate
+            path: cert.pem
+          - key: private_key
+            path: key.pem
+          secretName: var-cf-app-sd-client-tls
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -6553,8 +7578,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: kubecf
   namespace: default
 spec:
@@ -6578,8 +7603,8 @@ metadata:
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: kubecf
   namespace: default
 spec:
@@ -6623,6 +7648,8 @@ spec:
     type: configmap
   - name: ops-nats
     type: configmap
+  - name: ops-rotate-cc-database-key
+    type: configmap
   - name: ops-router
     type: configmap
   - name: ops-routing-api
@@ -6639,13 +7666,13 @@ spec:
     type: configmap
   - name: ops-uaa
     type: configmap
-  - name: ops-sizing
-    type: configmap
   - name: ops-azs
+    type: configmap
+  - name: ops-sizing
     type: configmap
   - name: ops-addons
     type: configmap
-  - name: ops-azs
+  - name: ops-instance-groups
     type: configmap
   - name: ops-releases
     type: configmap
@@ -6653,11 +7680,11 @@ spec:
     type: configmap
   - name: ops-set-deployment-name
     type: configmap
-  - name: ops-sizing
-    type: configmap
   - name: ops-stacks
     type: configmap
   - name: ops-stemcells
+    type: configmap
+  - name: ops-resource-limits
     type: configmap
   - name: user-provided-properties
     type: configmap
@@ -6674,159 +7701,34 @@ metadata:
           URL: docker.io/cfcontainerization/pxc:0.9.11
         URL: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
   labels:
+    app.kubernetes.io/component: database
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
-  name: database-seeder
-  namespace: default
-spec:
-  template:
-    spec:
-      template:
-        spec:
-          containers:
-          - command:
-            - /bin/bash
-            - -c
-            - |-
-              #!/usr/bin/env bash
-
-              set -o errexit -o nounset -o pipefail
-
-              cat > "${HOME}/.my.cnf" <<EOF
-              [mysql]
-              host=${DATABASE_HOST}
-              user=root
-              password=${DATABASE_ROOT_PASSWORD}
-              EOF
-
-              echo "Waiting for database to be ready..."
-              until echo "SELECT 'Ready!'" | mysql --connect-timeout=3 1> /dev/null 2> /dev/null; do
-                sleep 1
-              done
-
-              mysql < <(
-                echo "START TRANSACTION;"
-                echo "\
-                  CREATE DATABASE IF NOT EXISTS kubecf
-                    DEFAULT CHARACTER SET ${CHARACTER_SET}
-                    DEFAULT COLLATE ${COLLATE};
-                  USE kubecf;
-                  CREATE TABLE IF NOT EXISTS db_leader_election (
-                    anchor tinyint(3) unsigned NOT NULL,
-                    host varchar(128) NOT NULL,
-                    last_seen_active timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    PRIMARY KEY (anchor)
-                  );"
-                for database in ${DATABASES}; do
-                  if [[ -z "${database}" ]]; then continue; fi
-
-                  password=$(</passwords/"${database}"/password)
-
-                  echo "\
-                    CREATE USER IF NOT EXISTS \`${database}\`;
-                    ALTER USER \`${database}\` IDENTIFIED BY '${password}';
-
-                    CREATE DATABASE IF NOT EXISTS \`${database}\`
-                      DEFAULT CHARACTER SET ${CHARACTER_SET}
-                      DEFAULT COLLATE ${COLLATE};
-
-                    GRANT ALL ON \`${database}\`.* TO '${database}'@'%';
-                  "
-                done
-                echo "COMMIT;"
-              )
-              echo "Done!"
-            env:
-            - name: DATABASE_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: var-pxc-root-password
-            - name: DATABASE_HOST
-              value: database.default
-            - name: CHARACTER_SET
-              value: utf8
-            - name: COLLATE
-              value: utf8_unicode_ci
-            - name: DATABASES
-              value: |-
-                cloud_controller
-                diego
-                network_connectivity
-                network_policy
-                uaa
-                locket
-            image: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
-            imagePullPolicy: null
-            name: seeder
-            volumeMounts:
-            - mountPath: /passwords/cloud_controller
-              name: cloud-controller-database-password
-              readOnly: true
-            - mountPath: /passwords/diego
-              name: diego-database-password
-              readOnly: true
-            - mountPath: /passwords/network_connectivity
-              name: network-connectivity-database-password
-              readOnly: true
-            - mountPath: /passwords/network_policy
-              name: network-policy-database-password
-              readOnly: true
-            - mountPath: /passwords/uaa
-              name: uaa-database-password
-              readOnly: true
-            - mountPath: /passwords/locket
-              name: locket-database-password
-              readOnly: true
-          restartPolicy: Never
-          volumes:
-          - name: cloud-controller-database-password
-            secret:
-              secretName: var-cc-database-password
-          - name: diego-database-password
-            secret:
-              secretName: var-diego-database-password
-          - name: network-connectivity-database-password
-            secret:
-              secretName: var-network-connectivity-database-password
-          - name: network-policy-database-password
-            secret:
-              secretName: var-network-policy-database-password
-          - name: uaa-database-password
-            secret:
-              secretName: var-uaa-database-password
-          - name: locket-database-password
-            secret:
-              secretName: var-locket-database-password
-  trigger:
-    strategy: once
-  updateOnConfigChange: true
----
-apiVersion: quarks.cloudfoundry.org/v1alpha1
-kind: QuarksJob
-metadata:
-  annotations:
-    kbld.k14s.io/images: |
-      - Metas:
-        - Tag: 0.9.11
-          Type: resolved
-          URL: docker.io/cfcontainerization/pxc:0.9.11
-        URL: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
-  labels:
-    app.kubernetes.io/instance: kubecf
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: database-migrate-charset
   namespace: default
 spec:
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: kubecf
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: kubecf
+        app.kubernetes.io/version: 2.5.8
+        helm.sh/chart: kubecf-2.5.8
     spec:
       template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: database
+            app.kubernetes.io/instance: kubecf
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: kubecf
+            app.kubernetes.io/version: 2.5.8
+            helm.sh/chart: kubecf-2.5.8
         spec:
           containers:
           - command:
@@ -6961,19 +7863,22 @@ spec:
               value: |-
                 cloud_controller
                 diego
+                locket
                 network_connectivity
                 network_policy
                 uaa
-                locket
             image: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
             imagePullPolicy: null
             name: migrate-charset
             volumeMounts:
             - mountPath: /passwords/cloud_controller
-              name: cloud-controller-database-password
+              name: cc-database-password
               readOnly: true
             - mountPath: /passwords/diego
               name: diego-database-password
+              readOnly: true
+            - mountPath: /passwords/locket
+              name: locket-database-password
               readOnly: true
             - mountPath: /passwords/network_connectivity
               name: network-connectivity-database-password
@@ -6984,17 +7889,17 @@ spec:
             - mountPath: /passwords/uaa
               name: uaa-database-password
               readOnly: true
-            - mountPath: /passwords/locket
-              name: locket-database-password
-              readOnly: true
           restartPolicy: Never
           volumes:
-          - name: cloud-controller-database-password
+          - name: cc-database-password
             secret:
               secretName: var-cc-database-password
           - name: diego-database-password
             secret:
               secretName: var-diego-database-password
+          - name: locket-database-password
+            secret:
+              secretName: var-locket-database-password
           - name: network-connectivity-database-password
             secret:
               secretName: var-network-connectivity-database-password
@@ -7004,22 +7909,185 @@ spec:
           - name: uaa-database-password
             secret:
               secretName: var-uaa-database-password
+  trigger:
+    strategy: manual
+  updateOnConfigChange: true
+---
+apiVersion: quarks.cloudfoundry.org/v1alpha1
+kind: QuarksJob
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: 0.9.11
+          Type: resolved
+          URL: docker.io/cfcontainerization/pxc:0.9.11
+        URL: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
+  labels:
+    app.kubernetes.io/component: database
+    app.kubernetes.io/instance: kubecf
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubecf
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
+  name: database-seeder
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: kubecf
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: kubecf
+        app.kubernetes.io/version: 2.5.8
+        helm.sh/chart: kubecf-2.5.8
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: database
+            app.kubernetes.io/instance: kubecf
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: kubecf
+            app.kubernetes.io/version: 2.5.8
+            helm.sh/chart: kubecf-2.5.8
+        spec:
+          containers:
+          - command:
+            - /bin/bash
+            - -c
+            - |-
+              #!/usr/bin/env bash
+
+              set -o errexit -o nounset -o pipefail
+
+              cat > "${HOME}/.my.cnf" <<EOF
+              [mysql]
+              host=${DATABASE_HOST}
+              user=root
+              password=${DATABASE_ROOT_PASSWORD}
+              EOF
+
+              echo "Waiting for database to be ready..."
+              until echo "SELECT 'Ready!'" | mysql --connect-timeout="${DATABASE_CONNECT_TIMEOUT}" 1> /dev/null 2> /dev/null; do
+                sleep 1
+              done
+
+              mysql < <(
+                echo "START TRANSACTION;"
+                echo "\
+                  CREATE DATABASE IF NOT EXISTS kubecf
+                    DEFAULT CHARACTER SET ${CHARACTER_SET}
+                    DEFAULT COLLATE ${COLLATE};
+                  USE kubecf;
+                  CREATE TABLE IF NOT EXISTS db_leader_election (
+                    anchor tinyint(3) unsigned NOT NULL,
+                    host varchar(128) NOT NULL,
+                    last_seen_active timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (anchor)
+                  );"
+                for database in ${DATABASES}; do
+                  if [[ -z "${database}" ]]; then continue; fi
+
+                  password=$(</passwords/"${database}"/password)
+
+                  echo "\
+                    CREATE USER IF NOT EXISTS \`${database}\`;
+                    ALTER USER \`${database}\` IDENTIFIED BY '${password}';
+
+                    CREATE DATABASE IF NOT EXISTS \`${database}\`
+                      DEFAULT CHARACTER SET ${CHARACTER_SET}
+                      DEFAULT COLLATE ${COLLATE};
+
+                    GRANT ALL ON \`${database}\`.* TO '${database}'@'%';
+                  "
+
+                  # Print out the name of the database for troubleshooting; this container
+                  # otherwise has very little output.
+                  echo "    ... will update database ${database}" >&2
+                done
+                echo "COMMIT;"
+              )
+              echo "Done!"
+            env:
+            - name: DATABASE_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: var-pxc-root-password
+            - name: DATABASE_HOST
+              value: database.default
+            - name: DATABASE_CONNECT_TIMEOUT
+              value: "3"
+            - name: CHARACTER_SET
+              value: utf8
+            - name: COLLATE
+              value: utf8_unicode_ci
+            - name: DATABASES
+              value: |-
+                cloud_controller
+                diego
+                locket
+                network_connectivity
+                network_policy
+                uaa
+            image: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
+            imagePullPolicy: null
+            name: seeder
+            volumeMounts:
+            - mountPath: /passwords/cloud_controller
+              name: cc-database-password
+              readOnly: true
+            - mountPath: /passwords/diego
+              name: diego-database-password
+              readOnly: true
+            - mountPath: /passwords/locket
+              name: locket-database-password
+              readOnly: true
+            - mountPath: /passwords/network_connectivity
+              name: network-connectivity-database-password
+              readOnly: true
+            - mountPath: /passwords/network_policy
+              name: network-policy-database-password
+              readOnly: true
+            - mountPath: /passwords/uaa
+              name: uaa-database-password
+              readOnly: true
+          restartPolicy: Never
+          volumes:
+          - name: cc-database-password
+            secret:
+              secretName: var-cc-database-password
+          - name: diego-database-password
+            secret:
+              secretName: var-diego-database-password
           - name: locket-database-password
             secret:
               secretName: var-locket-database-password
+          - name: network-connectivity-database-password
+            secret:
+              secretName: var-network-connectivity-database-password
+          - name: network-policy-database-password
+            secret:
+              secretName: var-network-policy-database-password
+          - name: uaa-database-password
+            secret:
+              secretName: var-uaa-database-password
   trigger:
-    strategy: manual
+    strategy: once
   updateOnConfigChange: true
 ---
 apiVersion: quarks.cloudfoundry.org/v1alpha1
 kind: QuarksSecret
 metadata:
   labels:
+    app.kubernetes.io/component: database
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: var-pxc-root-password
   namespace: default
 spec:
@@ -7030,30 +8098,16 @@ apiVersion: quarks.cloudfoundry.org/v1alpha1
 kind: QuarksSecret
 metadata:
   labels:
+    app.kubernetes.io/component: database
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: var-pxc-password
   namespace: default
 spec:
   secretName: var-pxc-password
-  type: password
----
-apiVersion: quarks.cloudfoundry.org/v1alpha1
-kind: QuarksSecret
-metadata:
-  labels:
-    app.kubernetes.io/instance: kubecf
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
-  name: var-xtrabackup-password
-  namespace: default
-spec:
-  secretName: var-xtrabackup-password
   type: password
 ---
 apiVersion: quarks.cloudfoundry.org/v1alpha1
@@ -7066,96 +8120,45 @@ metadata:
           Type: resolved
           URL: docker.io/cfcontainerization/pxc:0.9.11
         URL: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
-      - Metas:
-        - Tag: 0.9.11
-          Type: resolved
-          URL: docker.io/cfcontainerization/pxc:0.9.11
-        URL: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
-      - Metas:
-        - Tag: 0.9.11
-          Type: resolved
-          URL: docker.io/cfcontainerization/pxc:0.9.11
-        URL: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
   labels:
-    app: database
+    app.kubernetes.io/component: database
     app.kubernetes.io/instance: kubecf
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kubecf
-    app.kubernetes.io/version: 2.4.0
-    helm.sh/chart: kubecf-2.4.0
+    app.kubernetes.io/version: 2.5.8
+    helm.sh/chart: kubecf-2.5.8
   name: database
   namespace: default
 spec:
-  activePassiveProbes:
-    database:
-      exec:
-        command:
-        - /bin/bash
-        - -c
-        - |
-          #!/usr/bin/env bash
-
-          leader=$(mysql -sN <<EOF
-            USE kubecf;
-            insert ignore into db_leader_election ( anchor, host, last_seen_active )
-              values ( 1, '${HOSTNAME}', now() ) on duplicate key update host = if(last_seen_active < now() - interval 20 second,
-              values(host), host), last_seen_active = if(host = values(host), values(last_seen_active), last_seen_active);
-              select host from db_leader_election;
-          EOF
-          )
-
-          # shellcheck disable=SC2181
-          if [[ $? != 0 ]]; then
-            # the kubecf database doesn't seem to be ready. make the first node the master
-            [[ ${HOSTNAME} == *-0 ]] || exit 2
-          else
-            [[ "${leader}" == "${HOSTNAME}" ]]
-          fi
-      periodSeconds: 5
   template:
     metadata:
       labels:
-        app: database
+        app.kubernetes.io/component: database
         app.kubernetes.io/instance: kubecf
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: kubecf
-        app.kubernetes.io/version: 2.4.0
-        helm.sh/chart: kubecf-2.4.0
+        app.kubernetes.io/version: 2.5.8
+        helm.sh/chart: kubecf-2.5.8
       name: database
       namespace: default
     spec:
       replicas: 1
       selector:
         matchLabels:
-          app: database
+          app.kubernetes.io/component: database
           app.kubernetes.io/instance: kubecf
-          app.kubernetes.io/managed-by: Helm
           app.kubernetes.io/name: kubecf
-          app.kubernetes.io/version: 2.4.0
-          helm.sh/chart: kubecf-2.4.0
       serviceName: database
       template:
         metadata:
           labels:
-            app: database
+            app.kubernetes.io/component: database
             app.kubernetes.io/instance: kubecf
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: kubecf
-            app.kubernetes.io/version: 2.4.0
-            helm.sh/chart: kubecf-2.4.0
+            app.kubernetes.io/version: 2.5.8
+            helm.sh/chart: kubecf-2.5.8
         spec:
-          affinity:
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-              - podAffinityTerm:
-                  labelSelector:
-                    matchExpressions:
-                    - key: quarks.cloudfoundry.org/quarks-statefulset-name
-                      operator: In
-                      values:
-                      - database
-                  topologyKey: kubernetes.io/hostname
-                weight: 100
           containers:
           - command:
             - /bin/bash
@@ -7171,19 +8174,8 @@ spec:
                 secretKeyRef:
                   key: password
                   name: var-pxc-password
-            - name: XTRABACKUP_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: var-xtrabackup-password
             - name: ALLOW_ROOT_FROM
               value: '%'
-            - name: CLUSTER_NAME
-              value: kubecf-database
-            - name: SHORT_CLUSTER_NAME
-              value: kubecf-database
-            - name: K8S_SERVICE_NAME
-              value: database-repl
             - name: PXC_STRICT_MODE
               value: ENFORCING
             image: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
@@ -7194,18 +8186,12 @@ spec:
                 - /bin/bash
                 - -c
                 - mysqladmin ping || test -e /var/lib/mysql/sst_in_progress
-              initialDelaySeconds: 30
+              initialDelaySeconds: 300
               timeoutSeconds: 2
             name: database
             ports:
             - containerPort: 3306
               name: mysql
-            - containerPort: 4567
-              name: galera-repl
-            - containerPort: 4568
-              name: state-transfer
-            - containerPort: 4444
-              name: state-snapshot
             readinessProbe:
               exec:
                 command:

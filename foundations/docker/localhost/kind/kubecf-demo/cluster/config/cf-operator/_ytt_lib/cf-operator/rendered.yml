@@ -482,10 +482,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.0.179
+        - Tag: v1.0.206
           Type: resolved
-          URL: cfcontainerization/quarks-job:v1.0.179
-        URL: index.docker.io/cfcontainerization/quarks-job@sha256:80591bca65178da9f47744736c7945c3946783b76a4c3c0b91a61077e13a35bd
+          URL: cfcontainerization/quarks-job:v1.0.206
+        URL: index.docker.io/cfcontainerization/quarks-job@sha256:d0e552cdc3fa9e8aac2b69d619a3a2cd2db82c6f1ca582ebc41f994e8913f4d9
   name: cf-operator-quarks-job
   namespace: default
 spec:
@@ -527,10 +527,10 @@ spec:
         - name: DOCKER_IMAGE_REPOSITORY
           value: quarks-job
         - name: DOCKER_IMAGE_TAG
-          value: v1.0.179
+          value: v1.0.206
         - name: DOCKER_IMAGE_PULL_POLICY
           value: IfNotPresent
-        image: index.docker.io/cfcontainerization/quarks-job@sha256:80591bca65178da9f47744736c7945c3946783b76a4c3c0b91a61077e13a35bd
+        image: index.docker.io/cfcontainerization/quarks-job@sha256:d0e552cdc3fa9e8aac2b69d619a3a2cd2db82c6f1ca582ebc41f994e8913f4d9
         imagePullPolicy: IfNotPresent
         name: quarks-job
         ports:
@@ -544,10 +544,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.0.692
+        - Tag: v1.0.744
           Type: resolved
-          URL: cfcontainerization/quarks-secret:v1.0.692
-        URL: index.docker.io/cfcontainerization/quarks-secret@sha256:870da3e007c6c1bb13cdd0d2db4d15c42c8b7291ad37c5ca1e6a0359dae30e40
+          URL: cfcontainerization/quarks-secret:v1.0.744
+        URL: index.docker.io/cfcontainerization/quarks-secret@sha256:4a3fbb75f4d767ed9e7c194a12d91f17a3eb3eb1392c1045cd0871579fc70dc4
   name: cf-operator-quarks-secret
   namespace: default
 spec:
@@ -584,7 +584,7 @@ spec:
               fieldPath: metadata.name
         - name: OPERATOR_NAME
           value: quarks-secret
-        image: index.docker.io/cfcontainerization/quarks-secret@sha256:870da3e007c6c1bb13cdd0d2db4d15c42c8b7291ad37c5ca1e6a0359dae30e40
+        image: index.docker.io/cfcontainerization/quarks-secret@sha256:4a3fbb75f4d767ed9e7c194a12d91f17a3eb3eb1392c1045cd0871579fc70dc4
         imagePullPolicy: IfNotPresent
         name: quarks-secret
         ports:
@@ -598,10 +598,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v5.2.0-0.g22cafc90
+        - Tag: v6.1.15-0.g89a56300
           Type: resolved
-          URL: cfcontainerization/cf-operator:v5.2.0-0.g22cafc90
-        URL: index.docker.io/cfcontainerization/cf-operator@sha256:b5a110d2391fe0d6826eb45b75222bc8bc76addf67534f7a73cb11ec177a29fb
+          URL: cfcontainerization/cf-operator:v6.1.15-0.g89a56300
+        URL: index.docker.io/cfcontainerization/cf-operator@sha256:7c1217081bbc445578049de0fd4584b334e296cae8f66ff4aaf27e901ae31c56
   name: cf-operator
   namespace: default
 spec:
@@ -621,11 +621,13 @@ spec:
         - name: APPLY_CRD
           value: "true"
         - name: BOSH_DNS_DOCKER_IMAGE
-          value: cfcontainerization/coredns:0.1.0-1.6.7-bp152.1.8
+          value: cfcontainerization/coredns:0.1.0-1.6.7-bp152.1.19
         - name: CLUSTER_DOMAIN
           value: cluster.local
         - name: LOG_LEVEL
           value: debug
+        - name: LOGROTATE_INTERVAL
+          value: "1440"
         - name: MONITORED_ID
           value: cfo
         - name: CF_OPERATOR_NAMESPACE
@@ -649,14 +651,14 @@ spec:
         - name: DOCKER_IMAGE_REPOSITORY
           value: cf-operator
         - name: DOCKER_IMAGE_TAG
-          value: v5.2.0-0.g22cafc90
+          value: v6.1.15-0.g89a56300
         - name: DOCKER_IMAGE_PULL_POLICY
           value: IfNotPresent
         - name: CF_OPERATOR_WEBHOOK_SERVICE_PORT
           value: "2999"
         - name: CF_OPERATOR_WEBHOOK_USE_SERVICE_REFERENCE
           value: "true"
-        image: index.docker.io/cfcontainerization/cf-operator@sha256:b5a110d2391fe0d6826eb45b75222bc8bc76addf67534f7a73cb11ec177a29fb
+        image: index.docker.io/cfcontainerization/cf-operator@sha256:7c1217081bbc445578049de0fd4584b334e296cae8f66ff4aaf27e901ae31c56
         imagePullPolicy: IfNotPresent
         name: cf-operator
         ports:
