@@ -1,111 +1,123 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.24.0
+minimumRequiredVersion: 0.25.0
 overrides:
-- image: cloudfoundry/capi-nginx@sha256:980f50e190cbff72d23300bc422da23faa888271c2d07ac3abaa65af55a5316a
-  newImage: index.docker.io/cloudfoundry/capi-nginx@sha256:980f50e190cbff72d23300bc422da23faa888271c2d07ac3abaa65af55a5316a
+- image: cloudfoundry/capi-nginx@sha256:25997cca011ed0761955754a68931f7b1694e487bffba73c6ac8dbcd084f5dee
+  newImage: index.docker.io/cloudfoundry/capi-nginx@sha256:25997cca011ed0761955754a68931f7b1694e487bffba73c6ac8dbcd084f5dee
   preresolved: true
-- image: cloudfoundry/cf-api-controllers@sha256:afe5933b8d97fe91e6aa6f7b8ec79a478df2838d56ac2736982b61b86dafbe25
-  newImage: index.docker.io/cloudfoundry/cf-api-controllers@sha256:afe5933b8d97fe91e6aa6f7b8ec79a478df2838d56ac2736982b61b86dafbe25
+- image: cloudfoundry/cf-api-controllers@sha256:9dd23d6669bc1b58147058116554b3d9158a2b9d236fa822bb8e39ed15c7b12c
+  newImage: index.docker.io/cloudfoundry/cf-api-controllers@sha256:9dd23d6669bc1b58147058116554b3d9158a2b9d236fa822bb8e39ed15c7b12c
   preresolved: true
-- image: cloudfoundry/cloud-controller-ng@sha256:36c889a7188d9c36b8c6230226a87330c5baa2207b8ab5e82d49f40f6061351a
-  newImage: index.docker.io/cloudfoundry/cloud-controller-ng@sha256:36c889a7188d9c36b8c6230226a87330c5baa2207b8ab5e82d49f40f6061351a
+- image: cloudfoundry/cf-api-package-image-uploader@sha256:321fbca190a06587b3d090150b499ab2c31ad56ca6c9a34715d9f6596e1542ec
+  newImage: index.docker.io/cloudfoundry/cf-api-package-image-uploader@sha256:321fbca190a06587b3d090150b499ab2c31ad56ca6c9a34715d9f6596e1542ec
   preresolved: true
-- image: gcr.io/cf-build-service-public/kpack/build-init@sha256:090bf83938b3a6e8559d566a816825035c3226a5b2b89710db3f2b9b8a0a218b
-  newImage: gcr.io/cf-build-service-public/kpack/build-init@sha256:090bf83938b3a6e8559d566a816825035c3226a5b2b89710db3f2b9b8a0a218b
+- image: cloudfoundry/cloud-controller-ng@sha256:8517eb1d5021317f59a154510d1816042e860f92f27d05b5701aebca1df4404d
+  newImage: index.docker.io/cloudfoundry/cloud-controller-ng@sha256:8517eb1d5021317f59a154510d1816042e860f92f27d05b5701aebca1df4404d
   preresolved: true
-- image: gcr.io/cf-build-service-public/kpack/completion@sha256:dd21b848f5ac7d1c844c780bb2b51596f5eadc300bee9bdc34cc912fa7d2ce9f
-  newImage: gcr.io/cf-build-service-public/kpack/completion@sha256:dd21b848f5ac7d1c844c780bb2b51596f5eadc300bee9bdc34cc912fa7d2ce9f
+- image: gcr.io/cf-build-service-public/kpack/build-init@sha256:8136ff3a64517457b91f86bf66b8ffe13b986aaf3511887eda107e59dcb8c632
+  newImage: gcr.io/cf-build-service-public/kpack/build-init@sha256:8136ff3a64517457b91f86bf66b8ffe13b986aaf3511887eda107e59dcb8c632
   preresolved: true
-- image: gcr.io/cf-build-service-public/kpack/controller@sha256:350e74b06c196070d4b256a9ab358aeb981cb55369d6933b89072d7625ec240a
-  newImage: gcr.io/cf-build-service-public/kpack/controller@sha256:350e74b06c196070d4b256a9ab358aeb981cb55369d6933b89072d7625ec240a
+- image: gcr.io/cf-build-service-public/kpack/completion@sha256:1e83c4ccb56ad3e0fccbac74f91dfc404db280f8d3380cfa20c7d68fd0359235
+  newImage: gcr.io/cf-build-service-public/kpack/completion@sha256:1e83c4ccb56ad3e0fccbac74f91dfc404db280f8d3380cfa20c7d68fd0359235
   preresolved: true
-- image: gcr.io/cf-build-service-public/kpack/lifecycle@sha256:830f6026479a0b43bdc6ba3e942a80c7c5e49839e911ad5592c1e54933419d05
-  newImage: gcr.io/cf-build-service-public/kpack/lifecycle@sha256:830f6026479a0b43bdc6ba3e942a80c7c5e49839e911ad5592c1e54933419d05
+- image: gcr.io/cf-build-service-public/kpack/controller@sha256:6a7fbb4d34a5ed778e75edc2a14b671afcbccaed1a37a4662708b7a11559734c
+  newImage: gcr.io/cf-build-service-public/kpack/controller@sha256:6a7fbb4d34a5ed778e75edc2a14b671afcbccaed1a37a4662708b7a11559734c
   preresolved: true
-- image: gcr.io/cf-build-service-public/kpack/rebase@sha256:68f116436c555fc655fb6cdf58a58b229dca6c64c46df730c01b0b2c995d24e3
-  newImage: gcr.io/cf-build-service-public/kpack/rebase@sha256:68f116436c555fc655fb6cdf58a58b229dca6c64c46df730c01b0b2c995d24e3
+- image: gcr.io/cf-build-service-public/kpack/lifecycle@sha256:2b97f13bdf43d2f4e72b68f67dcb1b693c6bee10f76b709c09e46ae21ec265e8
+  newImage: gcr.io/cf-build-service-public/kpack/lifecycle@sha256:2b97f13bdf43d2f4e72b68f67dcb1b693c6bee10f76b709c09e46ae21ec265e8
   preresolved: true
-- image: gcr.io/cf-build-service-public/kpack/webhook@sha256:8abb7c72856ee1276a9586dd687a31e0d2ae12d54c98432ee749cd1e33c0d331
-  newImage: gcr.io/cf-build-service-public/kpack/webhook@sha256:8abb7c72856ee1276a9586dd687a31e0d2ae12d54c98432ee749cd1e33c0d331
+- image: gcr.io/cf-build-service-public/kpack/rebase@sha256:70e1d8837773d623c67f9e9f09cddb58c77a30de46ebfe1d0090199c29dabc0d
+  newImage: gcr.io/cf-build-service-public/kpack/rebase@sha256:70e1d8837773d623c67f9e9f09cddb58c77a30de46ebfe1d0090199c29dabc0d
   preresolved: true
-- image: gcr.io/cf-networking-images/cf-k8s-networking/routecontroller@sha256:8ef88e0dcaa5228c2b325cf5296ff31666bd3e7525e994f4495ba4e8fc052ac8
-  newImage: gcr.io/cf-networking-images/cf-k8s-networking/routecontroller@sha256:8ef88e0dcaa5228c2b325cf5296ff31666bd3e7525e994f4495ba4e8fc052ac8
+- image: gcr.io/cf-build-service-public/kpack/webhook@sha256:c51a7508908baacc7253c74b9d9a4f7384a62882005c0d7aabe59f9d43904233
+  newImage: gcr.io/cf-build-service-public/kpack/webhook@sha256:c51a7508908baacc7253c74b9d9a4f7384a62882005c0d7aabe59f9d43904233
   preresolved: true
-- image: gcr.io/cf-routing/pilot@sha256:0516ef03cc2fb03e0202c7d08e73ffc761caad6946b664bd9ad1814020462c09
-  newImage: gcr.io/cf-routing/pilot@sha256:0516ef03cc2fb03e0202c7d08e73ffc761caad6946b664bd9ad1814020462c09
+- image: gcr.io/cf-networking-images/cf-k8s-networking/fluentbit@sha256:636813e4dfa80d615ecba1667d2e0f94c28096010bc190e177134b46e1e03eea
+  newImage: gcr.io/cf-networking-images/cf-k8s-networking/fluentbit@sha256:636813e4dfa80d615ecba1667d2e0f94c28096010bc190e177134b46e1e03eea
   preresolved: true
-- image: gcr.io/cf-routing/proxyv2@sha256:4e4d05059e65080b158a347bcfac67090968e96f302dea54c0efac9a16ef62f0
-  newImage: gcr.io/cf-routing/proxyv2@sha256:4e4d05059e65080b158a347bcfac67090968e96f302dea54c0efac9a16ef62f0
+- image: gcr.io/cf-networking-images/cf-k8s-networking/routecontroller@sha256:4b65f377a956f2f427809295aac6b5a6ec03db4c5977570e70173c8064d8deb8
+  newImage: gcr.io/cf-networking-images/cf-k8s-networking/routecontroller@sha256:4b65f377a956f2f427809295aac6b5a6ec03db4c5977570e70173c8064d8deb8
   preresolved: true
-- image: gcr.io/paketo-buildpacks/build@sha256:84f7b60192e69036cb363b2fc7d9834cff69dcbcf7aaf8c058d986fdee6941c3
-  newImage: gcr.io/paketo-buildpacks/build@sha256:84f7b60192e69036cb363b2fc7d9834cff69dcbcf7aaf8c058d986fdee6941c3
+- image: gcr.io/cf-networking-images/cf-k8s-networking/upgrade-sidecars@sha256:8cef1082ec0eb1d2e2f78c9b668065ce106de775cec929c745ca0e7f20a4c8fd
+  newImage: gcr.io/cf-networking-images/cf-k8s-networking/upgrade-sidecars@sha256:8cef1082ec0eb1d2e2f78c9b668065ce106de775cec929c745ca0e7f20a4c8fd
+  preresolved: true
+- image: gcr.io/cf-routing/pilot@sha256:dc3ae4f4a5b30828d4d92e879c698fd56d898e5755fad07fcbc1e25227062eba
+  newImage: gcr.io/cf-routing/pilot@sha256:dc3ae4f4a5b30828d4d92e879c698fd56d898e5755fad07fcbc1e25227062eba
+  preresolved: true
+- image: gcr.io/cf-routing/proxyv2@sha256:1cb3ad5eb354c0a3f0547cc8f5bbc18329ffcbc055a620244214244a55690f6e
+  newImage: gcr.io/cf-routing/proxyv2@sha256:1cb3ad5eb354c0a3f0547cc8f5bbc18329ffcbc055a620244214244a55690f6e
   preresolved: true
 - image: gcr.io/paketo-buildpacks/dotnet-core@sha256:db7d464fbaf62dd199f782a6efbca1cbbb60874654048e6ab9966dbda695dd78
   newImage: gcr.io/paketo-buildpacks/dotnet-core@sha256:db7d464fbaf62dd199f782a6efbca1cbbb60874654048e6ab9966dbda695dd78
   preresolved: true
-- image: gcr.io/paketo-buildpacks/go@sha256:8f75405b081db279bac501d3e8a1dcde290d4b13a4fd7ffa917112320d47ae2c
-  newImage: gcr.io/paketo-buildpacks/go@sha256:8f75405b081db279bac501d3e8a1dcde290d4b13a4fd7ffa917112320d47ae2c
+- image: gcr.io/paketo-buildpacks/go@sha256:436dfd26194a6ab136ae933e88fae8511c1c8bc2d0c974960c185c2d2d8a3491
+  newImage: gcr.io/paketo-buildpacks/go@sha256:436dfd26194a6ab136ae933e88fae8511c1c8bc2d0c974960c185c2d2d8a3491
   preresolved: true
-- image: gcr.io/paketo-buildpacks/java@sha256:1e7bc1095faa71d90df2cc1c806705ea6731dc977e7f86992cb771c714aa5345
-  newImage: gcr.io/paketo-buildpacks/java@sha256:1e7bc1095faa71d90df2cc1c806705ea6731dc977e7f86992cb771c714aa5345
+- image: gcr.io/paketo-buildpacks/java@sha256:bcfe1dc86d082a0f560d257d3a0431a346ea5d3947e270f3998bcad4fb1110c7
+  newImage: gcr.io/paketo-buildpacks/java@sha256:bcfe1dc86d082a0f560d257d3a0431a346ea5d3947e270f3998bcad4fb1110c7
   preresolved: true
-- image: gcr.io/paketo-buildpacks/nodejs@sha256:7110ff41a35ec4d8a0fbb63e7b292c2edc7ef0e072e542cd0a58e5d179ce2605
-  newImage: gcr.io/paketo-buildpacks/nodejs@sha256:7110ff41a35ec4d8a0fbb63e7b292c2edc7ef0e072e542cd0a58e5d179ce2605
+- image: gcr.io/paketo-buildpacks/nodejs@sha256:288e372a13232b8da1eb8f098aa04b36648655113247b6d7b74e3caeefb8a3a3
+  newImage: gcr.io/paketo-buildpacks/nodejs@sha256:288e372a13232b8da1eb8f098aa04b36648655113247b6d7b74e3caeefb8a3a3
   preresolved: true
-- image: gcr.io/paketo-buildpacks/php@sha256:5d065a7c2cf0343f01f01920819c535ee98fc22800b0f7c498ff6e2ad8eb394e
-  newImage: gcr.io/paketo-buildpacks/php@sha256:5d065a7c2cf0343f01f01920819c535ee98fc22800b0f7c498ff6e2ad8eb394e
+- image: gcr.io/paketo-buildpacks/php@sha256:c0c7e03cc26528adc04b81a52a5ae74587f3c5e3e8c03cdc80f3fb6880aed347
+  newImage: gcr.io/paketo-buildpacks/php@sha256:c0c7e03cc26528adc04b81a52a5ae74587f3c5e3e8c03cdc80f3fb6880aed347
   preresolved: true
-- image: gcr.io/paketo-buildpacks/procfile@sha256:e9f731b4cd3f8a13f2f70295713b0ef0970e02e03a530be467bf25703ee5e086
-  newImage: gcr.io/paketo-buildpacks/procfile@sha256:e9f731b4cd3f8a13f2f70295713b0ef0970e02e03a530be467bf25703ee5e086
+- image: gcr.io/paketo-buildpacks/procfile@sha256:861d9c93924dd1db3fbe6663754da603398931cdc4dee3da5c057ffa65cb383d
+  newImage: gcr.io/paketo-buildpacks/procfile@sha256:861d9c93924dd1db3fbe6663754da603398931cdc4dee3da5c057ffa65cb383d
   preresolved: true
-- image: gcr.io/paketo-buildpacks/run@sha256:84f7b60192e69036cb363b2fc7d9834cff69dcbcf7aaf8c058d986fdee6941c3
-  newImage: gcr.io/paketo-buildpacks/run@sha256:84f7b60192e69036cb363b2fc7d9834cff69dcbcf7aaf8c058d986fdee6941c3
+- image: gcr.io/paketo-buildpacks/ruby@sha256:f558d7ce3b21e166e51a51771e267834f5315198cbe09074e1e84707bec6e4fc
+  newImage: gcr.io/paketo-buildpacks/ruby@sha256:f558d7ce3b21e166e51a51771e267834f5315198cbe09074e1e84707bec6e4fc
   preresolved: true
-- image: gcr.io/paketo-community/python@sha256:c152763e3bc606f72cb7d8c513abe2fcf6ee2d8650b1e3a2884a0b7966404300
-  newImage: gcr.io/paketo-community/python@sha256:c152763e3bc606f72cb7d8c513abe2fcf6ee2d8650b1e3a2884a0b7966404300
-  preresolved: true
-- image: gcr.io/paketo-community/ruby@sha256:8442aecf21e6f19fe35efd603a66ded6561bf96cb80a8add2007082915d79665
-  newImage: gcr.io/paketo-community/ruby@sha256:8442aecf21e6f19fe35efd603a66ded6561bf96cb80a8add2007082915d79665
+- image: gcr.io/paketo-community/python@sha256:e6546f3072c49336ce99a2d8297716b748a69da9128c5afb1606c2b73a18a317
+  newImage: gcr.io/paketo-community/python@sha256:e6546f3072c49336ce99a2d8297716b748a69da9128c5afb1606c2b73a18a317
   preresolved: true
 - image: index.docker.io/bitnami/postgresql@sha256:0f76a419cfd9996036e3a53672f50cf69ed7699f1241cbf8e20af17bbbdf0683
   newImage: index.docker.io/bitnami/postgresql@sha256:0f76a419cfd9996036e3a53672f50cf69ed7699f1241cbf8e20af17bbbdf0683
   preresolved: true
-- image: index.docker.io/cfidentity/uaa@sha256:c4c5958fc10002d07e4c28baf2b1ad8b1c6ce06e3b423179a96d035f774bff12
-  newImage: index.docker.io/cfidentity/uaa@sha256:c4c5958fc10002d07e4c28baf2b1ad8b1c6ce06e3b423179a96d035f774bff12
+- image: index.docker.io/cfidentity/uaa@sha256:1854fc55c098781802e919681f28cfcb342e676fb5858800e902a206b0bca4b3
+  newImage: index.docker.io/cfidentity/uaa@sha256:1854fc55c098781802e919681f28cfcb342e676fb5858800e902a206b0bca4b3
   preresolved: true
 - image: index.docker.io/minio/minio@sha256:35d654988af3b5761162d5ce06243c1517ec34beeae271c8b5983b5082968858
   newImage: index.docker.io/minio/minio@sha256:35d654988af3b5761162d5ce06243c1517ec34beeae271c8b5983b5082968858
   preresolved: true
-- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-controller@sha256:a0caba94d99cb89511dbe68c3360ac7177f39cd42d8ee7d4990306ea105d8c58
-  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-controller@sha256:a0caba94d99cb89511dbe68c3360ac7177f39cd42d8ee7d4990306ea105d8c58
+- image: index.docker.io/paketobuildpacks/build@sha256:0b8396039246adce266e9a6c13a3095f19a5ae858d11874b4f2d0a04c1ac2da1
+  newImage: index.docker.io/paketobuildpacks/build@sha256:0b8396039246adce266e9a6c13a3095f19a5ae858d11874b4f2d0a04c1ac2da1
   preresolved: true
-- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-event-reporter@sha256:b9e2218b95aa2557b5d85a1c31c6a0b4a60156a78afaea56ceac1bbe7787996a
-  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-event-reporter@sha256:b9e2218b95aa2557b5d85a1c31c6a0b4a60156a78afaea56ceac1bbe7787996a
+- image: index.docker.io/paketobuildpacks/run@sha256:fca60d5476d5a7dc75deb3c8dad59514994958b4d267160f238e120bf8d79dc7
+  newImage: index.docker.io/paketobuildpacks/run@sha256:fca60d5476d5a7dc75deb3c8dad59514994958b4d267160f238e120bf8d79dc7
   preresolved: true
-- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-opi@sha256:1f08f8ca4e6981034043612159f7268e43e84a9d5d000c6c88f802c54fc5d265
-  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-opi@sha256:1f08f8ca4e6981034043612159f7268e43e84a9d5d000c6c88f802c54fc5d265
+- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-eirini-controller@sha256:52a7892033893d3d09b2582ae3d562433b30372dcb3678a37e0efd73d174d342
+  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-eirini-controller@sha256:52a7892033893d3d09b2582ae3d562433b30372dcb3678a37e0efd73d174d342
   preresolved: true
-- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-task-reporter@sha256:142847a256db48e0590a23b74b78d6e2086dc8913019e5b6b8050d4a9255f37f
-  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-task-reporter@sha256:142847a256db48e0590a23b74b78d6e2086dc8913019e5b6b8050d4a9255f37f
+- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-event-reporter@sha256:b06e19ac5232a1077474933e412143f1e4449df94b5899d1e6b29fa823c92b3f
+  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-event-reporter@sha256:b06e19ac5232a1077474933e412143f1e4449df94b5899d1e6b29fa823c92b3f
   preresolved: true
-- image: logcache/cf-k8s-logging@sha256:28f4c43ad85aa8fe5a33f0c37ddfe73db3e0b39e05c2c1f55a7af8b96487cf3a
-  newImage: index.docker.io/logcache/cf-k8s-logging@sha256:28f4c43ad85aa8fe5a33f0c37ddfe73db3e0b39e05c2c1f55a7af8b96487cf3a
+- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-instance-index-env-injector@sha256:ad9adc876d588fbc6b0592a1f8a9b24efd41e8dcd06ae2244192a7651499def8
+  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-instance-index-env-injector@sha256:ad9adc876d588fbc6b0592a1f8a9b24efd41e8dcd06ae2244192a7651499def8
   preresolved: true
-- image: logcache/log-cache-cf-auth-proxy@sha256:243cd2b8c1ce52213b97e2bc0eb45c505ef839133c0194c37596ade464826ef2
-  newImage: index.docker.io/logcache/log-cache-cf-auth-proxy@sha256:243cd2b8c1ce52213b97e2bc0eb45c505ef839133c0194c37596ade464826ef2
+- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-opi@sha256:d20c957c36644e8f9878bfee1633f319b2e94c82b66b16f9565b5796ed20817b
+  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-opi@sha256:d20c957c36644e8f9878bfee1633f319b2e94c82b66b16f9565b5796ed20817b
   preresolved: true
-- image: logcache/log-cache-gateway@sha256:ff61f78c8cf94cce2a0d21897c4c1144a412686f16fb7afec9ba7e3f179887dd
-  newImage: index.docker.io/logcache/log-cache-gateway@sha256:ff61f78c8cf94cce2a0d21897c4c1144a412686f16fb7afec9ba7e3f179887dd
+- image: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-task-reporter@sha256:b6173cbf13ecff7f789acc9fb38667caacbdef8a7ee5e0667e7c1470564fa5da
+  newImage: index.docker.io/relintdockerhubpushbot/cf-for-k8s-eirini-task-reporter@sha256:b6173cbf13ecff7f789acc9fb38667caacbdef8a7ee5e0667e7c1470564fa5da
   preresolved: true
-- image: logcache/log-cache@sha256:d0ea7cd515a5e46bc162e8e600afd1888c00935bff9e085d9f7575352cd828c2
-  newImage: index.docker.io/logcache/log-cache@sha256:d0ea7cd515a5e46bc162e8e600afd1888c00935bff9e085d9f7575352cd828c2
+- image: logcache/cf-k8s-logging@sha256:fed765745c41c656f409ff5e264a4cd5f13f89f33cfe468c7f534d40792f647a
+  newImage: index.docker.io/logcache/cf-k8s-logging@sha256:fed765745c41c656f409ff5e264a4cd5f13f89f33cfe468c7f534d40792f647a
   preresolved: true
-- image: logcache/syslog-server@sha256:a3924d66117cbdcb3aecfea7268e39e92aae78965f7daef28be2a8dc0c400e27
-  newImage: index.docker.io/logcache/syslog-server@sha256:a3924d66117cbdcb3aecfea7268e39e92aae78965f7daef28be2a8dc0c400e27
+- image: logcache/log-cache-cf-auth-proxy@sha256:c37c1065f026aba7b581f357a9d4268c8724a93630184b76307343195370d0cb
+  newImage: index.docker.io/logcache/log-cache-cf-auth-proxy@sha256:c37c1065f026aba7b581f357a9d4268c8724a93630184b76307343195370d0cb
   preresolved: true
-- image: oratos/metric-proxy@sha256:266be9306a2cb1aa862b382bdc5b029e000efd25aa8c0ceab3fffa66cf6ab512
-  newImage: index.docker.io/oratos/metric-proxy@sha256:266be9306a2cb1aa862b382bdc5b029e000efd25aa8c0ceab3fffa66cf6ab512
+- image: logcache/log-cache-gateway@sha256:4d85c35ff30b5d1ba22d5fdc2e2d1ccd1782644c5a58ea95a42a6b0da71bb7d2
+  newImage: index.docker.io/logcache/log-cache-gateway@sha256:4d85c35ff30b5d1ba22d5fdc2e2d1ccd1782644c5a58ea95a42a6b0da71bb7d2
+  preresolved: true
+- image: logcache/log-cache@sha256:e28a91c324f932a0e867a820210a3645e8ec87026e6195e8d23e4ab8fb7d2bbe
+  newImage: index.docker.io/logcache/log-cache@sha256:e28a91c324f932a0e867a820210a3645e8ec87026e6195e8d23e4ab8fb7d2bbe
+  preresolved: true
+- image: logcache/syslog-server@sha256:fdd2fb92bed0c2dec4d1ea96c8253304fed8abc2fdf4eb0174bc6f7a50facf35
+  newImage: index.docker.io/logcache/syslog-server@sha256:fdd2fb92bed0c2dec4d1ea96c8253304fed8abc2fdf4eb0174bc6f7a50facf35
+  preresolved: true
+- image: oratos/metric-proxy@sha256:aa06c55a4d4af904e6faa44cf776000534d9dc738554a1eff4a85279a504100e
+  newImage: index.docker.io/oratos/metric-proxy@sha256:aa06c55a4d4af904e6faa44cf776000534d9dc738554a1eff4a85279a504100e
   preresolved: true
 - image: oratos/metrics-server:v0.3.6@sha256:a37da13de7b74c373e8698dee7836ce5fdbd102c3c1c8b9953a95e7f20138ab6
   newImage: index.docker.io/oratos/metrics-server@sha256:a37da13de7b74c373e8698dee7836ce5fdbd102c3c1c8b9953a95e7f20138ab6
@@ -114,7 +126,7 @@ overrides:
   newImage: index.docker.io/oratos/statsd_exporter@sha256:10a64dc4ad0a3e3fe88372f0481dea5c02595c38d168617836a99a649d3ac407
   preresolved: true
 - image: proxyv2
-  newImage: gcr.io/cf-routing/proxyv2@sha256:4e4d05059e65080b158a347bcfac67090968e96f302dea54c0efac9a16ef62f0
+  newImage: gcr.io/cf-routing/proxyv2@sha256:1cb3ad5eb354c0a3f0547cc8f5bbc18329ffcbc055a620244214244a55690f6e
   preresolved: true
 searchRules:
 - keyMatcher:

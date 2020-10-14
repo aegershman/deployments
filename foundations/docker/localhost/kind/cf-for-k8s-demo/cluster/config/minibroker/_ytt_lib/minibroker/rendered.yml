@@ -187,11 +187,15 @@ spec:
           readOnlyRootFilesystem: true
           runAsNonRoot: true
         volumeMounts:
+        - mountPath: /home/minibroker/.cache
+          name: cache
         - mountPath: /minibroker
           name: provisioning-settings
           readOnly: true
       serviceAccountName: minibroker
       volumes:
+      - emptyDir: {}
+        name: cache
       - configMap:
           name: minibroker-provisioning-settings
         name: provisioning-settings
