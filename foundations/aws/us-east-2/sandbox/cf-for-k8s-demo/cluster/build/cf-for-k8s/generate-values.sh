@@ -173,14 +173,14 @@ blobstore:
   secret_access_key: $(bosh interpolate ${VARS_FILE} --path=/blobstore_secret_key)
 
 cf_db:
-  admin_password: xreplacedx
+  admin_password: $(bosh interpolate ${VARS_FILE} --path=/db_admin_password)
 
 capi:
   cc_username_lookup_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cc_username_lookup_client_secret)
   cf_api_controllers_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cf_api_controllers_client_secret)
   database:
     password: $(bosh interpolate ${VARS_FILE} --path=/capi_db_password)
-    encryption_key: xreplacedx
+    encryption_key: $(bosh interpolate ${VARS_FILE} --path=/capi_db_encryption_key)
 
 system_certificate:
   #! This certificates and keys should be valid for *.system.cf.example.com

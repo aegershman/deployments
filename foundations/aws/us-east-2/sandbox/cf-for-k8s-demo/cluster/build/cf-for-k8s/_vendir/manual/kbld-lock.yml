@@ -126,7 +126,7 @@ overrides:
   newImage: index.docker.io/oratos/statsd_exporter@sha256:10a64dc4ad0a3e3fe88372f0481dea5c02595c38d168617836a99a649d3ac407
   preresolved: true
 - image: proxyv2
-  newImage: gcr.io/cf-routing/proxyv2@sha256:4e4d05059e65080b158a347bcfac67090968e96f302dea54c0efac9a16ef62f0
+  newImage: gcr.io/cf-routing/proxyv2@sha256:1cb3ad5eb354c0a3f0547cc8f5bbc18329ffcbc055a620244214244a55690f6e
   preresolved: true
 searchRules:
 - keyMatcher:

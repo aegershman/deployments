@@ -19,9 +19,7 @@ generate)
     -f ${SCRIPT_DIR}/_vendir/upstream/cf-for-k8s/config \
     -f ${SCRIPT_DIR}/cf-app-registry-values.yml \
     -f ${SCRIPT_DIR}/cf-values-generated.yml \
-    -f ${SCRIPT_DIR}/cf-values-optional-toggles.yml \
-    -f ${SCRIPT_DIR}/_vendir/manual/secretgen-optional/capi-database-encryption-key-secret.yml \
-    -f ${SCRIPT_DIR}/_vendir/manual/secretgen-optional/postgres-cf-db-admin.yml |
+    -f ${SCRIPT_DIR}/cf-values-optional-toggles.yml |
     kbld \
       -f "${SCRIPT_DIR}/_vendir/manual/kbld-istio-proxy-config.yml" \
       -f - --lock-output="${SCRIPT_DIR}/_vendir/manual/kbld-lock.yml" \
