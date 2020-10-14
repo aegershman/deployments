@@ -83,10 +83,10 @@ a | apply | deploy)
     kapp deploy -a cf -f <(
       ytt \
         -f ./cluster/config/cf-for-k8s/ \
+        -f ./cluster/config-optional/cf-for-k8s/cf-system-certificate-cert-manager-prod.yml \
+        -f ./cluster/config-optional/cf-for-k8s/cf-workloads-certificate-cert-manager-prod.yml \
         -f ./cluster/config-optional/cf-for-k8s/istio-ingressgateway-aws-nlb.yml
     ) "$@"
-    # -f ./cluster/config-optional/cf-for-k8s/cf-system-certificate-cert-manager-prod.yml \
-    # -f ./cluster/config-optional/cf-for-k8s/cf-workloads-certificate-cert-manager-prod.yml \
     # -f ./cluster/config-optional/cf-for-k8s/label-ns-quarks-secret-monitor.yml
     # -f ./cluster/config-optional/cf-for-k8s/system-certificate-cert-manager-staging.yml
     ;;
