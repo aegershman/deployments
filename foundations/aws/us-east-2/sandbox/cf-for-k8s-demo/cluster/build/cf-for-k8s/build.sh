@@ -24,5 +24,8 @@ generate)
       -f "${SCRIPT_DIR}/_vendir/manual/kbld-istio-proxy-config.yml" \
       -f - --lock-output="${SCRIPT_DIR}/_vendir/manual/kbld-lock.yml" \
       >"${SCRIPT_DIR}/../../config/cf-for-k8s/_ytt_lib/cf-for-k8s/rendered.yml"
+
+  # -f ${SCRIPT_DIR}/_vendir/manual/secretgen-optional/capi-database-encryption-key-secret.yml \
+  # -f ${SCRIPT_DIR}/_vendir/manual/secretgen-optional/postgres-cf-db-admin.yml |
   ;;
 esac
