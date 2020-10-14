@@ -172,8 +172,7 @@ kind: Deployment
 metadata:
   annotations:
     kbld.k14s.io/images: |
-      - Metas: null
-        URL: index.docker.io/k14s/secretgen-controller@sha256:bb61310527f760ace5f2d0eddf49893f92ca48376f3c6e162c2067b6af7bb2d7
+      null
   name: secretgen-controller
   namespace: secretgen-controller
 spec:
