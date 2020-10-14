@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.3.0
+    helm.sh/chart: external-dns-3.4.6
   name: external-dns
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -16,7 +16,7 @@ metadata:
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.3.0
+    helm.sh/chart: external-dns-3.4.6
   name: external-dns
 rules:
 - apiGroups:
@@ -71,7 +71,7 @@ metadata:
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.3.0
+    helm.sh/chart: external-dns-3.4.6
   name: external-dns
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -89,7 +89,7 @@ metadata:
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.3.0
+    helm.sh/chart: external-dns-3.4.6
   name: external-dns
 spec:
   ports:
@@ -108,15 +108,15 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: 0.7.3-debian-10-r0
+        - Tag: 0.7.4-debian-10-r0
           Type: resolved
-          URL: docker.io/bitnami/external-dns:0.7.3-debian-10-r0
-        URL: index.docker.io/bitnami/external-dns@sha256:a38e2ee1f64c5bcef25e70801a515f6e855416b89261ddd8d46d34cfbaca9bf4
+          URL: docker.io/bitnami/external-dns:0.7.4-debian-10-r0
+        URL: index.docker.io/bitnami/external-dns@sha256:9f6dfef7ac8ff525d20e150a4ff3da27a530c1db5c3f527c7df01e362ab51861
   labels:
     app.kubernetes.io/instance: external-dns
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-dns
-    helm.sh/chart: external-dns-3.3.0
+    helm.sh/chart: external-dns-3.4.6
   name: external-dns
 spec:
   replicas: 1
@@ -132,7 +132,7 @@ spec:
         app.kubernetes.io/instance: external-dns
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-dns
-        helm.sh/chart: external-dns-3.3.0
+        helm.sh/chart: external-dns-3.4.6
     spec:
       containers:
       - args:
@@ -148,7 +148,7 @@ spec:
         env:
         - name: AWS_DEFAULT_REGION
           value: us-east-2
-        image: index.docker.io/bitnami/external-dns@sha256:a38e2ee1f64c5bcef25e70801a515f6e855416b89261ddd8d46d34cfbaca9bf4
+        image: index.docker.io/bitnami/external-dns@sha256:9f6dfef7ac8ff525d20e150a4ff3da27a530c1db5c3f527c7df01e362ab51861
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2
