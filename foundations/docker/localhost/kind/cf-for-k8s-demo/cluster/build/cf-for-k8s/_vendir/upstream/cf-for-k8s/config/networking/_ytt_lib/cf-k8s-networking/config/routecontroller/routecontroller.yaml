@@ -19,6 +19,10 @@ spec:
   template:
     metadata:
       namespace: #@ data.values.systemNamespace
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
       labels:
         app: routecontroller
         app.kubernetes.io/name: routecontroller
@@ -28,6 +32,7 @@ spec:
       containers:
       - name: routecontroller
         image: #@ data.values.routecontroller.image
+        args: ["--enable-leader-election=true"]
         resources:
           limits:
             cpu: 100m

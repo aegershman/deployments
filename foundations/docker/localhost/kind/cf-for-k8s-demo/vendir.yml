@@ -10,7 +10,7 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: da9b032c258057e94176af468318ff1e2a1127dd # beyond v0.6.0
+          ref: 552525ff352c36f3c3467e93b8e32fd35394c179 # beyond v0.7.0
         includePaths:
           - config/**/*
           - hack/generate-values.sh
@@ -22,7 +22,7 @@ directories:
       - path: upstream/harbor-helm
         git:
           url: https://github.com/goharbor/harbor-helm
-          ref: tags/v1.3.4
+          ref: tags/v1.3.5
         excludePaths:
           - .git/**/*
           - docs/**/*
@@ -34,7 +34,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/kubernetes-sigs/minibroker
-          ref: 6b728e3e6790c2a2bc3ea941b8a02285ef7a53ea
+          ref: ef11c304058e6c11062129369755200e2bce7642 # v1.1.0
         includePaths:
           - charts/minibroker/**/*
   - path: cluster/build/service-catalog/_vendir
@@ -44,7 +44,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/kubernetes-sigs/service-catalog
-          ref: 61ad94153909c177bf74cebe4e915b1b2aa5e764
+          ref: 11c5b363ad9070284f6f45d13107020a8aeab82a # v0.3.0
         includePaths:
           - charts/catalog/**/*
 
