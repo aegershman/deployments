@@ -10,7 +10,7 @@ directories:
       - path: upstream
         githubRelease:
           slug: jetstack/cert-manager
-          tag: v1.0.0
+          tag: v1.0.3
           disableAutoChecksumValidation: true
         includePaths:
           - cert-manager.yaml
@@ -22,7 +22,7 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: f37476c0087bae6613c81e1224af2aa92f5de77b # beyond v0.6.0
+          ref: 552525ff352c36f3c3467e93b8e32fd35394c179 # beyond v0.7.0
         includePaths:
           - config/**/*
           - hack/generate-values.sh
@@ -34,7 +34,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/bitnami/charts
-          ref: be5b30d4b65794d63d36449fc6e8a912bdccbdda # 3.3.0
+          ref: 0966de9fb6f693aea277d1c79fd8f43c3e65b897 # 3.4.6
         includePaths:
           - bitnami/external-dns/**/*
   - path: cluster/build/harbor/_vendir
@@ -44,7 +44,7 @@ directories:
       - path: upstream/harbor-helm
         git:
           url: https://github.com/goharbor/harbor-helm
-          ref: tags/v1.3.4
+          ref: tags/v1.3.5
         excludePaths:
           - .git/**/*
           - docs/**/*
@@ -56,7 +56,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/cloudfoundry-incubator/quarks-secret
-          ref: tags/v1.0.712
+          ref: tags/v1.0.744
         includePaths:
           - deploy/helm/quarks-secret/**/*
   - path: cluster/build/secretgen-controller/_vendir
