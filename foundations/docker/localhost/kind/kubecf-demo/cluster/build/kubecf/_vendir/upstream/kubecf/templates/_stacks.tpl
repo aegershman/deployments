@@ -31,7 +31,7 @@
   {{- $cc_stacks := $.kubecf.retval }}
 
   {{- if ne (len $cc_stacks) 1 }}
-    {{- fail "cf-deployment defines more than one stack (or none)" }}
+    {{- include "_config.fail" "cf-deployment defines more than one stack (or none)" }}
   {{- end }}
   {{- $cc_stack := index $cc_stacks 0 }}
 
@@ -39,7 +39,7 @@
   {{- $_ := include "_config.lookup" (list $ "stacks" $cc_stack.name) }}
   {{- $stack := $.kubecf.retval }}
   {{- if not $stack }}
-    {{- fail (printf "cf-deployment stack %q not configured in kubecf" $cc_stack.name) }}
+    {{- include "_config.fail" (printf "cf-deployment stack %q not configured in kubecf" $cc_stack.name) }}
   {{- end }}
 
   {{- /* *** Copy stack "description" from manifest *** */}}
@@ -55,6 +55,7 @@
 
   {{- /* *** Create "$stack.install_buildpacks" and "$stack.releases" from the "api" buildpack jobs *** */}}
   {{- $_ := set $stack "install_buildpacks" list }}
+  {{- $condition := printf "stacks.%s.enabled" $cc_stack.name }}
 
   {{- $_ := include "_config.lookupManifest" (list $ "instance_groups/name=api/jobs") }}
   {{- range $job := $.kubecf.retval }}
@@ -65,8 +66,17 @@
       {{- if not (index $stack.releases $job.release) }}
         {{- $_ := set $stack.releases $job.release dict }}
       {{- end }}
+      {{- /* Set job condition so no spurious references are generated when the stack is disabled  */}}
+      {{- $_ := set $.Values.jobs.api $job.name (dict "condition" $condition "processes" list) }}
     {{- end }}
   {{- end }}
+
+  {{- /* Make sure the rootfs-setup job is not referenced when the stack is disabled */}}
+  {{- $diego_cell := index $.Values.jobs "diego-cell" }}
+  {{- /* Both stack condition and diego-cell condition must be true to enable rootfs-setup job */}}
+  {{- $condition = printf "(%s) && (%s)" $condition (index $diego_cell "$default") }}
+  {{- $job_name := printf "%s-rootfs-setup" $cc_stack.name }}
+  {{- $_ := set $diego_cell $job_name (dict "condition" $condition "processes" list) }}
 
   {{- /* +----------------------------------------------------------------------------------------------+ */}}
   {{- /* | Setup the additional stacks in .config.stacks and merge their releases into .config.releases | */}}
@@ -75,6 +85,12 @@
   {{- $_ := include "_config.lookup" (list $ "stacks") }}
   {{- range $stack_name, $stack := $.kubecf.retval }}
     {{- $_ := set $stack "enabled" (has $stack_name $.Values.install_stacks) }}
+
+    {{- /* *** Mark all releases in the stack as data-only *** */}}
+    {{- if not (hasKey $stack.releases "$defaults") }}
+      {{- $_ := set $stack.releases "$defaults" dict }}
+    {{- end }}
+    {{- $_ := set (index $stack.releases "$defaults") "data-only" true }}
 
     {{- /* *** Update all releases with defaults from stack.releases.$defaults *** */}}
     {{- $_ := include "_releases.applyDefaults" $stack.releases }}
@@ -122,15 +138,15 @@
   {{- /* *** Make sure all requested stacks and their buildpacks are defined *** */}}
   {{- range $stack_name := $.Values.install_stacks }}
     {{- if not (include "_config.lookup" (list $ "stacks" $stack_name)) }}
-      {{- fail (printf "Stack %s is not defined" $stack_name) }}
+      {{- include "_config.fail" (printf "Stack %s is not defined" $stack_name) }}
     {{- end }}
     {{- $stack := $.kubecf.retval }}
     {{- if not (include "_config.lookup" (list $ "releases" $stack_name)) }}
-      {{- fail (printf "No rootfs release found for stack %s" $stack_name) }}
+      {{- include "_config.fail" (printf "No rootfs release found for stack %s" $stack_name) }}
     {{- end }}
     {{- range $buildpack_name := $stack.install_buildpacks }}
       {{- if not (include "_config.lookup" (list $ "stacks" $stack_name "buildpacks" $buildpack_name)) }}
-        {{- fail (printf "No release found for buildpack %s (used by stack %s)" $buildpack_name $stack_name) }}
+        {{- include "_config.fail" (printf "No release found for buildpack %s (used by stack %s)" $buildpack_name $stack_name) }}
       {{- end }}
     {{- end }}
   {{- end }}

@@ -4,23 +4,22 @@ directories:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/cloudfoundry-incubator/quarks-operator/releases/29091160
+      url: https://api.github.com/repos/cloudfoundry-incubator/quarks-operator/releases/32338202
     path: upstream
   path: cluster/build/cf-operator/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Adding parameter for externalTrafficPolicy in internal controller
-        service spec
-      sha: 442f7bb71b5111206d8ed20d28746c35c7bd4b62
+      commitTitle: 'Merge pull request #6326 from kolorful/master...'
+      sha: 9b683e40555fdfaba453d826306bc9c03880dc16
     path: upstream
   path: cluster/build/ingress-nginx/_vendir
 - contents:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/cloudfoundry-incubator/kubecf/releases/29692165
+      url: https://api.github.com/repos/cloudfoundry-incubator/kubecf/releases/32378896
     path: upstream
   path: cluster/build/kubecf/_vendir
 - contents:

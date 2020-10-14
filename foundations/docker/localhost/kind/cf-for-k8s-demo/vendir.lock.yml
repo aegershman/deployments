@@ -4,33 +4,32 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Merge branch 'remove-metric-proxy-ref' into develop...
-      sha: da9b032c258057e94176af468318ff1e2a1127dd
+      commitTitle: Autobump stack images
+      sha: 552525ff352c36f3c3467e93b8e32fd35394c179
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #668 from ywk253100/200716_1.3.4...'
-      sha: 768a3b2c03bcb708fc7c2bfc6b9552437efff067
+      commitTitle: 'Merge pull request #729 from ywk253100/200915_1.3.5...'
+      sha: 0b7457658b9b5c3c500c91a65caf991c4a460bb1
     path: upstream/harbor-helm
   path: cluster/build/harbor/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'feat: Allow for overriding user-specified provisioning params
-        with default values (#93)...'
-      sha: 6b728e3e6790c2a2bc3ea941b8a02285ef7a53ea
+      commitTitle: 'fix: set cluster domain for credentials URIs (#111)...'
+      sha: ef11c304058e6c11062129369755200e2bce7642
     path: upstream
   path: cluster/build/minibroker/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Add Priority Class support for catalog Helm Chart (#2832)...
-      sha: 61ad94153909c177bf74cebe4e915b1b2aa5e764
+      commitTitle: Update version from 0.3.0-beta.2 to 0.3.0 (#2811)
+      sha: 11c5b363ad9070284f6f45d13107020a8aeab82a
     path: upstream
   path: cluster/build/service-catalog/_vendir
 - contents:

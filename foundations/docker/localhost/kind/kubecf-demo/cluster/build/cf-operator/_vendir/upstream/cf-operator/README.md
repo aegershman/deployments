@@ -4,6 +4,10 @@
 
 This helm chart deploys the cf-operator, which allow the deployment of a bosh manifest through a configmap and watches for changes on it.
 
+The Quarks-operator documentation is available at: https://quarks.suse.dev/docs/
+
+For notes about the installation, see the relevant section: https://quarks.suse.dev/docs/quarks-operator/install/
+
 ## Installing the Latest Stable Chart
 
 To install the latest stable helm chart, with the `cf-operator` as the release name and namespace:
@@ -39,11 +43,11 @@ helm install relname1 quarks/cf-operator \
 
 Manually create before running `helm install`, for each namespace:
 
-* a namespace "staging1" with the following labels (note: "true" and "qjob-persist-output" are the defaults from `values.yaml`):
-  * quarks.cloudfoundry.org/monitored: "true"
-  * quarks.cloudfoundry.org/qjob-service-account: qjob-account1
-* a service account named "qjob-account1"
-* a role binding from the existing cluster role "qjob-persist-output" to "qjob-account1" in namespace "staging1"
+* a namespace "staging1" with the following labels (note: "cfo" and "qjob-persist-output" are the defaults from `values.yaml`):
+  * quarks.cloudfoundry.org/monitored: cfo
+  * quarks.cloudfoundry.org/qjob-service-account: qjob-persist-output
+* a service account named "qjob-persist-output"
+* a role binding from the existing cluster role "qjob-persist-output" to "qjob-persist-output" service account in namespace "staging1"
 
 ## Installing the Chart From the Development Branch
 
@@ -61,11 +65,15 @@ helm delete cf-operator
 
 ## Configuration
 
+For more possible parameters look in [`values.yml`](https://github.com/cloudfoundry-incubator/quarks-operator/blob/master/deploy/helm/cf-operator/values.yaml).
+
 | Parameter                                         | Description                                                                                       | Default                                        |
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `image.repository`                                | Docker hub repository for the cf-operator image                                                   | `cf-operator`                                  |
 | `image.org`                                       | Docker hub organization for the cf-operator image                                                 | `cfcontainerization`                           |
 | `image.tag`                                       | Docker image tag                                                                                  | `foobar`                                       |
+| `logrotateInterval`                               | Logrotate interval in minutes                                                                     | `1440`                                         |
+| `logLevel`                                        | Only show log messages which are at least at the given level (trace,debug,info,warn)              | `debug`                                        |
 | `global.contextTimeout`                           | Will set the context timeout in seconds, for future K8S API requests                              | `300`                                          |
 | `global.image.pullPolicy`                         | Kubernetes image pullPolicy                                                                       | `IfNotPresent`                                 |
 | `global.image.credentials`                        | Kubernetes image pull secret credentials (map with keys `servername`, `username`, and `password`) | `nil`                                          |
@@ -78,7 +86,8 @@ helm delete cf-operator
 | `serviceAccount.name`                             | If not set and `create` is `true`, a name is generated using the fullname of the chart            |                                                |
 | `global.singleNamespace.create`                   | If true, create a service account and a single watch namespace                                    | `true`                                         |
 | `global.singleNamespace.name`                     | Name of the single watch namespace, that will be watched for BOSH deployment                      | `staging`                                      |
-
+| `applyCRD`              | If True, the quarks-operator will install the CRD's.                                                                        | `true`
+|
 > **Note:**
 >
 > `global.operator.webhook.useServiceReference` will override `operator.webhook.endpoint` configuration

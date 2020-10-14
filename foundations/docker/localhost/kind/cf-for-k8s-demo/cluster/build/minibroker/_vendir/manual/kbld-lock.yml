@@ -1,6 +1,6 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.24.0
+minimumRequiredVersion: 0.25.0
 overrides:
 - image: quay.io/kubernetes-service-catalog/minibroker:canary
   newImage: quay.io/kubernetes-service-catalog/minibroker@sha256:1e5869edd429cd3b017b01ccd010cfd65ba80aefd0cec0d92e275a671b683fa6

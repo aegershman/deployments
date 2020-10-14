@@ -3,7 +3,7 @@ apiVersion: v1
 data:
   HARBOR_ADMIN_PASSWORD: YWRtaW4=
   POSTGRESQL_PASSWORD: Y2hhbmdlaXQ=
-  secret: RXdKSlRoN3lvU1d1V1dLZw==
+  secret: NG1JaXBZYUJLbjFyNUJ5ZA==
   secretKey: bm90LWEtc2VjdXJlLWtleQ==
   tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUUwekNDQXJ1Z0F3SUJBZ0lKQVBZL096TE1lVnEyTUEwR0NTcUdTSWIzRFFFQkN3VUFNQUF3SGhjTk1Ua3cKTkRFNE1ESXlOek0zV2hjTk1qa3dOREUxTURJeU56TTNXakFBTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQwpBZzhBTUlJQ0NnS0NBZ0VBM3hsVUpzMmIvYUkyTkxveTRPSVErZG4veU1iL085OWlLRFJ5WktwSDhyU09tUytvCkY5dW5tU0F6TDY1WEEvdjZuWTBPTEkvZEFTRGprcWtCcElkVEd6b2dSNWY4VWlCNm9zdUVZN1Y3MVhaZHpXTHIKUGpuSnE2WkxBYW9LbXdHODBXNStXZDZWOFB5Z094NTJta3IxdzdJV0t6KzFaTEk1aXpicHBvbjdYVkdWUmFBVApSdk5aRGlKNkNlSnBjSjVINzIzbGtmNVJ2SldhdFpMQ1lJWURiUmZUaUtzeVEvU2xSY3Y1QlZmSGcvTEpTSDlRCkxHUmhQTUFSbGRsOXd5WkN3WlpESHhoZUk0YSsyNmFhOE1ZM3U5c3QvbDAvT282VkNUR3BNaUVoaUdGMkxWanAKVVdxLytCUDRTRkV2SmZxL0R1aW5JMTM5Vy81YVpaNy9Id1JQbG1ZVTZwWFRSTHlJZzdqZCsxOWZKd1I3WDM3cQp3MG84dDA2RmhqbXJDemFZQ1Vqb1JlcURtSGFObVpOL2Rkdkc3alpXQnUrak5oMFlhdnN5UXlDSVZtdjZ5cVNjCmpQaUQ5dWl2eHFUd2pKaWRJQlJmdVVyejNhRVJRN2NRZ2YwcWhxakl6Zmx6SGJGS2hJTG9jQldxN3p5Tmw5aHIKdlVHVC9XWmN3MHQvT3RNNzJTUGFwbG1UZ1ZiYlFSeGYyVkh6eXB0R0l2dHlkbFhLOHRoeE9NcFhvNGUrU2w4ZAoxZ2RRY0M0b2lzTjlGMjlvTnM4UDV5RlFQLy94WXV2OEM2MDduQ2oxRHpySWQ1YXZHL05WZktCL2ZiREtFRmdOCjJXaEhJblR6UExFY2pGNGZFcmNVQUV1V1cwYnVYLzZGSENHM2lUdHJxeUQ5MktUVkRmTjFKNTZycmNzQ0F3RUEKQWFOUU1FNHdIUVlEVlIwT0JCWUVGRmhOaFRvNFVBQzJQVXNmOGpZYVdqMTYwdkdFTUI4R0ExVWRJd1FZTUJhQQpGRmhOaFRvNFVBQzJQVXNmOGpZYVdqMTYwdkdFTUF3R0ExVWRFd1FGTUFNQkFmOHdEUVlKS29aSWh2Y05BUUVMCkJRQURnZ0lCQU1Bc0V0VmxFTE13ZHRjaWZIZU9UMGtPbWY1d285SW4vZUZTZ3NjQ3pCTURhUngyQjNxMzZBb1MKSWw3WFdBWnBldmFSN1c3eWVBUkthQXNoQkxoeWdVcUxEMHpXYktsU045SHByZDF3ZHBNMGZmeVBwTjVkeE9ZQQplcjA0eTEyR1JuQ2JNWXFpNGN2enRQNFRpblhxcTJ5SFNZaExiTzlxa0k1Z2JXVnhrUnVJY01Ldml4ZGRsbE5ZClEzb2JKYURESG1vdk0zK2cvRysxWUZndDRxRVMzOFhuSjdCclNzaEhubjVFSVFoMjg2eGZKcml5cksyaEhiTEoKcXowWXVGNkczRFhQZVdHZ1h2ajBIaXBjMGY4VURaa0tray9lR0VJNnZFa3l0eXZvZXBvWkkyWGJBZi9aTXk1bgpLd3VoRW40aGhrRk13V2FTV3AvaDBRZE1DYXhrNEJWU09xbU5WYUxTQjcrRmpzSWo0Q2FzRm90WWl5SjJncFJCCk5mOFFhUzRiejBUbjFlQmJDOGtzaitlM1pXZVgyYjV3Vk1qcWw5alR0MlgxSUNzOEtLZTN2RUJranFUMkFVaTIKNTJUdEt6bTczYVdyei9HUHkvUTJMQ29yM0ZoOUZHVlNCT0JCRFhHeTZNSnBOSEpuWVZIOUVFTkZHT2g4NW9sMQoycEFET0JCNXZBVS9rTEI1TEhQajJrdWUvRk1pSGFObnJTWUlHck1sQlNYMmpqOUVZYTF1dVVIK3BkNE1CajFGCjV1SDhPUmlhUTZodDIrV0hrbHhpYzFSajV5VFlRd1ZsSDcwQ0JPbitxVkVkbzYzeVF3ekFNSktGSXdsR1VRRVgKamlsamdjODZxNGNadFVURnJjd01pZGJrKzhRNitKYkRWZzdIVi8rcG5DK3dudjE5N2t3ZQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
   tls.key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKS1FJQkFBS0NBZ0VBM3hsVUpzMmIvYUkyTkxveTRPSVErZG4veU1iL085OWlLRFJ5WktwSDhyU09tUytvCkY5dW5tU0F6TDY1WEEvdjZuWTBPTEkvZEFTRGprcWtCcElkVEd6b2dSNWY4VWlCNm9zdUVZN1Y3MVhaZHpXTHIKUGpuSnE2WkxBYW9LbXdHODBXNStXZDZWOFB5Z094NTJta3IxdzdJV0t6KzFaTEk1aXpicHBvbjdYVkdWUmFBVApSdk5aRGlKNkNlSnBjSjVINzIzbGtmNVJ2SldhdFpMQ1lJWURiUmZUaUtzeVEvU2xSY3Y1QlZmSGcvTEpTSDlRCkxHUmhQTUFSbGRsOXd5WkN3WlpESHhoZUk0YSsyNmFhOE1ZM3U5c3QvbDAvT282VkNUR3BNaUVoaUdGMkxWanAKVVdxLytCUDRTRkV2SmZxL0R1aW5JMTM5Vy81YVpaNy9Id1JQbG1ZVTZwWFRSTHlJZzdqZCsxOWZKd1I3WDM3cQp3MG84dDA2RmhqbXJDemFZQ1Vqb1JlcURtSGFObVpOL2Rkdkc3alpXQnUrak5oMFlhdnN5UXlDSVZtdjZ5cVNjCmpQaUQ5dWl2eHFUd2pKaWRJQlJmdVVyejNhRVJRN2NRZ2YwcWhxakl6Zmx6SGJGS2hJTG9jQldxN3p5Tmw5aHIKdlVHVC9XWmN3MHQvT3RNNzJTUGFwbG1UZ1ZiYlFSeGYyVkh6eXB0R0l2dHlkbFhLOHRoeE9NcFhvNGUrU2w4ZAoxZ2RRY0M0b2lzTjlGMjlvTnM4UDV5RlFQLy94WXV2OEM2MDduQ2oxRHpySWQ1YXZHL05WZktCL2ZiREtFRmdOCjJXaEhJblR6UExFY2pGNGZFcmNVQUV1V1cwYnVYLzZGSENHM2lUdHJxeUQ5MktUVkRmTjFKNTZycmNzQ0F3RUEKQVFLQ0FnRUFrOHE4czRQcnZZYnk3OVVWbFdKTktxY2V5a3dCa3hFMWZqcllPUldRMmhpQWlyeEdWNSs4bERULwprNnVqbTFFV3diNUswSHh4UktrYitQRWExSHFOTkhFNkp4TnBKS0s5ZXhEbFlBUSt4N2RGQnFWci8ybmF6bW80Ck1COE1MWWxtSXp0V1dvU1l3ZThvMm1FZzRxK2J4WXM1SW1kdTdBa2hFN2RKNjNobTIzZ0xNZmVNTGFsUnFvcHUKWEJQd0U1blhQNmFHdVVOSHRHMUs4dFFKRGxaWStMRWJBZU9mUmVOUWhUOU5kUnVrWVNXNTc5dmZLYmxKclN2egp1bGc4OXNWbTNjV0VLNXBCNnJqOXdKYks5NHZvS2Z0VnFiYnVCd1dqZDFhOXBpYktod1ZCZTJMMkZXaHBTWmM1CkYvY29DN25qVGFZVDZ0cjkxeTVWaGhKaElaUUNmL3Z2NFpsNVhoRkhzNVZUWk5iTS9PZnF5RlFMWVhWSk80OEsKRjd0bWF6QUVRUUJRd1ZacUg5QzlOUWR6UEhXbWMzOE9raHRjMXd6YXFuL3JnOSsxc2dBTUQ4aFdDdFFKVWU5NwpiOXltaDVBMFo0UVhLcHlGVDBiK3BYY0QxalJoYTA3VXRrWCsvekxKOUhwQVhjVW16a0crajVDWE5wbnhzSXE1CmZKRmVxM2hCajl3Nm40aCs1ME00VzBGc2U1WW9FVXNjM0IwZno4QmxRQmIrWUpMRkxOSDM0TUg4cDFsMFpEWUoKeWFlMHBzeGxCaWpnNE9QWitXQ0JhK2p0Rlc0TGlXZ0VjeHdnejh3K2hFT0FRcjJhMURjN3c4amQrWTRJSzhVbQpsVFZzNWRicDRtT21QTWxSdi9HTTdrRHVkRnFiTWczWUZ3WGczUWJxdVZxTFp6RXpqVmtDZ2dFQkFQSktaYkNXCllmTGVqa1MvZmtSeVYzVkliNTRtS3dRSG9NV3ViODh0UGdHdVh6anNKeWQ1UVRRNThQcFVqWHJMSG1uOGxTMisKdmlFOEdKeWxLd04xeU1sWnc0MCtrWmhwSFVwQ1d4LzJaS2pBcXZxQTlPT0tvMmZ2NkhkL3dPQW5VNEN0aW9DMQpwcmk3bEtGWVhvUDhEdFFWd0hZdkl6Q1JxRG5oYzRtd0pEcXpUQzl4ZHVJK3N2eHpsNHhIODJmeDBqclBpRlkrCi93T2RYanlmSVBqeWhIQzRqUFRXYmFpcndYUzlkQmpTbDEyOGFJUlQ1ODAveVhFL1NZQXVnZzA1akt0ZzV6UUEKU28xM01UZXpYUkhYZE8wZGkzdEVNSEdSRUVrRnBlVm5uUFF2Q0NlZEswRFYzNmlOd2lXYzhwd2RmTE1WbmVUdApES3daZWRDeCtvLzdldjBDZ2dFQkFPdTQ4REdFSkpKekh4VlI1bVkxSzJBbFp5WXRwVE9XZWhLMXpYNzRKdk0zCll4TjRuZCtaeDVuOXVTUG1tS3pxRjNUVSs0NFJWdGRKSzZlam9GRThkTURUTldhU0xXL1pEbU4xblQwbmp2T24KSVdKbjU5eW5PQ2hXV0taZ1haLzlVcUdSN1B0Nk94U2trZXg5Yy9mWUJzTVgveHVzZFhRaWdlb2dsMGlPWVZGVwpnWElpaUxSTEhwSEpzSy91TnhJaXpqMGhUWVluN3VEN1BSRU53RlJjQ1lmOEoxZVVGYmQ2RHVDVldlUUNLV2dmCk5kMnRTV29pMFZ5bGo0dVVYOEl3MHRqTE5NRDVDUkVKRWs0R1N2NEVEU212VWR2MUxpQktKQ0wybEVjZ29QZUMKb09EMmlDYzVLcWdubVFyYVJpbEZGazhSVlhBOVBXWkdZM0MwYjZUVm1tY0NnZ0VBTlpPMkFPS0FMbENBYlR0YgpGSStrUDA4UlA0dDVINThBTWpac2l3ZWFHbzBRaVduUERxK0ZkNk1JWXBLbjVtdGNBbHZVTVJWb3ZiaW9TSnROCmM2cHNCL3BOZjhKQ044Mm1xSEViN1dseXdNNDZBTUxiWkNXWUZMZThWQkJ2K2lFNEdkQkdQRWZ1NGhLNHZ5VG4KWVpBdlJ6NjRIR280QWRsenRiamc3NlYvbld0Z2dXMDV1TFhjcG01NUtKQVFodisyV1VMakJ3OVBIT0dEb1N3ZgpBbTIrVTU2N3JMaHQ3MHByc1FEajEwbGFKMlF1U0hTMVlYR2xmZUZjdzNlRlVwOVROK0pwdmRvQ29sMmxDSWdsCklIamdaajZPUldmQ3Zwb3hXN1JnQnVadWtxQ0QwUjYwSGRZdGF2eE4zanRpZXBzYXBBODNweE8wSmFwTWdaV1oKcnBVUmtRS0NBUUJPY0V2OUxpdTlUL0dYOXBqa2llelZJWjBoWnk4QjY2RFRlUXZZcEZyUnRDeVQzaDhxdU5GaQp2THRPNXYwSERSNmhFZjVqV0FHOXdldDA3VTM3dWxKZmwraTlLUWRWb0xUWkE5bys3MXJ5V1RzU3MrREQzQ0VqCnl4ZlV4VnhpVUxtZWFpQ2h6aHE2MDhoN0dZUHRoVVU2eGxGdHRBV2hqNW9MZnF6WXlBZzZPTDc2YStOeG0wMmcKMWF5bDNtOFU2ZUFYRjIza3BvVW0rSE5wcVZuR3VKbXpWb1VBNzVZS1orTnJlRWRoU0JiZlB3TjlzSnd0WlVpbAp1N0g0a0hjTTk1SXg4ZXlzQ2pLcUtJcWV6QmxJVGJEVG5qTnZMamNiSjVDKzBhNmx2SVhUMXZRUjUvZUdsYzlNCkJXRTM2MHBOa1YvTEQ4bU9mOUplcGkyUTQzb0RMOUVoQW9JQkFRRFRXSW1meTBLOWdHekEyclB5MTY5bVdZUUsKT2xjbkQzK2hRcTZ4NTFabjFlL3RleEZlVmxoSG40cnJuUmRDRk9BcDQ3dUZrSjJtNzJHQ1ZENzRFd1F1Y0s5eQpBRDVqb3JxZ1ZIcUNLWmRrSGpiMlY2ME16bTZnM3J0TDlXSlhGVkx2TkJiL1FHQjJ2Z0hWT08wenFpcUdaajRlCkV4N2wybS8vNVNFNERMdG43MEo5Q2dHMUh0WENTOGRXckdQTDFwekRuazhWWHRub1h6YjBMQ2hMVUZFZ1pSbWgKY1Y2QUZIRUsySDh3Qkh2aU55ZWhzUlFpRGtsMkFpV09jSk52a3pXNjhjazJuSmpSV3lQWUsxSkwzTkNLcEIzUQpPb2hyUDBmSGNXQVhNVzk3d0ZYWmhSZm5RZkR4eElPbGozTWNZVDBBbGFuWGQwRjROR2MyTnZtcGh4MDQKLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0K
@@ -32,7 +32,7 @@ type: Opaque
 ---
 apiVersion: v1
 data:
-  secret: dEg1Mmp1SU1IRHkzdmJjSQ==
+  secret: dEo3Ym1BcDdjUzdGdU02dg==
 kind: Secret
 metadata:
   labels:
@@ -45,7 +45,7 @@ type: Opaque
 ---
 apiVersion: v1
 data:
-  REGISTRY_HTTP_SECRET: WVV0czZobDFLN01YY2x2ag==
+  REGISTRY_HTTP_SECRET: aXRYUHRVOTZublFxTTJBcg==
   REGISTRY_REDIS_PASSWORD: ""
 kind: Secret
 metadata:
@@ -107,7 +107,7 @@ data:
     [dev]
     httpport = 8080
     EnableXSRF = true
-    XSRFKey = T3NYmvQ0aM0oOPc6G6tHhLljl2Hk1plNtgbGmMVb
+    XSRFKey = ws8C8zIuLDdZEFu4G1O10R5ZPeCzYApzQZyRjMOI
     XSRFExpire = 3600
 kind: ConfigMap
 metadata:
@@ -470,10 +470,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.10.4
+        - Tag: v1.10.5
           Type: resolved
-          URL: goharbor/harbor-core:v1.10.4
-        URL: index.docker.io/goharbor/harbor-core@sha256:d326c23b93a98dfaef1f6ff981ea2eaa9530ca7d3bebd3b81fbaac864042e2c9
+          URL: goharbor/harbor-core:v1.10.5
+        URL: index.docker.io/goharbor/harbor-core@sha256:82df65780c328b9d16c287b18b1913a50ffe31a423fa987e7fc25f96f36f0bc2
   labels:
     app: harbor
     chart: harbor
@@ -491,9 +491,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 1520f113cb31290c8d6c947f8b58ff6f73ecf7c37bcbf090b9a2816429296d07
-        checksum/secret: 9217af9f88412f253cff3bf4732ecebf363a410296912ad78a0da412d97f67e7
-        checksum/secret-jobservice: 90c30897d7a133c5430914f3bdc3ee381da19330e1de57d65a6d9e9aa45984d7
+        checksum/configmap: d6cf58d41cd313f0a4bac4aa0f43961ad4a1a62486f9b83bcc1e6f6466658695
+        checksum/secret: 06dbd6795ca132ee3ddf4cb4403c6e42197a6e8fa4d9bd68ccbcfe71f3408ac1
+        checksum/secret-jobservice: 67e31027044fb07da1a5d855d3e6d3f5b81f73a186e739f324e614d3bc283776
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
       labels:
         app: harbor
@@ -517,7 +517,7 @@ spec:
             name: harbor-harbor-core
         - secretRef:
             name: harbor-harbor-core
-        image: index.docker.io/goharbor/harbor-core@sha256:d326c23b93a98dfaef1f6ff981ea2eaa9530ca7d3bebd3b81fbaac864042e2c9
+        image: index.docker.io/goharbor/harbor-core@sha256:82df65780c328b9d16c287b18b1913a50ffe31a423fa987e7fc25f96f36f0bc2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -578,10 +578,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.10.4
+        - Tag: v1.10.5
           Type: resolved
-          URL: goharbor/harbor-jobservice:v1.10.4
-        URL: index.docker.io/goharbor/harbor-jobservice@sha256:124c3a245f2f082c916dbb835bd7e1739e2cdb6b934959f8af69f5012367d4ee
+          URL: goharbor/harbor-jobservice:v1.10.5
+        URL: index.docker.io/goharbor/harbor-jobservice@sha256:556894ba15c6b1643dc8340b3e6aa4ca106c6e6e9c408efe1e06a3cf481e19f8
   labels:
     app: harbor
     chart: harbor
@@ -602,8 +602,8 @@ spec:
     metadata:
       annotations:
         checksum/configmap: 23a75a60a28dbe0ba49e366d2004dce405a18eb4cd61cd61b62155e1d5887ce4
-        checksum/secret: e41924447eae889f8bc92afec298795fd1f20aaedfd24af4adb4fad193599ef7
-        checksum/secret-core: 109f208553337ecb6770038f91182f2bcf8c391daae50d783d01de7d6b31ab80
+        checksum/secret: eacae70b9ece299e999887d138099b4b2876a80b88359bc899cea2d0dd3bd318
+        checksum/secret-core: 110e0a4bbfa7d2351c77f354433b571dc466e1f57159070251567e826ce79a93
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
       labels:
         app: harbor
@@ -636,7 +636,7 @@ spec:
           value: ""
         - name: NO_PROXY
           value: harbor-harbor-core,harbor-harbor-jobservice,harbor-harbor-database,harbor-harbor-chartmuseum,harbor-harbor-clair,harbor-harbor-notary-server,harbor-harbor-notary-signer,harbor-harbor-registry,harbor-harbor-portal,127.0.0.1,localhost,.local,.internal
-        image: index.docker.io/goharbor/harbor-jobservice@sha256:124c3a245f2f082c916dbb835bd7e1739e2cdb6b934959f8af69f5012367d4ee
+        image: index.docker.io/goharbor/harbor-jobservice@sha256:556894ba15c6b1643dc8340b3e6aa4ca106c6e6e9c408efe1e06a3cf481e19f8
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -676,10 +676,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.10.4
+        - Tag: v1.10.5
           Type: resolved
-          URL: goharbor/nginx-photon:v1.10.4
-        URL: index.docker.io/goharbor/nginx-photon@sha256:f7424ef111f1feb3ae18cd5ed32fe531d9cdfa204c079f8091a3fa842481dad2
+          URL: goharbor/nginx-photon:v1.10.5
+        URL: index.docker.io/goharbor/nginx-photon@sha256:0835a1a36f0e3661d7a999551b255f41351b1d33fd4d203ca6d8b03b8924a211
   labels:
     app: harbor
     chart: harbor
@@ -707,7 +707,7 @@ spec:
         release: harbor
     spec:
       containers:
-      - image: index.docker.io/goharbor/nginx-photon@sha256:f7424ef111f1feb3ae18cd5ed32fe531d9cdfa204c079f8091a3fa842481dad2
+      - image: index.docker.io/goharbor/nginx-photon@sha256:0835a1a36f0e3661d7a999551b255f41351b1d33fd4d203ca6d8b03b8924a211
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -750,10 +750,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.10.4
+        - Tag: v1.10.5
           Type: resolved
-          URL: goharbor/harbor-portal:v1.10.4
-        URL: index.docker.io/goharbor/harbor-portal@sha256:1b3677e66755a1891004ca8cce230e7398a2576ee1a4f09696e067c2ae464b26
+          URL: goharbor/harbor-portal:v1.10.5
+        URL: index.docker.io/goharbor/harbor-portal@sha256:ea54de73a765f9a0142a08a77ce77b461861a71aa0e960ef71c79bd9853c412b
   labels:
     app: harbor
     chart: harbor
@@ -778,7 +778,7 @@ spec:
         release: harbor
     spec:
       containers:
-      - image: index.docker.io/goharbor/harbor-portal@sha256:1b3677e66755a1891004ca8cce230e7398a2576ee1a4f09696e067c2ae464b26
+      - image: index.docker.io/goharbor/harbor-portal@sha256:ea54de73a765f9a0142a08a77ce77b461861a71aa0e960ef71c79bd9853c412b
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -802,15 +802,15 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.10.4
+        - Tag: v1.10.5
           Type: resolved
-          URL: goharbor/harbor-registryctl:v1.10.4
-        URL: index.docker.io/goharbor/harbor-registryctl@sha256:a5794c575bb83348f992bf961d64afff3db7c7e11129e26357d3d3314807a221
+          URL: goharbor/harbor-registryctl:v1.10.5
+        URL: index.docker.io/goharbor/harbor-registryctl@sha256:ab24c739e4eaafc9c000048b6a72e007ea3dc6ef157021e5960a8771fb90d2b6
       - Metas:
-        - Tag: v1.10.4
+        - Tag: v1.10.5
           Type: resolved
-          URL: goharbor/registry-photon:v1.10.4
-        URL: index.docker.io/goharbor/registry-photon@sha256:e7e5c0f823418351059cc7cd0685fa0d578eb799be29ad48120ec07f438547f7
+          URL: goharbor/registry-photon:v1.10.5
+        URL: index.docker.io/goharbor/registry-photon@sha256:8215dab5226f216732deedd75da7c44543ae79a25b3899cbeeeaf527810bd9a2
   labels:
     app: harbor
     chart: harbor
@@ -831,9 +831,9 @@ spec:
     metadata:
       annotations:
         checksum/configmap: 262e4997f794e097e2302ba72bdd63e4e0654848d258d64c9e1c446d890a13d4
-        checksum/secret: e404e76974b75554db1a7cd4481490a12a6789a76af81ebae72e12329af99e00
-        checksum/secret-core: b3baed5b96f9e7c6a20eefd2760bdb22666151cbd9b9ac9e0b7eb33f5955dc1d
-        checksum/secret-jobservice: 839be58c3dffe46d60629a09be408dcb03e10c30aa5e88e77e594cdc0d1c29a8
+        checksum/secret: d1be679ad3c9c0c457b78cca94e96b0614a0d3ca64555eced718c5eea2cec26e
+        checksum/secret-core: dd67c3232b184d00589453e183d05eb3eb32417a7e5e19a3f38388d861bca1c8
+        checksum/secret-jobservice: 445ae7e5251d02b509efb2e790bd789b40c6da26a2b6e66b5638496a233614a1
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
       labels:
         app: harbor
@@ -849,7 +849,7 @@ spec:
         envFrom:
         - secretRef:
             name: harbor-harbor-registry
-        image: index.docker.io/goharbor/registry-photon@sha256:e7e5c0f823418351059cc7cd0685fa0d578eb799be29ad48120ec07f438547f7
+        image: index.docker.io/goharbor/registry-photon@sha256:8215dab5226f216732deedd75da7c44543ae79a25b3899cbeeeaf527810bd9a2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -894,7 +894,7 @@ spec:
         envFrom:
         - secretRef:
             name: harbor-harbor-registry
-        image: index.docker.io/goharbor/harbor-registryctl@sha256:a5794c575bb83348f992bf961d64afff3db7c7e11129e26357d3d3314807a221
+        image: index.docker.io/goharbor/harbor-registryctl@sha256:ab24c739e4eaafc9c000048b6a72e007ea3dc6ef157021e5960a8771fb90d2b6
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -940,20 +940,15 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.10.4
+        - Tag: v1.10.5
           Type: resolved
-          URL: goharbor/harbor-db:v1.10.4
-        URL: index.docker.io/goharbor/harbor-db@sha256:41397c9fe5d8f46e11c92691344c842304a69e38b6268e623df768b866bed73d
-      - Metas:
-        - Tag: v1.10.4
-          Type: resolved
-          URL: goharbor/harbor-db:v1.10.4
-        URL: index.docker.io/goharbor/harbor-db@sha256:41397c9fe5d8f46e11c92691344c842304a69e38b6268e623df768b866bed73d
+          URL: goharbor/harbor-db:v1.10.5
+        URL: index.docker.io/goharbor/harbor-db@sha256:fa92ecb81d7f746a263407261b696fe9a453c600f3eeae5c179c7a4b9f6b7c5d
       - Metas:
         - Tag: latest
           Type: resolved
           URL: busybox:latest
-        URL: index.docker.io/library/busybox@sha256:c3dbcbbf6261c620d133312aee9e858b45e1b686efbcead7b34d9aae58a37378
+        URL: index.docker.io/library/busybox@sha256:a9286defaba7b3a519d585ba0e37d0b2cbee74ebfe590960b0b1d6a5e97d1e1d
   labels:
     app: harbor
     chart: harbor
@@ -985,7 +980,7 @@ spec:
       - envFrom:
         - secretRef:
             name: harbor-harbor-database
-        image: index.docker.io/goharbor/harbor-db@sha256:41397c9fe5d8f46e11c92691344c842304a69e38b6268e623df768b866bed73d
+        image: index.docker.io/goharbor/harbor-db@sha256:fa92ecb81d7f746a263407261b696fe9a453c600f3eeae5c179c7a4b9f6b7c5d
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -1010,7 +1005,7 @@ spec:
         - chown -R 999:999 /var/lib/postgresql/data
         command:
         - /bin/sh
-        image: index.docker.io/library/busybox@sha256:c3dbcbbf6261c620d133312aee9e858b45e1b686efbcead7b34d9aae58a37378
+        image: index.docker.io/library/busybox@sha256:a9286defaba7b3a519d585ba0e37d0b2cbee74ebfe590960b0b1d6a5e97d1e1d
         imagePullPolicy: IfNotPresent
         name: change-permission-of-directory
         volumeMounts:
@@ -1021,7 +1016,7 @@ spec:
         - rm
         - -Rf
         - /var/lib/postgresql/data/lost+found
-        image: index.docker.io/goharbor/harbor-db@sha256:41397c9fe5d8f46e11c92691344c842304a69e38b6268e623df768b866bed73d
+        image: index.docker.io/goharbor/harbor-db@sha256:fa92ecb81d7f746a263407261b696fe9a453c600f3eeae5c179c7a4b9f6b7c5d
         imagePullPolicy: IfNotPresent
         name: remove-lost-found
         volumeMounts:
@@ -1050,10 +1045,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.10.4
+        - Tag: v1.10.5
           Type: resolved
-          URL: goharbor/redis-photon:v1.10.4
-        URL: index.docker.io/goharbor/redis-photon@sha256:0915d761e18d2134faa7e301c2113f329c45b9e01632ba833305772a84805b16
+          URL: goharbor/redis-photon:v1.10.5
+        URL: index.docker.io/goharbor/redis-photon@sha256:fb983c6e31fd9afb5ecbcc90463737821b29e5c581187862157d99dd2708adfb
   labels:
     app: harbor
     chart: harbor
@@ -1081,7 +1076,7 @@ spec:
         release: harbor
     spec:
       containers:
-      - image: index.docker.io/goharbor/redis-photon@sha256:0915d761e18d2134faa7e301c2113f329c45b9e01632ba833305772a84805b16
+      - image: index.docker.io/goharbor/redis-photon@sha256:fb983c6e31fd9afb5ecbcc90463737821b29e5c581187862157d99dd2708adfb
         imagePullPolicy: IfNotPresent
         livenessProbe:
           initialDelaySeconds: 300

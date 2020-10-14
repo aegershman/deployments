@@ -5,7 +5,7 @@ directories:
     path: manual
   - git:
       commitTitle: bump chart version
-      sha: 5d9c6e46e5bf81e67a02a8e7ac1e4b63dadcd485
+      sha: 88a125901beb50c1f4f8ffbcd6ff5e4379c26517
     path: upstream
   path: cluster/build/concourse-web/_vendir
 - contents:
@@ -13,24 +13,24 @@ directories:
     path: manual
   - git:
       commitTitle: bump chart version
-      sha: 5d9c6e46e5bf81e67a02a8e7ac1e4b63dadcd485
+      sha: 88a125901beb50c1f4f8ffbcd6ff5e4379c26517
     path: upstream
   path: cluster/build/concourse-workers/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: external-dns infoblox provider additional parameter (#3397)...
-      sha: be5b30d4b65794d63d36449fc6e8a912bdccbdda
+      commitTitle: '[bitnami/external-dns] Add ability to monitor contour entries
+        added in 0.7.4 (#3941)...'
+      sha: 0966de9fb6f693aea277d1c79fd8f43c3e65b897
     path: upstream
   path: cluster/build/external-dns/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Adding parameter for externalTrafficPolicy in internal controller
-        service spec
-      sha: 442f7bb71b5111206d8ed20d28746c35c7bd4b62
+      commitTitle: 'Merge pull request #6326 from kolorful/master...'
+      sha: 9b683e40555fdfaba453d826306bc9c03880dc16
     path: upstream
   path: cluster/build/ingress-nginx/_vendir
 - contents:

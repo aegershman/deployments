@@ -28,14 +28,7 @@ spec:
 {{ toYaml .Values.webhook.annotations | indent 8 }}
       {{- end }}
     spec:
-{{- with .Values.securityContext }}
-      securityContext:
-{{ toYaml . | indent 8 }}
-{{- end }}
       serviceAccountName: "{{ .Values.webhook.serviceAccount }}"
-      {{- if .Values.priorityClassName }}
-      priorityClassName: "{{ .Values.priorityClassName }}"
-      {{- end }}
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       containers:

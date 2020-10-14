@@ -24,5 +24,5 @@ overrides:
   # it does make things a littttle less seamless
   - image: proxyv2
     # manually basing this off of the proxyv2 image in kbld-lock.yml
-    newImage: gcr.io/cf-routing/proxyv2@sha256:4e4d05059e65080b158a347bcfac67090968e96f302dea54c0efac9a16ef62f0
+    newImage: gcr.io/cf-routing/proxyv2@sha256:1cb3ad5eb354c0a3f0547cc8f5bbc18329ffcbc055a620244214244a55690f6e
     preresolved: true

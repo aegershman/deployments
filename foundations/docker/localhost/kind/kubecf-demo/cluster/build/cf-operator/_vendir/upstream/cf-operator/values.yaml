@@ -20,7 +20,10 @@ image:
   # org that provides the operator docker image.
   org: cfcontainerization
   # tag of the operator docker image
-  tag: v5.2.0-0.g22cafc90
+  tag: v6.1.15-0.g89a56300
+
+# logrotateInterval is the time between logrotate calls for instance groups in minutes
+logrotateInterval: 1440
 
 # logLevel defines from which level the logs should be printed (trace,debug,info,warn).
 logLevel: debug
@@ -41,7 +44,7 @@ operator:
     # port the webhook server listens on
     port: "2999"
   # boshDNSDockerImage is the docker image used for emulating bosh DNS (a CoreDNS image).
-  boshDNSDockerImage: "cfcontainerization/coredns:0.1.0-1.6.7-bp152.1.8"
+  boshDNSDockerImage: "cfcontainerization/coredns:0.1.0-1.6.7-bp152.1.19"
 
 # serviceAccount contains the configuration
 # values of the service account used by cf-operator.

@@ -83,6 +83,8 @@ sizing:
     instances: ~
   api:
     instances: ~
+  apps_dns:
+    instances: ~
   asactors:
     instances: ~
   asapi:
@@ -100,7 +102,6 @@ sizing:
   credhub:
     instances: ~
   database:
-    instances: ~
     persistence:
       size: 20Gi
   diego_api:
@@ -109,6 +110,10 @@ sizing:
     ephemeral_disk:
       # Size of the ephemeral disk used to store applications in MB
       size: 40960
+      # IMPORTANT! Only set this if you understand the consequences of using a PVC as ephemeral
+      # storage for diego cells. The storage class should be high performance, and not based on NFS.
+      # Do not set this value in production environments unless you've tested your storage class with
+      # diego cells and have found no problems.
       # The name of the storage class used for the ephemeral disk PVC.
       storage_class: ~
     instances: ~
@@ -134,23 +139,45 @@ sizing:
 #  External endpoints are created for the instance groups only if features.ingress.enabled is false.
 services:
   router:
-    annotations: ~
+    annotations: {}
     type: LoadBalancer
     externalIPs: []
     clusterIP: ~
+    loadBalancerIP: ~
   ssh-proxy:
-    annotations: ~
+    annotations: {}
     type: LoadBalancer
     externalIPs: []
     clusterIP: ~
+    loadBalancerIP: ~
   tcp-router:
-    annotations: ~
+    annotations: {}
     type: LoadBalancer
     externalIPs: []
     clusterIP: ~
+    loadBalancerIP: ~
     port_range:
       start: 20000
       end: 20008
+
+# CPU and memory resources can be configured via the `resources` tree when features.cpu_limits.enabled
+# or features.memory_limits.enabled are set respectively. Each setting covers both limit and request
+# settings for their resource type.
+#
+# The helm chart includes default memory limits for all processes, and some explicit requests. When no
+# request size is specified, a default is calculated as a percentage of the limit, but at least some
+# minimum threshold, but never more than the limit itself. See the features.memory_limits setting to
+# finetune this algorithm.
+#
+# All values are integers; cpu values are in millicpus (m) and memory is in megabytes (Mi).
+#
+# More information about the `resources` structure can be found in the config/resources.yaml file
+# inside this helm chart.
+
+resources:
+  diego-cell:
+    garden:
+      garden: {memory: {limit: 524288, request: 16}}
 
 settings:
   router:
@@ -169,6 +196,13 @@ settings:
 
 
 features:
+  # Set default memory limits and requests for all containers
+  memory_limits:
+    enabled: true
+    # The memory request size default is calculated as a percentage of the limit.
+    # The default is always at least a minimum value, but never larger than the limit itself.
+    default_request_minimum: 32
+    default_request_in_percent: 25
   eirini:
     enabled: false
   # To support multi-clusters, deploy diego-cell separately please set control_plane is false  and cell_segment is true
@@ -273,6 +307,23 @@ features:
         #   system_domain: "{{ .Values.system_domain }}"
         #   app_domains: []
         link: ~
+      cloud_controller_container_networking_info:
+        secret_name: minion-link-cloud-controller-container-networking-info
+        service_name: minion-service-cloud-controller-container-networking-info
+        addresses:
+        - ip: ~
+        # link: |
+        #   cc.internal_route_vip_range: "127.128.0.0/9"
+        link: ~
+      cf_network:
+        secret_name: minion-link-cf-network
+        service_name: minion-service-cf-network
+        addresses:
+        - ip: ~
+        # link: |
+        #   network: "10.255.0.0/16"
+        #   subnet_prefix_length: 24
+        link: ~
   ingress:
     enabled: false
     tls:
@@ -297,13 +348,14 @@ features:
   routing_api:
     # Enable the routing API.  Disabling this will also disable TCP routing, which is used for TCP
     # port forwarding.
-    enabled: true
+    # Enabled by default, except under Eirini, where the routing-api is not (yet) supported.
+    enabled: ~
   embedded_database:
-    # Enable the embedded database (the PXC helm sub-chart).  Disabled it allows using an external,
-    # already seeded, database.  Please refer to
-    # https://kubecf.suse.dev/docs/getting-started/kubernetes-deploy/#external-database for details.
-    # See also features.external_database.
+    # Enable the embedded database.  If this is disabled, then features.external_database should be
+    # configured to use an external database.
     enabled: true
+    # Number of seconds to wait for the database to be ready, per iteration of the waiter loop
+    connect_timeout: 3
   blobstore:
     # Possible values for provider: singleton and s3.
     provider: singleton
@@ -318,7 +370,8 @@ features:
       droplet_directory_key: ~
       resource_directory_key: ~
 
-  # Configuration for the external database; see also features.embedded_database.
+  # Configuration for the external database; see also features.embedded_database.  Please refer to
+  # https://kubecf.io/docs/deployment/kubernetes-deploy/#external-database for details.
   external_database:
     enabled: false
     require_ssl: false
@@ -327,6 +380,12 @@ features:
     type: ~
     host: ~
     port: ~
+    # Number of seconds to wait for the database to be ready, per iteration of the waiter loop
+    connect_timeout: 3
+    # If seed is set to true, we will initialize the database using the provided
+    # root password (see `.variables.pxc-root-password`); in that case it is not
+    # necessary to provide the configuration for the individual databases.
+    seed: false
     databases:
       uaa:
         name: uaa
@@ -388,7 +447,7 @@ testing:
 ccdb:
   encryption:
     # Configure CCDB key rotation.  Please see
-    # https://kubecf.suse.dev/docs/tasks/secrets/#rotating-the-ccdb-encryption-keys for details.
+    # https://kubecf.io/docs/tasks/secrets/#rotating-the-ccdb-encryption-keys for details.
     rotation:
       # Key labels must be <= 240 characters long.
       key_labels:
@@ -408,196 +467,22 @@ operations:
   #       type: password
   inline: []
 
-# Configuration for the eirini sub-chart; please refer to
-# https://github.com/cloudfoundry-incubator/eirini-release/blob/master/docs/installation.md
-# for details.
-eirini:
-  global:
-    labels: {}
-    annotations: {}
-
-  env:
-    # This setting is not configurable and must be HIDDEN from the user.
-    # It's a workaround to replace the port eirini uses for the registry
-    DOMAIN: '127.0.0.1.nip.io:31666" #'
-  services:
-    loadbalanced: true
-  opi:
-    image_tag: "1.5.0"
-    image: registry.suse.com/cap-staging/opi
-    metrics_collector_image: registry.suse.com/cap-staging/metrics-collector
-    bits_waiter_image: registry.suse.com/cap-staging/bits-waiter
-    route_collector_image: registry.suse.com/cap-staging/route-collector
-    route_pod_informer_image: registry.suse.com/cap-staging/route-pod-informer
-    route_statefulset_informer_image: registry.suse.com/cap-staging/route-statefulset-informer
-    event_reporter_image: registry.suse.com/cap-staging/event-reporter
-    event_reporter_image_tag: "1.5.0"
-    staging_reporter_image: registry.suse.com/cap-staging/staging-reporter
-    staging_reporter_image_tag: "1.5.0"
-    registry_secret_name: eirini-registry-credentials
-    namespace: eirini
-    kubecf:
-      enable: false
-    use_registry_ingress: false
-    ingress_endpoint: ~
-    kube:
-      external_ips: []
-    deny_app_ingress: false
-    cc_api:
-      serviceName: "api"
-
-    staging:
-      downloader_image: registry.suse.com/cap-staging/recipe-downloader
-      downloader_image_tag: "1.5.0-24.1"
-      executor_image: registry.suse.com/cap-staging/recipe-executor
-      executor_image_tag: "1.5.0-24.1"
-      uploader_image: registry.suse.com/cap-staging/recipe-uploader
-      uploader_image_tag: "1.5.0-24.1"
-      enable: true
-      # The TLS secrets are generated by quarks-operator and should be HIDDEN from the user.
-      tls:
-        client:
-          secretName: "var-eirini-tls-client-cert"
-          certPath: "certificate"
-          keyPath: "private_key"
-        cc_uploader:
-          secretName: "var-cc-bridge-cc-uploader"
-          certPath: "certificate"
-          keyPath: "private_key"
-        ca:
-          secretName: "var-eirini-tls-client-cert"
-          path: "ca"
-        stagingReporter:
-          secretName: "var-eirini-tls-client-cert"
-          certPath: "certificate"
-          keyPath: "private_key"
-          caPath: "ca"
-
-    # The TLS secrets are generated by quarks-operator and should be HIDDEN from the user.
-    tls:
-      opiCapiClient:
-        secretName: "var-eirini-tls-client-cert"
-        keyPath: "private_key"
-        certPath: "certificate"
-      opiServer:
-        secretName: "var-eirini-tls-server-cert"
-        certPath: "certificate"
-        keyPath: "private_key"
-      capi:
-        secretName: "var-eirini-tls-server-cert"
-        caPath: "ca"
-      eirini:
-        secretName: "var-eirini-tls-server-cert"
-        caPath: "ca"
-
-    events:
-      # Events should always be enabled and HIDDEN from the user.
-      enable: true
-      # All configs in this section should be HIDDEN from the user; they are
-      # here to adapt the Eirini helm chart for KubeCF use.
-      tls:
-        capiClient:
-          secretName: "var-cc-tls"
-          keyPath: "private_key"
-          certPath: "certificate"
-        capi:
-          secretName: "var-cc-tls"
-          caPath: "ca"
-
-    logs:
-      # disable fluentd, use eirinix-loggregator-bridge (HIDDEN from the user).
-      enable: false
-      # HIDDEN from the user as changing this breaks logging.
-      serviceName: doppler
-
-    # All configs in this section should be HIDDEN from the user; they are here
-    # to adapt the Eirini helm chart for KubeCF use.
-    metrics:
-      enable: true
-      tls:
-        client:
-          secretName: "var-loggregator-tls-doppler"
-          keyPath: "private_key"
-          certPath: "certificate"
-        server:
-          secretName: "var-loggregator-tls-doppler"
-          caPath: "ca"
-
-    rootfsPatcher:
-      enable: false
-      timeout: 2m
-
-    # All configs in this section should be HIDDEN from the user; they are here
-    # to adapt the Eirini helm chart for KubeCF use.
-    routing:
-      enable: true
-      nats:
-        secretName: "var-nats-password"
-        passwordPath: "password"
-        serviceName: "nats"
-
-    secretSmuggler:
-      # We never want to enable the secret-smuggler (it's for SCF), so this option should be HIDDEN.
-      enable: false
-
-# Configuration for the BITS sub-chart; please refer to
-# https://github.com/SUSE/bits-service-release for details.
-bits:
-  download_eirinifs: false
-  resources:
-    cpu: ~
-    memory: ~
-  global:
-    labels: {}
-    annotations: {}
-    images:
-      bits_service: registry.suse.com/cap-staging/bits-service:bits-1.0.20-15.1.6.2.264-24.33
-  env:
-    # This setting is not configurable and must be HIDDEN from the user.
-    DOMAIN: 127.0.0.1.nip.io
-  ingress:
-    endpoint: ~
-    use: false
-  kube:
-    external_ips: []
-  services:
-    loadbalanced: true
-
-  # The blobstore configuration is part of kubecf and should be HIDDEN.
-  blobstore:
-    serviceName: "singleton-blobstore"
-    userName: "blobstore-user"
-    secret:
-      name: "var-blobstore-admin-users-password"
-      passwordPath: "password"
-
-  secrets:
-    BITS_SERVICE_SECRET: "secret"
-    BITS_SERVICE_SIGNING_USER_PASSWORD: "notpassword123"
-
-  # We always create the secret for bits and this should be HIDDEN
-  useExistingSecret: true
-  # The TLS secret is created via quarks-operator and should be HIDDEN
-  tls_secret_name: bits-service-ssl
-  # The TLS secret is created via quarks-operator and should be HIDDEN
-  tls_cert_name: certificate
-  # The TLS secret is created via quarks-operator and should be HIDDEN
-  tls_key_name: private_key
-  # The TLS secret is created via quarks-operator and should be HIDDEN
-  tls_ca_name: ca
-
-# Configuration options for eirini extensions; please refer to
-# https://github.com/SUSE/eirinix-helm-release for details.
 eirinix:
   persi-broker:
+    # Service plans for Eirini persistant storage support
     service-plans:
     - id: default
       name: "default"
       description: "Existing default storage class"
-      kube_storage_class: "default"
+      kube_storage_class: ~
       free: true
       default_size: "1Gi"
-  ssh-proxy:
-    type: LoadBalancer
-    externalIPs: []
-    clusterIP: ~
+    description: Eirini persistence broker
+    long_description: Eirini persistence broker to provide Kubernete storage classes
+    provider_display_name: Eirini broker
+    documentation_url: https://github.com/SUSE/eirini-persi-broker
+    support_url: https://github.com/SUSE/eirini-persi-broker/issues
+    display_name: Eirini broker
+    icon_image: Eirini broker
+    secrets:
+      auth-password: ~ # Password is randomly generated if not given

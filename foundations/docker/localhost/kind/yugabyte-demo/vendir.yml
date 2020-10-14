@@ -10,7 +10,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/yugabyte/charts
-          ref: 6a48c6f01b9b2458880eac097a5b3e1f207b7811 # 2.2.2
+          ref: f5140b098cf519a265983add6e5ded2279a5e06b # 2.3.2.0
         includePaths:
           - stable/yugabyte/**/*
 

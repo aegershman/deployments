@@ -8,7 +8,7 @@ This chart bootstraps an ingress-nginx deployment on a [Kubernetes](http://kuber
 
 ## Prerequisites
 
-- Kubernetes 1.6+
+- Kubernetes v1.16+
 
 ## Get Repo Info
 
@@ -185,6 +185,17 @@ controller:
       annotations:
         # Create internal LB
         cloud.google.com/load-balancer-type: "Internal"
+        # Any other annotation can be declared here.
+```
+
+Example for Azure:
+
+```yaml
+controller:
+  service:
+      annotations:
+        # Create internal LB
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
         # Any other annotation can be declared here.
 ```
 

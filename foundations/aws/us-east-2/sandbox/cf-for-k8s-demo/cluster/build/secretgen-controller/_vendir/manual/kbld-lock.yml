@@ -1,6 +1,6 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.24.0
+minimumRequiredVersion: 0.25.0
 overrides:
 - image: index.docker.io/k14s/secretgen-controller@sha256:bb61310527f760ace5f2d0eddf49893f92ca48376f3c6e162c2067b6af7bb2d7
   newImage: index.docker.io/k14s/secretgen-controller@sha256:bb61310527f760ace5f2d0eddf49893f92ca48376f3c6e162c2067b6af7bb2d7

@@ -33,10 +33,10 @@ metadata:
 spec:
   clusterIP: None
   ports:
-  - name: rpc-port
-    port: 7100
-  - name: ui
+  - name: http-ui
     port: 7000
+  - name: tcp-rpc-port
+    port: 7100
   selector:
     app: yb-master
 ---
@@ -54,21 +54,21 @@ metadata:
 spec:
   clusterIP: None
   ports:
-  - name: rpc-port
-    port: 7100
-  - name: ui
+  - name: http-ui
     port: 9000
-  - name: ycql-metrics
+  - name: http-ycql-met
     port: 12000
-  - name: yedis-metrics
+  - name: http-yedis-met
     port: 11000
-  - name: yedis-port
-    port: 6379
-  - name: yql-port
-    port: 9042
-  - name: ysql-metrics
+  - name: http-ysql-met
     port: 13000
-  - name: ysql-port
+  - name: tcp-rpc-port
+    port: 9100
+  - name: tcp-yedis-port
+    port: 6379
+  - name: tcp-yql-port
+    port: 9042
+  - name: tcp-ysql-port
     port: 5433
   selector:
     app: yb-tserver
@@ -84,10 +84,10 @@ metadata:
           URL: busybox:1.31
         URL: index.docker.io/library/busybox@sha256:95cf004f559831017cdf4628aaf1bb30133677be8702a8c5f2994629f637a209
       - Metas:
-        - Tag: 2.2.2.0-b15
+        - Tag: 2.3.2.0-b37
           Type: resolved
-          URL: yugabytedb/yugabyte:2.2.2.0-b15
-        URL: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
+          URL: yugabytedb/yugabyte:2.3.2.0-b37
+        URL: index.docker.io/yugabytedb/yugabyte@sha256:eb4c9adc98d0837708d48ec9c550a99f7fa324e2999bd8f6de807a5d835e7ee9
   labels:
     app: yb-master
     chart: yugabyte
@@ -130,6 +130,7 @@ spec:
         - --fs_data_dirs=/mnt/disk0
         - --rpc_bind_addresses=$(HOSTNAME).yb-masters.$(NAMESPACE).svc.cluster.local
         - --server_broadcast_addresses=$(HOSTNAME).yb-masters.$(NAMESPACE).svc.cluster.local:7100
+        - --webserver_interface=0.0.0.0
         - --master_addresses= yb-master-0.yb-masters.$(NAMESPACE).svc.cluster.local:7100
         - --replication_factor=1
         - --enable_ysql=true
@@ -152,7 +153,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
+        image: index.docker.io/yugabytedb/yugabyte@sha256:eb4c9adc98d0837708d48ec9c550a99f7fa324e2999bd8f6de807a5d835e7ee9
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -168,10 +169,10 @@ spec:
                 fi
         name: yb-master
         ports:
-        - containerPort: 7100
-          name: rpc-port
         - containerPort: 7000
-          name: ui
+          name: http-ui
+        - containerPort: 7100
+          name: tcp-rpc-port
         resources:
           limits:
             cpu: 2
@@ -182,7 +183,7 @@ spec:
         volumeMounts:
         - mountPath: /mnt/disk0
           name: datadir0
-        workingDir: /mnt/disk0
+        workingDir: /mnt/disk0/cores
       - command:
         - /bin/sh
         - -c
@@ -236,10 +237,10 @@ metadata:
           URL: busybox:1.31
         URL: index.docker.io/library/busybox@sha256:95cf004f559831017cdf4628aaf1bb30133677be8702a8c5f2994629f637a209
       - Metas:
-        - Tag: 2.2.2.0-b15
+        - Tag: 2.3.2.0-b37
           Type: resolved
-          URL: yugabytedb/yugabyte:2.2.2.0-b15
-        URL: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
+          URL: yugabytedb/yugabyte:2.3.2.0-b37
+        URL: index.docker.io/yugabytedb/yugabyte@sha256:eb4c9adc98d0837708d48ec9c550a99f7fa324e2999bd8f6de807a5d835e7ee9
   labels:
     app: yb-tserver
     chart: yugabyte
@@ -283,8 +284,9 @@ spec:
         - --server_broadcast_addresses=$(HOSTNAME).yb-tservers.$(NAMESPACE).svc.cluster.local:9100
         - --rpc_bind_addresses=$(HOSTNAME).yb-tservers.$(NAMESPACE).svc.cluster.local
         - --cql_proxy_bind_address=$(HOSTNAME).yb-tservers.$(NAMESPACE).svc.cluster.local
+        - --webserver_interface=0.0.0.0
         - --enable_ysql=true
-        - --pgsql_proxy_bind_address=$(POD_IP):5433
+        - --pgsql_proxy_bind_address=0.0.0.0:5433
         - --tserver_master_addrs= yb-master-0.yb-masters.$(NAMESPACE).svc.cluster.local:7100
         - --metric_node_name=$(HOSTNAME)
         - --memory_limit_hard_bytes=3649044480
@@ -305,7 +307,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
+        image: index.docker.io/yugabytedb/yugabyte@sha256:eb4c9adc98d0837708d48ec9c550a99f7fa324e2999bd8f6de807a5d835e7ee9
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -321,22 +323,22 @@ spec:
                 fi
         name: yb-tserver
         ports:
-        - containerPort: 7100
-          name: rpc-port
         - containerPort: 9000
-          name: ui
+          name: http-ui
         - containerPort: 12000
-          name: ycql-metrics
+          name: http-ycql-met
         - containerPort: 11000
-          name: yedis-metrics
-        - containerPort: 6379
-          name: yedis-port
-        - containerPort: 9042
-          name: yql-port
+          name: http-yedis-met
         - containerPort: 13000
-          name: ysql-metrics
+          name: http-ysql-met
+        - containerPort: 9100
+          name: tcp-rpc-port
+        - containerPort: 6379
+          name: tcp-yedis-port
+        - containerPort: 9042
+          name: tcp-yql-port
         - containerPort: 5433
-          name: ysql-port
+          name: tcp-ysql-port
         resources:
           limits:
             cpu: 2
@@ -347,7 +349,7 @@ spec:
         volumeMounts:
         - mountPath: /mnt/disk0
           name: datadir0
-        workingDir: /mnt/disk0
+        workingDir: /mnt/disk0/cores
       - command:
         - /bin/sh
         - -c

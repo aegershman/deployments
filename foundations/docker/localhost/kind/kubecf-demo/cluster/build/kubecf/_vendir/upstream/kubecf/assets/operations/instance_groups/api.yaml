@@ -1,5 +1,3 @@
-{{- $_ := include "_config.load" $ }}
-
 {{- if .Values.testing.brain_tests.enabled}}
 # For brain tests, allow CC access to the insecure registry they will create.
 - type: replace
@@ -34,10 +32,10 @@
 
 {{- range $keyLabel := .Values.ccdb.encryption.rotation.key_labels }}
 {{- if not (regexMatch "^[a-zA-Z]+[a-zA-Z0-9_]*[a-zA-Z0-9]+$" $keyLabel) }}
-{{ fail "One or more items in ccdb.encryption.rotation.key_labels don't match the regex /^[a-zA-Z]+[a-zA-Z0-9_]*[a-zA-Z0-9]+$/" }}
+{{- include "_config.fail" "One or more items in ccdb.encryption.rotation.key_labels don't match the regex /^[a-zA-Z]+[a-zA-Z0-9_]*[a-zA-Z0-9]+$/" }}
 {{- end }}
 {{- if gt (len $keyLabel) 240 }}
-{{ fail "One or more items in ccdb.encryption.rotation.key_labels exceed the maximum length of 240 characters" }}
+{{- include "_config.fail" "One or more items in ccdb.encryption.rotation.key_labels exceed the maximum length of 240 characters" }}
 {{- end }}
 - type: replace
   path: /variables/-
@@ -116,12 +114,14 @@
           # do not want to interrupt that.  We may want to consider using a
           # startupProbe in the future (once that feature stabilizes).
           liveness: ~
-        local_worker_1:
-          readiness: &cc_local_worker_readiness
+  {{- range $process := $.Values.jobs.api.cloud_controller_ng.processes }}
+    {{- if hasPrefix "local_worker_" $process }}
+        {{ $process }}:
+          readiness:
             exec:
               command: [/usr/bin/pgrep, --full, cc_api_worker]
-        local_worker_2:
-          readiness: *cc_local_worker_readiness
+    {{- end }}
+  {{- end }}
         nginx:
           readiness:
             httpGet:
@@ -228,8 +228,23 @@
       # routes are healthy
 
 - type: replace
-  path: /instance_groups/name=api/jobs/name=loggr-udp-forwarder/properties/quarks?/run/healthcheck/loggr-udp-forwarder/readiness/exec/command
-  value: ["sh", "-c", "ss -nlu sport = 3457 | grep :3457"]
+  path: /instance_groups/name=api/jobs/name=loggr-udp-forwarder/properties/quarks?
+  value:
+    run:
+      healthcheck:
+        loggr-udp-forwarder:
+          readiness:
+            exec:
+              command: ["sh", "-c", "ss -nlu sport = 3457 | grep :3457"]
+    envs:
+    - name: INDEX
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
+    - name: IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
 
 {{- range $path, $bytes := .Files.Glob "assets/operations/pre_render_scripts/api_*" }}
 {{ $bytes | toString }}
