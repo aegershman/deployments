@@ -15,7 +15,7 @@ global:
 image:
   org: cfcontainerization
   repository: quarks-job
-  tag: v1.0.179
+  tag: v1.0.206
 logLevel: debug
 maxWorkers: 1
 nameOverride: ""
