@@ -4,39 +4,41 @@ directories:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/jetstack/cert-manager/releases/30572580
+      url: https://api.github.com/repos/jetstack/cert-manager/releases/32307751
     path: upstream
   path: cluster/build/cert-manager/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #415 from cloudfoundry/maint/rm-metric-proxy-certs...'
-      sha: f37476c0087bae6613c81e1224af2aa92f5de77b
+      commitTitle: Autobump stack images
+      sha: 552525ff352c36f3c3467e93b8e32fd35394c179
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: external-dns infoblox provider additional parameter (#3397)...
-      sha: be5b30d4b65794d63d36449fc6e8a912bdccbdda
+      commitTitle: '[bitnami/external-dns] Add ability to monitor contour entries
+        added in 0.7.4 (#3941)...'
+      sha: 0966de9fb6f693aea277d1c79fd8f43c3e65b897
     path: upstream
   path: cluster/build/external-dns/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #668 from ywk253100/200716_1.3.4...'
-      sha: 768a3b2c03bcb708fc7c2bfc6b9552437efff067
+      commitTitle: 'Merge pull request #729 from ywk253100/200915_1.3.5...'
+      sha: 0b7457658b9b5c3c500c91a65caf991c4a460bb1
     path: upstream/harbor-helm
   path: cluster/build/harbor/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Update links to documentation
-      sha: 1b9aff307ea35918caed9c4ee20bb76f514e3914
+      commitTitle: Fix quarks secret `SecretLabels` & `SecretAnnotations` update bug
+        (#59)...
+      sha: 4171053d17e66a93044795924abdca66cac09785
     path: upstream
   path: cluster/build/quarks-secret/_vendir
 - contents:
