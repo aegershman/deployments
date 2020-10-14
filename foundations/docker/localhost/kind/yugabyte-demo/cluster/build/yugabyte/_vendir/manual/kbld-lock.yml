@@ -1,10 +1,10 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.24.0
+minimumRequiredVersion: 0.25.0
 overrides:
 - image: busybox:1.31
   newImage: index.docker.io/library/busybox@sha256:95cf004f559831017cdf4628aaf1bb30133677be8702a8c5f2994629f637a209
   preresolved: true
-- image: yugabytedb/yugabyte:2.2.2.0-b15
-  newImage: index.docker.io/yugabytedb/yugabyte@sha256:c0f92818c459f47a89f2f45a71af5702d26c6ff312af346c96f2579524cc5914
+- image: yugabytedb/yugabyte:2.3.2.0-b37
+  newImage: index.docker.io/yugabytedb/yugabyte@sha256:eb4c9adc98d0837708d48ec9c550a99f7fa324e2999bd8f6de807a5d835e7ee9
   preresolved: true
