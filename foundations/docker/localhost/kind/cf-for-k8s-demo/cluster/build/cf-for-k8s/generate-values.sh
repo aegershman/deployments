@@ -110,6 +110,8 @@ variables:
   type: password
 - name: cf_api_controllers_client_secret
   type: password
+- name: cf_api_backup_metadata_generator_client_secret
+  type: password
 - name: default_ca
   type: certificate
   options:
@@ -145,7 +147,6 @@ variables:
     extended_key_usage:
     - client_auth
     - server_auth
-
 - name: uaa_jwt_policy_signing_key
   type: certificate
   options:
@@ -178,6 +179,7 @@ cf_db:
 capi:
   cc_username_lookup_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cc_username_lookup_client_secret)
   cf_api_controllers_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cf_api_controllers_client_secret)
+  cf_api_backup_metadata_generator_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cf_api_backup_metadata_generator_client_secret)
   database:
     password: $(bosh interpolate ${VARS_FILE} --path=/capi_db_password)
     encryption_key: $(bosh interpolate ${VARS_FILE} --path=/capi_db_encryption_key)
