@@ -1,10 +1,13 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.25.0
+minimumRequiredVersion: 0.27.0
 overrides:
-- image: docker.io/cfcontainerization/pxc:0.9.11
-  newImage: index.docker.io/cfcontainerization/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
-  preresolved: true
 - image: ghcr.io/cfcontainerizationbot/kubecf-apps-dns:0.1.0
   newImage: ghcr.io/cfcontainerizationbot/kubecf-apps-dns@sha256:82db593bd6320e48209e1f326ce561f0796df0f5c0ee0537069349363cdca5d3
+  preresolved: true
+- image: ghcr.io/cfcontainerizationbot/kubecf-kubectl:v1.19.2
+  newImage: ghcr.io/cfcontainerizationbot/kubecf-kubectl@sha256:61daa1bba5cb7146aa4dc503772933cf4c110a911668bd88d0998d718003c128
+  preresolved: true
+- image: ghcr.io/cloudfoundry-incubator/pxc:0.9.11
+  newImage: ghcr.io/cloudfoundry-incubator/pxc@sha256:c3a0d231824d2d2920696411d17626d473d408be299a7ca13bbb1f614887b05d
   preresolved: true

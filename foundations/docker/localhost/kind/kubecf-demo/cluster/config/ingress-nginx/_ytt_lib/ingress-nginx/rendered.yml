@@ -7,8 +7,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 ---
 apiVersion: v1
@@ -30,8 +30,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-tcp
 ---
 apiVersion: v1
@@ -45,8 +45,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-controller
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -56,8 +56,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 rules:
 - apiGroups:
@@ -125,8 +125,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -145,8 +145,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 rules:
 - apiGroups:
@@ -238,8 +238,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -253,13 +253,14 @@ subjects:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations: null
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-controller
 spec:
   ports:
@@ -328,8 +329,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-controller
 spec:
   minReadySeconds: 0
@@ -371,7 +372,7 @@ spec:
               fieldPath: metadata.namespace
         - name: LD_PRELOAD
           value: /usr/local/lib/libmimalloc.so
-        image: k8s.gcr.io/ingress-nginx/controller@sha256:46ba23c3fbaafd9e5bd01ea85b2f921d9f2217be082580edc22e6c704a83f02f
+        image: k8s.gcr.io/ingress-nginx/controller@sha256:1f4f402b9c14f3ae92b11ada1dfe9893a88f0faeb0b2f4b903e2c67a0c3bf0de
         imagePullPolicy: IfNotPresent
         lifecycle:
           preStop:

@@ -598,10 +598,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v6.1.15-0.g89a56300
+        - Tag: v6.1.17-0.gec409fd7
           Type: resolved
-          URL: cfcontainerization/cf-operator:v6.1.15-0.g89a56300
-        URL: index.docker.io/cfcontainerization/cf-operator@sha256:7c1217081bbc445578049de0fd4584b334e296cae8f66ff4aaf27e901ae31c56
+          URL: cfcontainerization/cf-operator:v6.1.17-0.gec409fd7
+        URL: index.docker.io/cfcontainerization/cf-operator@sha256:061ca959f0612f55fea44934a0a2e3426750a1560c5bc4839fa993fcfec7383c
   name: cf-operator
   namespace: default
 spec:
@@ -651,14 +651,14 @@ spec:
         - name: DOCKER_IMAGE_REPOSITORY
           value: cf-operator
         - name: DOCKER_IMAGE_TAG
-          value: v6.1.15-0.g89a56300
+          value: v6.1.17-0.gec409fd7
         - name: DOCKER_IMAGE_PULL_POLICY
           value: IfNotPresent
         - name: CF_OPERATOR_WEBHOOK_SERVICE_PORT
           value: "2999"
         - name: CF_OPERATOR_WEBHOOK_USE_SERVICE_REFERENCE
           value: "true"
-        image: index.docker.io/cfcontainerization/cf-operator@sha256:7c1217081bbc445578049de0fd4584b334e296cae8f66ff4aaf27e901ae31c56
+        image: index.docker.io/cfcontainerization/cf-operator@sha256:061ca959f0612f55fea44934a0a2e3426750a1560c5bc4839fa993fcfec7383c
         imagePullPolicy: IfNotPresent
         name: cf-operator
         ports:
@@ -700,3 +700,99 @@ subjects:
 - kind: ServiceAccount
   name: cf-operator
   namespace: default
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-2"
+  labels:
+    app.kubernetes.io/instance: cf-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: cf-operator
+  name: cf-operator-pre-upgrade
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-2"
+  labels:
+    app.kubernetes.io/instance: cf-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: cf-operator
+  name: cf-operator-pre-upgrade-delete-dm
+  namespace: kubecf
+rules:
+- apiGroups:
+  - quarks.cloudfoundry.org
+  resourceNames:
+  - dm
+  resources:
+  - quarksjobs
+  verbs:
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-2"
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  labels:
+    app.kubernetes.io/instance: cf-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: cf-operator
+  name: cf-operator-pre-upgrade-delete-dm
+  namespace: kubecf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cf-operator-pre-upgrade-delete-dm
+subjects:
+- kind: ServiceAccount
+  name: cf-operator-pre-upgrade
+  namespace: default
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-weight: "-1"
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: v1.19.2
+          Type: resolved
+          URL: ghcr.io/cfcontainerizationbot/kubecf-kubectl:v1.19.2
+        URL: ghcr.io/cfcontainerizationbot/kubecf-kubectl@sha256:61daa1bba5cb7146aa4dc503772933cf4c110a911668bd88d0998d718003c128
+  labels:
+    app.kubernetes.io/instance: cf-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: cf-operator
+  name: cf-operator-pre-upgrade
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: cf-operator
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: cf-operator
+    spec:
+      containers:
+      - args:
+        - delete
+        - quarksjobs.quarks.cloudfoundry.org
+        - --ignore-not-found
+        - --namespace=kubecf
+        - dm
+        image: ghcr.io/cfcontainerizationbot/kubecf-kubectl@sha256:61daa1bba5cb7146aa4dc503772933cf4c110a911668bd88d0998d718003c128
+        imagePullPolicy: IfNotPresent
+        name: pre-upgrade
+      restartPolicy: Never
+      serviceAccountName: cf-operator-pre-upgrade
