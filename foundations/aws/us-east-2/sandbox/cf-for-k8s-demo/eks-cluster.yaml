@@ -7,7 +7,7 @@ kind: ClusterConfig
 metadata:
   name: cf-for-k8s-demo
   region: us-east-2
-  version: "1.17"
+  version: "1.18"
   tags: { cost-center: aegershman }
 
 vpc:

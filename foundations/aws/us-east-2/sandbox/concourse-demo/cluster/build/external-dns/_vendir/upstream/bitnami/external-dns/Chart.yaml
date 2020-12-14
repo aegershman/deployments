@@ -1,27 +1,21 @@
-annotations:
-  category: DeveloperTools
-apiVersion: v2
-appVersion: 0.7.5
-dependencies:
-  - name: common
-    repository: https://charts.bitnami.com/bitnami
-    tags:
-      - bitnami-common
-    version: 1.x.x
+apiVersion: v1
+name: external-dns
+version: 3.4.6
+appVersion: 0.7.4
 description: ExternalDNS is a Kubernetes addon that configures public DNS servers with information about exposed Kubernetes services to make them discoverable.
-engine: gotpl
-home: https://github.com/bitnami/charts/tree/master/bitnami/external-dns
-icon: https://bitnami.com/assets/stacks/external-dns/img/external-dns-stack-110x117.png
 keywords:
   - external-dns
   - network
   - dns
-maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
-name: external-dns
+home: https://github.com/bitnami/charts/tree/master/bitnami/external-dns
 sources:
   - https://github.com/kubernetes-sigs/external-dns
   - https://github.com/bitnami/bitnami-docker-external-dns
   - https://github.com/kubernetes-sigs/external-dns
-version: 4.4.3
+maintainers:
+  - name: Bitnami
+    email: containers@bitnami.com
+engine: gotpl
+icon: https://bitnami.com/assets/stacks/external-dns/img/external-dns-stack-110x117.png
+annotations:
+  category: DeveloperTools

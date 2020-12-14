@@ -1,0 +1,180 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/instance: external-dns
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: external-dns
+    helm.sh/chart: external-dns-3.4.6
+  name: external-dns
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/instance: external-dns
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: external-dns
+    helm.sh/chart: external-dns-3.4.6
+  name: external-dns
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - pods
+  - nodes
+  - endpoints
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - gateways
+  - virtualservices
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - zalando.org
+  resources:
+  - routegroups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - zalando.org
+  resources:
+  - routegroups/status
+  verbs:
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/instance: external-dns
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: external-dns
+    helm.sh/chart: external-dns-3.4.6
+  name: external-dns
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-dns
+subjects:
+- kind: ServiceAccount
+  name: external-dns
+  namespace: external-dns
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: external-dns
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: external-dns
+    helm.sh/chart: external-dns-3.4.6
+  name: external-dns
+spec:
+  ports:
+  - name: http
+    port: 7979
+    protocol: TCP
+    targetPort: http
+  selector:
+    app.kubernetes.io/instance: external-dns
+    app.kubernetes.io/name: external-dns
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: 0.7.4-debian-10-r0
+          Type: resolved
+          URL: docker.io/bitnami/external-dns:0.7.4-debian-10-r0
+        URL: index.docker.io/bitnami/external-dns@sha256:9f6dfef7ac8ff525d20e150a4ff3da27a530c1db5c3f527c7df01e362ab51861
+  labels:
+    app.kubernetes.io/instance: external-dns
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: external-dns
+    helm.sh/chart: external-dns-3.4.6
+  name: external-dns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: external-dns
+      app.kubernetes.io/name: external-dns
+  template:
+    metadata:
+      annotations:
+        gershman.io/purpose: none
+      labels:
+        app.kubernetes.io/instance: external-dns
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: external-dns
+        helm.sh/chart: external-dns-3.4.6
+    spec:
+      containers:
+      - args:
+        - --log-level=info
+        - --log-format=text
+        - --policy=sync
+        - --provider=aws
+        - --registry=txt
+        - --interval=1m
+        - --source=service
+        - --source=ingress
+        - --aws-batch-change-size=1000
+        env:
+        - name: AWS_DEFAULT_REGION
+          value: us-east-2
+        image: index.docker.io/bitnami/external-dns@sha256:9f6dfef7ac8ff525d20e150a4ff3da27a530c1db5c3f527c7df01e362ab51861
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: external-dns
+        ports:
+        - containerPort: 7979
+          name: http
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        volumeMounts: null
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      serviceAccountName: external-dns
+      volumes: null

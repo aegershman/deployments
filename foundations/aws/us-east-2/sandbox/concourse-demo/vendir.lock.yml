@@ -24,8 +24,9 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: '[bitnami/external-dns] Release 4.4.3 updating components versions...'
-      sha: 55e40b0e46a9d484e3e042fad9c25f6a0dd507d8
+      commitTitle: '[bitnami/external-dns] Add ability to monitor contour entries
+        added in 0.7.4 (#3941)...'
+      sha: 0966de9fb6f693aea277d1c79fd8f43c3e65b897
     path: upstream
   path: cluster/build/external-dns/_vendir
 - contents:

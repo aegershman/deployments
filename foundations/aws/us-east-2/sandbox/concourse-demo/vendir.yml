@@ -38,9 +38,10 @@ directories:
       - path: upstream
         git:
           url: https://github.com/bitnami/charts
-          ref: 55e40b0e46a9d484e3e042fad9c25f6a0dd507d8 # 4.4.3
+          # ref: 55e40b0e46a9d484e3e042fad9c25f6a0dd507d8 # 4.4.3
+          ref: 0966de9fb6f693aea277d1c79fd8f43c3e65b897 # 3.4.6
         includePaths:
-          - bitnami/common/**/*
+          # - bitnami/common/**/*
           - bitnami/external-dns/**/*
   - path: cluster/build/ingress-nginx/_vendir
     contents:
