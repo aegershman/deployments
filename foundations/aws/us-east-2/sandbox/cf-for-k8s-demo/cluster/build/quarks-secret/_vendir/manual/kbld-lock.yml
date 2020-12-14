@@ -1,6 +1,6 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.25.0
+minimumRequiredVersion: 0.27.0
 overrides:
 - image: cfcontainerization/quarks-secret:v1.0.745
   newImage: index.docker.io/cfcontainerization/quarks-secret@sha256:b843a965e3419e204ea69a7d97b804118d4187304f4d7321578af260a56ecf3e
