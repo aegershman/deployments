@@ -40,14 +40,14 @@ chart and their default values.
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `image` | Service catalog image to use | `quay.io/kubernetes-service-catalog/service-catalog:v0.3.0` |
+| `image` | Service catalog image to use | `quay.io/kubernetes-service-catalog/service-catalog:v0.3.1` |
 | `imagePullPolicy` | `imagePullPolicy` for the service catalog | `Always` |
 | `imagePullSecrets`|  The pre-existing secrets to use to pull images from a private registry | `[]` | 
 | `webhook.updateStrategy` | `updateStrategy` for the service catalog webhook deployment | `RollingUpdate` |
 | `webhook.minReadySeconds` | how many seconds an webhook server pod needs to be ready before killing the next, during update | `1` |
 | `webhook.annotations` | Annotations for webhook pods | `{}` |
 | `webhook.nodeSelector` | A nodeSelector value to apply to the webhook pods. If not specified, no nodeSelector will be applied | |
-| `webhook.service.type` | Type of service; valid values are `LoadBalancer` , `NodePort` and `ClusterIP` | `NodePort` |
+| `webhook.service.type` | Type of service; valid values are `LoadBalancer` , `NodePort` and `ClusterIP` | `ClusterIP` |
 | `webhook.service.nodePort.securePort` | If service type is `NodePort`, specifies a port in allowable range (e.g. 30000 - 32767 on minikube); The TLS-enabled endpoint will be exposed here | `30443` |
 | `webhook.service.clusterIP` | If service type is ClusterIP, specify clusterIP as `None` for `headless services` OR specify your own specific IP OR leave blank to let Kubernetes assign a cluster IP |  |
 | `webhook.verbosity` | Log level; valid values are in the range 0 - 10 | `10` |
@@ -75,8 +75,10 @@ chart and their default values.
 | `controllerManager.service.clusterIP` | If service type is ClusterIP, specify clusterIP as `None` for `headless services` OR specify your own specific IP OR leave blank to let Kubernetes assign a cluster IP |  |
 | `rbacEnable` | If true, create & use RBAC resources | `true` |
 | `originatingIdentityEnabled` | Whether the OriginatingIdentity feature should be enabled | `true` |
+| `persistence.storageClass` | Define the storageclass use by pvc | `null` |
 | `asyncBindingOperationsEnabled` | Whether or not alpha support for async binding operations is enabled | `false` |
 | `namespacedServiceBrokerDisabled` | Whether or not alpha support for namespace scoped brokers is disabled | `false` |
+| `priorityClassName` | Define PriorityClass for pods | "" |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to
 `helm install`.

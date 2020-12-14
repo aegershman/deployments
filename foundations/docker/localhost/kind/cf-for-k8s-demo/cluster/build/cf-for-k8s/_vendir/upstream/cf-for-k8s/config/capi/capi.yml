@@ -3,6 +3,7 @@
 #@ load("@ytt:overlay", "overlay")
 #@ load("@ytt:template", "template")
 #@ load("/namespaces.star", "system_namespace", "workloads_namespace", "workloads_staging_namespace")
+#@ load("/quarks-secret/quarks-secret.star", "quarks_secret_enabled")
 
 #@ def capi_host():
 #@   if len(data.values.capi.database.host) > 0:
@@ -54,6 +55,8 @@ uaa:
       secret_name: cloud-controller-username-lookup-client-secret
     cf_api_controllers:
       secret_name: cf-api-controllers-client-secret
+    cf_api_backup_metadata_generator:
+      secret_name: cf-api-backup-metadata-generator-client-secret
 
 kpack:
   registry:
@@ -62,6 +65,12 @@ kpack:
     username: #@ data.values.app_registry.username
     password: #@ data.values.app_registry.password
 #@ end
+
+#! scale down default number of cf-api-server replicas to 1
+#@overlay/match by=overlay.subset({"kind":"Deployment","metadata":{"name":"cf-api-server"}})
+---
+spec:
+  replicas: 1
 
 #@ capi = library.get("capi-k8s-release")
 --- #@ template.replace(capi.with_data_values(capi_values()).eval())
@@ -103,6 +112,7 @@ metadata:
 type: Opaque
 stringData:
   password: #@ data.values.blobstore.secret_access_key
+#@ if not quarks_secret_enabled():
 ---
 apiVersion: v1
 kind: Secret
@@ -112,6 +122,15 @@ metadata:
 type: Opaque
 stringData:
   password: #@ data.values.capi.cf_api_controllers_client_secret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cf-api-backup-metadata-generator-client-secret
+  namespace: #@ system_namespace()
+type: Opaque
+stringData:
+  password: #@ data.values.capi.cf_api_backup_metadata_generator_client_secret
 ---
 apiVersion: v1
 kind: Secret
@@ -130,3 +149,4 @@ metadata:
 type: Opaque
 stringData:
   password: #@ data.values.capi.database.encryption_key
+#@ end
