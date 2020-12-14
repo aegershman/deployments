@@ -16,9 +16,15 @@ kind-delete)
 
 cd)
   # purely for copy-paste convenience
-  exit 0
+  exit 1
   cd ./foundations/aws/us-east-2/sandbox/cf-for-k8s-demo
   cd ./foundations/docker/localhost/kind/cf-for-k8s-demo
+  ;;
+
+misc)
+  # purely for copy-paste convenience
+  exit 1
+  helm repo add "stable" "https://charts.helm.sh/stable" --force-update
   ;;
 
 *)
