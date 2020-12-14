@@ -10,7 +10,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/concourse/concourse-chart
-          ref: 88a125901beb50c1f4f8ffbcd6ff5e4379c26517 # 14.0.1
+          ref: d9fc598ea2d5c85df55291795988baa763cf0dea # 14.5.1
         includePaths:
           - templates/**/*
           - .gitignore
@@ -24,7 +24,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/concourse/concourse-chart
-          ref: 88a125901beb50c1f4f8ffbcd6ff5e4379c26517 # 14.0.1
+          ref: d9fc598ea2d5c85df55291795988baa763cf0dea # 14.5.1
         includePaths:
           - templates/**/*
           - .gitignore
@@ -38,7 +38,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/bitnami/charts
-          ref: 0966de9fb6f693aea277d1c79fd8f43c3e65b897 # 3.4.6
+          ref: 55e40b0e46a9d484e3e042fad9c25f6a0dd507d8 # 4.4.3
         includePaths:
           - bitnami/external-dns/**/*
   - path: cluster/build/ingress-nginx/_vendir
@@ -48,7 +48,7 @@ directories:
       - path: upstream
         git:
           url: https://github.com/kubernetes/ingress-nginx
-          ref: 9b683e40555fdfaba453d826306bc9c03880dc16 # 3.7.1
+          ref: 91d8c86964de7732bdbf30abb2abab7d5184e5a8 # 3.15.2
         includePaths:
           - charts/ingress-nginx/**/*
         excludePaths:
