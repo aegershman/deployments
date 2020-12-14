@@ -69,9 +69,9 @@ d | delete)
     ;;
   all)
     shift
-    ./deploy-ctl.sh delete -a ingress-nginx "$@"
-    ./deploy-ctl.sh delete -a cf-operator "$@"
-    ./deploy-ctl.sh delete -a kubecf "$@"
+    ./deploy-ctl.sh delete ingress-nginx "$@"
+    ./deploy-ctl.sh delete cf-operator "$@"
+    ./deploy-ctl.sh delete kubecf "$@"
     ;;
   *)
     echo "usage: ./deploy.sh delete {kapp-env} [optional-args...]"

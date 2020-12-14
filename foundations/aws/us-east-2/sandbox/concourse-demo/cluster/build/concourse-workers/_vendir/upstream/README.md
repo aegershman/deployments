@@ -87,7 +87,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `6.6.0` |
+| `imageTag` | Concourse image version | `6.7.2` |
 | `image` | Concourse image | `concourse/concourse` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
@@ -105,10 +105,13 @@ The following table lists the configurable parameters of the Concourse chart and
 | `rbac.apiVersion` | RBAC version | `v1beta1` |
 | `rbac.create` | Enables creation of RBAC resources | `true` |
 | `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default` |
+| `rbac.webServiceAccountAnnotations` | Any annotations to be attached to the web service account | `{}` |
 | `rbac.workerServiceAccountName` | Name of the service account to use for workers if `rbac.create` is `false` | `default` |
+| `rbac.workerServiceAccountAnnotations` | Any annotations to be attached to the worker service account | `{}` |
 | `podSecurityPolicy.create` | Enables creation of podSecurityPolicy resources | `false` |
 | `podSecurityPolicy.allowedWorkerVolumes` | List of volumes allowed by the podSecurityPolicy for the worker pods | *See [values.yaml](values.yaml)* |
 | `podSecurityPolicy.allowedWebVolumes` | List of volumes allowed by the podSecurityPolicy for the web pods | *See [values.yaml](values.yaml)* |
+| `secrets.annotations`| Annotations to be added to the secrets | `{}` |
 | `secrets.awsSecretsmanagerAccessKey` | AWS Access Key ID for Secrets Manager access | `nil` |
 | `secrets.awsSecretsmanagerSecretKey` | AWS Secret Access Key ID for Secrets Manager access | `nil` |
 | `secrets.awsSecretsmanagerSessionToken` | AWS Session Token for Secrets Manager access | `nil` |
@@ -229,6 +232,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.service.workerGateway.type` | Concourse Web workerGateway service type | `ClusterIP` |
 | `web.service.prometheus.annotations` | Concourse Web Prometheus Service annotations | `nil` |
 | `web.service.prometheus.labels` | Additional concourse web prometheus service labels | `nil` |
+| `web.shareProcessNamespace` | Enable or disable the process namespace sharing for the web nodes | `false` |
 | `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
 | `web.extraInitContainers` | Array of extra init containers to run before the Concourse web container | `nil` |
 | `web.strategy` | Strategy for updates to deployment. | `{}` |
