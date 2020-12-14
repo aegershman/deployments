@@ -109,6 +109,8 @@ variables:
   type: password
 - name: cf_api_controllers_client_secret
   type: password
+- name: cf_api_backup_metadata_generator_client_secret
+  type: password
 - name: default_ca
   type: certificate
   options:
@@ -144,7 +146,6 @@ variables:
     extended_key_usage:
     - client_auth
     - server_auth
-
 - name: uaa_jwt_policy_signing_key
   type: certificate
   options:
@@ -177,6 +178,7 @@ cf_db:
 capi:
   cc_username_lookup_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cc_username_lookup_client_secret)
   cf_api_controllers_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cf_api_controllers_client_secret)
+  cf_api_backup_metadata_generator_client_secret: $(bosh interpolate ${VARS_FILE} --path=/cf_api_backup_metadata_generator_client_secret)
   database:
     password: $(bosh interpolate ${VARS_FILE} --path=/capi_db_password)
     encryption_key: $(bosh interpolate ${VARS_FILE} --path=/capi_db_encryption_key)
@@ -231,7 +233,7 @@ if [[ -n "${GCP_SERVICE_ACCOUNT_JSON_FILE:=}" ]]; then
 
 app_registry:
   hostname: gcr.io
-  repository_prefix: gcr.io/$(bosh interpolate ${GCP_SERVICE_ACCOUNT_JSON_FILE} --path=/project_id)/cf-workloads
+  repository_prefix: gcr.io/$( bosh interpolate ${GCP_SERVICE_ACCOUNT_JSON_FILE} --path=/project_id )/cf-workloads
   username: _json_key
   password: |
 $(cat ${GCP_SERVICE_ACCOUNT_JSON_FILE} | grep -Ev '^$' | sed -e 's/^/    /')
@@ -239,15 +241,15 @@ EOF
 
 fi
 
-if [[ -n "${K8S_ENV:-}" ]]; then
-  k8s_env_path=$HOME/workspace/relint-ci-pools/k8s-dev/ready/claimed/"$K8S_ENV"
-  if [[ -f "$k8s_env_path" ]]; then
-    ip_addr=$(jq -r .lb_static_ip <"$k8s_env_path")
-    echo 1>&2 "Detected \$K8S_ENV environment var; writing \"load_balancer.static_ip: $ip_addr\" entry to end of output"
-    echo "
+if [[ -n "${K8S_ENV:-}" ]] ; then
+    k8s_env_path=$HOME/workspace/relint-ci-pools/k8s-dev/ready/claimed/"$K8S_ENV"
+    if [[ -f "$k8s_env_path" ]] ; then
+	      ip_addr=$(jq -r .lb_static_ip < "$k8s_env_path")
+        echo 1>&2 "Detected \$K8S_ENV environment var; writing \"load_balancer.static_ip: $ip_addr\" entry to end of output"
+        echo "
 load_balancer:
   enable: true
   static_ip: $ip_addr
 "
-  fi
+    fi
 fi

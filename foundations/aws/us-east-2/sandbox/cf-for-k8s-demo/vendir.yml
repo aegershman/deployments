@@ -10,7 +10,7 @@ directories:
       - path: upstream
         githubRelease:
           slug: jetstack/cert-manager
-          tag: v1.0.3
+          tag: v1.1.0
           disableAutoChecksumValidation: true
         includePaths:
           - cert-manager.yaml
@@ -22,7 +22,7 @@ directories:
       - path: upstream/cf-for-k8s
         git:
           url: https://github.com/cloudfoundry/cf-for-k8s
-          ref: 552525ff352c36f3c3467e93b8e32fd35394c179 # beyond v0.7.0
+          ref: c72740e81a15fa9c386578e75853fcc43e8f014e # beyond v1.0.0
         includePaths:
           - config/**/*
           - hack/generate-values.sh
@@ -44,7 +44,7 @@ directories:
       - path: upstream/harbor-helm
         git:
           url: https://github.com/goharbor/harbor-helm
-          ref: tags/v1.3.5
+          ref: tags/v1.3.6
         excludePaths:
           - .git/**/*
           - docs/**/*
@@ -65,7 +65,7 @@ directories:
         manual: {}
       - path: upstream
         githubRelease:
-          slug: k14s/secretgen-controller
+          slug: vmware-tanzu/carvel-secretgen-controller
           tag: v0.2.0
           disableAutoChecksumValidation: false
         includePaths:
