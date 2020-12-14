@@ -4,22 +4,24 @@ directories:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/cloudfoundry-incubator/quarks-operator/releases/32338202
+      url: https://api.github.com/repos/cloudfoundry-incubator/quarks-operator/releases/32655203
     path: upstream
   path: cluster/build/cf-operator/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #6326 from kolorful/master...'
-      sha: 9b683e40555fdfaba453d826306bc9c03880dc16
+      commitTitle: Fix helm chart releaser action
+      sha: 91d8c86964de7732bdbf30abb2abab7d5184e5a8
+      tags:
+      - ingress-nginx-3.15.2
     path: upstream
   path: cluster/build/ingress-nginx/_vendir
 - contents:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/cloudfoundry-incubator/kubecf/releases/32378896
+      url: https://api.github.com/repos/cloudfoundry-incubator/kubecf/releases/35123374
     path: upstream
   path: cluster/build/kubecf/_vendir
 - contents:

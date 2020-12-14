@@ -13,18 +13,18 @@ metadata:
   name: {{ include "ingress-nginx.fullname" . }}-admission
 webhooks:
   - name: validate.nginx.ingress.kubernetes.io
+    matchPolicy: Equivalent
     rules:
       - apiGroups:
           - networking.k8s.io
         apiVersions:
           - v1beta1
-          - v1
         operations:
           - CREATE
           - UPDATE
         resources:
           - ingresses
-    failurePolicy: Fail
+    failurePolicy: {{ .Values.controller.admissionWebhooks.failurePolicy | default "Fail" }}
     sideEffects: None
     admissionReviewVersions:
       - v1
