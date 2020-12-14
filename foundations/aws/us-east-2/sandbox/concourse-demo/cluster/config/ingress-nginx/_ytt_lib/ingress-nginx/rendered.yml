@@ -7,8 +7,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 ---
 apiVersion: v1
@@ -22,8 +22,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-controller
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -33,8 +33,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 rules:
 - apiGroups:
@@ -102,8 +102,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -122,8 +122,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 rules:
 - apiGroups:
@@ -215,8 +215,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -235,8 +235,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-controller-admission
 spec:
   ports:
@@ -263,8 +263,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-controller
 spec:
   ports:
@@ -293,8 +293,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-controller
 spec:
   minReadySeconds: 0
@@ -337,7 +337,7 @@ spec:
               fieldPath: metadata.namespace
         - name: LD_PRELOAD
           value: /usr/local/lib/libmimalloc.so
-        image: k8s.gcr.io/ingress-nginx/controller@sha256:46ba23c3fbaafd9e5bd01ea85b2f921d9f2217be082580edc22e6c704a83f02f
+        image: k8s.gcr.io/ingress-nginx/controller@sha256:1f4f402b9c14f3ae92b11ada1dfe9893a88f0faeb0b2f4b903e2c67a0c3bf0de
         imagePullPolicy: IfNotPresent
         lifecycle:
           preStop:
@@ -409,8 +409,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-admission
 webhooks:
 - admissionReviewVersions:
@@ -422,13 +422,13 @@ webhooks:
       namespace: ingress-nginx
       path: /networking/v1beta1/ingresses
   failurePolicy: Fail
+  matchPolicy: Equivalent
   name: validate.nginx.ingress.kubernetes.io
   rules:
   - apiGroups:
     - networking.k8s.io
     apiVersions:
     - v1beta1
-    - v1
     operations:
     - CREATE
     - UPDATE
@@ -447,8 +447,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-admission
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -462,8 +462,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-admission
 rules:
 - apiGroups:
@@ -485,8 +485,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-admission
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -508,8 +508,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-admission
 rules:
 - apiGroups:
@@ -531,8 +531,8 @@ metadata:
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-admission
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -551,17 +551,17 @@ metadata:
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.3.0
+        - Tag: v1.5.0
           Type: resolved
-          URL: docker.io/jettech/kube-webhook-certgen:v1.3.0
-        URL: index.docker.io/jettech/kube-webhook-certgen@sha256:ff01fba91131ed260df3f3793009efbf9686f5a5ce78a85f81c386a4403f7689
+          URL: docker.io/jettech/kube-webhook-certgen:v1.5.0
+        URL: index.docker.io/jettech/kube-webhook-certgen@sha256:fb7c2cd46ccfdd2809165152ec3f2cd0ae1dfc74cc74671b1dea73f034a87acf
   labels:
     app.kubernetes.io/component: admission-webhook
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-admission-create
 spec:
   template:
@@ -571,8 +571,8 @@ spec:
         app.kubernetes.io/instance: ingress-nginx
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/version: 0.40.2
-        helm.sh/chart: ingress-nginx-3.7.1
+        app.kubernetes.io/version: 0.41.2
+        helm.sh/chart: ingress-nginx-3.15.2
       name: ingress-nginx-admission-create
     spec:
       containers:
@@ -586,7 +586,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: index.docker.io/jettech/kube-webhook-certgen@sha256:ff01fba91131ed260df3f3793009efbf9686f5a5ce78a85f81c386a4403f7689
+        image: index.docker.io/jettech/kube-webhook-certgen@sha256:fb7c2cd46ccfdd2809165152ec3f2cd0ae1dfc74cc74671b1dea73f034a87acf
         imagePullPolicy: IfNotPresent
         name: create
       restartPolicy: OnFailure
@@ -603,17 +603,17 @@ metadata:
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.3.0
+        - Tag: v1.5.0
           Type: resolved
-          URL: docker.io/jettech/kube-webhook-certgen:v1.3.0
-        URL: index.docker.io/jettech/kube-webhook-certgen@sha256:ff01fba91131ed260df3f3793009efbf9686f5a5ce78a85f81c386a4403f7689
+          URL: docker.io/jettech/kube-webhook-certgen:v1.5.0
+        URL: index.docker.io/jettech/kube-webhook-certgen@sha256:fb7c2cd46ccfdd2809165152ec3f2cd0ae1dfc74cc74671b1dea73f034a87acf
   labels:
     app.kubernetes.io/component: admission-webhook
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 0.40.2
-    helm.sh/chart: ingress-nginx-3.7.1
+    app.kubernetes.io/version: 0.41.2
+    helm.sh/chart: ingress-nginx-3.15.2
   name: ingress-nginx-admission-patch
 spec:
   template:
@@ -623,8 +623,8 @@ spec:
         app.kubernetes.io/instance: ingress-nginx
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/version: 0.40.2
-        helm.sh/chart: ingress-nginx-3.7.1
+        app.kubernetes.io/version: 0.41.2
+        helm.sh/chart: ingress-nginx-3.15.2
       name: ingress-nginx-admission-patch
     spec:
       containers:
@@ -640,7 +640,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: index.docker.io/jettech/kube-webhook-certgen@sha256:ff01fba91131ed260df3f3793009efbf9686f5a5ce78a85f81c386a4403f7689
+        image: index.docker.io/jettech/kube-webhook-certgen@sha256:fb7c2cd46ccfdd2809165152ec3f2cd0ae1dfc74cc74671b1dea73f034a87acf
         imagePullPolicy: IfNotPresent
         name: patch
       restartPolicy: OnFailure

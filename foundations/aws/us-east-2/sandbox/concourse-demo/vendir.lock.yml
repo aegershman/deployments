@@ -4,16 +4,20 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: bump chart version
-      sha: 88a125901beb50c1f4f8ffbcd6ff5e4379c26517
+      commitTitle: 'Merge pull request #176 from concourse/arbitrary-pod-spec-fields...'
+      sha: d9fc598ea2d5c85df55291795988baa763cf0dea
+      tags:
+      - v14.5.1-3-gd9fc598
     path: upstream
   path: cluster/build/concourse-web/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: bump chart version
-      sha: 88a125901beb50c1f4f8ffbcd6ff5e4379c26517
+      commitTitle: 'Merge pull request #176 from concourse/arbitrary-pod-spec-fields...'
+      sha: d9fc598ea2d5c85df55291795988baa763cf0dea
+      tags:
+      - v14.5.1-3-gd9fc598
     path: upstream
   path: cluster/build/concourse-workers/_vendir
 - contents:
@@ -29,8 +33,10 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #6326 from kolorful/master...'
-      sha: 9b683e40555fdfaba453d826306bc9c03880dc16
+      commitTitle: Fix helm chart releaser action
+      sha: 91d8c86964de7732bdbf30abb2abab7d5184e5a8
+      tags:
+      - ingress-nginx-3.15.2
     path: upstream
   path: cluster/build/ingress-nginx/_vendir
 - contents:

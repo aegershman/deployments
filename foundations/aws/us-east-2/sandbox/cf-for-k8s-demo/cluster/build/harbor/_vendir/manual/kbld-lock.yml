@@ -1,31 +1,31 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.25.0
+minimumRequiredVersion: 0.27.0
 overrides:
 - image: busybox:latest
-  newImage: index.docker.io/library/busybox@sha256:a9286defaba7b3a519d585ba0e37d0b2cbee74ebfe590960b0b1d6a5e97d1e1d
+  newImage: index.docker.io/library/busybox@sha256:bde48e1751173b709090c2539fdf12d6ba64e88ec7a4301591227ce925f3c678
   preresolved: true
-- image: goharbor/harbor-core:v1.10.5
-  newImage: index.docker.io/goharbor/harbor-core@sha256:82df65780c328b9d16c287b18b1913a50ffe31a423fa987e7fc25f96f36f0bc2
+- image: goharbor/harbor-core:v1.10.6
+  newImage: index.docker.io/goharbor/harbor-core@sha256:3853b530a900c1daecb628958f1205efe06c5b470ab802d3f5e742d719360cc8
   preresolved: true
-- image: goharbor/harbor-db:v1.10.5
-  newImage: index.docker.io/goharbor/harbor-db@sha256:fa92ecb81d7f746a263407261b696fe9a453c600f3eeae5c179c7a4b9f6b7c5d
+- image: goharbor/harbor-db:v1.10.6
+  newImage: index.docker.io/goharbor/harbor-db@sha256:53c7d4fe0165e30e940d39dbee19494a488cd03adbe3b422adb38956627f185f
   preresolved: true
-- image: goharbor/harbor-jobservice:v1.10.5
-  newImage: index.docker.io/goharbor/harbor-jobservice@sha256:556894ba15c6b1643dc8340b3e6aa4ca106c6e6e9c408efe1e06a3cf481e19f8
+- image: goharbor/harbor-jobservice:v1.10.6
+  newImage: index.docker.io/goharbor/harbor-jobservice@sha256:c906071780ca6a485300d43311aacc03fca88f57f54c9d0e470835e15eeab247
   preresolved: true
-- image: goharbor/harbor-portal:v1.10.5
-  newImage: index.docker.io/goharbor/harbor-portal@sha256:ea54de73a765f9a0142a08a77ce77b461861a71aa0e960ef71c79bd9853c412b
+- image: goharbor/harbor-portal:v1.10.6
+  newImage: index.docker.io/goharbor/harbor-portal@sha256:7c705530c853680b5fa93b979ac64866571bd8c4ec35ffaa0e012f817be93249
   preresolved: true
-- image: goharbor/harbor-registryctl:v1.10.5
-  newImage: index.docker.io/goharbor/harbor-registryctl@sha256:ab24c739e4eaafc9c000048b6a72e007ea3dc6ef157021e5960a8771fb90d2b6
+- image: goharbor/harbor-registryctl:v1.10.6
+  newImage: index.docker.io/goharbor/harbor-registryctl@sha256:4b769b33638cee1758c045b90344b1d0b9fe3d36b24518681c3885860254d0e1
   preresolved: true
-- image: goharbor/nginx-photon:v1.10.5
-  newImage: index.docker.io/goharbor/nginx-photon@sha256:0835a1a36f0e3661d7a999551b255f41351b1d33fd4d203ca6d8b03b8924a211
+- image: goharbor/nginx-photon:v1.10.6
+  newImage: index.docker.io/goharbor/nginx-photon@sha256:9bb49c6c03c524f316da8e823a15c5493707fe9b1f176fc814498ae155092edd
   preresolved: true
-- image: goharbor/redis-photon:v1.10.5
-  newImage: index.docker.io/goharbor/redis-photon@sha256:fb983c6e31fd9afb5ecbcc90463737821b29e5c581187862157d99dd2708adfb
+- image: goharbor/redis-photon:v1.10.6
+  newImage: index.docker.io/goharbor/redis-photon@sha256:ebbb99c7de1b6e8f54cd81899b7e0f6d438cae5893ec6948f444e6bed8a02888
   preresolved: true
-- image: goharbor/registry-photon:v1.10.5
-  newImage: index.docker.io/goharbor/registry-photon@sha256:8215dab5226f216732deedd75da7c44543ae79a25b3899cbeeeaf527810bd9a2
+- image: goharbor/registry-photon:v1.10.6
+  newImage: index.docker.io/goharbor/registry-photon@sha256:dbb26bd3165b175ff35b034874989389fa9417c633837f33db6cb338bc5a5612
   preresolved: true

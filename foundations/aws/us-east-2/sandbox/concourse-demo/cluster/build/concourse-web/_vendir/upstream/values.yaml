@@ -21,7 +21,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "6.6.0"
+imageTag: "6.7.2"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -94,6 +94,10 @@ concourse:
     ## Enable the experimental across step to be used in jobs. The API is subject to change.
     ##
     enableAcrossStep: false
+
+    ## Enable skip checking not-in-use resources.
+    ##
+    enableSkipCheckingNotInUseResources: false
 
     ## Maximum number of jobs to be scheduling at the same time.
     ##
@@ -267,6 +271,16 @@ concourse:
     ## configured a webhook token
     ##
     resourceWithWebhookCheckingInterval: 1m
+
+    ## Configuration file for specifying defaults for base resource types
+    ## Ref: https://concourse-ci.org/concourse-web.html#resource-defaults
+    ## Example:
+    ## baseResourceTypeDefaults: |
+    ##   registry-image:
+    ##     registry_mirror:
+    ##       host: https://registry.mirror.example.com
+    ##
+    baseResourceTypeDefaults: ""
 
     ## Compression to use when streaming artifacts (values: zstd, gzip)
     ##
@@ -1635,7 +1649,6 @@ concourse:
 ## Concourse Web nodes, see https://concourse-ci.org/concourse-web.html.
 ##
 web:
-
   ## Enable or disable the web component.
   ## This allows the creation of worker-only releases by setting this to false.
   ##
@@ -1676,6 +1689,14 @@ web:
   ##   command: ['sh', '-c', 'echo Hello && sleep 3600']
   ##
   extraInitContainers: []
+
+  ## Enable or disable the process namespace sharing for the web nodes.
+  ## This allows signaling the concourse process from a sidecar container.
+  ## eg.: signal concourse web to reload the team authorized keys file.
+  ##
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/
+  ##
+  shareProcessNamespace: false
 
   ## Configures the liveness probe used to determine if the Web component is up.
   ## ps.: if you're upgrading Concourse from one version  to another, the probe will
@@ -1718,6 +1739,14 @@ web:
   ##     value: "debug"
   ##
   env:
+
+  ## Configure the security context for the web containers.
+  ## Example:
+  ##   capabilities:
+  ##     add:
+  ##       - SYS_PTRACE
+  ##
+  securityContext:
 
   ## Where secrets should be mounted for the web container.
   ##
@@ -1927,9 +1956,6 @@ web:
       ##
       ##
       annotations: {}
-
-
-
 
   ## Ingress configuration.
   ## Ref: https://kubernetes.io/docs/user-guide/ingress/
@@ -2292,15 +2318,21 @@ rbac:
 
   ## RBAC Version
   ##
-  apiVersion: v1beta1
+  apiVersion: v1
 
   ## The name of the service account to use for web pods if rbac.create is false
   ##
   webServiceAccountName: default
 
+  ## Any annotations required for the web Service Account
+  webServiceAccountAnnotations: {}
+
   ## The name of the service account to use for worker pods if rbac.create is false
   ##
   workerServiceAccountName: default
+
+  ## Any annotations required for the worker Service Account
+  workerServiceAccountAnnotations: {} 
 
 ## For managing podSecurityPolicies. To make sure rbac objects are also created
 ## for the use of the podsecuritypolicy objects,
@@ -2341,6 +2373,16 @@ secrets:
   ## false to manage these secrets outside Helm.
   ##
   create: true
+
+  ## Annotations to be added to the secrets.
+  ##
+  ## Example:
+  ##   key1: "value1"
+  ##   key2: "value2"
+  ##
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  annotations: {}
 
   ## Array of team names and public keys for team external workers.
   ##

@@ -4,15 +4,17 @@ directories:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/jetstack/cert-manager/releases/32307751
+      url: https://api.github.com/repos/jetstack/cert-manager/releases/34373236
     path: upstream
   path: cluster/build/cert-manager/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Autobump stack images
-      sha: 552525ff352c36f3c3467e93b8e32fd35394c179
+      commitTitle: Autobump buildpacks
+      sha: c72740e81a15fa9c386578e75853fcc43e8f014e
+      tags:
+      - v1.1.0-rc.1-17-gc72740e
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
@@ -28,8 +30,10 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #729 from ywk253100/200915_1.3.5...'
-      sha: 0b7457658b9b5c3c500c91a65caf991c4a460bb1
+      commitTitle: 'Merge pull request #794 from ywk253100/201119_1.3.6...'
+      sha: 8ed55683e8c9882646f4c279218dbc29f8fa25dd
+      tags:
+      - v1.3.6
     path: upstream/harbor-helm
   path: cluster/build/harbor/_vendir
 - contents:
@@ -39,13 +43,15 @@ directories:
       commitTitle: Fix quarks secret `SecretLabels` & `SecretAnnotations` update bug
         (#59)...
       sha: 4171053d17e66a93044795924abdca66cac09785
+      tags:
+      - v1.0.744
     path: upstream
   path: cluster/build/quarks-secret/_vendir
 - contents:
   - manual: {}
     path: manual
   - githubRelease:
-      url: https://api.github.com/repos/k14s/secretgen-controller/releases/25061781
+      url: https://api.github.com/repos/vmware-tanzu/carvel-secretgen-controller/releases/25061781
     path: upstream
   path: cluster/build/secretgen-controller/_vendir
 - contents:

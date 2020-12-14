@@ -1,13 +1,16 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.25.0
+minimumRequiredVersion: 0.27.0
 overrides:
-- image: cfcontainerization/cf-operator:v6.1.15-0.g89a56300
-  newImage: index.docker.io/cfcontainerization/cf-operator@sha256:7c1217081bbc445578049de0fd4584b334e296cae8f66ff4aaf27e901ae31c56
+- image: cfcontainerization/cf-operator:v6.1.17-0.gec409fd7
+  newImage: index.docker.io/cfcontainerization/cf-operator@sha256:061ca959f0612f55fea44934a0a2e3426750a1560c5bc4839fa993fcfec7383c
   preresolved: true
 - image: cfcontainerization/quarks-job:v1.0.206
   newImage: index.docker.io/cfcontainerization/quarks-job@sha256:d0e552cdc3fa9e8aac2b69d619a3a2cd2db82c6f1ca582ebc41f994e8913f4d9
   preresolved: true
 - image: cfcontainerization/quarks-secret:v1.0.744
   newImage: index.docker.io/cfcontainerization/quarks-secret@sha256:4a3fbb75f4d767ed9e7c194a12d91f17a3eb3eb1392c1045cd0871579fc70dc4
+  preresolved: true
+- image: ghcr.io/cfcontainerizationbot/kubecf-kubectl:v1.19.2
+  newImage: ghcr.io/cfcontainerizationbot/kubecf-kubectl@sha256:61daa1bba5cb7146aa4dc503772933cf4c110a911668bd88d0998d718003c128
   preresolved: true

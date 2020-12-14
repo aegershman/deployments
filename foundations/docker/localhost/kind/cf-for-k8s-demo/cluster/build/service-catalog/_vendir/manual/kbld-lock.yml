@@ -1,7 +1,7 @@
 apiVersion: kbld.k14s.io/v1alpha1
 kind: Config
-minimumRequiredVersion: 0.25.0
+minimumRequiredVersion: 0.27.0
 overrides:
-- image: quay.io/kubernetes-service-catalog/service-catalog:v0.3.0
-  newImage: quay.io/kubernetes-service-catalog/service-catalog@sha256:bd383d7b8e7f36bbebd4800bee6b43b8ecfa75f959dfcd7d272867242195f4e8
+- image: quay.io/kubernetes-service-catalog/service-catalog:v0.3.1
+  newImage: quay.io/kubernetes-service-catalog/service-catalog@sha256:b88502e34d0a893f921bbbd6a6c6fc30f4fbe257543c21cad22cf26e050c73c3
   preresolved: true

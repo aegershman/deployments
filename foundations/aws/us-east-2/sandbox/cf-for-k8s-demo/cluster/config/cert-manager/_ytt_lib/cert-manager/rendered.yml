@@ -907,6 +907,10 @@ spec:
                 items:
                   type: string
                 type: array
+              encodeUsagesInRequest:
+                description: EncodeUsagesInRequest controls whether key usages should
+                  be present in the CertificateRequest
+                type: boolean
               ipAddresses:
                 description: IPAddresses is a list of IP address subjectAltNames to
                   be set on the Certificate.
@@ -1315,6 +1319,10 @@ spec:
                 items:
                   type: string
                 type: array
+              encodeUsagesInRequest:
+                description: EncodeUsagesInRequest controls whether key usages should
+                  be present in the CertificateRequest
+                type: boolean
               ipAddresses:
                 description: IPAddresses is a list of IP address subjectAltNames to
                   be set on the Certificate.
@@ -1722,6 +1730,10 @@ spec:
                 items:
                   type: string
                 type: array
+              encodeUsagesInRequest:
+                description: EncodeUsagesInRequest controls whether key usages should
+                  be present in the CertificateRequest
+                type: boolean
               ipAddresses:
                 description: IPAddresses is a list of IP address subjectAltNames to
                   be set on the Certificate.
@@ -2131,6 +2143,10 @@ spec:
                 items:
                   type: string
                 type: array
+              encodeUsagesInRequest:
+                description: EncodeUsagesInRequest controls whether key usages should
+                  be present in the CertificateRequest
+                type: boolean
               ipAddresses:
                 description: IPAddresses is a list of IP address subjectAltNames to
                   be set on the Certificate.
@@ -8589,6 +8605,13 @@ spec:
                       notification emails. This field may be updated after the account
                       is initially registered.
                     type: string
+                  enableDurationFeature:
+                    description: Enables requesting a Not After date on certificates
+                      that matches the duration of the certificate. This is not supported
+                      by all ACME servers like Let's Encrypt. If set to true when
+                      the ACME server does not support it it will create an error
+                      on the Order. Defaults to false.
+                    type: boolean
                   externalAccountBinding:
                     description: ExternalAccountBinding is a reference to a CA external
                       account of the ACME server. If set, upon registration cert-manager
@@ -10561,6 +10584,13 @@ spec:
                       notification emails. This field may be updated after the account
                       is initially registered.
                     type: string
+                  enableDurationFeature:
+                    description: Enables requesting a Not After date on certificates
+                      that matches the duration of the certificate. This is not supported
+                      by all ACME servers like Let's Encrypt. If set to true when
+                      the ACME server does not support it it will create an error
+                      on the Order. Defaults to false.
+                    type: boolean
                   externalAccountBinding:
                     description: ExternalAccountBinding is a reference to a CA external
                       account of the ACME server. If set, upon registration cert-manager
@@ -12533,6 +12563,13 @@ spec:
                       notification emails. This field may be updated after the account
                       is initially registered.
                     type: string
+                  enableDurationFeature:
+                    description: Enables requesting a Not After date on certificates
+                      that matches the duration of the certificate. This is not supported
+                      by all ACME servers like Let's Encrypt. If set to true when
+                      the ACME server does not support it it will create an error
+                      on the Order. Defaults to false.
+                    type: boolean
                   externalAccountBinding:
                     description: ExternalAccountBinding is a reference to a CA external
                       account of the ACME server. If set, upon registration cert-manager
@@ -14507,6 +14544,13 @@ spec:
                       notification emails. This field may be updated after the account
                       is initially registered.
                     type: string
+                  enableDurationFeature:
+                    description: Enables requesting a Not After date on certificates
+                      that matches the duration of the certificate. This is not supported
+                      by all ACME servers like Let's Encrypt. If set to true when
+                      the ACME server does not support it it will create an error
+                      on the Order. Defaults to false.
+                    type: boolean
                   externalAccountBinding:
                     description: ExternalAccountBinding is a reference to a CA external
                       account of the ACME server. If set, upon registration cert-manager
@@ -16517,6 +16561,13 @@ spec:
                       notification emails. This field may be updated after the account
                       is initially registered.
                     type: string
+                  enableDurationFeature:
+                    description: Enables requesting a Not After date on certificates
+                      that matches the duration of the certificate. This is not supported
+                      by all ACME servers like Let's Encrypt. If set to true when
+                      the ACME server does not support it it will create an error
+                      on the Order. Defaults to false.
+                    type: boolean
                   externalAccountBinding:
                     description: ExternalAccountBinding is a reference to a CA external
                       account of the ACME server. If set, upon registration cert-manager
@@ -18488,6 +18539,13 @@ spec:
                       notification emails. This field may be updated after the account
                       is initially registered.
                     type: string
+                  enableDurationFeature:
+                    description: Enables requesting a Not After date on certificates
+                      that matches the duration of the certificate. This is not supported
+                      by all ACME servers like Let's Encrypt. If set to true when
+                      the ACME server does not support it it will create an error
+                      on the Order. Defaults to false.
+                    type: boolean
                   externalAccountBinding:
                     description: ExternalAccountBinding is a reference to a CA external
                       account of the ACME server. If set, upon registration cert-manager
@@ -20459,6 +20517,13 @@ spec:
                       notification emails. This field may be updated after the account
                       is initially registered.
                     type: string
+                  enableDurationFeature:
+                    description: Enables requesting a Not After date on certificates
+                      that matches the duration of the certificate. This is not supported
+                      by all ACME servers like Let's Encrypt. If set to true when
+                      the ACME server does not support it it will create an error
+                      on the Order. Defaults to false.
+                    type: boolean
                   externalAccountBinding:
                     description: ExternalAccountBinding is a reference to a CA external
                       account of the ACME server. If set, upon registration cert-manager
@@ -22432,6 +22497,13 @@ spec:
                       notification emails. This field may be updated after the account
                       is initially registered.
                     type: string
+                  enableDurationFeature:
+                    description: Enables requesting a Not After date on certificates
+                      that matches the duration of the certificate. This is not supported
+                      by all ACME servers like Let's Encrypt. If set to true when
+                      the ACME server does not support it it will create an error
+                      on the Order. Defaults to false.
+                    type: boolean
                   externalAccountBinding:
                     description: ExternalAccountBinding is a reference to a CA external
                       account of the ACME server. If set, upon registration cert-manager
@@ -24426,9 +24498,9 @@ spec:
             properties:
               commonName:
                 description: CommonName is the common name as specified on the DER
-                  encoded CSR. If specified, this value must also be present in `dnsNames`.
-                  This field must match the corresponding field on the DER encoded
-                  CSR.
+                  encoded CSR. If specified, this value must also be present in `dnsNames`
+                  or `ipAddresses`. This field must match the corresponding field
+                  on the DER encoded CSR.
                 type: string
               csr:
                 description: Certificate signing request bytes in DER encoding. This
@@ -24440,6 +24512,18 @@ spec:
                 description: DNSNames is a list of DNS names that should be included
                   as part of the Order validation process. This field must match the
                   corresponding field on the DER encoded CSR.
+                items:
+                  type: string
+                type: array
+              duration:
+                description: Duration is the duration for the not after date for the
+                  requested certificate. this is set on order creation as pe the ACME
+                  spec.
+                type: string
+              ipAddresses:
+                description: IPAddresses is a list of IP addresses that should be
+                  included as part of the Order validation process. This field must
+                  match the corresponding field on the DER encoded CSR.
                 items:
                   type: string
                 type: array
@@ -24464,7 +24548,6 @@ spec:
                 type: object
             required:
             - csr
-            - dnsNames
             - issuerRef
             type: object
           status:
@@ -24634,9 +24717,9 @@ spec:
             properties:
               commonName:
                 description: CommonName is the common name as specified on the DER
-                  encoded CSR. If specified, this value must also be present in `dnsNames`.
-                  This field must match the corresponding field on the DER encoded
-                  CSR.
+                  encoded CSR. If specified, this value must also be present in `dnsNames`
+                  or `ipAddresses`. This field must match the corresponding field
+                  on the DER encoded CSR.
                 type: string
               csr:
                 description: Certificate signing request bytes in DER encoding. This
@@ -24648,6 +24731,18 @@ spec:
                 description: DNSNames is a list of DNS names that should be included
                   as part of the Order validation process. This field must match the
                   corresponding field on the DER encoded CSR.
+                items:
+                  type: string
+                type: array
+              duration:
+                description: Duration is the duration for the not after date for the
+                  requested certificate. this is set on order creation as pe the ACME
+                  spec.
+                type: string
+              ipAddresses:
+                description: IPAddresses is a list of IP addresses that should be
+                  included as part of the Order validation process. This field must
+                  match the corresponding field on the DER encoded CSR.
                 items:
                   type: string
                 type: array
@@ -24672,7 +24767,6 @@ spec:
                 type: object
             required:
             - csr
-            - dnsNames
             - issuerRef
             type: object
           status:
@@ -24842,14 +24936,26 @@ spec:
             properties:
               commonName:
                 description: CommonName is the common name as specified on the DER
-                  encoded CSR. If specified, this value must also be present in `dnsNames`.
-                  This field must match the corresponding field on the DER encoded
-                  CSR.
+                  encoded CSR. If specified, this value must also be present in `dnsNames`
+                  or `ipAddresses`. This field must match the corresponding field
+                  on the DER encoded CSR.
                 type: string
               dnsNames:
                 description: DNSNames is a list of DNS names that should be included
                   as part of the Order validation process. This field must match the
                   corresponding field on the DER encoded CSR.
+                items:
+                  type: string
+                type: array
+              duration:
+                description: Duration is the duration for the not after date for the
+                  requested certificate. this is set on order creation as pe the ACME
+                  spec.
+                type: string
+              ipAddresses:
+                description: IPAddresses is a list of IP addresses that should be
+                  included as part of the Order validation process. This field must
+                  match the corresponding field on the DER encoded CSR.
                 items:
                   type: string
                 type: array
@@ -24879,7 +24985,6 @@ spec:
                 format: byte
                 type: string
             required:
-            - dnsNames
             - issuerRef
             - request
             type: object
@@ -25051,14 +25156,26 @@ spec:
             properties:
               commonName:
                 description: CommonName is the common name as specified on the DER
-                  encoded CSR. If specified, this value must also be present in `dnsNames`.
-                  This field must match the corresponding field on the DER encoded
-                  CSR.
+                  encoded CSR. If specified, this value must also be present in `dnsNames`
+                  or `ipAddresses`. This field must match the corresponding field
+                  on the DER encoded CSR.
                 type: string
               dnsNames:
                 description: DNSNames is a list of DNS names that should be included
                   as part of the Order validation process. This field must match the
                   corresponding field on the DER encoded CSR.
+                items:
+                  type: string
+                type: array
+              duration:
+                description: Duration is the duration for the not after date for the
+                  requested certificate. this is set on order creation as pe the ACME
+                  spec.
+                type: string
+              ipAddresses:
+                description: IPAddresses is a list of IP addresses that should be
+                  included as part of the Order validation process. This field must
+                  match the corresponding field on the DER encoded CSR.
                 items:
                   type: string
                 type: array
@@ -25088,7 +25205,6 @@ spec:
                 format: byte
                 type: string
             required:
-            - dnsNames
             - issuerRef
             - request
             type: object
@@ -25723,6 +25839,15 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - acme.cert-manager.io
+  resources:
+  - challenges
+  - orders
+  verbs:
+  - get
+  - list
+  - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -25748,6 +25873,15 @@ rules:
   - deletecollection
   - patch
   - update
+- apiGroups:
+  - acme.cert-manager.io
+  resources:
+  - challenges
+  - orders
+  verbs:
+  - get
+  - list
+  - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -26068,10 +26202,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.0.3
+        - Tag: v1.1.0
           Type: resolved
-          URL: quay.io/jetstack/cert-manager-cainjector:v1.0.3
-        URL: quay.io/jetstack/cert-manager-cainjector@sha256:9e6afef260bb2e78da7a56223a2025a0993dfde9d424255aa81fb7c972beeb5b
+          URL: quay.io/jetstack/cert-manager-cainjector:v1.1.0
+        URL: quay.io/jetstack/cert-manager-cainjector@sha256:5cd541e0af815c81b24e8ff3721257a0e309faecf78913774b58ca71984c4a46
   labels:
     app: cainjector
     app.kubernetes.io/component: cainjector
@@ -26103,7 +26237,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/jetstack/cert-manager-cainjector@sha256:9e6afef260bb2e78da7a56223a2025a0993dfde9d424255aa81fb7c972beeb5b
+        image: quay.io/jetstack/cert-manager-cainjector@sha256:5cd541e0af815c81b24e8ff3721257a0e309faecf78913774b58ca71984c4a46
         imagePullPolicy: IfNotPresent
         name: cert-manager
         resources: {}
@@ -26115,10 +26249,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.0.3
+        - Tag: v1.1.0
           Type: resolved
-          URL: quay.io/jetstack/cert-manager-controller:v1.0.3
-        URL: quay.io/jetstack/cert-manager-controller@sha256:d3e83a36c16c696778af9567d378ae0334ed92a40aabb0e2ef7d84967183b201
+          URL: quay.io/jetstack/cert-manager-controller:v1.1.0
+        URL: quay.io/jetstack/cert-manager-controller@sha256:153d99b48570b053e599a03b918dbc80406ba1cf2137f14d5a80a9c7043ac06b
   labels:
     app: cert-manager
     app.kubernetes.io/component: controller
@@ -26155,7 +26289,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/jetstack/cert-manager-controller@sha256:d3e83a36c16c696778af9567d378ae0334ed92a40aabb0e2ef7d84967183b201
+        image: quay.io/jetstack/cert-manager-controller@sha256:153d99b48570b053e599a03b918dbc80406ba1cf2137f14d5a80a9c7043ac06b
         imagePullPolicy: IfNotPresent
         name: cert-manager
         ports:
@@ -26170,10 +26304,10 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: v1.0.3
+        - Tag: v1.1.0
           Type: resolved
-          URL: quay.io/jetstack/cert-manager-webhook:v1.0.3
-        URL: quay.io/jetstack/cert-manager-webhook@sha256:efd72a53312a47155a07cec4134b21f5262aa42d3d1871d8b64e4a05aee277f8
+          URL: quay.io/jetstack/cert-manager-webhook:v1.1.0
+        URL: quay.io/jetstack/cert-manager-webhook@sha256:4dd372a988c2a1287c72bac0e73987f6ab97c9b6b9551218f529b463acfbe711
   labels:
     app: webhook
     app.kubernetes.io/component: webhook
@@ -26208,7 +26342,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/jetstack/cert-manager-webhook@sha256:efd72a53312a47155a07cec4134b21f5262aa42d3d1871d8b64e4a05aee277f8
+        image: quay.io/jetstack/cert-manager-webhook@sha256:4dd372a988c2a1287c72bac0e73987f6ab97c9b6b9551218f529b463acfbe711
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -26271,6 +26405,7 @@ webhooks:
     resources:
     - '*/*'
   sideEffects: None
+  timeoutSeconds: 10
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -26316,3 +26451,4 @@ webhooks:
     resources:
     - '*/*'
   sideEffects: None
+  timeoutSeconds: 10

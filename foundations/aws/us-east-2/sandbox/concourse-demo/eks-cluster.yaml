@@ -5,7 +5,7 @@ kind: ClusterConfig
 metadata:
   name: concourse-demo
   region: us-east-2
-  version: "1.17"
+  version: "1.18"
   tags: {}
 
 vpc:

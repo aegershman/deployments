@@ -4,32 +4,40 @@ directories:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Autobump stack images
-      sha: 552525ff352c36f3c3467e93b8e32fd35394c179
+      commitTitle: Autobump buildpacks
+      sha: c72740e81a15fa9c386578e75853fcc43e8f014e
+      tags:
+      - v1.1.0-rc.1-17-gc72740e
     path: upstream/cf-for-k8s
   path: cluster/build/cf-for-k8s/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'Merge pull request #729 from ywk253100/200915_1.3.5...'
-      sha: 0b7457658b9b5c3c500c91a65caf991c4a460bb1
+      commitTitle: 'Merge pull request #794 from ywk253100/201119_1.3.6...'
+      sha: 8ed55683e8c9882646f4c279218dbc29f8fa25dd
+      tags:
+      - v1.3.6
     path: upstream/harbor-helm
   path: cluster/build/harbor/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: 'fix: set cluster domain for credentials URIs (#111)...'
-      sha: ef11c304058e6c11062129369755200e2bce7642
+      commitTitle: Update chart repository URL to new location (#116)
+      sha: c1aecd6614bb391ea825a1e578c7400f3df77b6a
+      tags:
+      - v1.2.0
     path: upstream
   path: cluster/build/minibroker/_vendir
 - contents:
   - manual: {}
     path: manual
   - git:
-      commitTitle: Update version from 0.3.0-beta.2 to 0.3.0 (#2811)
-      sha: 11c5b363ad9070284f6f45d13107020a8aeab82a
+      commitTitle: Add small improvements in catalog chart (#2814)
+      sha: f83ebf922fd676cf75b5541d9980737da9f91203
+      tags:
+      - v0.3.1-2-gf83ebf922
     path: upstream
   path: cluster/build/service-catalog/_vendir
 - contents:
