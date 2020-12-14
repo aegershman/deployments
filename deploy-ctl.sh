@@ -5,7 +5,7 @@ set -e
 case "$1" in
 kind-create)
   # https://github.com/cloudfoundry-incubator/cf-operator/#prerequisites
-  kind create cluster --config ./foundations/docker/localhost/kind/_common/kind.config.yaml # --image kindest/node:v1.17.5
+  kind create cluster --config ./foundations/docker/localhost/kind/cf-for-k8s-demo/kind.config.yaml # --image kindest/node:v1.17.5
   docker exec -it "kind-control-plane" bash -c 'cp /etc/kubernetes/pki/ca.crt /etc/ssl/certs/ && update-ca-certificates && (systemctl list-units | grep containerd > /dev/null && systemctl restart containerd)'
   ;;
 
