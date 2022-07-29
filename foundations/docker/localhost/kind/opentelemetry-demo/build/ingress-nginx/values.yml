@@ -1,0 +1,23 @@
+---
+controller:
+  replicaCount: 1
+  service:
+    type: NodePort
+  config:
+    proxy-body-size: 64m
+    proxy-buffer-size: 16k
+  dnsPolicy: ClusterFirstWithHostNet
+  reportNodeInternalIp: true
+  hostNetwork: true
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+  kind: Deployment
+
+  admissionWebhooks:
+    enabled: true # todo, was false, set to "true" for keycloak operator. bleh.
+
+defaultBackend:
+  enabled: false

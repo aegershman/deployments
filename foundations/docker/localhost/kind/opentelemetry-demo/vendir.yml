@@ -1,0 +1,15 @@
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.8.0
+directories:
+  - path: build/ingress-nginx/_vendir
+    contents:
+      - path: upstream
+        git:
+          url: https://github.com/kubernetes/ingress-nginx
+          ref: e222b74b9e1055e34259eab0281974af77281df6 # 4.2.0
+        includePaths:
+          - charts/ingress-nginx/**/*
+        excludePaths:
+          - charts/ingress-nginx/ci/**/*

@@ -1,0 +1,11 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Release v1.3.0 (#8811)...
+      sha: e222b74b9e1055e34259eab0281974af77281df6
+      tags:
+      - controller-v1.3.0
+    path: upstream
+  path: build/ingress-nginx/_vendir
+kind: LockConfig
