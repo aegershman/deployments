@@ -1,5 +1,11 @@
 # deployments
 
+## archive note Nov. 02, 2023
+
+I don't care about "proper organization" as much anymore since I've learned that corporate deployment operations will always be a beautiful bespoke disaster anyway. So just do what's easiest to maintain.
+
+---
+
 NOTE: currently the most active workspace cluster is `aws/us-east-2/sandbox/cf-for-k8s-demo`
 
 `k8s` deployments. These are for experimentation and demonstrations of stitching together systems. Emphasis on being as declarative and `git`-driven as technically possible. Emphasis on being `kind`/`minikube`-friendly. Emphasis on accounting for multiple environments. Trying to work out ideas of promoting from environment to environment. Conceptually this focuses on clusters as a whole; deployments might be built, configured, and applied independently, but the end-result emphasizes the cumulative result of everything happening on the cluster.
